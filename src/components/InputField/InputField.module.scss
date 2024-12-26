@@ -1,0 +1,106 @@
+.input {
+  box-shadow: none !important;
+  height: 48px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 28px;
+  color: #333333;
+  background: #fff;
+  border-radius: 12px;
+  border: 1px solid #999999;
+  padding: 0;
+  width: 100%;
+  outline: 0;
+  padding: 0 16px;
+  caret-color: #333333 !important;
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    background-color: transparent !important;
+  }
+  &::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: #999999;
+    font-weight: 500;
+  }
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #999999;
+    font-weight: 500;
+  }
+  &:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #999999;
+    font-weight: 500;
+  }
+  &:-moz-placeholder {
+    /* Firefox 18- */
+    color: #999999;
+    font-weight: 500;
+  }
+}
+
+
+.input:-webkit-autofill,
+.input:-webkit-autofill:hover,
+.input:-webkit-autofill:focus {
+  border-bottom: solid 1px #f5f5f5;
+  -webkit-text-fill-color: #333333;
+  -webkit-box-shadow: 0 0 0px 1000px #333333 inset;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+
+.btnEye {
+  position: absolute;
+  right: 0;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin-right: 16px;
+  cursor: pointer;
+  .eyeIcon {
+    width: 20px;
+    color: #999999;
+  }
+}
+
+.unit {
+  position: absolute;
+  right: 0;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  margin-right: 16px;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 600;
+}
+
+
+.focus {
+  border: 1px solid #849EBF !important;
+}
+
+.errorField {
+  border: 1px solid #ff6565 !important;
+}
+
+
+
+.inputContainer {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+}
+
+
+.disabled {
+  background-color: #efefef !important;
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  .inputContainer {
+    flex: 1;
+  }
+}

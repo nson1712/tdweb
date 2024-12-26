@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Redirect with App Detection</title>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const url = new URL(window.location.href);
+            const param = url.searchParams.get("param");
+
+            if (param) {
+                navigator.clipboard.writeText(param).then(function() {
+                    openAppOrRedirect(param);
+                }).catch(function(error) {
+                    console.error('Failed to copy text: ', error);
+                });
+            } else {
+                console.log('Parameter not found in URL.');
+            }
+
+            function openAppOrRedirect(param) {
+                // Deep link giả định nếu ứng dụng hỗ trợ custom URL scheme
+                // const osSystem = getOperatingSystem()
+                // const appLink = "toidoc://param=" + encodeURIComponent(param);
+
+                // Thời gian chờ để kiểm tra nếu ứng dụng không mở được
+                // const timeout = setTimeout(function() {
+                    // Nếu ứng dụng không mở, chuyển hướng đến App Store
+                //     if (osSystem === 'Android') {
+                //         window.location.href = "https://play.google.com/store/apps/details?id=com.maple.toidoc";
+                //     } else if (osSystem === 'IOS') {
+                //         window.location.href = "https://apps.apple.com/vn/app/6450690393";
+                //     }
+                    
+                // }, 2000);
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                if (userAgent.match(
+                    /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+                )) {
+                    window.location.href = "https://apps.apple.com/vn/app/6450690393";
+                }
+
+                // Tạo một iframe để cố gắng mở ứng dụng
+                const iframe = document.createElement("iframe");
+                iframe.style.display = "none";
+                iframe.src = appLink;
+
+                iframe.onload = function() {
+                    clearTimeout(timeout);
+                };
+
+                document.body.appendChild(iframe);
+            }
+
+            function getOperatingSystem() {
+                document.getElementById("platform-info").innerText = window.navigator.platform;
+                let os = "Unknown OS";
+                document.getElementById("os-info").innerText = os;
+                // const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+                if(userAgent.match(
+                    /Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i
+                )) {
+                    os = "iOS";
+                }
+                if (navigator.userAgent.indexOf("Safari") != -1) {
+                    os='IOS Safari'
+                }
+
+                // Check for iOS
+                if (/iPad|iPhone|iPod/.test(userAgent) && !window.MSStream) {
+                    os = "iOS";
+                }
+
+                // Check for iPadOS (iPad running as Mac)
+                if (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) {
+                    os = "iOS";
+                }
+
+                // Check for other operating systems
+                if (/Windows NT/.test(userAgent)) {
+                    os = "Windows";
+                } else if (/Mac/.test(userAgent)) {
+                    os = "MacOS";
+                } else if (/Android/.test(userAgent)) {
+                    os = "Android";
+                } else if (/Linux/.test(userAgent)) {
+                    os = "Linux";
+                }
+                document.getElementById("os-info").innerText = os;
+                return os;
+            }
+        });
+        
+    </script>
+</head>
+<body>
+    <h1>Your Operating System is:</h1>
+    <p id="os-info"></p>
+    <p id="platform-info"></p>
+</body>
+</html>

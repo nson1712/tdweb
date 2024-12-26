@@ -1,0 +1,38 @@
+.input {
+  box-shadow: none !important;
+  height: 32px;
+  font-size: 14px;
+  border: 0;
+  border-radius: 4px;
+  padding: 0 20px 0 10px;
+  font-weight: 600;
+  outline: 0;
+  width: 100%;
+  color: #ffffff;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-color: transparent;
+  &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    color: #6e7580;
+  }
+  &::-moz-placeholder { /* Firefox 19+ */
+    color: #6e7580;
+  }
+  &:-ms-input-placeholder { /* IE 10+ */
+    color: #6e7580;
+  }
+  &:-moz-placeholder { /* Firefox 18- */
+    color: #6e7580;
+  }
+}
+
+.container {
+  position: relative;
+  .caretIcon {
+    position: absolute;
+    width: 26px;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 12px;
+  }
+}

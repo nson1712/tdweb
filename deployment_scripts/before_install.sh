@@ -1,0 +1,13 @@
+#!/bin/bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+cd /home/ubuntu/sources/reflex-homepage
+pm2 stop website
+pm2 delete website
+killall -9 node
+
+cd /home/ubuntu/sources
+sudo rm -rf reflex-homepage
+sudo mkdir reflex-homepage

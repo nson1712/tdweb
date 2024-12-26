@@ -1,0 +1,156 @@
+.input {
+  box-shadow: none !important;
+  height: 48px;
+  background-color: #262A30;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 28px;
+  color: #ffffff;
+  border: 1px solid transparent;
+  padding: 0;
+  width: 100%;
+  outline: 0;
+  border-radius: 4px;
+  padding: 0 16px;
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus {
+    background-color: #262A30 !important;
+  }
+  &::-webkit-input-placeholder {
+    /* Chrome/Opera/Safari */
+    color: #72757C;
+    font-weight: 500;
+  }
+  &::-moz-placeholder {
+    /* Firefox 19+ */
+    color: #72757C;
+    font-weight: 500;
+  }
+  &:-ms-input-placeholder {
+    /* IE 10+ */
+    color: #72757C;
+    font-weight: 500;
+  }
+  &:-moz-placeholder {
+    /* Firefox 18- */
+    color: #72757C;
+    font-weight: 500;
+  }
+}
+
+.calendarIcon {
+  width: 16px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 16px;
+}
+
+.h50 {
+  height: 50px;
+}
+
+.focus {
+  border: 1px solid #FF9E2B !important;
+}
+
+.fullBorder {
+  border-radius: 4px;
+  box-shadow: inset 0 1px 2px 0 rgba(102, 113, 123, 0.21) !important;
+  padding: 0 16px;
+  border: 1px solid #e2e5ed;
+}
+
+.inputContainer {
+  position: relative;
+  display: inline-flex;
+  width: 100%;
+  .calendarIcon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    opacity: 0.7;
+  }
+  .btnClear {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 32px;
+    &:hover {
+      background-color: #f5f5f5;
+    }
+    .closeIcon {
+      width: 16px;
+      height: 16px;
+    }
+    @media (max-width: 767px) {
+      right: 22px
+    }
+  }
+
+  
+
+}
+
+.labelError {
+  font-size: 12px;
+  color: #CF1E1E !important;
+}
+
+.errorMessage {
+  font-size: 12px;
+  color: #CF1E1E !important;
+  margin-left: 6px
+}
+
+.errorField {
+  border: 1px solid #ff6565 !important;
+}
+
+.dateTimePicker {
+  position: absolute;
+  z-index: 99;
+  top: 50px;
+  border-radius: 8px;
+  width: 100%;
+  max-width: 500px;
+
+}
+
+.btnWrapper {
+  padding: 10px;
+  background-color: #ffffff;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  .btnCancel {
+    font-size: 14px;
+    color: #888888;
+    cursor: pointer;
+    font-weight: bold;
+  }
+
+  .btnOk {
+    font-size: 14px;
+    color: #007aff;
+    font-weight: bold;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+}
+
+.disabled {
+  background-color: #efefef !important;
+  pointer-events: none;
+}
+

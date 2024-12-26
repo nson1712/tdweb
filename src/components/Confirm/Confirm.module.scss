@@ -1,0 +1,52 @@
+.container {
+  padding: 60px 0 0 0;
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border-top: 1px solid rgb(77, 83, 88);
+    .btnCancel {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 0;
+      font-size: 16px;
+      font-weight: bold;
+      color: rgb(135, 141, 150);;
+      border-right: 1px solid rgb(77, 83, 88);
+      &:hover {
+        color: rgb(135, 141, 150);
+      }
+    }
+    .btnOk {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 16px 0;
+      font-size: 16px;
+      font-weight: bold;
+      color: #FF9E2B;
+      &:hover {
+        color: #FF9E2B;
+      }
+    }
+    a {
+      flex: 1
+    }
+  }
+  .title {
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    color: #ffffff;
+  }
+  .description {
+    font-size: 16px;
+    text-align: center;
+    padding: 0 40px;
+    margin-bottom: 20px;
+    color: #ffffff;
+  }
+}

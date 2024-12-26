@@ -1,0 +1,54 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+}
+.toidocChatBox {
+    background: linear-gradient(135deg, #02b37b, #02b37b);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 5px;
+    padding: 15px;
+}
+.title {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+.buttonContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+.button {
+    font-size: 16px;
+    margin: 5px;
+    padding: 10px;
+    background: linear-gradient(135deg, #016b8b, #ffcc01);
+    border-radius: 10px;
+    width: 200px;
+    color: #fff;
+}
+.benefitItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.imgCheckIcon {
+    width: 20px;
+    height: 20px;
+}
+
+.emptyMarginP {
+    margin: 0px;
+    padding: 0px;
+}
+
+.ml10 {
+    margin-left: 10px;
+}
+.whiteColor {
+    color: #fff;
+}

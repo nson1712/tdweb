@@ -1,0 +1,20 @@
+{
+  "applinks": {
+      "details": [
+          {
+              "appIDs": [
+                  "V2HLLHQ5W6.com.maple.toidoc"
+              ],
+              "components": [
+                  {
+                    "/": "/deep-link*",
+                    "comment": "Open regiser refer"
+                  }
+              ]
+          }
+      ]
+  },
+  "webcredentials": {
+    "apps": [ "V2HLLHQ5W6.com.maple.toidoc" ]
+ }
+}

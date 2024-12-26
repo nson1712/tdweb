@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chia Văn Bản Thành Các Trang</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin-bottom: 10px;
+        }
+        .output {
+            margin-top: 20px;
+        }
+        .page {
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin-bottom: 10px;
+            position: relative; /* Để đặt nút copy ở góc trên bên phải */
+        }
+        .word-count {
+            font-style: italic;
+            color: #555;
+            margin-top: 10px;
+        }
+        .copy-button {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+        .copy-button:hover {
+            background-color: #45a049;
+        }
+        .copied {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chia Văn Bản Thành Các Trang</h1>
+    <form id="textForm">
+        <textarea id="inputText" placeholder="Nhập đoạn văn bản dài ở đây..."></textarea><br>
+        <label for="wordLimit">Số từ tối đa mỗi trang:</label>
+        <select id="wordLimit">
+            <option value="1200">1200</option>
+            <option value="1500">1500</option>
+            <option value="2000">2000</option>
+            <option value="custom">Tùy chỉnh</option>
+        </select>
+        <input type="number" id="customLimit" placeholder="Nhập số từ tối đa" style="display:none; width: 100px;">
+        <br>
+        <button type="button" onclick="splitText()">Chia Văn Bản</button>
+    </form>
+    <div id="output" class="output"></div>
+
+    <script>
+        document.getElementById('wordLimit').addEventListener('change', function() {
+            const customLimit = document.getElementById('customLimit');
+            if (this.value === 'custom') {
+                customLimit.style.display = 'inline';
+            } else {
+                customLimit.style.display = 'none';
+            }
+        });
+
+        function splitText() {
+            const inputText = document.getElementById('inputText').value;
+            const wordLimitSelect = document.getElementById('wordLimit');
+            const customLimitInput = document.getElementById('customLimit');
+            let maxWords;
+
+            if (wordLimitSelect.value === 'custom') {
+                maxWords = parseInt(customLimitInput.value, 10);
+                if (isNaN(maxWords) || maxWords <= 0) {
+                    alert('Vui lòng nhập số từ hợp lệ.');
+                    return;
+                }
+            } else {
+                maxWords = parseInt(wordLimitSelect.value, 10);
+            }
+
+            // Tách văn bản thành các đoạn bằng cách sử dụng dấu xuống dòng đơn
+            const paragraphs = inputText.split('\n');
+
+            let chunks = [];
+            let currentChunk = [];
+            let currentWordCount = 0;
+
+            paragraphs.forEach(paragraph => {
+                const words = paragraph.split(/\s+/);
+                const wordCount = words.length;
+
+                if (currentWordCount + wordCount <= maxWords) {
+                    // Nếu đoạn văn có thể thêm vào trang hiện tại
+                    currentChunk.push(paragraph);
+                    currentWordCount += wordCount;
+                } else {
+                    // Nếu đoạn văn không thể thêm vào trang hiện tại
+                    if (currentChunk.length > 0) {
+                        chunks.push({ text: currentChunk.join('\n'), wordCount: currentWordCount });
+                    }
+                    // Bắt đầu một trang mới với đoạn văn hiện tại
+                    currentChunk = [paragraph];
+                    currentWordCount = wordCount;
+                }
+            });
+
+            // Thêm trang cuối cùng nếu còn nội dung
+            if (currentChunk.length > 0) {
+                chunks.push({ text: currentChunk.join('\n'), wordCount: currentWordCount });
+            }
+
+            displayChunks(chunks);
+        }
+
+        function displayChunks(chunks) {
+            const outputDiv = document.getElementById('output');
+            outputDiv.innerHTML = ''; // Xóa nội dung cũ
+
+            chunks.forEach((chunk, index) => {
+                const pageDiv = document.createElement('div');
+                pageDiv.className = 'page';
+
+                // Tạo nội dung của trang bao gồm tiêu đề, nội dung và nút copy
+                pageDiv.innerHTML = `
+                    <button class="copy-button" onclick="copyPageContent(this)">Copy</button>
+                    <h2>Chương ${index + 1}</h2>
+                    <p>${chunk.text.replace(/\n/g, '<br/>')}</p>
+                    <div class="word-count">Tổng số từ: ${chunk.wordCount}</div>`;
+
+                outputDiv.appendChild(pageDiv);
+            });
+        }
+
+        function copyPageContent(button) {
+            // Tìm phần tử chứa tiêu đề và nội dung của trang để sao chép
+            const pageDiv = button.parentElement;
+            const title = pageDiv.querySelector('h2').innerText;
+            const content = pageDiv.querySelector('p').innerText;
+
+            // Kết hợp tiêu đề và nội dung
+            const fullText = `${title}\n\n${content}`;
+
+            // Sao chép nội dung vào clipboard
+            navigator.clipboard.writeText(fullText).then(() => {
+                // Cập nhật văn bản của nút thành "Copied" và thêm lớp CSS
+                button.innerText = 'Copied';
+                button.classList.add('copied');
+            }).catch(err => {
+                console.error('Lỗi khi sao chép: ', err);
+            });
+        }
+    </script>
+</body>
+</html>

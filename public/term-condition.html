@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style>
+        .numberStyle {
+            list-style-type: decimal;
+            font-size: 16px;
+            counter-reset: list-counter;
+            margin-left: -25px;
+            font-weight: bold;
+
+        }
+
+        .firstSentence {
+            font-weight: bold;
+            list-style-type: none;
+            margin-left: 0;
+            font-size: 18px;
+        }
+
+        .secondli {
+            list-style-type: lower-alpha;
+
+        }
+
+        ul.secondli li {
+            list-style-type: none;
+            margin-left: 0;
+        }
+
+        .list-item {
+            list-style-type: none;
+            margin-left: 0;
+
+        }
+
+        .custom-list {
+            counter-reset: section;
+            list-style-type: none;
+
+        }
+
+        .custom-list li::before {
+            content: counter(section, lower-alpha)") ";
+            counter-increment: section;
+            margin-right: 2px;
+        }
+
+        .custom-list1 li::before {
+            content: counter(section, lower-alpha)") ";
+            counter-increment: section;
+            margin-right: 2px;
+            margin-left: 20px;
+        }
+
+    </style>
+</head>
+
+<body style="max-width: 600px; margin: auto; color: #000;">
+    <div style="max-width: 600px; margin: auto; text-align: justify;">
+        <div>
+            <p>Chào mừng và cảm ơn bạn về sự quan tâm đến hoạt động dịch vụ của Toidoc ("Toidoc" hoặc "chúng tôi") và
+                trang web của chúng tôi tại <strong>www.toidoc.vn</strong> cùng với các trang web liên quan khác, mạng, ứng dụng và các
+                dịch vụ khác do chúng tôi cung cấp (tổng hợp là "Dịch vụ" của chúng tôi). Những Điều Khoản dưới đây là
+                một hợp đồng có tính ràng buộc pháp lý giữa bạn và nền tảng Toidoc liên quan đến việc sử dụng Dịch vụ
+                của chúng tôi.</p>
+            <p>VUI LÒNG ĐỌC CÁC ĐIỀU KHOẢN SAU ĐÂY MỘT CÁCH CẨN THẬN. BẰNG CÁCH NHẤP VÀO "TÔI CHẤP NHẬN" HOẶC BẰNG CÁCH
+                TẢI XUỐNG, CÀI ĐẶT, HOẶC TRUY CẬP HOẶC SỬ DỤNG BẤT CỨ DỊCH VỤ NÀO KHÁC CỦA CHÚNG TÔI, BẠN XÁC NHẬN RẰNG
+                BẠN ĐÃ ĐỌC, HIỂU VÀ ĐỒNG Ý BỊ RÀNG BUỘC BỞI CÁC ĐIỀU KHOẢN VÀ ĐIỀU KIỆN SAU ĐÂY, BAO GỒM CHÍNH SÁCH BẢO
+                MẬT CỦA TOIDOC VÀ NỘI QUY HOẠT ĐỘNG CỦA CỘNG ĐỒNG TOIDOC. </p>
+            <p>Nếu bạn không đủ điều kiện, hoặc không đồng ý với các Điều Khoản, thì bạn không được phép sử dụng Dịch vụ
+                của chúng tôi.</p>
+            <ul class="numberStyle" style="margin-left: -25px;">
+                <li>
+                    <p class="firstSentence  ">Tổng quan về Dịch vụ Toidoc</p>
+                    <blockquote style="margin-left: 15px; margin-right: 0px;">
+                        <p style="font-weight: lighter;">Toidoc hoạt động và duy trì một nền tảng cộng đồng chia sẻ trực tuyến miễn phí cung cấp dịch vụ đọc truyện trực tuyến, tạo nội dung truyện và dịch vụ phân phối nội dung truyện bao gồm nhưng không giới hạn: Truyện chữ, truyện tranh.</p>
+                    </blockquote>
+                </li>
+                <li>
+                    <p class="firstSentence">Đủ điều kiện sử dụng</p>
+                    <blockquote style="margin-left: 15px; margin-right: 0px;">
+                        <p style="font-weight: lighter;">Bạn phải ít nhất 17 tuổi để sử dụng Dịch vụ. Bằng việc đồng ý với các Điều khoản này, bạn tuyên bố và cam đoan với chúng tôi rằng: </p>
+                    </blockquote>
+                    <blockquote style="margin-top: -15px; margin-left: -3px; margin-right: 0px;">
+                        <ol class="custom-list" style="font-weight: lighter;">
+                            <li>Bạn ít nhất 17 tuổi; </li>
+                            <li>Bạn chưa bao giờ bị đình chỉ hoặc loại bỏ khỏi Dịch vụ trước đây; </li>
+                            <li>Việc đăng ký và sử dụng Dịch vụ của bạn tuân theo tất cả các luật và quy định áp dụng.
+                                Nếu
+                                bạn đang sử dụng Dịch vụ thay mặt cho một tổ chức hoặc công ty, bạn tuyên bố và cam đoan
+                                rằng bạn có quyền đại diện cho tổ chức đó đối với các Điều khoản này và bạn đồng ý tuân
+                                thủ
+                                các Điều khoản này thay mặt cho tổ chức đó.</li>
+                        </ol>
+                    </blockquote>
+                </li>
+                <li>
+                    <p class="firstSentence">Truy cập và sử dụng dịch vụ</p>
+                    <blockquote style="margin-left: 15px; margin-right: 0px;">
+                        <p style="font-weight: lighter;">Để truy cập vào hầu hết các tính năng của Dịch vụ, bạn phải
+                            đăng ký một tài khoản. Khi bạn
+                            đăng
+                            ký tài khoản, bạn ý thức được nghĩa vụ cung cấp cho chúng tôi một số thông tin cơ bản, chẳng
+                            hạn
+                            như địa chỉ email và những thông tin đó được chúng tôi duy trì bảo mật theo pháp luật hiện
+                            hành.
+                            Bạn đồng ý rằng thông tin bạn cung cấp cho chúng tôi là chính xác và bạn sẽ giữ cho nó chính
+                            xác
+                            và cập nhật trong suốt thời gian. Bạn hoàn toàn chịu trách nhiệm duy trì tính bảo mật của
+                            tài
+                            khoản và mật khẩu của mình, bạn chấp nhận chịu trách nhiệm cho tất cả các hoạt động diễn ra
+                            dưới
+                            tài khoản của bạn. Nếu bạn có lý do để tin rằng tài khoản của bạn không còn an toàn, bạn
+                            phải
+                            ngay lập tức thông báo cho chúng tôi qua địa chỉ email toidoc.io@gmail.com.</p>
+                    </blockquote>
+                </li>
+                <li>
+                    <p class="firstSentence">Thanh toán phí đối với một số tính năng</p>
+                    <blockquote style="margin-left: 15px; margin-right: 0px;">
+                        <p style="font-weight: lighter;">Việc truy cập vào một số tính năng cụ thể của Ứng dụng có thể
+                            yêu cầu bạn thanh toán phí.
+                            Trước
+                            khi bạn thanh toán bất kỳ khoản phí nào, bạn sẽ được xem xét và chấp nhận thanh toán các
+                            khoản
+                            phí đó. Tất cả khoản phí đã thanh toán sẽ không được hoàn trả.</p>
+                    </blockquote>
+                    <ul>
+                        <blockquote style="margin-left: -50px; margin-right: 0px;">
+                            <li class="list-item" style="font-weight: lighter;">4.1 Giá cả
+
+                                <blockquote style="margin-left: 25px; margin-right: 0px;">
+                                    <p>Toidoc chỉ cung cấp nền tảng chia sẻ nội dung và không có quyền đưa ra giá cụ thể
+                                        của nội
+                                        dung, ngoại trừ giá một số tính năng cụ thể. Toidoc sẽ cố gắng hợp lý để giữ
+                                        thông tin
+                                        về giá cả được công bố trên trang web được cập nhật. Chúng tôi khuyến khích bạn
+                                        kiểm tra
+                                        trang web của chúng tôi định kỳ để cập nhật thông tin giá cả hiện tại. Toidoc có
+                                        thể
+                                        thay đổi các khoản phí cho bất kỳ tính năng của Dịch vụ nào, bao gồm cả các
+                                        khoản phí
+                                        hoặc lệ phí bổ sung, nếu Toidoc thông báo cho bạn về các thay đổi trước khi
+                                        chúng được
+                                        áp dụng, Toidoc cũng là phía duy nhất được phép có thể tạo các ưu đãi khuyến mãi
+                                        với các
+                                        tính năng khác nhau và giá cả khác nhau cho bất kỳ khách hàng nào của Toidoc.
+                                        Những ưu
+                                        đãi khuyến mãi này, trừ khi dành riêng cho bạn, sẽ không có hiệu lực hay có tác
+                                        dụng với
+                                        các Điều khoản khác trên Thỏa thuận này.</p>
+                                </blockquote>
+
+                            </li>
+                        </blockquote>
+                        <blockquote style="margin-left: -50px;">
+                            <li class="list-item" style="font-weight: lighter;">4.2 Ủy quyền
+                                <blockquote style="margin-left: 25px; margin-right: -40px;">
+                                    <p>Việc mua hàng được thực hiện thông qua dịch vụ xử lý thanh toán được cung cấp bởi
+                                        dịch vụ
+                                        của bên thứ ba (ví dụ: mua qua Ứng dụng Apple In-App Purchases, Google Play),
+                                        Toidoc sẽ
+                                        tính tiền theo phương thức thanh toán bạn xác định tại thời điểm mua hàng. Bạn
+                                        ủy quyền
+                                        cho bên thứ ba tính tiền dựa vào phương thức thanh toán đó tất cả các số tiền
+                                        cho các
+                                        đơn hàng bạn thực hiện và bất kỳ cấp độ Dịch vụ nào bạn chọn như mô tả trong các
+                                        Điều
+                                        khoản này hoặc được công bố bởi Công ty.</p>
+                                </blockquote>
+                            </li>
+                        </blockquote>
+                        <blockquote style="margin-left: -50px;">
+                            <li class="list-item" style="font-weight: lighter;">4.3 Gói đăng ký
+                                <ul class="secondli">
+                                    <blockquote style="margin-left: -15px; margin-right: -40px;">
+                                        <li>a) Đăng ký và Tự động gia hạn
+                                            <p style="font-weight: lighter;">Dịch vụ có thể cho phép bạn đăng ký một gói
+                                                cước ("Gói Đăng ký") mà theo
+                                                đó bạn
+                                                sẽ được tính tiền định kỳ các số tiền được chỉ ra cho bạn tại thời điểm
+                                                đăng ký,
+                                                có thể được cập nhật thường xuyên bởi Toidoc. Khi bạn đăng ký Gói Đăng
+                                                ký, Gói
+                                                Đăng ký sẽ được tính tiền theo chu kỳ định kỳ. Bằng cách này bạn ủy
+                                                quyền cho
+                                                Toidoc tính tiền cho bạn theo cơ sở tiến lên và cho đến khi hủy Gói Đăng
+                                                ký hoặc
+                                                hủy tài khoản của bạn. "Ngày Tính Phí Đăng ký" là ngày trong tháng bạn
+                                                đăng ký
+                                                Gói Đăng ký. Tài khoản của bạn sẽ tự động bị tính phí vào Ngày Tính Phí
+                                                Đăng ký
+                                                tất cả các khoản phí và thuế áp dụng cho giai đoạn đăng ký tiếp theo.
+                                                (Kiểm tra
+                                                xem có cài đặt gia hạn tự động được không)</p>
+                                            <p style="font-weight: lighter;">BẰNG CÁCH MUA GÓI ĐĂNG KÝ, BẠN ĐỒNG Ý RẰNG
+                                                GÓI ĐĂNG KÝ CỦA BẠN SẼ TỰ ĐỘNG
+                                                GIA HẠN
+                                                CHO CÁC GIAI ĐOẠN KẾ TIẾP TRỪ KHI BẠN HỦY GÓI ĐĂNG KÝ HOẶC TÀI KHOẢN CỦA
+                                                BẠN NHƯ
+                                                ĐƯỢC MÔ TẢ BỔ SUNG BÊN DƯỚI.</p>
+                                        </li>
+                                    </blockquote>
+                                    <blockquote style="margin-left: -15px; margin-right: -40px;">
+                                        <li>b) Hoàn trả tiền; Hủy
+                                            <p style="font-weight: lighter;">BẠN CÓ THỂ HỦY GÓI ĐĂNG KÝ CỦA BẠN BẤT KỲ
+                                                LÚC NÀO, TRONG TRƯỜNG HỢP ĐÓ
+                                                GÓI ĐĂNG
+                                                KÝ CỦA BẠN SẼ HẾT HẠN VÀO CUỐI GIAI ĐOẠN ĐĂNG KÝ ĐÓ (VÀ SAU HẠN, GÓI
+                                                ĐĂNG KÝ CỦA
+                                                BẠN SẼ KHÔNG GIA HẠN HOẶC TÍNH TIỀN). Bạn phải hủy Gói Đăng ký của bạn
+                                                trước khi
+                                                nó gia hạn để tránh tính phí Phí Đăng ký chu kỳ tiếp theo cho tài khoản
+                                                của bạn.
+                                                Chúng tôi sẽ tính phí Phí Đăng ký chu kỳ cho phương thức thanh toán bạn
+                                                cung cấp
+                                                cho chúng tôi trong quá trình đăng ký (hoặc cho một phương thức thanh
+                                                toán khác
+                                                nếu bạn thay đổi thông tin thanh toán của bạn). Bạn có thể hủy Gói Đăng
+                                                ký của
+                                                mình [<strong>(i)</strong> Đối với điện thoại Apple, người dùng có thể
+                                                vào Cài
+                                                đặt>Itunes & App Store. Nhấp vào Apple ID và chọn Apple ID. Nhập trang
+                                                Cài đặt
+                                                Người dùng để nhấp, Đăng ký. Chọn Toidoc để hủy đăng ký.
+                                                <strong>(ii)</strong>
+                                                Đối với điện thoại Android, người dùng có thể vào cửa hàng Google Play
+                                                tương ứng
+                                                để hủy đăng ký.
+                                            </p>
+                                        </li>
+                                    </blockquote>
+                                </ul>
+                            </li>
+                        </blockquote>
+                        <blockquote style="margin-left: -50px;">
+                            <li class="list-item" style="font-weight: lighter;">4.4 Tài khoản vi
+                                    phạm
+                                <blockquote style="margin-left: 25px; margin-right: -40px;">
+                                    <p>Chúng tôi có thể tạm ngừng hoặc chấm dứt quyền truy
+                                        cập vào Dịch vụ, bao gồm các
+                                        phần có
+                                        tính phí của Dịch vụ, đối với bất kỳ tài khoản nào có bất kỳ số tiền nào còn
+                                        thiếu nhưng
+                                        chưa thanh toán. </p>
+                                </blockquote>
+                            </li>
+                        </blockquote>
+                    </ul>
+                </li>
+                <li>
+                    <p class="firstSentence">Các giới hạn</p>
+                    <ul>
+                        <blockquote style="margin-left: -50px;">
+                            <li class="list-item" style="font-weight: lighter;">5.1 Điều kiện
+                                <blockquote style="margin-left: 25px; margin-right: -40px;">
+                                    <p>Dưới điều kiện bạn tuân thủ đầy đủ và liên tục các Điều Khoản này, Toidoc cấp cho
+                                        bạn,
+                                        chỉ cho mục đích sử dụng cá nhân và phi thương mại của bạn, một giấy phép hạn
+                                        chế, không
+                                        độc quyền, không chuyển nhượng, không cho phép cấp phụ, có thể thu hồi được để:
+                                    </p>
+                                </blockquote>
+                                <blockquote style="margin-left: 20px; margin-right: -40px;">
+                                    <ol class="custom-list">
+                                        <li>Cài đặt và sử dụng một bản sao mã đối tượng của bất kỳ ứng dụng di động nào
+                                            liên
+                                            quan đến nền tảng Toidoc được lấy từ một chợ ứng dụng hợp pháp (dù bạn tự
+                                            cài
+                                            đặt
+                                            hoặc được cài sẵn trên thiết bị di động của bạn bởi nhà sản xuất thiết bị)
+                                            trên
+                                            một
+                                            thiết bị di động mà bạn sở hữu hoặc kiểm soát; </li>
+                                        <li>Truy cập và sử dụng Dịch vụ.</li>
+                                    </ol><br />
+                            </li>
+                        </blockquote>
+                        </blockquote>
+                        <blockquote style="margin-left: -50px;">
+                            <li class="list-item" style="font-weight: lighter;">5.2 Bạn không
+                                    được:
+                                <blockquote style="margin-left: 20px; margin-right: -40px;">
+                                    <ol class="custom-list">
+                                        <li>Sao chép, phân phối, trình bày công khai hoặc trình diễn công khai các ứng
+                                            dụng,
+                                            nền
+                                            tảng liên quan đến Toidoc; </li>
+                                        <li>Thực hiện sửa đổi ứng dụng, website; </li>
+                                        <li>Can thiệp hoặc vượt qua bất kỳ tính năng nào của ứng dụng, bao gồm bất kỳ cơ
+                                            chế
+                                            bảo
+                                            mật hoặc kiểm soát truy cập nào trừ trường hợp luật pháp hiện hành xung đột
+                                            với
+                                            giới
+                                            hạn này. Nếu theo luật pháp áp dụng, bạn bị cấm sử dụng Dịch vụ, bạn không
+                                            được
+                                            sử
+                                            dụng nó.</li>
+                                    </ol>
+                                </blockquote>
+                            </li>
+                        </blockquote>
+                    </ul>
+                </li>
+                <li>
+                    <p class="firstSentence">Nội dung người dùng</p>
+                    <ul>
+                        <blockquote style="margin-left: -50px;">
+                            <li class="list-item" style="font-weight: lighter;">6.1 Nội dung người
+                                    dùng nói chung
+                                <blockquote style="margin-left: 25px; margin-right: -40px;">
+                                    <p>Một số tính năng của nền tảng Toidoc có thể cho phép người dùng tải nội dung lên
+                                        nền
+                                        tảng, bao gồm các tác phẩm văn học gốc (như truyện viễn tưởng, truyện ngắn, bài
+                                        luận,
+                                        v.v.), bình luận, đánh giá, ảnh, video, hình ảnh, thư mục, dữ liệu, văn bản. Bạn
+                                        giữ bản
+                                        quyền và bất kỳ quyền sở hữu khác nào bạn có thể nắm giữ với nội dung mà bạn
+                                        đăng lên
+                                        nền tảng.</p>
+                                </blockquote>
+                            </li>
+                            <li class="list-item" style="font-weight: lighter;">6.2 Cấp giấy phép
+                                    có giới hạn cho Toidoc
+                                <blockquote style="margin-left: 25px; margin-right: -40px;">
+                                    <p>Bằng cách đăng tải hoặc công bố Nội dung người dùng, bạn cấp cho Toidoc một quyền
+                                        và giấy
+                                        phép trên toàn thế giới và không độc quyền (với quyền cấp phép phụ cho các chi
+                                        nhánh của
+                                        Toidoc chỉ liên quan đến việc cung cấp Dịch vụ của họ) để lưu trữ, chuyển giao,
+                                        hiển
+                                        thị, thực hiện, sao chép, truyền tải, phát sóng, sửa đổi (chỉ nhằm mục đích định
+                                        dạng để
+                                        hiển thị) và phân phối Nội dung Người dùng của bạn, toàn bộ hoặc một phần, ở bất
+                                        kỳ định
+                                        dạng phương tiện nào chỉ thông qua Dịch vụ của chúng tôi.</p>
+                                </blockquote>
+                            </li>
+                            <li class="list-item" style="font-weight: lighter;">6.3 Quyền cấp phép
+                                    giới hạn cho người dùng
+                                    khác
+                                <blockquote style="margin-left: 25px; margin-right: -40px;">
+                                    <p>Bằng cách đăng tải Nội dung người dùng, bạn cấp cho những người dùng khác một
+                                        giấy phép
+                                        không độc quyền để truy cập và sử dụng Nội dung người dùng đó theo các quy định
+                                        của Điều
+                                        khoản này và chức năng của nền tảng Toidoc.</p>
+                                </blockquote>
+                            </li>
+                            <li class="list-item" style="font-weight: lighter;">6.4 Tuyên bố và
+                                    Cam đoan về Nội dung từ người
+                                    dùng
+                                <blockquote style="margin-left: 25px; margin-right: -40px;">
+                                    <p>Bạn chịu trách nhiệm cá nhân về bất kỳ Nội dung nào bạn đăng hoặc công bố trên
+                                        Dịch vụ và
+                                        bạn chịu trách nhiệm về hậu quả của việc đăng hoặc công bố Nội dung như vậy.
+                                        Bằng cách
+                                        đăng hoặc công bố Nội dung người dùng, bạn khẳng định, đại diện và cam đoan
+                                        rằng:</p>
+                                </blockquote>
+                                <ul class="secondli">
+                                    <blockquote style="margin-right: -40px;">
+                                        <li>
+                                            <a style="margin-left: -18px;">a) </a>Bạn là người sáng tạo hoặc chủ
+                                            sở hữu của Nội dung người dùng, hoặc có các giấy
+                                            phép, quyền, sự đồng ý và sự cho phép cần thiết để ủy quyền cho Toidoc và
+                                            người dùng
+                                            của Nền Tảng sử dụng và phân phối Nội dung cho người dùng của bạn theo cách
+                                            cần
+                                            thiết để thực hiện các giấy phép mà bạn đã cấp trong phần này, theo cách mà
+                                            Toidoc,
+                                            các nền tảng của Toidoc và Điều khoản này đã thiết kế;
+                                        </li>
+                                        <li>
+                                            <a style="margin-left: -18px;">b) </a>Nội dung người dùng của bạn và
+                                            việc sử dụng Nội dung người dùng của bạn theo những
+                                            điều khoản này không và sẽ không:
+                                            <ul style="margin-left: -40px;">
+                                                <li><em>(i)</em> Xâm phạm, vi phạm hoặc lạm dụng bất kỳ quyền của bên
+                                                    thứ ba nào, bao gồm
+                                                    bất kỳ quyền tác giả, thương hiệu, sáng chế, bí mật thương mại,
+                                                    quyền đạo
+                                                    đức, quyền riêng tư, quyền công khai hoặc bất kỳ quyền sở hữu trí
+                                                    tuệ hoặc
+                                                    tài sản độc quyền nào khác; </li>
+                                                <li><em>(ii)</em> Bôi nhọ, phỉ báng, nói xấu hoặc xâm phạm quyền riêng
+                                                    tư, quyền công
+                                                    khai hoặc quyền tài sản khác của bất kỳ người khác; </li>
+                                                <li><em>(iii)</em> Vi phạm bất kỳ chính sách hoặc hướng dẫn khác của
+                                                    Toidoc áp dụng cho
+                                                    Nội dung người dùng của bạn; </li>
+                                                <li><em>(iv)</em> Khiến Toidoc vi phạm bất kỳ luật hoặc quy định nào.
+                                                </li>
+                                            </ul>
+                                        </li>
+                                    </blockquote>
+                                </ul>
+                            </li><br />
+                            <li class="list-item" style="font-weight: lighter;">6.5 Để bảo vệ
+                                    quyền lợi của các tác giả
+                                <blockquote style="margin-left: 25px; margin-right: -40px;">
+                                    <p>Nếu bạn có khiếu nại liên quan đến quyền sở hữu trí tuệ về nội dung tác phẩm được
+                                        đăng
+                                        trên Dịch vụ, bạn có thể liên hệ theo địa chỉ: Email: toidoc.io@gmail.com</p>
+                                    <blockquote style="margin-top: -10px; margin-left: 0; margin-right: 0;">
+                                        <p>Mọi thông báo tố cáo về việc các nội dung được đăng tải hoặc phân phối qua
+                                            Dịch vụ vi
+                                            phạm quyền sở hữu trí tuệ phải bao gồm các thông tin sau:
+                                    </blockquote>
+                                    </p>
+                                </blockquote>
+                                <blockquote style="margin-left: 25px; margin-right: -40px;">
+                                    <ol class="custom-list" style="">
+                                        <li>Chữ ký điện tử hoặc vật lý của người được ủy quyền thay mặt cho chủ sở hữu
+                                            bản quyền
+                                            hoặc quyền khác đang bị vi phạm;</li>
+                                        <li>Mô tả về tác phẩm được bảo hộ bởi bản quyền hoặc quyền sở hữu trí tuệ khác
+                                            mà bạn
+                                            cho rằng đã bị vi phạm;</li>
+                                        <li>Mô tả về tài liệu mà bạn cho rằng đã bị vi phạm và nơi mà nó được đặt trên
+                                            nền tảng;
+                                        </li>
+                                        <li>Địa chỉ, số điện thoại và địa chỉ email của bạn;</li>
+                                        <li>Tuyên bố của bạn rằng bạn thực sự tin rằng việc sử dụng các tài liệu đó trên
+                                            nền
+                                            tảng Toidoc không được chủ sở hữu bản quyền, đại lý của chủ sở hữu bản quyền
+                                            hoặc
+                                            luật pháp cho phép;</li>
+                                        <li>Tuyên bố của bạn rằng thông tin trên trong thông báo của bạn là chính xác và
+                                            rằng,
+                                            bạn là chủ sở hữu bản quyền hoặc tài sản trí tuệ hoặc được ủy quyền hành
+                                            động thay
+                                            mặt chủ sở hữu bản quyền hoặc tài sản trí tuệ và rằng bạn chịu mọi trách
+                                            nhiệm trước
+                                            pháp luật nếu các thông tin bạn cung cấp là không chính xác.</li>
+                                    </ol><br />
+                                </blockquote>
+                            </li>
+                            <li class="list-item" style="font-weight: lighter;">6.6 Trường hợp tái
+                                    phạm
+                                <blockquote style="margin-left: 25px; margin-right: -40px;">
+                                    <p>Toidoc sẽ ngay lập tức chấm dứt tài khoản của người dùng mà Toidoc xác định là
+                                        "Tái phạm"
+                                        mà không cần thông báo trước. Một người dùng tái phạm là người dùng đã được
+                                        thông báo về
+                                        hoạt động vi phạm hoặc đã có Nội dung đăng tải bị loại bỏ khỏi Dịch vụ ít nhất
+                                        hai lần.
+                                    </p>
+                                </blockquote>
+                                <p style="margin-left: 50px;"><strong>Hành vi cấm kỵ </strong></p>
+                                <blockquote style="margin-left: 25px; margin-right: -40px;">
+                                    <p>Bằng cách sử dụng Dịch vụ, bạn đồng ý KHÔNG thực hiện những hành vi sau:</p>
+
+                                    <ul class="secondli" style="margin-left: -40px;">
+                                        <li>a) Sử dụng Dịch vụ cho bất kỳ mục đích bất hợp pháp nào hoặc vi phạm bất kỳ
+                                            luật
+                                            pháp
+                                            nào tại khu vực bạn sử dụng;</li>
+                                        <li>b) Vi phạm hoặc thúc đẩy người khác vi phạm quyền của bên thứ ba, bao gồm vi
+                                            phạm
+                                            hoặc
+                                            lạm dụng bất kỳ quyền sở hữu trí tuệ của bên thứ ba nào;</li>
+                                        <li>c) Đăng tải, tải lên hoặc phân phối bất kỳ Nội dung nào vi phạm pháp luật,
+                                            cố ý phỉ
+                                            báng, xúc phạm, sai lệch hoặc gây phản cảm, xúc phạm, quấy rối, đe dọa, làm
+                                            bẽ
+                                            mặt,
+                                            thù hằn hoặc không phù hợp theo cách nào đó;</li>
+                                        <li>d) Can thiệp vào các tính năng liên quan đến bảo mật của Dịch vụ, bao gồm:
+                                            <ul style="margin-left: -20px;">
+                                                <li><em>(i)</em> vô hiệu hóa hoặc né tránh các tính năng ngăn chặn hoặc
+                                                    hạn chế việc
+                                                    sử
+                                                    dụng hoặc sao chép bất kỳ nội dung nào; </li>
+                                                <li><em>(ii)</em> Phân tích ngược hoặc thử khám phá mã nguồn của bất kỳ
+                                                    phần nào của
+                                                    nền
+                                                    tảng trừ trường hợp hoạt động này được cho phép rõ ràng bởi pháp
+                                                    luật áp
+                                                    dụng;</li>
+                                            </ul>
+                                        </li>
+                                        <li>e) Can thiệp vào hoạt động của nền tảng hoặc quá trình sử dụng của người
+                                            dùng khác,
+                                            bao
+                                            gồm:
+                                            <ul style="margin-left: -20px;">
+                                                <li><em>(i)</em> Tải lên hoặc phân phối bất kỳ virus, quảng cáo không
+                                                    mong muốn, phần
+                                                    mềm
+                                                    gián điệp, worm hoặc bất kỳ mã độc hại khác; </li>
+                                                <li><em>(ii)</em> Thực hiện bất kỳ đề nghị hay quảng cáo không mời của
+                                                    người dùng
+                                                    khác
+                                                    trên Dịch vụ; </li>
+                                                <li><em>(iii)</em> cố gắng thu thập thông tin cá nhân về người dùng khác
+                                                    hoặc bên thứ
+                                                    ba
+                                                    mà không có sự đồng thuận; </li>
+                                                <li><em>(iv)</em> Can thiệp hoặc làm gián đoạn bất kỳ mạng, thiết bị
+                                                    hoặc máy chủ
+                                                    kết
+                                                    nối với hoặc được sử dụng để cung cấp Dịch vụ, hoặc vi phạm bất kỳ
+                                                    quy
+                                                    định,
+                                                    chính sách hoặc thủ tục nào của bất kỳ mạng, thiết bị hoặc máy chủ
+                                                    như
+                                                    vậy.
+                                                </li>
+                                            </ul>
+                                        </li>
+                                        <li>f) Thực hiện bất kỳ hoạt động gian lận nào bao gồm giả mạo bất kỳ người hoặc
+                                            thực
+                                            thể
+                                            nào, tuyên bố có liên quan giả, truy cập bất kỳ tài khoản Dịch vụ khác mà
+                                            không
+                                            có
+                                            sự cho phép, hoặc làm giả mạo tuổi hoặc ngày sinh của bạn;</li>
+                                        <li>g) Bán hoặc chuyển giao truy cập được cấp dưới Điều khoản này hoặc bất kỳ
+                                            Tài liệu
+                                            nào
+                                            hoặc bất kỳ quyền hoặc khả năng xem, truy cập hoặc sử dụng bất kỳ Tài liệu
+                                            nào;
+                                        </li>
+                                        <li>h) Vì Mục đích thương mại, xúi giục bất kỳ người dùng của Dịch vụ liên quan
+                                            đến các
+                                            nội
+                                            dung người dùng của họ;</li>
+                                        <li>i) Cố gắng thực hiện bất kỳ hành vi nào được mô tả trong điều này, hoặc hỗ
+                                            trợ hoặc
+                                            cho
+                                            phép bất kỳ người nào tham gia vào bất kỳ hành vi nào được mô tả trong điều
+                                            này.
+                                        </li>
+                                    </ul>
+                                </blockquote>
+                            </li>
+                        </blockquote>
+                    </ul>
+                </li>
+                <li>
+                    <p class="firstSentence">Dịch vụ và Các Dịch vụ của Bên Thứ Ba và Liên kết đến Trang Web </p>
+                    <p style="margin-left: 15px; margin-right: 0px; font-weight: lighter;">Toidoc có thể cung cấp các
+                        công cụ qua Dịch vụ cho
+                        phép bạn xuất thông tin, bao gồm Nội dung
+                        người dùng, đến các dịch vụ của bên thứ ba, bao gồm các tính năng kết nối cho phép bạn liên kết
+                        tài khoản của mình trên Toidoc với một tài khoản trên dịch vụ của bên thứ ba như Google hoặc
+                        Facebook, hoặc thông qua việc triển khai của chúng tôi các nút của bên thứ ba (như các nút
+                        "thích" hoặc "chia sẻ"). Bằng cách sử dụng một trong những công cụ này, bạn đồng ý rằng chúng
+                        tôi có thể chuyển thông tin đó cho dịch vụ của bên thứ ba tương ứng. Các dịch vụ của bên thứ ba
+                        không nằm dưới sự kiểm soát của chúng tôi và chúng tôi không chịu trách nhiệm về việc sử dụng
+                        thông tin bạn xuất bản bởi dịch vụ của bên thứ ba. Dịch vụ cũng có thể chứa các liên kết đến
+                        trang web của bên thứ ba. Các trang web liên kết không nằm dưới sự kiểm soát của chúng tôi và
+                        chúng tôi không chịu trách nhiệm về nội dung của họ.</p>
+                </li>
+                <li>
+                    <p class="firstSentence">Chấm Dứt Sử Dụng; Ngừng và Sửa Đổi Dịch Vụ </p>
+                    <p style="margin-left: 15px; margin-right: 0px; font-weight: lighter;">Bạn có thể chấm dứt tài khoản
+                        của bạn bất kỳ lúc
+                        nào bằng cách liên hệ với dịch vụ khách hàng qua
+                        địa chỉ toidoc.io@gmail. Nếu bạn chấm dứt tài khoản của mình, bạn vẫn phải thanh toán tất cả các
+                        khoản phí còn lại, nếu có, bạn phải trả trước khi chấm dứt liên quan đến việc sử dụng Dịch vụ.
+                        Nếu bạn vi phạm bất kỳ điều khoản nào trong Điều khoản này, sự cho phép sử dụng Dịch vụ từ chúng
+                        tôi sẽ tự động chấm dứt. Ngoài ra, Toidoc có thể tùy theo quyết định của riêng mình hủy kích
+                        hoạt tài khoản người dùng của bạn trên nền tảng hoặc tạm ngưng hoặc chấm dứt quyền truy cập của
+                        bạn vào nền tảng bất kỳ lúc nào vì bất kỳ lý do nào hoặc không có lý do, có hoặc không có thông
+                        báo. Chúng tôi cũng có quyền sửa đổi hoặc ngừng Dịch vụ bất kỳ lúc nào (bao gồm việc giới hạn
+                        hoặc ngừng một số tính năng cụ thể của Dịch vụ), tạm thời hoặc vĩnh viễn, mà không cần thông báo
+                        cho bạn. Chúng tôi sẽ không có bất kỳ trách nhiệm nào liên quan đến bất kỳ thay đổi nào đối với
+                        Dịch vụ hoặc bất kỳ sự tạm ngừng hoặc chấm dứt nào về quyền truy cập hoặc sử dụng Dịch vụ.>
+                </li>
+                <li>
+                    <p class="firstSentence">Chính sách bảo mật; Các Điều Khoản Bổ Sung</p>
+                    <ul style="margin-left: -50px; font-weight: lighter;">
+                        <li class="list-item">9.1 Chính sách bảo mật
+                            <p style="margin-left: 25px;">Vui lòng đọc kỹ Chính sách bảo mật của Toidoc để biết thông
+                                tin liên quan đến việc thu
+                                thập (nếu có), sử dụng, lưu trữ và tiết lộ thông tin cá nhân của bạn. Chính sách bảo mật
+                                của Toidoc được tích hợp thông qua tham chiếu vào và trở thành một phần của các Điều
+                                Khoản này.</p>
+                        </li>
+                        <li class="list-item">9.2 Các Điều Khoản Bổ Sung
+                            <p style="margin-left: 25px;">Việc sử dụng Dịch vụ của bạn phải tuân theo tất cả các điều
+                                khoản, chính sách, quy tắc
+                                hoặc hướng dẫn bổ sung được áp dụng cho Dịch vụ hoặc một số tính năng cụ thể của nền
+                                tảng mà chúng tôi có thể đăng tải hoặc liên kết từ nền tảng (gọi là "Các Điều Khoản Bổ
+                                Sung"), chẳng hạn như các hợp đồng cấp phép cuối người dùng cho bất kỳ ứng dụng phần mềm
+                                có thể tải xuống nào hoặc các quy tắc áp dụng cho một tính năng hoặc nội dung cụ thể
+                                trên nền tảng. Tất cả Các Điều Khoản Bổ Sung được tích hợp thông qua tham chiếu vào và
+                                trở thành một phần của các Điều Khoản này.</p>
+                        </li>
+                        <li class="list-item"> 9.3 Sửa Đổi Các Điều Khoản Này
+                            <p style="margin-left: 25px;">Chúng tôi có quyền thay đổi Các Điều Khoản này bất kỳ thời
+                                điểm nào. Vui lòng kiểm tra
+                                định kỳ Các Điều Khoản này để biết các thay đổi. Các sửa đổi trọng yếu được thực hiện
+                                sau khi bạn chấp nhận Các Điều Khoản được sửa đổi. Các sửa đổi không trọng yếu có hiệu
+                                lực sau khi được công bố. Các tranh chấp phát sinh dưới các Điều Khoản này sẽ được giải
+                                quyết theo phiên bản của Các Điều Khoản này có hiệu lực vào thời điểm tranh chấp phát
+                                sinh.</p>
+                        </li>
+                        <li class="list-item">9.4 Sở hữu; Quyền Sở Hữu Trí Tuệ
+                            <p style="margin-left: 25px;">Dịch vụ được sở hữu và vận hành bởi Toidoc. Giao diện trực
+                                quan, đồ họa, thiết kế, sưu
+                                tập, thông tin, dữ liệu, mã máy tính (bao gồm mã nguồn hoặc mã đối tượng), sản phẩm,
+                                phần mềm, dịch vụ và tất cả các yếu tố khác của Dịch vụ ("Tài liệu") được cung cấp bởi
+                                Toidoc được bảo vệ bởi luật về sở hữu trí tuệ và luật khác. Tất cả các Tài liệu được bao
+                                gồm trong Dịch vụ là tài sản của Toidoc hoặc các bên cấp phép bên thứ ba của chúng tôi.
+                                Trừ khi được Toidoc ủy quyền rõ ràng, bạn không được sử dụng các Tài liệu đã được đề cập
+                                ở trên.</p>
+                        </li>
+                        <li class="list-item">9.5 Phản hồi
+                            <p style="margin-left: 25px;">Nếu bạn chọn cung cấp thông tin đầu vào và đề xuất về các vấn
+                                đề liên quan đến sự cố hoặc
+                                các sửa đổi hoặc cải tiến đề xuất cho Dịch vụ ("Phản hồi"), tại đây bạn trao cho Toidoc
+                                quyền không hạn chế, vĩnh viễn, không thể thu hồi, không độc quyền, đã được thanh toán
+                                đầy đủ và miễn phí bản quyền để khai thác Phản hồi bằng bất kỳ cách nào và cho bất kỳ
+                                mục đích nào, bao gồm để cải tiến Dịch vụ và tạo ra các sản phẩm và dịch vụ khác.</p>
+                        </li>
+                        <li class="list-item">9.6 Bồi thường
+                            <p style="margin-left: 25px;">Bạn chịu trách nhiệm cho việc sử dụng Dịch vụ của bạn và bạn
+                                sẽ bảo vệ và bồi thường cho
+                                Toidoc và nhân viên, cố vấn, liên kết, chi nhánh và đối tác của Toidoc khỏi mọi khiếu
+                                nại, trách nhiệm, thiệt hại, mất mát và chi phí, bao gồm cả phí luật sư hợp lý và chi
+                                phí, phát sinh từ việc: </p>
+                            <ol class="custom-list" style="margin-left: 10px;">
+                                <li>Truy cập, sử dụng hoặc được cho là sử dụng Dịch vụ của bạn; </li>
+                                <li>Vi phạm bất kỳ phần nào của Các Điều Khoản này, bất kỳ sự đại diện, bảo đảm hoặc
+                                    thỏa thuận được tham chiếu trong Các Điều Khoản này hoặc bất kỳ luật hoặc quy định
+                                    hiện hành nào; </li>
+                                <li>Vi phạm bất kỳ quyền nào của bên thứ ba, bao gồm bất kỳ quyền sở hữu trí tuệ hoặc
+                                    quyền công khai, bảo mật, tài sản khác hoặc quyền riêng tư nào; </li>
+                                <li>Bất kỳ tranh chấp hoặc vấn đề nào giữa bạn và bất kỳ bên thứ ba nào. Chúng tôi có
+                                    quyền, theo chi phí của chúng tôi, tiến hành bảo vệ độc quyền và kiểm soát bất kỳ
+                                    vấn đề nào khác chịu sự bồi thường của bạn (mà không hạn chế nghĩa vụ bồi thường của
+                                    bạn đối với vấn đề đó), và trong trường hợp đó, bạn đồng ý hợp tác với quá trình bảo
+                                    vệ của chúng tôi đối với khiếu nại đó.</li>
+                            </ol>
+                        </li><br />
+                        <li class="list-item">9.7 Hạn chế trách nhiệm
+                            <p style="margin-left: 25px; line-height: 1.3;">TRONG BẤT KỲ TRƯỜNG HỢP NÀO, CÁC THỰC THỂ Toidoc SẼ KHÔNG CHỊU
+                                TRÁCH NHIỆM PHÁP LÝ VỚI
+                                BẠN VỀ BẤT KỲ THIỆT HẠI GIÁN TIẾP, NGẪU NHIÊN, ĐẶC BIỆT, DO HẬU QUẢ HOẶC TRÁCH NHIỆM
+                                (BAO GỒM THIỆT HẠI DO MẤT LỢI NHUẬN, LỢI NHUẬN HOẶC BẤT KỲ TỔN THẤT VÔ HÌNH NÀO KHÁPHÁT
+                                SINH TỪ HOẶC LIÊN QUAN ĐẾN VIỆC TRUY CẬP HOẶC SỬ DỤNG CỦA BẠN, HOẶC BẠN KHÔNG CÓ KHẢ
+                                NĂNG TRUY CẬP HOẶC SỬ DỤNG DỊCH VỤ HOẶC BẤT KỲ TÀI LIỆU HOẶC NỘI DUNG NÀO TRÊN DỊCH VỤ,
+                                DÙ DỰA TRÊN SỰ BẢO HÀNH, HỢP ĐỒNG (BAO GỒM SƠ SUẤT), ĐẠO LUẬT HOẶC BẤT KỲ LÝ THUYẾT PHÁP
+                                LÝ NÀO KHÁC, VÀ DÙ BẤT KỲ CHỦ THỂ LIÊN QUAN ĐẾN TOIDOC NÀO CÓ HAY KHÔNG ĐƯỢC THÔNG BÁO
+                                VỀ KHẢ NĂNG THIỆT HẠI.</p>
+                        </li>
+                    </ul>
+                </li>
+                <li>
+                    <blockquote style="margin-left: 15px; margin-right: 0px;">
+                        <p class="firstSentence">Tổng quát </p>
+                        <p style="font-weight: lighter;">Những Điều Khoản này, cùng với Chính Sách Bảo Mật và bất kỳ
+                            thỏa thuận nào khác được chú
+                            thích rõ
+                            ràng bằng cách tham chiếu vào những Điều Khoản này, là toàn bộ và độc quyền về thỏa thuận
+                            giữa
+                            bạn và Toidoc về việc sử dụng Dịch vụ. Trừ khi được phép rõ ràng như đã nêu ở trên, Những
+                            Điều
+                            Khoản này chỉ có thể được sửa đổi thông qua một thỏa thuận bằng văn bản được ký bởi đại diện
+                            có
+                            thẩm quyền của tất cả các bên trong Những Điều Khoản này. Bạn không được giao phó hoặc
+                            chuyển
+                            nhượng Những Điều Khoản này hoặc quyền của bạn theo Những Điều Khoản này, toàn bộ hoặc một
+                            phần,
+                            theo pháp luật hoặc bất kỳ cách nào khác, mà không có sự đồng ý bằng văn bản của chúng tôi
+                            trước
+                            đây. Chúng tôi có thể giao phó Những Điều Khoản này vào bất kỳ thời điểm nào mà không cần
+                            thông
+                            báo hoặc sự đồng ý. Việc không yêu cầu thực hiện bất kỳ quy định nào sẽ không ảnh hưởng đến
+                            quyền của chúng tôi yêu cầu thực hiện vào bất kỳ thời điểm nào sau đó, và việc từ chối của
+                            chúng
+                            tôi về bất kỳ vi phạm hoặc vi phạm mặc định nào trong Những Điều Khoản này, hoặc bất kỳ quy
+                            định
+                            nào trong Những Điều Khoản này, sẽ không là sự từ chối về bất kỳ vi phạm hoặc vi phạm mặc
+                            định
+                            sau này hoặc là sự từ chối về chính quy định đó. Việc sử dụng tiêu đề các phần trong Những
+                            Điều
+                            Khoản này chỉ để tiện lợi và sẽ không ảnh hưởng đến việc diễn giải bất kỳ quy định nào. Nếu
+                            bất
+                            kỳ phần nào trong Những Điều Khoản này được xem là không hợp lệ hoặc không thể thi hành,
+                            phần
+                            không thể thi hành sẽ được thực thi đến mức tối đa có thể, và các phần còn lại vẫn duy trì
+                            hiệu
+                            lực và tác dụng toàn bộ. Khi chấm dứt Những Điều Khoản này, các Điều 2, 4, 5, 6 đến…., cùng
+                            với
+                            Chính Sách Bảo Mật và bất kỳ thỏa thuận kèm theo nào, sẽ tiếp tục tồn tại.</p>
+                    </blockquote>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

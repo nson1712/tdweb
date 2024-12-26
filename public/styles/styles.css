@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'UTM Americana';
+  src: url('/fonts/UTM-Americana.ttf');
+  font-weight: 400;
+  font-style: normal;
+}

@@ -1,0 +1,29 @@
+@import "../../../public/styles/utils";
+.container {
+    display: flex;
+    grid-gap: 16px;
+
+    @include media(">tablet") {
+      grid-gap: 32px;
+    }
+}
+
+.title {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    text-transform: uppercase;
+
+    @include media(">desktop") {
+      font-size: 22px;
+      line-height: 29px;
+    }
+}
+
+.imgFinger {
+    max-height: 179px;
+    @include media(">desktop") {
+        max-height: 235px;
+    }
+}

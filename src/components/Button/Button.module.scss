@@ -1,0 +1,24 @@
+.btn {
+  &:hover,
+  &:active,
+  &:visited,
+  &:focus {
+    outline: 0;
+  }
+}
+
+.btn {
+  display: flex;
+  .loader {
+    margin-left: 6px;
+  }
+}
+
+.disabled {
+  pointer-events: none;
+  opacity: 0.5;
+}
+
+.eventNone {
+  pointer-events: none;
+}

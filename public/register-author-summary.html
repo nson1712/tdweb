@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <style>
+        .numberStyle {
+            list-style-type: decimal;
+            font-size: 16px;
+            counter-reset: list-counter;
+            margin-left: 20px;
+            font-weight: bold;
+
+        }
+
+        .ul {
+            list-style-type: none;
+        }
+
+        .li {
+            list-style-type: none;
+        }
+
+        .li::before {
+            content: "-";
+            margin-right: 10px;
+        }
+
+        .firstSentence {
+            font-weight: bold;
+            list-style-type: none;
+            margin-left: 0;
+            font-size: 18px;
+
+
+        }
+
+        .secondli {
+            list-style-type: lower-alpha;
+
+        }
+
+        ul.secondli li {
+            list-style-type: none;
+            margin-left: 0;
+        }
+
+        .list-item {
+            list-style-type: none;
+            margin-left: 0;
+
+        }
+
+        .custom-list {
+            counter-reset: section;
+            list-style-type: none;
+
+        }
+
+        .custom-list li::before {
+            content: counter(section, lower-alpha)") ";
+            counter-increment: section;
+            margin-right: 2px;
+        }
+
+        .custom-list1 li::before {
+            content: counter(section, lower-alpha)") ";
+            counter-increment: section;
+            margin-right: 2px;
+            margin-left: 20px;
+        }
+
+        .bold-index {
+            color: rgb(110, 109, 109);
+
+        }
+
+        .hide-index {
+            list-style-type: none;
+        }
+
+        .hide-index ::before {
+            content: none;
+        }
+
+        .centered {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            font-weight: bold;
+        }
+
+        .highlighted {
+            width: 100%;
+            background-color: rgb(175, 225, 186);
+            color: black;
+            font-weight: bold;
+        }
+    </style>
+
+
+</head>
+
+<body style="margin: auto;">
+
+    <div style="margin-left: 20px; margin-right: 20px; text-align: justify;">
+        <div>
+            <p>
+                Cảm ơn bạn khi đã quan tâm đến việc sản xuất nội dung trên cộng đồng Toidoc (tôi đọc). Chứng kiến quá
+                trình trưởng thành của nhiều cây bút trên cộng đồng này, chúng tôi thấm thía rằng dù việc chắp bút cần
+                có đam mê; tuy nhiên, nỗi lo cơm áo gạo tiền luôn là nỗi niềm, là áp lực không thể chối cãi của những
+                cây bút mới. Nếu có một cộng đồng chung sức, nếu có những nguồn lực tốt hơn thì có lẽ nhiều tác giả,
+                dịch giả đã có thể sống với đam mê và nhiều sản phẩm chất lượng hơn nữa đã xuất hiện. Bởi vậy, với chúng
+                tôi:
+            </p>
+
+            <p id="mission">
+                <em style="font-weight: bold;"><span class="highlighted">Sứ mệnh phát triển cộng đồng yêu thích truyện
+                        mạng là không thể tách rời
+                        với nhiệm vụ</span> <span class="highlighted">hỗ trợ, phát
+                        triển, nâng tầm người viết.</span>
+                </em>
+            </p>
+
+            <p id="rights">
+                Khi và chỉ khi người viết có thể phát triển được với thu nhập từ nghề viết, cộng đồng Toidoc mới đạt
+                được
+                tiền đề đầu tiên để lớn mạnh. Những gì các cây bút mới đang làm và sắp làm đóng vai trò không thể thay
+                thế
+                cho cộng đồng Toidoc nói riêng, sự phát triển của văn học mạng nói chung. Bằng tất cả nỗ lực, Toidoc cam
+                kết
+                đem tới cho tác giả một môi trường phát triển thuận lợi trong đó các tiền đề sau được đảm bảo:
+            </p>
+            <ul>
+                <li class="hide-index">
+
+                    <p>
+
+                        <a style="margin-left: -10px;">-</a> <em style="font-weight: bold;">Nhuận bút minh bạch:</em>
+                        Tại Toidoc, các nguồn thu của người
+                        viết bao gồm: doanh thu quảng cáo, mở
+                        khoá chương, ủng hộ (donation) đều được công bố minh bạch tới người viết theo thoả thuận. Với
+                        vai trò phát triển cộng đồng, chúng tôi để người viết có toàn quyền xác định giá trị tác phẩm
+                        của mình thông qua việc tự thiết lập giá mở chương. Đồng hành hỗ trợ cây bút mới, Toidoc cũng để
+                        tác giả hưởng 100% doanh thu mở chương trong thời gian đầu xây dựng tên tuổi. Bên cạnh đó, mỗi
+                        thời điểm cộng đồng cũng triển khai các chương trình hấp dẫn khác dựa trên đề xuất của chính
+                        cộng đồng. Chi tiết
+                    </p>
+
+                    <p>
+                        <a style="margin-left: -10px;">-</a>
+                        <em style="font-weight: bold;">Bảo vệ bản quyền:</em> Mọi tác phẩm được chia sẻ trên cộng đồng
+                        đều đã được người viết xác nhận
+                        việc được sử dụng bản quyền. Ngược lại, nền tảng cũng ghi nhận và thực hiện bảo vệ tối đa với
+                        bản quyền của người viết. Trong trường hợp bạn xác định có tác phẩm vi phạm bản quyền của bạn
+                        trên Toidoc, vui lòng liên hệ hoặc báo cáo trong nền tảng, chúng tôi đảm bảo thực hiện đầy đủ
+                        các giải pháp để bảo vệ người sản xuất nội dung.
+                    </p>
+
+                    <p>
+                        <a style="margin-left: -10px;">-</a> <em style="font-weight: bold;">Nâng tầng tác phẩm:</em>
+                        Việc giới thiệu những tác phẩm hay ra
+                        thế giới không thể chỉ là nỗ lực của
+                        một mình tác giả. Cộng đồng và các ekip nhiệt huyết tại Toidoc sẽ đồng hành với người viết trong
+                        quá trình này, khẳng định được tài năng người viết Việt.
+                    </p>
+
+                    <p>
+                        <a style="margin-left: -10px;">-</a> <em style="font-weight: bold;">Học hỏi kinh nghiệm:</em>
+                        Hãy để cộng đồng người viết tại Toidoc
+                        có được sự ủng hộ, động viên, tư
+                        vấn… và có cơ hội nâng cao năng lực cạnh tranh. Thật tuyệt khi bạn có công việc hấp dẫn để làm,
+                        có đam mê để theo đuổi, và có người đồng hành để tụ tập sẻ chia.
+                    </p>
+                </li>
+            </ul>
+
+            <div>
+                <p class="highlighted">
+                    <em style="width: 100%;">Bạn hãy lên tiếng, thế giới sẽ lắng nghe</em>
+                </p>
+            </div>
+
+            <p id="request">
+                Mặt khác, là một cộng đồng đọc đề cao góc nhỏ yên bình của mỗi thành viên, chúng tôi cũng có một số quy
+                tắc ứng xử và yêu cầu về nội dung mà người viết nên tuân thủ để đảo bảo chất lượng tác phẩm, tôn trọng
+                cá nhân các thành viên, xã hội cũng như các chủ thể khác, đề cao sự tích cực trong cộng đồng. Mong các
+                bạn dành thời gian xem chi tiết tại đây để quá trình sản xuất nội dung được thuận lợi.
+            </p>
+
+            <p><strong>- ĐÂY LÀ ĐIỀU KHOẢN VÀ CHÍNH SÁCH CỦA TÁC GIẢ XEM <a href = "https://drive.google.com/file/d/1SV4-j46XFDydLbp3NCw_VMYM74Cq5DLz/view?usp=sharing">TẠI ĐÂY</a></strong></p>
+            <p><strong>- ĐÂY LÀ ĐIỀU KHOẢN VÀ CHÍNH SÁCH CỦA DỊCH GIẢ/ NHÓM DỊCH <a href = "https://drive.google.com/file/d/1DBtqJSD-eZtQ0xqqTGuUfFllQtxwx_CU/view?usp=drive_link">TẠI ĐÂY</a></strong></p>
+
+
+        </div>
+    </div>
+
+
+
+</body>
+
+
+
+</html>

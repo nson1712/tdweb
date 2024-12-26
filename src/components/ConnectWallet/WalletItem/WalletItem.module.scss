@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  align-items: center;
+  outline: none;
+  border: 0;
+  border-radius: 8px;
+  width: 100% !important;
+  background-color: #2C2D3A;
+  padding: 16px 20px;
+  margin-bottom: 16px;
+  cursor: pointer;
+  .icon {
+    width: 24px;
+    margin-right: 16px;
+  }
+  .name {
+    color: #F2F4F8;
+    font-size: 16px;
+    font-weight: 500;
+    margin-bottom: 0;
+  }
+
+  &:hover {
+    border: 1px solid #FFB42B !important;
+  }
+}
