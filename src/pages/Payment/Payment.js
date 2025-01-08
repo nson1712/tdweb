@@ -179,7 +179,7 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
               </div>
               <a
                 onClick={(e) => setShowModal(true)}
-                style={{ color: "#0693ee", textDecoration: "underline" }}
+                className="text-[#0693ee] underline"
               >
                 Xem hướng dẫn
               </a>
@@ -241,7 +241,7 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
                       setShowMorePackage(!showMorePackage);
                       setHideMorePackage(!hideMorePackage);
                     }}
-                    style={{ color: "#0693ee", textDecoration: "underline" }}
+                    className="text-[#0693ee] underline"
                   >
                     Xem thêm gói khác
                   </a>
@@ -252,7 +252,7 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
                       setShowMorePackage(!showMorePackage);
                       setHideMorePackage(!hideMorePackage);
                     }}
-                    style={{ color: "#0693ee", textDecoration: "underline" }}
+                    className="text-[#0693ee] underline"
                   >
                     Ẩn bớt gói
                   </a>

@@ -28,7 +28,7 @@ const TransferInfo = () => {
   const paymentId = useRef("");
 
   useEffect(() => {
-    const dateTimeStr = router.query.expriedAt;
+    const dateTimeStr = router.query.expiredAt;
     console.log("expiredAt: ", dateTimeStr);
     const reverseDateTime =
       dateTimeStr === "" ? new Date() : new Date(dateTimeStr);
@@ -53,7 +53,7 @@ const TransferInfo = () => {
     router.query.amount,
     router.query.description,
     router.query.qrCode,
-    router.query.expriedAt,
+    router.query.expiredAt,
   ]);
 
   useEffect(() => {
@@ -85,7 +85,7 @@ const TransferInfo = () => {
           paymentLinkId: paymentId.current,
         };
         const result = await axios.post(
-          `https://api.toidoc.vn/customer/public/customer/deposit/qr/result`,
+          `/customer/public/customer/deposit/qr/result`,
           data
         );
         if (result?.data?.data.code === 200) {
