@@ -15,17 +15,12 @@ import FooterDesktop from "../../components/FooterDesktop";
 import ChatSupport from "../../components/Button/ChatSupport";
 import ModalComponent from "../../components/Modal/Modal";
 import HeaderPayment from "./HeaderPayment";
-import moment from "moment";
-import "moment/locale/vi";
-import { Alert } from "antd";
 
 const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
-  moment.locale("vi");
   const [loading, setLoading] = useState(false);
   const [cash, setCash] = useState(0);
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [packageValue, setPackageValue] = useState({});
-  const [premiumPackages, setPremiumPackages] = useState([]);
   const [clickedIndex, setClickedIndex] = useState(null);
   const [showWarningPackage, setShowWarningPackage] = useState(false);
   const [showChat, setShowChat] = useState(true);

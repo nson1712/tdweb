@@ -85,7 +85,7 @@ const TransferInfo = () => {
           paymentLinkId: paymentId.current,
         };
         const result = await axios.post(
-          `https://uatapi.truyenso1.xyz/customer/public/customer/deposit/qr/result`,
+          `https://api.toidoc.vn/customer/public/customer/deposit/qr/result`,
           data
         );
         if (result?.data?.data.code === 200) {

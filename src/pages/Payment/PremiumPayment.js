@@ -41,7 +41,7 @@ const PremiumPayment = ({
     const getPremiumPackage = async () => {
       try {
         const result = await Api.get({
-          url: "https://uatapi.truyenso1.xyz/customer/subscription/plans",
+          url: "/customer/subscription/plans",
         });
         setPremiumPackages(result.data.PREMIUM);
       } catch (e) {
