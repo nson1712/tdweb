@@ -10,7 +10,7 @@ import { QRCode } from "react-qrcode-logo";
 import { formatStringToNumber } from "../../utils/utils";
 import Button from "../../components/Button/Button";
 
-const TransferInfo = () => {
+const PremiumTransferInfo = ({ type }) => {
   const [accountName, setAccountName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [amount, setAmount] = useState(0);
@@ -28,14 +28,11 @@ const TransferInfo = () => {
   const paymentId = useRef("");
 
   useEffect(() => {
-    const dateTimeStr = router.query.expriedAt;
-    console.log("expiredAt: ", dateTimeStr);
+    const dateTimeStr = router.query.expiredAt;
     const reverseDateTime =
       dateTimeStr === "" ? new Date() : new Date(dateTimeStr);
-    console.log("reverseDateTime: ", reverseDateTime);
     const now = new Date();
     const duration = reverseDateTime - now;
-    console.log("duration:", duration);
     const remainTime = Math.floor(duration / 1000);
     setTimeLeft(remainTime);
     counter.current = remainTime;
@@ -53,50 +50,22 @@ const TransferInfo = () => {
     router.query.amount,
     router.query.description,
     router.query.qrCode,
-    router.query.expriedAt,
+    router.query.expiredAt,
   ]);
 
   useEffect(() => {
-    // Chạy mỗi giây
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       counter.current = counter.current > 0 ? counter.current - 1 : 0;
-      if (counter.current % 5 === 0 && counter.current > 0) {
-        validatePaymentResult();
-      }
     }, 1000);
 
-    // Cleanup khi component bị unmount
     return () => clearInterval(timer);
   }, []);
 
-  // Hàm để chuyển đổi giây sang phút và giây
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = Math.floor(timeInSeconds % 60);
     return `${minutes} phút:${seconds < 10 ? `0${seconds}` : seconds} giây`;
-  };
-
-  const validatePaymentResult = async () => {
-    try {
-      if (orderCode.current) {
-        const data = {
-          orderCode: orderCode.current,
-          paymentLinkId: paymentId.current,
-        };
-        const result = await axios.post(
-          `https://uatapi.truyenso1.xyz/customer/public/customer/deposit/qr/result`,
-          data
-        );
-        if (result?.data?.data.code === 200) {
-          Router.push("/nap-kim-cuong/success");
-        } else if (result?.data?.data.code !== 201) {
-          Router.push("/nap-kim-cuong/failed");
-        }
-      }
-    } catch (e) {
-      Router.push("/nap-kim-cuong/failed");
-    }
   };
 
   const handleDownload = async () => {
@@ -146,7 +115,7 @@ const TransferInfo = () => {
         <div className="header-payment">
           <Header />
         </div>
-        <div className="relative max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] flex flex-col justify-center text-second-color">
+        <div className="relative max-w-[768px] mx-auto bg-white md:pt-[88px] flex flex-col justify-center text-second-color">
           <HeaderPayment />
           {timeLeft <= 0 ? (
             <div style={{ marginTop: "20%" }}>
@@ -165,10 +134,10 @@ const TransferInfo = () => {
               <Button
                 className="btnMain btnSecond max-w-[300px] mx-auto mt-[20px]"
                 onClick={(e) => {
-                  Router.push("/nap-kim-cuong");
+                  Router.push("/premium");
                 }}
               >
-                Nạp gói kim cương khác
+                Mua gói Premium khác
               </Button>
               <Button
                 className="btnSecond-Second max-w-[300px] mx-auto"
@@ -204,7 +173,7 @@ const TransferInfo = () => {
                     động về tài khoản của bạn)
                   </i>
                 </p>
-                <div className="text-xs box-transfer-info">
+                <div className="text-xs box-transfer-info p-2">
                   <div>
                     <div className="m-2 flex">
                       <div className="mr-3 flex justify-center">
@@ -365,4 +334,4 @@ const TransferInfo = () => {
   );
 };
 
-export default observer(TransferInfo);
+export default observer(PremiumTransferInfo);

@@ -1,38 +1,38 @@
-import axios from "axios"
-import Router from "next/router"
-import { toast } from "react-toastify"
-import { removeToken } from "../utils/storage"
+import axios from "axios";
+import Router from "next/router";
+import { toast } from "react-toastify";
+import { removeToken } from "../utils/storage";
 
-import * as jose from 'jose'
+import * as jose from "jose";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   baseCustomerURL: process.env.NEXT_CUSTOMER_API_URL,
   timeout: process.env.NEXT_PUBLIC_API_TIMEOUT,
-})
+});
 
 const handleError = async (error, hideError) => {
-  const hideErrorNoti = hideError
+  const hideErrorNoti = hideError;
   const errorMessages = {
     golobal:
       "System is in maintenance. We are on it. Please check back in a few minute.",
     timeout: "Request is timeout, check internet connection",
     sessionExprire: "Session is expried, please re-login again",
-  }
-  let errorMessage = errorMessages.golobal
+  };
+  let errorMessage = errorMessages.golobal;
 
   if (error?.response?.data?.error) {
-    errorMessage = error.response.data.error
+    errorMessage = error.response.data.error;
   }
   if (error.code === "ECONNABORTED") {
-    errorMessage = errorMessages.timeout
+    errorMessage = errorMessages.timeout;
   }
-  console.log('error ===>', error.response)
-  if ( error?.response?.status === 401 || error?.response?.status === 403) {
-    errorMessage = errorMessages.sessionExprire
-    removeToken()
-    ProfileStore.setProfile({})
-    Router.push('/login')
+  console.log("error ===>", error.response);
+  if (error?.response?.status === 401 || error?.response?.status === 403) {
+    errorMessage = errorMessages.sessionExprire;
+    removeToken();
+    ProfileStore.setProfile({});
+    Router.push("/login");
     // logout
   }
   if (!hideErrorNoti && errorMessage) {
@@ -43,10 +43,8 @@ const handleError = async (error, hideError) => {
     // })
   }
 
-  return Promise.reject(error.response, errorMessage)
-}
-
-
+  return Promise.reject(error.response, errorMessage);
+};
 
 const sendRequest = async ({
   url,
@@ -62,15 +60,16 @@ const sendRequest = async ({
 }) => {
   const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_SECRET_KEY);
   const access_token =
-    accessToken || (typeof window !== 'undefined' ? localStorage.getItem('accessToken') : "")
-    const clientToken = await new jose.SignJWT({ 'urn:example:claim': true })
-    .setProtectedHeader({ alg: 'HS256' })
+    accessToken ||
+    (typeof window !== "undefined" ? localStorage.getItem("accessToken") : "");
+  const clientToken = await new jose.SignJWT({ "urn:example:claim": true })
+    .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setIssuer('urn:example:issuer')
-    .setAudience('urn:example:audience')
-    .setExpirationTime('1m')
-    .sign(secret)
-  console.log('clientToken ===>', clientToken)
+    .setIssuer("urn:example:issuer")
+    .setAudience("urn:example:audience")
+    .setExpirationTime("1m")
+    .sign(secret);
+  console.log("clientToken ===>", clientToken);
   return instance({
     url,
     method,
@@ -80,10 +79,11 @@ const sendRequest = async ({
     headers: {
       "Content-Type": "application/json",
       "Cache-Control": "no-cache",
-      "Authorization": access_token ? `${access_token}` : "",
-      channelId: 'WEB',
-      deviceId: typeof window !== 'undefined' ? localStorage.getItem('DEVICE_ID') : '',
-      'Client-Auth': clientToken,
+      Authorization: access_token ? `${access_token}` : "",
+      channelId: "WEB",
+      deviceId:
+        typeof window !== "undefined" ? localStorage.getItem("DEVICE_ID") : "",
+      "Client-Auth": clientToken,
       ...headers,
     },
     ...options,
@@ -96,9 +96,9 @@ const sendRequest = async ({
               message: response.data.message,
             },
           },
-        }
+        };
       }
-      return response.data
+      return response.data;
     })
     .catch((error) =>
       handleError(error, hideError, () =>
@@ -114,8 +114,8 @@ const sendRequest = async ({
           config,
         })
       )
-    )
-}
+    );
+};
 
 export const get = ({
   url = "",
@@ -135,7 +135,7 @@ export const get = ({
     options,
     hideError,
     isServer,
-  })
+  });
 
 export const post = ({
   url,
@@ -159,7 +159,7 @@ export const post = ({
     config,
     hideError,
     accessToken,
-  })
+  });
 
 export const put = ({
   url,
@@ -179,7 +179,7 @@ export const put = ({
     headers,
     options,
     accessToken,
-  })
+  });
 
 export const patch = ({
   url,
@@ -197,7 +197,7 @@ export const patch = ({
     loading,
     headers,
     options,
-  })
+  });
 
 export const deleteData = ({
   url,
@@ -215,7 +215,7 @@ export const deleteData = ({
     loading,
     headers,
     options,
-  })
+  });
 
 export const getHTTPMethod = (baseURL) => ({
   get: ({
@@ -283,6 +283,6 @@ export const getHTTPMethod = (baseURL) => ({
       headers,
       options: { ...options, baseURL },
     }),
-})
+});
 
-export const server = getHTTPMethod(process.env.NEXT_PUBLIC_API_URL)
+export const server = getHTTPMethod(process.env.NEXT_PUBLIC_API_URL);
