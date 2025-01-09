@@ -9,6 +9,7 @@ import FooterDesktop from "../../components/FooterDesktop";
 import { QRCode } from "react-qrcode-logo";
 import { formatStringToNumber } from "../../utils/utils";
 import Button from "../../components/Button/Button";
+import { Alert } from "antd";
 
 const PremiumTransferInfo = ({ type }) => {
   const [accountName, setAccountName] = useState("");
@@ -57,6 +58,9 @@ const PremiumTransferInfo = ({ type }) => {
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       counter.current = counter.current > 0 ? counter.current - 1 : 0;
+      if (counter.current % 5 === 0 && counter.current > 0) {
+        validatePaymentResult();
+      }
     }, 1000);
 
     return () => clearInterval(timer);
@@ -66,6 +70,28 @@ const PremiumTransferInfo = ({ type }) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = Math.floor(timeInSeconds % 60);
     return `${minutes} phút:${seconds < 10 ? `0${seconds}` : seconds} giây`;
+  };
+
+  const validatePaymentResult = async () => {
+    try {
+      if (orderCode.current) {
+        const data = {
+          orderCode: orderCode.current,
+          paymentLinkId: paymentId.current,
+        };
+        const result = await axios.post(
+          `https://api.toidoc.vn/customer/public/customer/deposit/qr/result`,
+          data
+        );
+        if (result?.data?.data.code === 200) {
+          Router.push("/premium/success");
+        } else if (result?.data?.data.code !== 201) {
+          Router.push("/premium/failed");
+        }
+      }
+    } catch (e) {
+      Router.push("/premium/failed");
+    }
   };
 
   const handleDownload = async () => {
@@ -141,7 +167,7 @@ const PremiumTransferInfo = ({ type }) => {
               </Button>
               <Button
                 className="btnSecond-Second max-w-[300px] mx-auto"
-                onClick={(e) => {
+                onClick={() => {
                   window.open(
                     `https://m.me/185169981351799?text=Mình qua web với nội dung ${description} không được. Hỗ trợ giúp mình với.`
                   );
@@ -163,16 +189,15 @@ const PremiumTransferInfo = ({ type }) => {
                   )}</strong> nữa`,
                 }}
               />
-              <div className="pl-[20px] pr-[20px] mb-[20px]">
+              <div className="px-[20px] space-y-4">
                 <p className="text-[14px] font-bold mb-[0px]">
                   Hãy ấn nút Copy thông tin chuyển khoản bên dưới
                 </p>
-                <p className="text-[14px] text-red">
-                  <i>
-                    (Lưu ý chỉ copy đúng các thông tin, thì kim cương mới tự
-                    động về tài khoản của bạn)
-                  </i>
-                </p>
+                <Alert
+                  message="Lưu ý: chỉ khi copy đúng các thông tin, thì tài khoản mới nhận được gói Premium"
+                  showIcon
+                  type="warning"
+                />
                 <div className="text-xs box-transfer-info p-2">
                   <div>
                     <div className="m-2 flex">
@@ -274,8 +299,8 @@ const PremiumTransferInfo = ({ type }) => {
                 <br />
                 {qrCode && (
                   <>
-                    <p className="text-[14px] font-bold mb-[0px]">
-                      Hoặc bạn có thể quyét mã QR dưới đây
+                    <p className="text-center text-[14px] font-bold mb-[0px]">
+                      Hoặc bạn có thể quét mã QR dưới đây
                     </p>
                     <div>
                       <QRCode
@@ -294,20 +319,13 @@ const PremiumTransferInfo = ({ type }) => {
                         logoPaddingStyle={"circle"}
                         enableCORS={true}
                       />
-                      <div className="vertical-center">
-                        <button
-                          type="button"
+                      <div className="flex justify-center">
+                        <Button
+                          className="bg-[#04b17c] rounded-md px-3 py-1.5 text-white font-semibold shadow-md"
                           onClick={() => handleDownload()}
-                          style={{
-                            backgroundColor: "#04b17c",
-                            borderRadius: "5px",
-                            padding: "5px 10px",
-                            color: "#fff",
-                            marginTop: "20px",
-                          }}
                         >
-                          Tải mã QR Code
-                        </button>
+                          Tải mã QR
+                        </Button>
                       </div>
                     </div>
                   </>

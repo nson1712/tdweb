@@ -146,7 +146,7 @@ const TransferInfo = () => {
         <div className="header-payment">
           <Header />
         </div>
-        <div className="relative max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] flex flex-col justify-center text-second-color">
+        <div className="relative max-w-[768px] mx-auto bg-white md:pt-[88px] flex flex-col justify-center text-second-color">
           <HeaderPayment />
           {timeLeft <= 0 ? (
             <div style={{ marginTop: "20%" }}>
@@ -305,8 +305,8 @@ const TransferInfo = () => {
                 <br />
                 {qrCode && (
                   <>
-                    <p className="text-[14px] font-bold mb-[0px]">
-                      Hoặc bạn có thể quyét mã QR dưới đây
+                    <p className="text-center text-[14px] font-bold mb-[0px]">
+                      Hoặc bạn có thể quét mã QR dưới đây
                     </p>
                     <div>
                       <QRCode

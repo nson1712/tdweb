@@ -14,7 +14,7 @@ const PaymentSuccess = ({
     <CommonLayout >
       <div>
         <Header/>
-        <div className='relative max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] flex flex-col justify-center text-second-color'>
+        <div className='relative max-w-[768px] mx-auto bg-white md:pt-[88px] flex flex-col justify-center text-second-color'>
           <HeaderPayment />
           <img src={"https://js.pngtree.com/a4/static/l03b0s.d57ca31e.gif"} />
           <div className='w-full mx-auto' style={{'position': 'absolute', 'marginTop': '50px'}}>

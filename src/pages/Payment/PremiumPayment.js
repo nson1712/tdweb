@@ -16,9 +16,10 @@ import ModalComponent from "../../components/Modal/Modal";
 import HeaderPayment from "./HeaderPayment";
 import moment from "moment";
 import "moment/locale/vi";
-import { Alert } from "antd";
+import { Alert, notification, Spin } from "antd";
 import crownIcon from "../../../public/images/queen-crown.png";
 import Image from "next/image";
+import { CloseCircleOutlined } from "@ant-design/icons";
 
 const PremiumPayment = ({
   values,
@@ -37,13 +38,27 @@ const PremiumPayment = ({
   const [showChat, setShowChat] = useState(true);
   const [showModal, setShowModal] = useState(false);
 
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (placement) => {
+    api.open({
+      message: "Vui lòng kiểm tra lại Mã Khách Hàng!",
+      icon: <CloseCircleOutlined className="text-red-600" />,
+      placement,
+    });
+  };
+
   useEffect(() => {
     const getPremiumPackage = async () => {
       try {
         const result = await Api.get({
-          url: "/customer/subscription/plans",
+          url: "https://api.toidoc.vn/customer/subscription/plans",
         });
-        setPremiumPackages(result.data.PREMIUM);
+        setPremiumPackages(
+          result.data.PREMIUM.sort(function (a, b) {
+            return a.id - b.id;
+          })
+        );
       } catch (e) {
         console.log(e);
       }
@@ -60,7 +75,7 @@ const PremiumPayment = ({
     setShowWarningPackage(false);
     setClickedIndex(index);
     setPlanCode(item.code);
-    setCash(item.price)
+    setCash(item.price);
   };
 
   const handleRequestPayment = async (data) => {
@@ -69,12 +84,9 @@ const PremiumPayment = ({
         setShowWarningPackage(true);
       } else {
         setLoading(true);
-        console.log("Start submit form");
         if (!executeRecaptcha) {
-          console.log("Execute recaptcha not yet available");
           return;
         }
-        console.log("Start get token");
         const token = await executeRecaptcha("onSubmit");
         data.token = token;
         const timestamp = Date.now();
@@ -82,7 +94,7 @@ const PremiumPayment = ({
         data.planCode = planCode;
 
         const result = await Api.post({
-          url: "/customer/public/customer/subscription/qr",
+          url: "https://api.toidoc.vn/customer/public/customer/subscription/qr",
           data,
         });
         setLoading(false);
@@ -106,13 +118,16 @@ const PremiumPayment = ({
         }
       }
     } catch (e) {
-      console.log("Error get token: ", e);
       setLoading(false);
+      if (e.status === 400) {
+        openNotification("topRight");
+      }
     }
   };
 
   return (
     <CommonLayout>
+      {contextHolder}
       <div>
         <div className="header-payment">
           <Header />
@@ -135,7 +150,7 @@ const PremiumPayment = ({
                 </span>
                 Lưu ý:
               </div>
-              <div class="admonitionContent_S0QG">
+              <div className="admonitionContent_S0QG">
                 <p>
                   Mã khách hàng: là mã TD.... được lấy từ màn hình "Tài Khoản"
                   trên App Toidoc
@@ -164,28 +179,30 @@ const PremiumPayment = ({
                 2. Bấm chọn gói PREMIUM bên dưới
               </p>
               {showWarningPackage && (
-                <p className="text-[14px] text-red">
-                  * Bạn phải lựa chọn gói PREMIUM
-                </p>
+                <Alert type="error" showIcon message="Vui lòng chọn gói" />
               )}
               <div className="btnContainer">
                 {premiumPackages?.map((item, index) => (
                   <Button
                     key={index}
                     className={`
-                      shadow-xl bg-golden-gradient flex gap-x-1 justify-center rounded-lg relative overflow-hidden font-bold text-base text-[#A54426] w-[350px] h-[50px] pt-2.5 hover:translate-y-[-10%] transition duration-300 delay-75 ease-in-out
+                      shadow-xl bg-golden-gradient flex gap-x-1 justify-center rounded-lg relative overflow-hidden font-bold text-base text-[#A54426] w-[350px] h-[50px] hover:translate-y-[-10%] transition duration-300 delay-75 ease-in-out
                       ${clickedIndex === index ? "clicked" : ""}
                     `}
                     onClick={() => handleChangePremiumPackages(index, item)}
                   >
-                    <Image width={25} height={25} src={crownIcon} />
-                    {`${item.tier} ${moment
-                      .duration(item.expiryInterval)
-                      .humanize(true)
-                      .replace(" tới", "")
-                      .replace("một", "1")
-                      .replace("tháng", "Tháng")
-                      .replace("năm", "Năm")}`}
+                    <div className="self-center">
+                      <Image width={24} height={24} src={crownIcon} />
+                    </div>
+                    <div className="self-center">
+                      {`${item.tier} ${moment
+                        .duration(item.expiryInterval)
+                        .humanize(true)
+                        .replace(" tới", "")
+                        .replace("một", "1")
+                        .replace("tháng", "Tháng")
+                        .replace("năm", "Năm")}`}
+                    </div>
                   </Button>
                 ))}
               </div>
@@ -205,13 +222,13 @@ const PremiumPayment = ({
                 </span>
               </p>
 
-              <Button
-                className="btnMain btnSecond"
+              <button
+                className="w-full text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm py-2.5 text-center shadow-xl"
                 type="submit"
                 loading={loading}
               >
                 Hiển thị thông tin chuyển khoản
-              </Button>
+              </button>
 
               <Button
                 className="btnSecond-Second"
@@ -245,6 +262,8 @@ const PremiumPayment = ({
           />
         </ModalComponent>
       )}
+
+      <Spin fullscreen={true} spinning={loading} />
     </CommonLayout>
   );
 };
