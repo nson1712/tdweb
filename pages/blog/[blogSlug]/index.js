@@ -29,9 +29,9 @@ const BlogDetail = ({}) => {
       </div>
 
       <Image
-        className="self-center rounded-lg  w-full"
+        className="self-center rounded-lg w-full"
         preview={false}
-        src="https://images.pexels.com/photos/378570/pexels-photo-378570.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+        src="https://media.truyenso1.xyz/story-cover4bc133a5-4670-4f68-8a6a-8725dc5a1b83-1736240488273.jpg"
       />
       <div className="block sm:hidden text-lg text-white -mt-24 mb-2 relative font-semibold pl-1">
         Phá sóng karaoke: có nên hay không nhỉ hah ah ah ha hah a ah hah ah ah a?
