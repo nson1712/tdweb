@@ -208,28 +208,11 @@ const TransferInfo = () => {
                   <div>
                     <div className="m-2 flex">
                       <div className="mr-3 flex justify-center">
-                        <img
-                          loading="lazy"
-                          width="50"
-                          height="30"
-                          decoding="async"
-                          data-nimg="1"
-                          className="rounded-full m-auto self-center"
-                          style={{
-                            color: "transparent",
-                            "background-color": "#fff",
-                            padding: "5px",
-                          }}
-                          src="https://bidv.com.vn/wps/wcm/connect/48a10028-99d9-4b2c-9e19-5541dbb16a73/Header.png?MOD=AJPERES&attachment=true&id=1648629012586"
-                        />
+                        <img loading="lazy" width="50" height="30" decoding="async" data-nimg="1" className="rounded-full m-auto self-center" style={{'color':'transparent',  'background-color': '#fff', 'padding': '5px'}} src="https://img.bankhub.dev/OCB.png"/>
                       </div>
                       <div>
-                        <p className="text-sm text-[#fff]">
-                          Ngân hàng thụ hưởng
-                        </p>
-                        <p className="font-bold text-sm text-[#fff]">
-                          Ngân hàng Đầu Tư & Phát Triển BIDV
-                        </p>
+                        <p className="text-sm text-[#fff]">Ngân hàng thụ hưởng</p>
+                        <p className="font-bold text-sm text-[#fff]">Ngân hàng Phương Đông OCB</p>
                       </div>
                     </div>
                   </div>
