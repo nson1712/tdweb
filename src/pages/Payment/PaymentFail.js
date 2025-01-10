@@ -12,7 +12,7 @@ const PaymentFail = () => {
     <CommonLayout >
       <div>
         <Header/>
-        <div className='relative max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] flex flex-col justify-center text-second-color'>
+        <div className='relative max-w-[768px] mx-auto bg-white md:pt-[88px] flex flex-col justify-center text-second-color'>
           <HeaderPayment />
           <div className='w-full mx-auto' style={{'marginTop': '50px'}}>
             <p className='text-[20px] font-bold main-text text-center'>
