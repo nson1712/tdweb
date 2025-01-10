@@ -4,10 +4,12 @@ import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import { DateTime } from "luxon";
 import { CalendarTwoTone } from "@ant-design/icons";
 import Content from "./Content";
+import Menu from "./Menu";
 
 const BlogDetails = () => {
   const data = {
-    coverImage: "https://media.truyenso1.xyz/story-coverd4bc6da8-4125-4e9f-a47f-b9102a21db94-1736240269947.jpg",
+    coverImage:
+      "https://media.truyenso1.xyz/story-coverd4bc6da8-4125-4e9f-a47f-b9102a21db94-1736240269947.jpg",
     title: "Phá sóng karaoke: Có nên hay không nhỉ các bạn ơi hah ah ah ahh a?",
     createdAt: 1734159619140,
     updatedAt: 1736159662308,
@@ -28,12 +30,18 @@ const BlogDetails = () => {
 
         <div className="text-[12px] md:text-sm text-slate-500">
           <CalendarTwoTone /> Ngày đăng:{" "}
-          {DateTime.fromMillis(data?.createdAt ?? 0).toFormat("dd/MM/yyyy")} -
-          Cập nhật:{" "}
-          {DateTime.fromMillis(data?.updatedAt ?? 0).toFormat("dd/MM/yyyy")}
+          {DateTime.fromMillis(data?.createdAt ?? 0, { zone: "utc" }).toFormat(
+            "dd/MM/yyyy"
+          )}{" "}
+          - Cập nhật:{" "}
+          {DateTime.fromMillis(data?.updatedAt ?? 0, { zone: "utc" }).toFormat(
+            "dd/MM/yyyy"
+          )}
         </div>
 
         <Content content={contentArr} />
+
+        <Menu />
       </div>
     </CommonLayout>
   );

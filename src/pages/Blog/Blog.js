@@ -4,10 +4,14 @@ import Header from "../../components/Header/Header";
 import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import StoryStore from "../../stores/StoryStore";
 
-import { Button, Image, List, Skeleton } from "antd";
+import { Button, Image, List, Skeleton, Typography } from "antd";
 import { DateTime } from "luxon";
 import { ClockCircleOutlined } from "@ant-design/icons";
 import Link from "next/link";
+import { Router } from "next/router";
+// import Title from "antd/es/typography/Title";
+
+const { Title } = Typography
 
 let timeout;
 const Blog = () => {
@@ -85,11 +89,17 @@ const Blog = () => {
   return (
     <CommonLayout>
       <div className="relative">
-        <div className="hidden md:block">
+        <div className="block md:block">
           <Header selectedTab={"HOME"} />
         </div>
 
         <div className="relative pb-[100px] max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] px-0 md:px-[8px] min-h-[100vh] flex flex-col justify-center">
+          <div className="w-fit ">
+          {/* <Title level={3}>Bài viết mới nhất</Title> */}
+          <div className="text-xl font-[600] sm:text-2xl">Bài viết mới nhất</div>
+          <span className="mt-[5px] block w-[70%] border-b-[3px] border-red-500"></span>
+          </div>
+          <div className=""></div>
           <List
             className="demo-loadmore-list px-2"
             loading={initLoading}
@@ -101,18 +111,25 @@ const Blog = () => {
                 <Skeleton title={false} loading={item.loading} active>
                   <List.Item.Meta
                     avatar={
-                      <img
-                        className="rounded-lg max-h-[85px] min-w-[110px] md:w-[200px]"
-                        src="https://media.toidoc.vn/story-coverxe-my-thuc-di-dong-cua-nu-phao-hoi-tai-mat-the,xe-my-thuc-di-dong-cua-nu-phao-hoi-tai-mat-the-1706943626040.jpg"
+                      <div className="w-36 sm:w-52 md:w-60">
+                        <Link href={`blog/${item.slug}`}>
+                        <Image
+                        preview={false}
+                        className="rounded-lg"
+                        src="https://cdn-media.sforum.vn/storage/app/media/haianh/nintendo-switch-2-thong-tin-moi-1.jpg"
                       />
+                      </Link>
+                      </div>
                     }
                     title={
-                      <Link
-                        className="text-base font-semibold pr-2 line-clamp-2"
+                      <div className="line-clamp-2 text-md sm:text-base font-[500] sm:font-semibold">
+                        <a
+                        className="text-black"
                         href={`blog/${item.slug}`}
                       >
                         {item.title}
-                      </Link>
+                      </a>
+                      </div>
                     }
                     description={
                       <>

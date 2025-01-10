@@ -15,9 +15,7 @@ const Content = ({ content }) => {
         if (headingRegex.test(item)) {
           const headingText = cleanHtml(item);
           const headingTagMatch = item.match(/<h([1-6])>/i);
-          const HeadingTag = headingTagMatch
-            ? `h${headingTagMatch[1]}`
-            : "h3";
+          const HeadingTag = headingTagMatch ? `h${headingTagMatch[1]}` : "h3";
 
           return React.createElement(
             HeadingTag,
@@ -33,9 +31,9 @@ const Content = ({ content }) => {
 
           if (match && match[1]) {
             return (
-              <div className="flex justify-center" key={index}>
+              <div className="flex justify-center mb-1" key={index}>
                 <Image
-                  src={match[1]} // Sử dụng URL ảnh đã trích xuất
+                  src={match[1]}
                   preview={false}
                   alt="alt"
                 />
@@ -44,9 +42,7 @@ const Content = ({ content }) => {
           }
           return <div key={index}></div>;
         } else {
-          return (
-            <p dangerouslySetInnerHTML={{ __html: item }} />
-          );
+          return <div className="mb-1" dangerouslySetInnerHTML={{ __html: item }} />;
         }
       })}
     </div>
