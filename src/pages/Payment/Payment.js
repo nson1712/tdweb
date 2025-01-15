@@ -32,32 +32,32 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
     {
       label: "15,500",
       deposit: "18,000VNĐ",
-      value: 15500,
+      value: 18000,
     },
     {
-      label: "50,000",
+      label: "52,500",
       deposit: "50,000VNĐ",
       value: 50000,
     },
     {
-      label: "105,000",
+      label: "110,000",
       deposit: "100,000VNĐ",
-      value: 105000,
+      value: 100000,
     },
     {
-      label: "315,000",
+      label: "330,000",
       deposit: "300,000VNĐ",
-      value: 315000,
+      value: 300000,
     },
     {
-      label: "530,000",
+      label: "550,000",
       deposit: "500,000VNĐ",
-      value: 530000,
+      value: 500000,
     },
     {
-      label: "1,060,000",
+      label: "1,100,000",
       deposit: "1,000,000VNĐ",
-      value: 1060000,
+      value: 1000000,
     },
   ];
 
@@ -69,32 +69,7 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
   const handleChangePackage = (index, item) => {
     setShowWarningPackage(false);
     setClickedIndex(index);
-    setPackageValue(item.value);
-    switch (item.value) {
-      case 15500:
-        setCash(18000);
-        break;
-      case 50000:
-        setCash(50000);
-        break;
-      case 105000:
-        setCash(100000);
-        break;
-      case 315000:
-        setCash(300000);
-        break;
-      case 530000:
-        setCash(500000);
-        break;
-      case 1060000:
-        setCash(1000000);
-        break;
-      case 2120000:
-        setCash(2000000);
-        break;
-      default:
-        setCash(item.value);
-    }
+    setCash(item.value);
   };
 
   const handleRequestPayment = async (data) => {
