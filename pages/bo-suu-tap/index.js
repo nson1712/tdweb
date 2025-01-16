@@ -1,6 +1,7 @@
 import React from 'react'
 import CollectionComponent from '../../src/pages/Collection'
 import HeaderServer from '../../src/components/HeaderServer'
+import Blog from '../../src/pages/Blog'
 
 const StoryType = () => {
   return (
@@ -10,6 +11,7 @@ const StoryType = () => {
         title="Danh sách bộ sưu tập truyện chữ hấp dẫn | Nền tảng cộng đồng đọc truyện Online Toidoc"
         canonical='https://toidoc.vn/bo-suu-tap'/>
       <CollectionComponent />
+      <Blog />
     </>
   )
 }
