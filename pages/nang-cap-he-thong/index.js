@@ -1,6 +1,6 @@
 import React from 'react'
-import HeaderServer from '../src/components/HeaderServer'
-import MaintainancePage from '../src/pages/Maintainance'
+import HeaderServer from '../../src/components/HeaderServer'
+import MaintainancePage from '../../src/pages/Maintainance'
 
 const Maintainance = () => {
   return (

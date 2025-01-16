@@ -69,7 +69,7 @@ const Homepage = () => {
         setSelectedCategories(selectedCategoriesStore.split(','))
       }
       // checkCustomerClickAffLocal();
-      setShowModal(true)
+      // setShowModal(true)
       
     }, 2000)
     
