@@ -58,7 +58,7 @@ const BlogDetail = ({}) => {
         </div>
       </div>
       <div className="block sm:hidden text-lg text-white -mt-24 mb-2 relative font-semibold pl-1">
-        Định lý Cosin trong tam giác và hệ quả của định lý Cosin
+        {blog?.title || ""}
       </div>
       <BlogDetails data={blog} />
     </div>

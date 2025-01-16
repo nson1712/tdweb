@@ -28,7 +28,7 @@ const Blog = () => {
   }, []);
 
   const fetchData = (currentPage) => {
-    const fetchUrl = `https://api.toidoc.com/data/admin/posts?size=${size}&page=${currentPage}`;
+    const fetchUrl = `https://api.toidoc.com/data/post/list?size=${size}&page=${currentPage}`;
 
     setLoading(true);
     fetch(fetchUrl)
