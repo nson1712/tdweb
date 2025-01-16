@@ -87,7 +87,7 @@ const Research = () => {
 
     getcollections1()
     getcollections2()
-    // setShowModal(true)
+    setShowModal(true)
     // checkCustomerClickAffLocal();
     
   }, [])
@@ -106,7 +106,7 @@ const Research = () => {
     if (code === 'tai-app-research') {
       window.open('https://toidoc.onelink.me/59bO/d42503wz')
     } else {
-      window.open(`https://toidoc.onelink.me/59bO/d42503wz`, '_blank', 'Toidoc')
+      window.open(`https://www.facebook.com/toidoc.support/posts/pfbid02FE94wAvXZLq3cAVT3TSppkFLM8uabRcJ8AwMuHa9LYdbCFM7TfnpqW1crVnadNPel`, '_blank', 'Toidoc')
     }
   };
 
@@ -321,7 +321,7 @@ const Research = () => {
           countDownTime={5}
         >
           <a onClick={(e) => handleClick(e, 'big-banner-research')}>
-            <img src="https://media.truyenso1.xyz/ads/bxh-ve-vang-20-9.png" className='imgBanner'/>
+            <img src="https://media.truyenso1.xyz/ads/banner-lixi-tet.png" className='imgBanner'/>
           </a>
         </ModalComponent>}
       </div>

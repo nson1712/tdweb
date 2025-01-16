@@ -343,6 +343,7 @@ class StoryStore {
   getStoryByCategory = async (categoryCode, last = undefined, limit = 5, params = {}) => {
     try {
       this.loadingStories = true
+      console.log('Start get category story')
       const result = await Api.get({
         url: 'data/private/data/category/stories1',
         params: {
@@ -352,7 +353,7 @@ class StoryStore {
           ...params
         }
       })
-
+      console.log('Start get category story: ', result)
       if (last === undefined) {
         this.storyByCategory = {
           ...this.storyByCategory,
@@ -370,6 +371,7 @@ class StoryStore {
           }
         }
       }
+
       this.loadingStories = false
      
     } catch(e) {

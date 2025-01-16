@@ -128,7 +128,7 @@ export const get = ({
 }) =>
   sendRequest({
     url,
-    params: { ...params, key: "trinhkhoi1811trinhkhoi1811@@@@trinhkhoi"},
+    params: { ...params},
     method: "GET",
     loading,
     headers,
