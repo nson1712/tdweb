@@ -1,31 +1,131 @@
 import { observer } from "mobx-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import { DateTime } from "luxon";
 import { CalendarTwoTone } from "@ant-design/icons";
 import Content from "./Content";
 import Menu from "./Menu";
+import RelatedBlog from "./RelatedBlog";
+import parse from "html-react-parser";
+import PinMenu from "../../components/PinMenu/PinMenu";
+import {
+  appendNewLineAfterCloseHTag,
+  getSlugfromSlugGenerate,
+  slugGenerate,
+} from "../../utils/utils";
+import AuthorMessage from "../../components/AuthorMessage";
+import Header from "../../components/Header/Header";
 
-const BlogDetails = () => {
-  const data = {
-    coverImage:
-      "https://media.truyenso1.xyz/story-coverd4bc6da8-4125-4e9f-a47f-b9102a21db94-1736240269947.jpg",
-    title: "Phá sóng karaoke: Có nên hay không nhỉ các bạn ơi hah ah ah ahh a?",
-    createdAt: 1734159619140,
-    updatedAt: 1736159662308,
-    shortDescription:
-      "Âm nhạc những ngày cận Tết từ các dàn loa công suất lớn khiến bạn khó chịu và nghĩ đến việc phá sóng karaoke để lấy lại sự yên bình? \n Tuy vậy, việc phá sóng karaoke có thực sự là giải pháp hợp lý, hay nó chỉ khiến mọi thứ trở nên phức tạp hơn? Hãy cùng tìm hiểu kỹ hơn với Sforum nhé!",
-    content:
-      "<h3>Thiết kế và ngoại hình Nothing Phone 2a Plus</h3> \n Về thiết kế, Nothing Phone 2a Plus không có quá nhiều khác biệt so với người anh em Nothing Phone 2a. Máy vẫn giữ được phong cách thiết kế đặc trưng với các đường nét vát phẳng, hòa quyện cùng các cạnh bo cong nhẹ nhàng, mang đến sự hài hòa giữa cổ điển và hiện đại. \n Điểm nhấn nổi bật của Nothing Phone 2a Plus chính là ngoại hình ấn tượng, thể hiện cá tính độc đáo ngay từ cái nhìn đầu tiên. Mặt lưng trong suốt kết hợp cùng hệ thống đèn LED độc quyền không chỉ tạo sự hiện đại, cuốn hút mà còn giúp thiết bị dễ dàng nổi bật trong đám đông. \n Nothing Phone 2a Plus mang đến hai tùy chọn màu sắc là đen và xám, trong đó màu xám là điểm khác biệt độc đáo không xuất hiện trên Nothing Phone 2a. Đây là chi tiết giúp người dùng dễ dàng phân biệt giữa hai phiên bản, đồng thời mang lại sự mới mẻ cho dòng sản phẩm. \n Sự khác biệt lớn nhất giữa Nothing Phone 2a và 2a Plus nằm ở họa tiết mặt lưng. Với Nothing Phone 2a Plus, các họa tiết được thiết kế theo phong cách mạ nhôm sáng bóng, tạo cảm giác nổi bật và cao cấp hơn. Ngoài ra, mặt lưng của phiên bản này còn được nhấn nhá thêm một ô vuông nhỏ ở góc trái, tăng thêm phần độc đáo. Trong khi đó, Nothing Phone 2a sử dụng họa tiết đồng màu với mặt lưng, mang đến cảm giác tối giản nhưng đôi khi lại hơi kém nổi bật. \n <figure class='image'><img src='https://media.truyenso1.xyz/story-cover4bc133a5-4670-4f68-8a6a-8725dc5a1b83-1736240488273.jpg'></figure> \n Về độ hoàn thiện thì Nothing Phone 2a Plus được hoàn thiện từ chất liệu nhựa. Tuy là vậy nhưng máy vẫn mang đến cảm giác chắc chắn và cao cấp, không bị rẻ tiền. Với kích thước 161.7 x 76.3 x 8.5 mm. Trọng lượng 190g, vừa đủ để mang lại cảm giác đầm tay, tạo sự chắc chắn mà không quá nặng nề khi sử dụng trong thời gian dài. \n <ul><li>line 1</li><li>line 2</li></ul>",
+const BlogDetails = ({data}) => {
+  const [loading, setLoading] = useState(false);
+  const [list, setList] = useState([]);
+  const [randomList, setRandomList] = useState([]);
+
+  const [page, setPage] = useState(0);
+  const size = 10000;
+
+  useEffect(() => {
+    fetchData(page);
+  }, []);
+
+  const fetchData = () => {
+    const fetchUrl = `https://api.toidoc.com/data/admin/posts?size=${size}`;
+
+    setLoading(true);
+    fetch(fetchUrl)
+      .then((res) => res.json())
+      .then((res) => {
+        setList(res.data.data);
+      })
+      .catch((err) => {
+        console.error("Fetch data error: ", err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   };
 
-  const contentArr = data.content.split("\n");
+  const getRandom = (arr, n) => {
+    var result = new Array(n),
+      len = arr.length,
+      taken = new Array(len);
+    if (n > len)
+      throw new RangeError("getRandom: more elements taken than available");
+    while (n--) {
+      var x = Math.floor(Math.random() * len);
+      result[n] = arr[x in taken ? taken[x] : x];
+      taken[x] = --len in taken ? taken[len] : len;
+    }
+    return result;
+  };
+
+  useEffect(() => {
+    if (list.length !== 0) {
+      setRandomList(getRandom(list, 6));
+    }
+  }, [list]);
+
+  const updatedContent = appendNewLineAfterCloseHTag(data?.content || "");
+
+  const contentArr = updatedContent.split("\n");
+
+  const getHeadingList = (arr) => {
+    let headingList = [];
+    const headingRegex = /<h[1-6][^>]*>(.*?)<\/h[1-6]>/gi;
+    arr?.forEach((item) => {
+      const validHeadings = item.match(headingRegex);
+      if (validHeadings) {
+        headingList = headingList.concat(validHeadings);
+      }
+    });
+
+    return headingList;
+  };
+
+  const headingList = getHeadingList(contentArr).map((htmlString) => {
+    const doc = parse(htmlString);
+    const tagName = doc.type;
+
+    const levelMap = {
+      "h3": 1,
+      "h4": 2,
+      "h5": 3,
+      "h6": 4,
+    };
+    const level = levelMap[tagName] || null;
+    return {
+      label: doc.props.children,
+      id: getSlugfromSlugGenerate(
+        slugGenerate(doc.props.children.props.children || "")
+      ),
+      level: level,
+    };
+  });
+
+  const handleScrollTo = (headingId) => {
+    const element = document.getElementById(headingId);
+    if (element) {
+      const yOffSet = -100;
+      const yPosition =
+        element.getBoundingClientRect().top + window.scrollY + yOffSet;
+      window.scrollTo({
+        top: yPosition,
+        behavior: "smooth",
+      });
+    }
+  };
 
   return (
-    <CommonLayout>
-      <div className="md:-mt-12 relative pb-[100px] max-w-[950px] mx-auto p-6 bg-white min-h-[100vh] shadow-md border border-slate-100 rounded-2xl md:space-y-4">
-        <div className="hidden md:block md:text-3xl font-semibold">
-          {data?.title}
+    <CommonLayout className="text-base bg-transparent">
+      <Header selectedTab={"LIBRARY"} />
+      <div className="md:-mt-12 relative pb-[100px] max-w-[950px] mx-auto p-3 bg-white min-h-[100vh] sm:shadow-md sm:border sm:border-slate-100 rounded-2xl space-y-4">
+        <div className="bg-[#DF062D] text-white font-semibold w-fit py-1 px-3 rounded-md">
+          Blog
+        </div>
+        <PinMenu headingList={headingList} scrollIntoView={handleScrollTo} />
+
+        <div className="hidden sm:text-[30px] sm:block font-semibold">
+          {parse(data?.title || "")}
         </div>
 
         <div className="text-[12px] md:text-sm text-slate-500">
@@ -39,9 +139,15 @@ const BlogDetails = () => {
           )}
         </div>
 
+        <div>{parse(data?.shortDescription || "")}</div>
+
+        <Menu headingList={headingList} scrollIntoView={handleScrollTo} />
+
         <Content content={contentArr} />
 
-        <Menu />
+        {/* <AuthorMessage /> */}
+
+        <RelatedBlog relatedBlogList={randomList} />
       </div>
     </CommonLayout>
   );

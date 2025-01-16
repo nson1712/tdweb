@@ -5,14 +5,14 @@ import HeaderServer from '../../src/components/HeaderServer'
 
 const Payment = () => {
   return (
-    // <GoogleReCaptchaProvider reCaptchaKey="6LemlQIqAAAAAN3GiXSgwfSljLMiGgRAINr1ALev">
+    <GoogleReCaptchaProvider reCaptchaKey="6LemlQIqAAAAAN3GiXSgwfSljLMiGgRAINr1ALev">
       <>
       <HeaderServer 
         title={'Toidoc - Nạp kim cương tự động'} 
       />
       <PaymentComponent />
       </>
-    // </GoogleReCaptchaProvider>
+    </GoogleReCaptchaProvider>
   )
 }
 

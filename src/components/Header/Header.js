@@ -1,115 +1,177 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useState } from 'react'
-import classNames from 'classnames'
-import { observer } from 'mobx-react'
-import Router, { useRouter } from 'next/router'
-
+import React, { useEffect, useState } from "react";
+import classNames from "classnames";
+import { observer } from "mobx-react";
+import Router, { useRouter } from "next/router";
 
 let timeout;
 
-const Header = ({selectedTab}) => {
-  const [text, setText] = useState('')
+const Header = ({ selectedTab }) => {
+  const [text, setText] = useState("");
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
+    setText(router.query.tukhoa || "");
+  }, [router.query.tukhoa]);
 
-    setText(router.query.tukhoa || '')
-
-  }, [router.query.tukhoa])
-  
   return (
-    <div className='py-[16px] shadow-header fixed bottom-[0px] md:bottom-auto md:top-0 left-0 right-0 z-[99] border-t-[1px] md:border-t-0 border-color '>
-    <div className='flex items-center max-w-[768px] mx-auto'>
-      <img src='/images/logo-toidoc.svg' className='mr-[24px] hidden md:block cursor-pointer'
-        onClick={() => {
-          Router.push('/')
-        }}
-        alt='logo'
-      />
+    <div className="py-[16px] shadow-header fixed bottom-[0px] md:bottom-auto md:top-0 left-0 right-0 z-[99] border-t-[1px] md:border-t-0 border-color ">
+      <div className="flex items-center max-w-[768px] mx-auto">
+        <img
+          src="/images/logo-toidoc.svg"
+          className="mr-[24px] hidden md:block cursor-pointer"
+          onClick={() => {
+            Router.push("/");
+          }}
+          alt="logo"
+        />
 
-      <div className='flex items-center justify-between px-[24px] md:px-0 w-full md:w-auto'>
-        <div className={classNames('flex items-center justify-between mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer',
-          selectedTab === 'HOME' && 'bg-tab-active text-active'
-        )}
-        onClick={() => {
-          Router.push('/')
-        }}
-        >
-          <img src={selectedTab === 'HOME' ? '/images/star-home-active.svg' : '/images/star-home.svg'} className='w-[24px] mr-[4px]'
-            alt='home'
-          />
-          <p className={classNames('mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap',
-             selectedTab === 'HOME' ? 'text-active block' : 'hidden md:block'
-          )}>
-            Toidoc
-          </p>
-        </div>
-        <div className={classNames('flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer',
-          selectedTab === 'RESEARCH' && 'bg-tab-active text-active'
-        )}
-        onClick={() => {
-          Router.push('/tim-kiem')
-        }}
-        >
-          <img src={selectedTab === 'RESEARCH' ? '/images/search-loupe-active.svg' : '/images/search-loupe.svg'} className='w-[24px] mr-[4px]'
-            alt='search'
-          />
-          <p className={classNames('mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap',
-             selectedTab === 'RESEARCH' ? 'text-active block' : 'hidden md:block'
-          )}>
-            Khám phá
-          </p>
-        </div>
-        <div className={classNames('flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer',
-          selectedTab === 'LIBRARY' && 'bg-tab-active text-active'
-        )}
-        onClick={() => {
-          Router.push('/thu-vien')
-        }}
-        >
-          <img src={selectedTab === 'LIBRARY' ? '/images/book-active.svg' : '/images/book.svg'} className='w-[24px] mr-[4px]'
-             alt='library'
-          />
-          <p className={classNames('mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap',
-             selectedTab === 'LIBRARY' ? 'text-active block' : 'hidden md:block'
-          )}>
-            Thư viện
-          </p>
-        </div>
-        <div className={classNames('flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer',
-          selectedTab === 'AUTHOR' && 'bg-tab-active text-active'
-        )}
-        onClick={() => {
-          Router.push('/tac-gia')
-        }}
-        >
-          <img src={selectedTab === 'AUTHOR' ? '/images/author-active.svg' : '/images/author.svg'} className='w-[28px] mr-[4px]'
-             alt='Liên hệ'
-          />
-          <p className={classNames('mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap',
-             selectedTab === 'AUTHOR' ? 'text-active block' : 'hidden md:block'
-          )}>
-            Tác Giả
-          </p>
-        </div>
-        <div className={classNames('flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer',
-          selectedTab === 'CONTACT' && 'bg-tab-active text-active'
-        )}
-        onClick={() => {
-          Router.push('/lien-he')
-        }}
-        >
-          <img src={selectedTab === 'CONTACT' ? '/images/contact-active.svg' : '/images/contact.svg'} className='w-[24px] mr-[4px]'
-             alt='Liên hệ'
-          />
-          <p className={classNames('mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap',
-             selectedTab === 'CONTACT' ? 'text-active block' : 'hidden md:block'
-          )}>
-            Liên hệ
-          </p>
-        </div>
-        {/* <div className={classNames('flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer',
+        <div className="flex items-center justify-between px-[24px] md:px-0 w-full md:w-auto">
+          <div
+            className={classNames(
+              "flex items-center justify-between mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
+              selectedTab === "HOME" && "bg-tab-active text-active"
+            )}
+            onClick={() => {
+              Router.push("/");
+            }}
+          >
+            <img
+              src={
+                selectedTab === "HOME"
+                  ? "/images/star-home-active.svg"
+                  : "/images/star-home.svg"
+              }
+              className="w-[24px] mr-[4px]"
+              alt="home"
+            />
+            <p
+              className={classNames(
+                "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
+                selectedTab === "HOME" ? "text-active block" : "hidden md:block"
+              )}
+            >
+              Toidoc
+            </p>
+          </div>
+          <div
+            className={classNames(
+              "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
+              selectedTab === "RESEARCH" && "bg-tab-active text-active"
+            )}
+            onClick={() => {
+              Router.push("/tim-kiem");
+            }}
+          >
+            <img
+              src={
+                selectedTab === "RESEARCH"
+                  ? "/images/search-loupe-active.svg"
+                  : "/images/search-loupe.svg"
+              }
+              className="w-[24px] mr-[4px]"
+              alt="search"
+            />
+            <p
+              className={classNames(
+                "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
+                selectedTab === "RESEARCH"
+                  ? "text-active block"
+                  : "hidden md:block"
+              )}
+            >
+              Khám phá
+            </p>
+          </div>
+          <div
+            className={classNames(
+              "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
+              selectedTab === "LIBRARY" && "bg-tab-active text-active"
+            )}
+            onClick={() => {
+              Router.push("/blog");
+            }}
+          >
+            <img
+              src={
+                selectedTab === "LIBRARY"
+                  ? "/images/book-active.svg"
+                  : "/images/book.svg"
+              }
+              className="w-[24px] mr-[4px]"
+              alt="library"
+            />
+            <p
+              className={classNames(
+                "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
+                selectedTab === "LIBRARY"
+                  ? "text-active block"
+                  : "hidden md:block"
+              )}
+            >
+              Blog
+            </p>
+          </div>
+          <div
+            className={classNames(
+              "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
+              selectedTab === "AUTHOR" && "bg-tab-active text-active"
+            )}
+            onClick={() => {
+              Router.push("/tac-gia");
+            }}
+          >
+            <img
+              src={
+                selectedTab === "AUTHOR"
+                  ? "/images/author-active.svg"
+                  : "/images/author.svg"
+              }
+              className="w-[28px] mr-[4px]"
+              alt="Liên hệ"
+            />
+            <p
+              className={classNames(
+                "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
+                selectedTab === "AUTHOR"
+                  ? "text-active block"
+                  : "hidden md:block"
+              )}
+            >
+              Tác Giả
+            </p>
+          </div>
+          <div
+            className={classNames(
+              "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
+              selectedTab === "CONTACT" && "bg-tab-active text-active"
+            )}
+            onClick={() => {
+              Router.push("/lien-he");
+            }}
+          >
+            <img
+              src={
+                selectedTab === "CONTACT"
+                  ? "/images/contact-active.svg"
+                  : "/images/contact.svg"
+              }
+              className="w-[24px] mr-[4px]"
+              alt="Liên hệ"
+            />
+            <p
+              className={classNames(
+                "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
+                selectedTab === "CONTACT"
+                  ? "text-active block"
+                  : "hidden md:block"
+              )}
+            >
+              Liên hệ
+            </p>
+          </div>
+          {/* <div className={classNames('flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer',
           selectedTab === 'PROFILE' && 'bg-tab-active text-active'
         )}
         onClick={() => {
@@ -130,26 +192,27 @@ const Header = ({selectedTab}) => {
             Cá nhân
           </p>
         </div> */}
-      </div>
+        </div>
 
-      <div className='relative ml-[10px] w-[157px] hidden md:block'>
-        <input className='search h40 border-primary border-width-1'
-          placeholder='Nhập tên truyện mà bạn muốn tìm...'
-          value={text}
-          onChange={(e) => {
-            const value = e.target.value
-            setText(value)
-            clearTimeout(timeout)
-            timeout = setTimeout(() => {
-              Router.push(`/tim-kiem-truyen?tukhoa=${value}`)
-            }, 600)
-          }}
-        />
-        <img src='/images/search.svg' className='search-icon' alt='search'/>
+        <div className="relative ml-[10px] w-[157px] hidden md:block">
+          <input
+            className="search h40 border-primary border-width-1"
+            placeholder="Nhập tên truyện mà bạn muốn tìm..."
+            value={text}
+            onChange={(e) => {
+              const value = e.target.value;
+              setText(value);
+              clearTimeout(timeout);
+              timeout = setTimeout(() => {
+                Router.push(`/tim-kiem-truyen?tukhoa=${value}`);
+              }, 600);
+            }}
+          />
+          <img src="/images/search.svg" className="search-icon" alt="search" />
+        </div>
       </div>
     </div>
-    </div>
-  )
-}
+  );
+};
 
-export default observer(Header)
+export default observer(Header);

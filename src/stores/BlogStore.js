@@ -1,29 +1,26 @@
-// import { useEffect, useState } from "react";
-// import * as Api from "../api/api";
+import { useEffect, useState } from "react";
+import * as Api from "../api/api";
 
-// export const useGetBlog = () => {
-//   const [blog, setBlog] = useState(null);
+export const useGetBlog = ({ blogId }) => {
+  const [blog, setBlog] = useState(null);
+  useEffect(() => {
+    if (!blogId) {
+      return;
+    }
+    const getBlogById = async () => {
+      try {
+        const result = await Api.get({
+          url: `https://api.toidoc.com/data/admin/post/${blogId}`,
+        });
+        setBlog({
+          ...result.data,
+        });
+      } catch (e) {
+        console.log("errorrrrr: ", e);
+      }
+    };
+    getBlogById();
+  }, [blogId]);
 
-//   useEffect(() => {
-//     const getBlog = async () => {
-//       try {
-//         const result = await Api.get({
-//           url: "https://uatapi.truyenso1.xyz/data/admin/posts",
-//           params: {
-//             size: 20,
-//             page: 0,
-//           },
-//         });
-//         console.log("RESULT: ", result);
-//         setBlog({
-//           ...result.data,
-//         });
-//       } catch (e) {
-//         console.log("errorrrrr: ", e);
-//       }
-//     };
-//     getBlog();
-//   }, []);
-
-//   return { blog };
-// };
+  return { blog };
+};
