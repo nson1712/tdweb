@@ -9,8 +9,9 @@ import FooterDesktop from "../../components/FooterDesktop";
 import { QRCode } from "react-qrcode-logo";
 import { formatStringToNumber } from "../../utils/utils";
 import Button from "../../components/Button/Button";
+import { Alert } from "antd";
 
-const TransferInfo = () => {
+const PremiumTransferInfo = ({ type }) => {
   const [accountName, setAccountName] = useState("");
   const [accountNumber, setAccountNumber] = useState("");
   const [amount, setAmount] = useState(0);
@@ -29,13 +30,10 @@ const TransferInfo = () => {
 
   useEffect(() => {
     const dateTimeStr = router.query.expiredAt;
-    console.log("expiredAt: ", dateTimeStr);
     const reverseDateTime =
       dateTimeStr === "" ? new Date() : new Date(dateTimeStr);
-    console.log("reverseDateTime: ", reverseDateTime);
     const now = new Date();
     const duration = reverseDateTime - now;
-    console.log("duration:", duration);
     const remainTime = Math.floor(duration / 1000);
     setTimeLeft(remainTime);
     counter.current = remainTime;
@@ -57,7 +55,6 @@ const TransferInfo = () => {
   ]);
 
   useEffect(() => {
-    // Chạy mỗi giây
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
       counter.current = counter.current > 0 ? counter.current - 1 : 0;
@@ -66,11 +63,9 @@ const TransferInfo = () => {
       }
     }, 1000);
 
-    // Cleanup khi component bị unmount
     return () => clearInterval(timer);
   }, []);
 
-  // Hàm để chuyển đổi giây sang phút và giây
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = Math.floor(timeInSeconds % 60);
@@ -89,13 +84,13 @@ const TransferInfo = () => {
           data
         );
         if (result?.data?.data.code === 200) {
-          Router.push("/nap-kim-cuong/success");
+          Router.push("/premium/success");
         } else if (result?.data?.data.code !== 201) {
-          Router.push("/nap-kim-cuong/failed");
+          Router.push("/premium/failed");
         }
       }
     } catch (e) {
-      Router.push("/nap-kim-cuong/failed");
+      Router.push("/premium/failed");
     }
   };
 
@@ -165,14 +160,14 @@ const TransferInfo = () => {
               <Button
                 className="btnMain btnSecond max-w-[300px] mx-auto mt-[20px]"
                 onClick={(e) => {
-                  Router.push("/nap-kim-cuong");
+                  Router.push("/premium");
                 }}
               >
-                Nạp gói kim cương khác
+                Mua gói Premium khác
               </Button>
               <Button
                 className="btnSecond-Second max-w-[300px] mx-auto"
-                onClick={(e) => {
+                onClick={() => {
                   window.open(
                     `https://m.me/185169981351799?text=Mình qua web với nội dung ${description} không được. Hỗ trợ giúp mình với.`
                   );
@@ -194,25 +189,41 @@ const TransferInfo = () => {
                   )}</strong> nữa`,
                 }}
               />
-              <div className="pl-[20px] pr-[20px] mb-[20px]">
+              <div className="px-[20px] space-y-4">
                 <p className="text-[14px] font-bold mb-[0px]">
                   Hãy ấn nút Copy thông tin chuyển khoản bên dưới
                 </p>
-                <p className="text-[14px] text-red">
-                  <i>
-                    (Lưu ý chỉ copy đúng các thông tin, thì kim cương mới tự
-                    động về tài khoản của bạn)
-                  </i>
-                </p>
-                <div className="text-xs box-transfer-info">
+                <Alert
+                  message="Lưu ý: chỉ khi copy đúng các thông tin, thì tài khoản mới nhận được gói Premium"
+                  showIcon
+                  type="warning"
+                />
+                <div className="text-xs box-transfer-info p-2">
                   <div>
                     <div className="m-2 flex">
                       <div className="mr-3 flex justify-center">
-                        <img loading="lazy" width="50" height="30" decoding="async" data-nimg="1" className="rounded-full m-auto self-center" style={{'color':'transparent',  'background-color': '#fff', 'padding': '5px'}} src="https://img.bankhub.dev/OCB.png"/>
+                        <img
+                          loading="lazy"
+                          width="50"
+                          height="30"
+                          decoding="async"
+                          data-nimg="1"
+                          className="rounded-full m-auto self-center"
+                          style={{
+                            color: "transparent",
+                            "background-color": "#fff",
+                            padding: "5px",
+                          }}
+                          src="https://bidv.com.vn/wps/wcm/connect/48a10028-99d9-4b2c-9e19-5541dbb16a73/Header.png?MOD=AJPERES&attachment=true&id=1648629012586"
+                        />
                       </div>
                       <div>
-                        <p className="text-sm text-[#fff]">Ngân hàng thụ hưởng</p>
-                        <p className="font-bold text-sm text-[#fff]">Ngân hàng Phương Đông OCB</p>
+                        <p className="text-sm text-[#fff]">
+                          Ngân hàng thụ hưởng
+                        </p>
+                        <p className="font-bold text-sm text-[#fff]">
+                          Ngân hàng Đầu Tư & Phát Triển BIDV
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -308,20 +319,13 @@ const TransferInfo = () => {
                         logoPaddingStyle={"circle"}
                         enableCORS={true}
                       />
-                      <div className="vertical-center">
-                        <button
-                          type="button"
+                      <div className="flex justify-center">
+                        <Button
+                          className="bg-[#04b17c] rounded-md px-3 py-1.5 text-white font-semibold shadow-md"
                           onClick={() => handleDownload()}
-                          style={{
-                            backgroundColor: "#04b17c",
-                            borderRadius: "5px",
-                            padding: "5px 10px",
-                            color: "#fff",
-                            marginTop: "20px",
-                          }}
                         >
-                          Tải mã QR Code
-                        </button>
+                          Tải mã QR
+                        </Button>
                       </div>
                     </div>
                   </>
@@ -348,4 +352,4 @@ const TransferInfo = () => {
   );
 };
 
-export default observer(TransferInfo);
+export default observer(PremiumTransferInfo);

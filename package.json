@@ -15,7 +15,6 @@
     "@fortawesome/fontawesome-free": "^6.1.1",
     "@tailwindcss/line-clamp": "^0.4.2",
     "animated-number-react": "^0.1.2",
-    "antd": "^5.22.7",
     "axios": "^0.26.1",
     "bootstrap": "^5.1.3",
     "classnames": "^2.3.2",

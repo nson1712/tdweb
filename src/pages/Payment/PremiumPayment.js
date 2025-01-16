@@ -9,67 +9,73 @@ import Form from "../../components/Form/Form";
 import InputField from "../../components/InputField/InputField";
 import Button from "../../components/Button/Button";
 import Field from "../../components/Form/Field";
-import RedDiamondIcon from "./RedDiamondIcon";
 import { formatStringToNumber } from "../../utils/utils";
 import FooterDesktop from "../../components/FooterDesktop";
 import ChatSupport from "../../components/Button/ChatSupport";
 import ModalComponent from "../../components/Modal/Modal";
 import HeaderPayment from "./HeaderPayment";
+import moment from "moment";
+import "moment/locale/vi";
+import { Alert, notification, Spin } from "antd";
+import crownIcon from "../../../public/images/queen-crown.png";
+import Image from "next/image";
+import { CloseCircleOutlined } from "@ant-design/icons";
 
-const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
+const PremiumPayment = ({
+  values,
+  updateProperty,
+  handleTouched,
+  submitForm,
+}) => {
+  moment.locale("vi");
   const [loading, setLoading] = useState(false);
   const [cash, setCash] = useState(0);
   const { executeRecaptcha } = useGoogleReCaptcha();
-  const [packageValue, setPackageValue] = useState({});
+  const [premiumPackages, setPremiumPackages] = useState([]);
+  const [planCode, setPlanCode] = useState();
   const [clickedIndex, setClickedIndex] = useState(null);
   const [showWarningPackage, setShowWarningPackage] = useState(false);
   const [showChat, setShowChat] = useState(true);
   const [showModal, setShowModal] = useState(false);
-  const [showMorePackage, setShowMorePackage] = useState(false);
-  const [hideMorePackage, setHideMorePackage] = useState(false);
 
-  const packages = [
-    {
-      label: "15,500",
-      deposit: "18,000VNĐ",
-      value: 18000,
-    },
-    {
-      label: "52,500",
-      deposit: "50,000VNĐ",
-      value: 50000,
-    },
-    {
-      label: "110,000",
-      deposit: "100,000VNĐ",
-      value: 100000,
-    },
-    {
-      label: "330,000",
-      deposit: "300,000VNĐ",
-      value: 300000,
-    },
-    {
-      label: "550,000",
-      deposit: "500,000VNĐ",
-      value: 500000,
-    },
-    {
-      label: "1,100,000",
-      deposit: "1,000,000VNĐ",
-      value: 1000000,
-    },
-  ];
+  const [api, contextHolder] = notification.useNotification();
+
+  const openNotification = (placement) => {
+    api.open({
+      message: "Vui lòng kiểm tra lại Mã Khách Hàng!",
+      icon: <CloseCircleOutlined className="text-red-600" />,
+      placement,
+    });
+  };
 
   useEffect(() => {
-    setPackageValue(null);
+    const getPremiumPackage = async () => {
+      try {
+        const result = await Api.get({
+          url: "https://api.toidoc.vn/customer/subscription/plans",
+        });
+        setPremiumPackages(
+          result.data.PREMIUM.sort(function (a, b) {
+            return a.id - b.id;
+          })
+        );
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getPremiumPackage();
+  }, []);
+
+  useEffect(() => {
     setClickedIndex(null);
   }, []);
 
-  const handleChangePackage = (index, item) => {
+  const handleChangePremiumPackages = (index, item) => {
     setShowWarningPackage(false);
     setClickedIndex(index);
-    setCash(item.value);
+    setPlanCode(item.code);
+    setCash(item.price);
   };
 
   const handleRequestPayment = async (data) => {
@@ -78,20 +84,17 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
         setShowWarningPackage(true);
       } else {
         setLoading(true);
-        console.log("Start submit form");
         if (!executeRecaptcha) {
-          console.log("Execute recaptcha not yet available");
           return;
         }
-        console.log("Start get token");
         const token = await executeRecaptcha("onSubmit");
         data.token = token;
-        data.amount = cash;
         const timestamp = Date.now();
         data.requestId = data.customerCode + "_" + timestamp;
+        data.planCode = planCode;
 
         const result = await Api.post({
-          url: "/customer/public/customer/deposit/qr",
+          url: "https://api.toidoc.vn/customer/public/customer/subscription/qr",
           data,
         });
         setLoading(false);
@@ -99,11 +102,10 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
           alert(result?.data.message);
         } else {
           const now = new Date();
-          // Add 10 minutes to the current time
-          const timePlusTenMinutes = new Date(now.getTime() + 10 * 60000); // 10 minutes = 10 * 60 * 1000 milliseconds
+          const timePlusTenMinutes = new Date(now.getTime() + 10 * 60000);
 
           Router.push(
-            `/nap-kim-cuong/thong-tin-chuyen-khoan?accountName=${
+            `/premium/thong-tin-chuyen-khoan?accountName=${
               result?.data.accountName
             }&accountNumber=${result?.data.accountNumber}&amount=${
               result?.data.amount
@@ -113,25 +115,27 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
               result?.data.orderCode
             }&paymentId=${result?.data.paymentLinkId}`
           );
-          // window.open(result?.data.checkoutLink, "_self")
         }
       }
     } catch (e) {
-      console.log("Error get token: ", e);
       setLoading(false);
+      if (e.status === 400) {
+        openNotification("topRight");
+      }
     }
   };
 
   return (
     <CommonLayout>
+      {contextHolder}
       <div>
         <div className="header-payment">
           <Header />
         </div>
-        <div className="relative max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] flex flex-col justify-center text-second-color">
+        <div className="relative max-w-[768px] mx-auto bg-white md:pt-[88px] flex flex-col justify-center text-second-color">
           <HeaderPayment />
-          <p className="text-[20px] font-bold main-text text-center">
-            Web Nạp KC Tự Động Chính Thức của Toidoc
+          <p className="text-[20px] font-bold main-text text-center p-2">
+            Web Mua Premium Tự Động Chính Thức của Toidoc
           </p>
           <div className="pl-[20px] pr-[20px] mb-[20px]">
             <div className="max-w-[450px] w-full mx-auto alert alert--secondary admonition_LlT9 pl-[20px] pr-[20px]">
@@ -146,7 +150,7 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
                 </span>
                 Lưu ý:
               </div>
-              <div class="admonitionContent_S0QG">
+              <div className="admonitionContent_S0QG">
                 <p>
                   Mã khách hàng: là mã TD.... được lấy từ màn hình "Tài Khoản"
                   trên App Toidoc
@@ -172,67 +176,44 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
                 label="1. Copy và Paste mã KH vào ô dưới"
               />
               <p className="text-[14px] font-semibold">
-                2. Bấm chọn gói nạp bên dưới
+                2. Bấm chọn gói PREMIUM bên dưới
               </p>
               {showWarningPackage && (
-                <p className="text-[14px] text-red">
-                  * Bạn phải lựa chọn gói kim cương
-                </p>
+                <Alert type="error" showIcon message="Vui lòng chọn gói" />
               )}
               <div className="btnContainer">
-                {packages.slice(0, 3).map((item, index) => (
+                {premiumPackages?.map((item, index) => (
                   <Button
                     key={index}
-                    className={`btn btnSelectDiamond w-[350px] h-[50px] pt-[10px] ${
-                      clickedIndex === index ? "clicked" : ""
-                    }`}
-                    onClick={() => handleChangePackage(index, item)}
+                    className={`
+                      shadow-xl bg-golden-gradient flex gap-x-1 justify-center rounded-lg relative overflow-hidden font-bold text-base text-[#A54426] w-[350px] h-[50px] hover:translate-y-[-10%] transition duration-300 delay-75 ease-in-out
+                      ${clickedIndex === index ? "clicked" : ""}
+                    `}
+                    onClick={() => handleChangePremiumPackages(index, item)}
                   >
-                    <div>
-                      {`CK ${item.deposit} -> Nhận ${item.label}`}{" "}
-                      <RedDiamondIcon className="float-right ml-[5px]" />
+                    <div className="self-center">
+                      <Image width={24} height={24} src={crownIcon} />
+                    </div>
+                    <div className="self-center">
+                      {`${item.tier} ${moment
+                        .duration(item.expiryInterval)
+                        .humanize(true)
+                        .replace(" tới", "")
+                        .replace("một", "1")
+                        .replace("tháng", "Tháng")
+                        .replace("năm", "Năm")}`}
                     </div>
                   </Button>
                 ))}
-
-                {showMorePackage &&
-                  packages.slice(3, 6).map((item, index) => (
-                    <Button
-                      key={index + 3}
-                      className={`btn btnSelectDiamond w-[350px] h-[50px] pt-[10px] ${
-                        clickedIndex === index + 3 ? "clicked" : ""
-                      }`}
-                      onClick={() => handleChangePackage(index + 3, item)}
-                    >
-                      <div>
-                        {`CK ${item.deposit} -> Nhận ${item.label}`}{" "}
-                        <RedDiamondIcon className="float-right ml-[5px]" />
-                      </div>
-                    </Button>
-                  ))}
-                {!showMorePackage && (
-                  <a
-                    onClick={(e) => {
-                      setShowMorePackage(!showMorePackage);
-                      setHideMorePackage(!hideMorePackage);
-                    }}
-                    className="text-[#0693ee] underline"
-                  >
-                    Xem thêm gói khác
-                  </a>
-                )}
-                {hideMorePackage && (
-                  <a
-                    onClick={(e) => {
-                      setShowMorePackage(!showMorePackage);
-                      setHideMorePackage(!hideMorePackage);
-                    }}
-                    className="text-[#0693ee] underline"
-                  >
-                    Ẩn bớt gói
-                  </a>
-                )}
               </div>
+
+              <Alert
+                closable
+                showIcon
+                type="warning"
+                message="Nếu như bạn đã đăng ký gói trên chợ, vui lòng hủy gói trên chợ trước khi mua!"
+                className="mb-3"
+              />
 
               <p className="text-[16px] font-bold">
                 Số tiền bạn cần chuyển là:{" "}
@@ -241,13 +222,13 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
                 </span>
               </p>
 
-              <Button
-                className="btnMain btnSecond"
+              <button
+                className="w-full text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm py-2.5 text-center shadow-xl"
                 type="submit"
                 loading={loading}
               >
                 Hiển thị thông tin chuyển khoản
-              </Button>
+              </button>
 
               <Button
                 className="btnSecond-Second"
@@ -281,6 +262,8 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
           />
         </ModalComponent>
       )}
+
+      <Spin fullscreen={true} spinning={loading} />
     </CommonLayout>
   );
 };
@@ -301,5 +284,5 @@ const validate = (values) => {
 
 export default LocalForm({
   validate,
-  MyComponent: Payment,
+  MyComponent: PremiumPayment,
 });

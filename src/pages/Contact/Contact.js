@@ -37,14 +37,14 @@ const Contact = () => {
               >
                 <img src='/images/ic_feedback.svg' className='w-[24px]' alt='Góp ý truyện fulll' title='Góp ý truyện full'/>
               </a>
-              <a className='w-[32px] h-[32px] flex items-center justify-center gray-bg rounded-full ml-[20px]'
+              {/*<a className='w-[32px] h-[32px] flex items-center justify-center gray-bg rounded-full ml-[20px]'
                 // onClick={() => {
                 //   Router.push(`/tim-kiem-truyen`)
                 // }}
                 href='/tim-kiem-truyen' title='Tìm kiếm các thể loại truyện full hay'
               >
                 <img src='/images/ic_search.svg' className='w-[24px]' alt='Tìm kiếm các thể loại truyện full hay' title='Tìm kiếm các thể loại truyện full hay'/>
-              </a>
+              </a>*/}
             </div>
           </div>
           <a onClick={(e) => handleClick(e, 'button-contact-big-banner')} >

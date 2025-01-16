@@ -60,15 +60,16 @@ const sendRequest = async ({
 }) => {
   const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_SECRET_KEY);
   const access_token =
-    accessToken || (typeof window !== 'undefined' ? localStorage.getItem('accessToken') : "")
-    const clientToken = await new jose.SignJWT({ 'urn:example:claim': true })
-    .setProtectedHeader({ alg: 'HS256' })
+    accessToken ||
+    (typeof window !== "undefined" ? localStorage.getItem("accessToken") : "");
+  const clientToken = await new jose.SignJWT({ "urn:example:claim": true })
+    .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
     .setIssuer('urn:example:issuer')
     .setAudience('urn:example:audience')
     .setExpirationTime('1m')
     .sign(secret)
-  console.log('clientToken ===>')
+  console.log('clientToken ===>', clientToken)
   return instance({
     url,
     method,
@@ -78,10 +79,11 @@ const sendRequest = async ({
     headers: {
       "Content-Type": "application/json",
       "Cache-Control": "no-cache",
-      "Authorization": access_token ? `${access_token}` : "",
-      channelId: 'WEB',
-      deviceId: typeof window !== 'undefined' ? localStorage.getItem('DEVICE_ID') : '',
-      'Client-Auth': clientToken,
+      Authorization: access_token ? `${access_token}` : "",
+      channelId: "WEB",
+      deviceId:
+        typeof window !== "undefined" ? localStorage.getItem("DEVICE_ID") : "",
+      "Client-Auth": clientToken,
       ...headers,
     },
     ...options,
