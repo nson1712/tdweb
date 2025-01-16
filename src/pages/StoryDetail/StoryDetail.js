@@ -333,7 +333,7 @@ const StoryDetail = () => {
                   <p  className='font-content' dangerouslySetInnerHTML={{__html: item.content}} />
                   {/* {i === 6 && <p dangerouslySetInnerHTML={{__html: `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3889009823396535" crossorigin="anonymous"></script><ins class="adsbygoogle banner-adsense-content-click" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-3889009823396535" data-ad-slot="5416873782"></ins>`}}/>} */}
                   {/* {i === 16 && <p dangerouslySetInnerHTML={{__html: `<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3889009823396535" crossorigin="anonymous"></script><ins class="adsbygoogle banner-adsense-content-click" style="display:block; text-align:center;" data-ad-layout="in-article" data-ad-format="fluid" data-ad-client="ca-pub-3889009823396535" data-ad-slot="5416873782"></ins>`}}/>} */}
-                  {i === 6 && <a href='https://zalo.me/0941642183'><img src='https://media.truyenso1.xyz/ads/chat-gpt-min.png' className='img-ads' alt='Bán tài khoản ChatGPT'/></a>}
+                  {i === 6 && <a href='https://m.me/185169981351799?text=Mình quan tâm tới gói Premium. Hỗ trợ mình với'><img src='https://media.truyenso1.xyz/ads/upgrade-premium.png' className='img-ads' alt='Toidoc premium'/></a>}
 
                   {/* {i === 14 && 
                     <div style={{'z-index': '1', 'height': '812px', 'margin': '0px auto', 'position': 'relative', 'overflow': 'initial'}}>
