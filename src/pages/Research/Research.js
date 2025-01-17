@@ -166,49 +166,49 @@ const Research = () => {
             {/* <h1 className='text-[16px] font-bold label-text mb-[10px] px-[20px]'>
               Khám phá các thể loại
             </h1> */}
-            <div className='mx-auto flex items-center flex-wrap px-[16px] mb-[34px]'>
-              
-              { categories?.slice(0, 5)?.map((category) => (
-                <a className={classNames(`py-[11px] px-[16px] flex items-center justify-center text-[14px] main-text font-medium rounded-[24px] bg-primary2 m-[4px] research-category bg-${category.code}`,
-                  )}
-                  key={category.code}
-                  // onClick={() => {
-                  //   Router.push(`/the-loai/${category.code}`)  
-                  // }}
-                  href={`/the-loai/${category.code}`} title={`Thể loại truyện ${category.name}`}
-                >
-                  {category.name}
-                </a>
-              )) }
-              <a className={classNames('py-[11px] px-[16px] flex items-center justify-center text-[14px] main-text font-medium rounded-[24px] m-[4px] research-category research-category-view-all',
-                )}
-                // onClick={() => {
-                //   Router.push('/the-loai')
-                // }}
-                href='/the-loai' title='Tất cả thể loại truyện full'
-              >
-                Xem tất cả
-              </a>
+              <div className='mb-[20px]'>
+                <div className='mx-auto flex items-center flex-wrap px-[16px] mb-[34px]'>
+                  
+                  { categories?.slice(0, 5)?.map((category) => (
+                    <a className={classNames(`py-[11px] px-[16px] flex items-center justify-center text-[14px] main-text font-medium rounded-[24px] bg-primary2 m-[4px] research-category bg-${category.code}`,
+                      )}
+                      key={category.code}
+                      // onClick={() => {
+                      //   Router.push(`/the-loai/${category.code}`)  
+                      // }}
+                      href={`/the-loai/${category.code}`} title={`Thể loại truyện ${category.name}`}
+                    >
+                      {category.name}
+                    </a>
+                  )) }
+                  <a className={classNames('py-[11px] px-[16px] flex items-center justify-center text-[14px] main-text font-medium rounded-[24px] m-[4px] research-category research-category-view-all',
+                    )}
+                    // onClick={() => {
+                    //   Router.push('/the-loai')
+                    // }}
+                    href='/the-loai' title='Tất cả thể loại truyện full'
+                  >
+                    Xem tất cả
+                  </a>
+                </div>
+                {collections1?.data && collections1?.data?.length > 0
+                  &&  <SlideCollections collections={collections1?.data}/>
+                }
+                <SlideStories
+                  title='Trending'
+                  data={topTrending?.data?.slice(0, 20)}
+                  url={`/danh-sach-truyen/trending`}
+                />
+              </div>
+            
+              <SlideStories
+                title='Truyen HOT Toidoc'
+                data={hotStories?.data?.slice(0, 20)}
+                url={`/danh-sach-truyen/hot`}
+              />
             </div>
 
-            {collections1?.data && collections1?.data?.length > 0
-              &&  <SlideCollections collections={collections1?.data}/>
-            }
-           
-            <SlideStories
-              title='Truyen HOT Toidoc'
-              data={hotStories?.data?.slice(0, 20)}
-              url={`/danh-sach-truyen/hot`}
-            />
-          </div>
-
-          <div className='mb-[20px]'>
-            <SlideStories
-              title='Nhiều lượt view nhất'
-              data={topViews?.data?.slice(0, 20)}
-              url={`/danh-sach-truyen/xem-nhieu-nhat`}
-            />
-          </div>
+          
 
           {/* <div className='flex scoll-horizonal pl-[16px]'>
             {favouriteCategories?.map((category, i) => (
@@ -258,12 +258,11 @@ const Research = () => {
             </div>
           </div> */}
         
-
           <div className='mb-[20px]'>
             <SlideStories
-              title='Trending'
-              data={topTrending?.data?.slice(0, 20)}
-              url={`/danh-sach-truyen/trending`}
+              title='Nhiều lượt view nhất'
+              data={topViews?.data?.slice(0, 20)}
+              url={`/danh-sach-truyen/xem-nhieu-nhat`}
             />
           </div>
 

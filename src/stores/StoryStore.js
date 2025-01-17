@@ -622,10 +622,10 @@ class StoryStore {
   getCollections = async (page = 1, size = 20) => {
     try {
       const result = await Api.get({
-        url: 'data/private/collection/search',
+        url: 'data/private/data/collections',
         params: {
           page,
-          size
+          pageSize: size
         },
         hideError: true
       })

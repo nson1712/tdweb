@@ -77,13 +77,13 @@ const Stories = () => {
     const filterParams = {
       sort: 'hot'
     }
-    getStoryByCategory('dien-van', last, 20, filterParams)
+    getStoryByCategory('dtruyen', last, 20, filterParams)
   }, [])
 
 
   const data = useMemo(() => {
 
-    return storyByCategory['dien-van']
+    return storyByCategory['dtruyen']
 
   }, [storyByCategory])
 
