@@ -20,9 +20,10 @@ const Content = ({ content }) => {
               {parse(item)}
             </div>
           );
-        } else {
+        }
+        else {
           return (
-            <div key={index} className="mb-3">
+            <div key={index} className="mb-1 flex justify-center">
               {parse(item)}
             </div>
           );

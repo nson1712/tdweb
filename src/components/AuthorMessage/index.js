@@ -1,11 +1,10 @@
-import { UserOutlined } from "@ant-design/icons";
 import { Avatar, Typography } from "antd";
 
 const { Paragraph } = Typography;
-const AuthorMessage = () => {
+const AuthorMessage = ({message}) => {
   return (
-    <div className="p-2 rounded-[8px] bg-gradient-to-br from-[#f6d9d9] to-[#fffcfc] sm:flex sm:space-x-6">
-      <div>
+    <div className="py-4 px-10 rounded-[8px] bg-gradient-to-br from-[#fffcfc] via-[#f6d9d9] f6d9d9 to-[#fffcfc] sm:flex sm:space-x-6">
+      <div className="flex justify-center sm:flex-none">
         <Avatar size={100} src="https://toidoc.vn/images/logo-toidoc.svg" />
       </div>
       <Paragraph className="font-semibold">
@@ -21,9 +20,7 @@ const AuthorMessage = () => {
         >
           <path d="M464 256h-80v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8c-88.4 0-160 71.6-160 160v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48zm-288 0H96v-64c0-35.3 28.7-64 64-64h8c13.3 0 24-10.7 24-24V56c0-13.3-10.7-24-24-24h-8C71.6 32 0 103.6 0 192v240c0 26.5 21.5 48 48 48h128c26.5 0 48-21.5 48-48V304c0-26.5-21.5-48-48-48z"></path>
         </svg>
-        Bạn là tín đồ đam mê công nghệ và game? Hãy cùng mình - Gia Khanh, khám
-        phá những bí mật thú vị về thế giới số. Với những bài viết chuyên sâu và
-        cập nhật thường xuyên, mình sẽ giúp bạn luôn đi đầu trong xu hướng.
+        <p className="text-base">{message}</p>
         <div className="flex w-full justify-end">
           <svg
             stroke="currentColor"

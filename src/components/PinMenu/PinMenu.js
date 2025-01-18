@@ -8,6 +8,7 @@ const PinMenu = ({ headingList, scrollIntoView }) => {
   );
   const [headingOrder, setHeadingOrder] = useState(1);
   const [isVisible, setIvisible] = useState(false);
+  const [activeKey, setActiveKey] = useState([]);
 
   const generateNestedList = (list) => {
     const result = [];
@@ -44,8 +45,11 @@ const PinMenu = ({ headingList, scrollIntoView }) => {
         return (
           <li key={item.id} className="cursor-pointer">
             <div
-              className="hover:text-blue-600 mt-2"
-              onClick={() => scrollIntoView(item.id)}
+              className="hover:text-blue-600 mt-2 max-w-xs sm:max-w-none pl-3.5"
+              onClick={() => {
+                scrollIntoView(item.id)
+                setActiveKey([])
+              }}
             >
               {currentIndex}. {item.label}
             </div>
@@ -118,7 +122,7 @@ const PinMenu = ({ headingList, scrollIntoView }) => {
     {
       key: "1",
       label: (
-        <div className="text-blue-600 ">
+        <div className="text-blue-600 max-w-xs sm:max-w-none">
           {currentIndex}. {currentHeading}
         </div>
       ),
@@ -131,15 +135,17 @@ const PinMenu = ({ headingList, scrollIntoView }) => {
         token: {
           colorTextHeading: "#000",
           colorTextBase: "#3b82f6",
-          padding: "10",
+          padding: "20",
         },
       }}
     >
-      <div className="fixed top-0 z-[999] max-h-[800px] translate-x-[-10px] sm:translate-x-[-25px] w-[950px] -ml-5 sm:ml-2">
+      <div className="fixed top-[0px] sm:top-[92px] z-[999] translate-x-[-10px] sm:translate-x-[-25px] w-[950px] -ml-5 sm:ml-2 shadow-md">
         <Collapse
-          className="bg-slate-50 font-[500] rounded-none -mt-5 py-1.5"
+          className="bg-slate-50 font-[500] max-h-[500px] rounded-none -mt-5 py-1.5 overflow-y-auto"
           items={items}
           bordered={false}
+          activeKey={activeKey}
+          onChange={(key) => setActiveKey(key)}
         />
       </div>
     </ConfigProvider>

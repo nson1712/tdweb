@@ -28,7 +28,7 @@ const Blog = () => {
   }, []);
 
   const fetchData = (currentPage) => {
-    const fetchUrl = `https://api.toidoc.com/data/post/list?size=${size}&page=${currentPage}`;
+    const fetchUrl = `https://api.toidoc.com/data/article/list?size=${size}&page=${currentPage}`;
 
     setLoading(true);
     fetch(fetchUrl)
@@ -103,8 +103,10 @@ const Blog = () => {
                           pathname: `blog/${item.slug}`,
                           query: {
                             id: item.id
-                          }
-                        }}>
+                          },
+                        }}
+                        as={`blog/${item.slug}`}
+                        >
                           <Image
                             preview={false}
                             className="rounded-lg"
@@ -120,7 +122,9 @@ const Blog = () => {
                           query: {
                             id: item.id
                           }
-                        }}>
+                        }}
+                        as={`blog/${item.slug}`}
+                        >
                           <div className="text-black cursor-pointer hover:text-blue-600">
                           {item.title}
                           </div>

@@ -26,6 +26,7 @@ const RelatedBlog = ({ relatedBlogList }) => {
                     id: item.id,
                   },
                 }}
+                as={`${item.slug}`}
               >
                 <div className="text-xs sm:text-sm font-[500] line-clamp-2 cursor-pointer hover:text-blue-600 transition delay-75">
                   {item.title}
