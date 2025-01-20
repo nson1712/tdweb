@@ -78,7 +78,7 @@ const Stories = () => {
       sort: 'hot'
     }
     getStoryByCategory('dtruyen', last, 20, filterParams)
-  }, [])
+  }, [last])
 
 
   const data = useMemo(() => {
@@ -111,9 +111,7 @@ const Stories = () => {
   }, [data])
 
   const handleLoadmore = () => {
-    if (data && data?.totalElements > 0 && data?.totalPages > page) {
-      setPage(page + 1)
-    }
+    console.log('data?.hasNext: ', data?.hasNext);
     if (data && data.hasNext) {
       setLast(data.last)
     }

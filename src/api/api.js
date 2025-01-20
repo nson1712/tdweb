@@ -150,7 +150,7 @@ export const post = ({
 }) =>
   sendRequest({
     url,
-    params: { ...params, key: "trinhkhoi1811trinhkhoi1811@@@@trinhkhoi" },
+    params: { ...params },
     data,
     method: "POST",
     loading,
@@ -172,7 +172,7 @@ export const put = ({
 }) =>
   sendRequest({
     url,
-    params: { ...params, key: "trinhkhoi1811trinhkhoi1811@@@@trinhkhoi" },
+    params: { ...params},
     data,
     method: "PUT",
     loading,
@@ -191,7 +191,7 @@ export const patch = ({
 }) =>
   sendRequest({
     url,
-    params: { ...params, key: "trinhkhoi1811trinhkhoi1811@@@@trinhkhoi" },
+    params: { ...params },
     data,
     method: "PATCH",
     loading,
@@ -209,7 +209,7 @@ export const deleteData = ({
 }) =>
   sendRequest({
     url,
-    params: { ...params, key: "trinhkhoi1811trinhkhoi1811@@@@trinhkhoi" },
+    params: { ...params},
     data,
     method: "DELETE",
     loading,
@@ -229,7 +229,7 @@ export const getHTTPMethod = (baseURL) => ({
   }) =>
     sendRequest({
       url,
-      params: { ...params, key: "trinhkhoi1811trinhkhoi1811@@@@trinhkhoi" },
+      params: { ...params},
       method: "GET",
       loading,
       headers,
@@ -248,7 +248,7 @@ export const getHTTPMethod = (baseURL) => ({
   }) =>
     sendRequest({
       url,
-      params: { ...params, key: "trinhkhoi1811trinhkhoi1811@@@@trinhkhoi" },
+      params: { ...params},
       data,
       method: "POST",
       loading,
@@ -259,7 +259,7 @@ export const getHTTPMethod = (baseURL) => ({
   put: ({ url, params, data, loading = true, headers = {}, options = {} }) =>
     sendRequest({
       url,
-      params: { ...params, key: "trinhkhoi1811trinhkhoi1811@@@@trinhkhoi" },
+      params: { ...params},
       data,
       method: "PUT",
       loading,
@@ -276,7 +276,7 @@ export const getHTTPMethod = (baseURL) => ({
   }) =>
     sendRequest({
       url,
-      params: { ...params, key: "trinhkhoi1811trinhkhoi1811@@@@trinhkhoi" },
+      params: { ...params },
       data,
       method: "DELETE",
       loading,
