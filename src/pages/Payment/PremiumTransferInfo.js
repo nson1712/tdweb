@@ -10,6 +10,7 @@ import { QRCode } from "react-qrcode-logo";
 import { formatStringToNumber } from "../../utils/utils";
 import Button from "../../components/Button/Button";
 import { Alert } from "antd";
+import ocbIcon from "../../../public/images/ocb.png";
 
 const PremiumTransferInfo = ({ type }) => {
   const [accountName, setAccountName] = useState("");
@@ -202,27 +203,16 @@ const PremiumTransferInfo = ({ type }) => {
                   <div>
                     <div className="m-2 flex">
                       <div className="mr-3 flex justify-center">
-                        <img
-                          loading="lazy"
-                          width="50"
-                          height="30"
-                          decoding="async"
-                          data-nimg="1"
-                          className="rounded-full m-auto self-center"
-                          style={{
-                            color: "transparent",
-                            "background-color": "#fff",
-                            padding: "5px",
-                          }}
-                          src="https://bidv.com.vn/wps/wcm/connect/48a10028-99d9-4b2c-9e19-5541dbb16a73/Header.png?MOD=AJPERES&attachment=true&id=1648629012586"
-                        />
+                        <div className="w-16">
+                          <Image className="self-center" src={ocbIcon} />
+                        </div>
                       </div>
                       <div>
                         <p className="text-sm text-[#fff]">
                           Ngân hàng thụ hưởng
                         </p>
                         <p className="font-bold text-sm text-[#fff]">
-                          Ngân hàng Đầu Tư & Phát Triển BIDV
+                          Ngân hàng thương mại cổ phần Phương Đông
                         </p>
                       </div>
                     </div>
