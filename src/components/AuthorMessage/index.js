@@ -11,7 +11,7 @@ const AuthorMessage = ({message}) => {
         <svg
           stroke="currentColor"
           fill="rgb(223 6 45)"
-          stroke-width="0"
+          strokeWidth="0"
           viewBox="0 0 512 512"
           class="text-cps"
           height="12"
@@ -25,7 +25,7 @@ const AuthorMessage = ({message}) => {
           <svg
             stroke="currentColor"
             fill="rgb(223 6 45)"
-            stroke-width="0"
+            strokeWidth="0"
             viewBox="0 0 512 512"
             class="text-cps"
             height="12"

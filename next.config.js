@@ -1,4 +1,4 @@
-const path = require('path')
+const path = require('path');
 
 module.exports = {
   sassOptions: {
@@ -11,6 +11,9 @@ module.exports = {
         destination: '/rewards-dashboard',
         permanent: true,
       },
-    ]
+    ];
   },
-}
+  images: {
+    domains: ['media.truyenso1.xyz'],
+  },
+};

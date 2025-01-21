@@ -4,11 +4,11 @@
 <rect x="0.5" y="0.5" width="51" height="51" rx="25.5" stroke="white"/>
 </g>
 <g clip-path="url(#clip0_318_998)">
-<path d="M21.7301 23.7111C23.3841 25.3651 23.3841 28.0467 21.7301 29.7007C20.0761 31.3547 17.3945 31.3547 15.7405 29.7007C14.0865 28.0467 14.0865 25.3651 15.7405 23.7111C17.3945 22.0571 20.0761 22.0571 21.7301 23.7111" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M34.4362 15.2405C36.0901 16.8945 36.0901 19.5761 34.4362 21.2301C32.7822 22.8841 30.1005 22.8841 28.4465 21.2301C26.7926 19.5761 26.7926 16.8945 28.4465 15.2405C30.1005 13.5865 32.7822 13.5865 34.4362 15.2405" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M34.4362 30.7699C36.0901 32.4239 36.0901 35.1055 34.4362 36.7595C32.7822 38.4135 30.1005 38.4135 28.4465 36.7595C26.7926 35.1055 26.7926 32.4239 28.4465 30.7699C30.1005 29.1159 32.7822 29.1159 34.4362 30.7699" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M22.9707 23.8823L27.206 21.0588" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path d="M22.9707 29.5294L27.206 32.3529" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M21.7301 23.7111C23.3841 25.3651 23.3841 28.0467 21.7301 29.7007C20.0761 31.3547 17.3945 31.3547 15.7405 29.7007C14.0865 28.0467 14.0865 25.3651 15.7405 23.7111C17.3945 22.0571 20.0761 22.0571 21.7301 23.7111" stroke="white" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M34.4362 15.2405C36.0901 16.8945 36.0901 19.5761 34.4362 21.2301C32.7822 22.8841 30.1005 22.8841 28.4465 21.2301C26.7926 19.5761 26.7926 16.8945 28.4465 15.2405C30.1005 13.5865 32.7822 13.5865 34.4362 15.2405" stroke="white" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M34.4362 30.7699C36.0901 32.4239 36.0901 35.1055 34.4362 36.7595C32.7822 38.4135 30.1005 38.4135 28.4465 36.7595C26.7926 35.1055 26.7926 32.4239 28.4465 30.7699C30.1005 29.1159 32.7822 29.1159 34.4362 30.7699" stroke="white" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.9707 23.8823L27.206 21.0588" stroke="white" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path d="M22.9707 29.5294L27.206 32.3529" stroke="white" strokeWidth="2" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 <defs>
 <filter id="filter0_b_318_998" x="-4" y="-4" width="60" height="60" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
