@@ -124,6 +124,26 @@ const StorySummary = () => {
     setScreenWidth(window.innerWidth)
   }, [])
 
+  useEffect(() => {
+      // Disable right-click (context menu)
+      const disableContextMenu = (event) => event.preventDefault();
+      document.addEventListener('contextmenu', disableContextMenu);
+    
+      // Disable copying (Ctrl+C, Cmd+C, etc.)
+      const disableCopy = (event) => {
+        event.clipboardData.setData('text/plain', 'Copying is not allowed.');
+        event.preventDefault();
+  
+      };
+      document.addEventListener('copy', disableCopy);
+    
+      // Cleanup on unmount
+      return () => {
+        document.removeEventListener('contextmenu', disableContextMenu);
+        document.removeEventListener('copy', disableCopy);
+      };
+    }, []);
+
 
   // useEffect(() => {
   //   ; (window.adsbygoogle = window.adsbygoogle || []).push({})
