@@ -1,19 +1,11 @@
 import { useEffect, useState } from "react";
 import * as Api from "../api/api";
+import { useRouter } from "next/router";
 
 export const useGetBlog = () => {
+  const router = useRouter();
+  const blogId = router.query.id
   const [blog, setBlog] = useState(null);
-  const [blogId, setBlogId] = useState(null);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const query = localStorage.getItem("hiddenQuery");
-      if (query) {
-        const parsedQuery = JSON.parse(query);
-        setBlogId(parsedQuery.id);
-      }
-    }
-  }, []);
 
   useEffect(() => {
     if (!blogId) {

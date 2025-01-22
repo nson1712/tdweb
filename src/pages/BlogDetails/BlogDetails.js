@@ -132,7 +132,7 @@ const BlogDetails = ({ data }) => {
         <Header selectedTab={"LIBRARY"} />
       </div>
       <div className="max-w-[950px] mx-auto space-y-4 pb-24">
-        <div className="md:-mt-12 relative p-3 bg-white min-h-[100vh] sm:shadow-sm sm:border sm:border-slate-100 rounded-2xl space-y-4">
+        <div className="md:-mt-32 relative p-3 bg-white min-h-[100vh] sm:shadow-sm sm:border sm:border-slate-100 rounded-2xl space-y-4">
           <CategoriesTag title="Blog" className="hidden sm:block" />
 
           <PinMenu headingList={headingList} scrollIntoView={handleScrollTo} />
@@ -149,7 +149,7 @@ const BlogDetails = ({ data }) => {
 
           <ArticleShortDescription shortDescription={data?.shortDescription} />
 
-          <Menu headingList={headingList} scrollIntoView={handleScrollTo} />
+          {headingList.length !== 0 && <Menu headingList={headingList} scrollIntoView={handleScrollTo} />}
 
           <Content content={contentArr} />
         </div>

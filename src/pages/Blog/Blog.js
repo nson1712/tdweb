@@ -9,9 +9,8 @@ import { Router, useRouter } from "next/router";
 import UnderLineTitle from "../../components/UnderLineTitle/UnderLineTitle";
 import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import { cleanHtml } from "../../utils/utils";
-import BlogImageLink from "../../components/BlogImageLink";
-import BlogTitleLink from "../../components/BlogTitle";
-
+import Link from "next/link";
+import Image from "next/image";
 
 const Blog = () => {
   const [page, setPage] = useState(0);
@@ -101,12 +100,39 @@ const Blog = () => {
                   <List.Item.Meta
                     avatar={
                       <div className="w-36 sm:w-52 md:w-60">
-                        <BlogImageLink item={item} router={router} />
+                        <Link
+                          href={{
+                            pathname: `blog/${item.slug}`,
+                            query: {
+                              id: item.id,
+                            },
+                          }}
+                          as={`blog/${item.slug}`}
+                        >
+                          <Image
+                            width={1280}
+                            height={720}
+                            className={`rounded-lg cursor-pointer`}
+                            src={item.coverImage || ""}
+                            alt={item?.alt || "Blog image"}
+                          />
+                        </Link>
                       </div>
                     }
                     title={
                       <div className="line-clamp-3 text-md sm:text-base font-[500] sm:font-semibold hover:text-blue-600">
-                        <BlogTitleLink item={item} router={router} />
+                        <Link
+                          href={{
+                            pathname: `blog/${item.slug}`,
+                            query: {
+                              id: item.id,
+                            },
+                          }}
+                        >
+                          <div className="text-black cursor-pointer hover:text-blue-600">
+                            {item.title}
+                          </div>
+                        </Link>
                       </div>
                     }
                     description={

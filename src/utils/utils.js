@@ -223,3 +223,13 @@ export const appendNewLineAfterCloseHTag = (string) => {
     .replaceAll("</p>", "</p> \n")
     .replaceAll("</figure>", "</figure> \n")
 };
+
+export const isEmpty = (obj) => {
+  for (const prop in obj) {
+    if (Object.hasOwn(obj, prop)) {
+      return false;
+    }
+  }
+
+  return true;
+}

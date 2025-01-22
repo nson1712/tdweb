@@ -20,10 +20,16 @@ const Content = ({ content }) => {
               {parse(item)}
             </div>
           );
+        }else if(item.includes("</figure>")){
+          return (
+            <div key={index} className="mb-1 flex justify-center">
+              {parse(item)}
+            </div>
+          );
         }
         else {
           return (
-            <div key={index} className="mb-1 flex justify-center">
+            <div key={index}>
               {parse(item)}
             </div>
           );
