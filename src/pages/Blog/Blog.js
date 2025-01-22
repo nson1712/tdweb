@@ -107,7 +107,6 @@ const Blog = () => {
                               id: item.id,
                             },
                           }}
-                          as={`blog/${item.slug}`}
                         >
                           <Image
                             width={1280}
