@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import Content from "./Content";
 import Menu from "./Menu";
-import RelatedBlog from "./RelatedBlog";
 import parse from "html-react-parser";
 import PinMenu from "../../components/PinMenu/PinMenu";
 import {
@@ -18,6 +17,7 @@ import CategoriesTag from "../../components/CategoriesTag";
 import CreateAndUpdateTimeZone from "../../components/CreateAndUpdateTimeZone";
 import ArticleTitle from "../../components/ArticleTitle";
 import ArticleShortDescription from "../../components/ArticleShortDescription";
+import RelatedBlog from "../../components/RelatedBlog";
 
 const BlogDetails = ({ data }) => {
   const [loading, setLoading] = useState(false);
@@ -149,7 +149,9 @@ const BlogDetails = ({ data }) => {
 
           <ArticleShortDescription shortDescription={data?.shortDescription} />
 
-          {headingList.length !== 0 && <Menu headingList={headingList} scrollIntoView={handleScrollTo} />}
+          {headingList.length !== 0 && (
+            <Menu headingList={headingList} scrollIntoView={handleScrollTo} />
+          )}
 
           <Content content={contentArr} />
         </div>

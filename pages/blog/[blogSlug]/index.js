@@ -16,6 +16,7 @@ const BlogDetailPage = ({}) => {
             width={1780}
             src={blog?.coverImage || "/default.jpg"}
             alt="blog image"
+            priority
           />
           <div className="absolute inset-0 bg-black/60 sm:bg-transparent" />
         </div>

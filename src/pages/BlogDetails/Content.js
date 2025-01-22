@@ -1,42 +1,24 @@
+import React from "react";
+import parse from "html-react-parser";
 import {
   cleanHtml,
   getSlugfromSlugGenerate,
   slugGenerate,
 } from "../../utils/utils";
-import React from "react";
-import parse from "html-react-parser";
 
-const Content = ({ content }) => {
-  const headingRegex = /<\/h[1-6]>/i;
-  return (
-    <div>
-      {content?.map((item, index) => {
-        if (headingRegex.test(item)) {
-          return (
-            <div
-              key={index}
-              id={getSlugfromSlugGenerate(slugGenerate(cleanHtml(item)))}
-            >
-              {parse(item)}
-            </div>
-          );
-        }else if(item.includes("</figure>")){
-          return (
-            <div key={index} className="mb-1 flex justify-center">
-              {parse(item)}
-            </div>
-          );
-        }
-        else {
-          return (
-            <div key={index}>
-              {parse(item)}
-            </div>
-          );
-        }
+const Content = ({ content }) =>
+  content?.map((item, index) => (
+    <div
+      key={index}
+      {...(item.match(/<\/h[1-6]>/i) && {
+        id: getSlugfromSlugGenerate(slugGenerate(cleanHtml(item))),
       })}
+      className={
+        item.includes("</figure>") ? "mb-1 flex justify-center" : undefined
+      }
+    >
+      {parse(item)}
     </div>
-  );
-};
+  )) ?? null;
 
 export default Content;

@@ -1,26 +1,18 @@
-// const CustomLink = ({ router, href, query, children, ...props }) => {
-//   const handleClick = (e) => {
-//     if (query.id) {
-//       localStorage.setItem("hiddenQuery", JSON.stringify(query));
-//     }
-//     router.push(
-//       {
-//         pathname: href,
-//         query: query,
-//       },
-//       href
-//     );
-//   };
+const { default: Link } = require("next/link");
 
-//   return (
-//     <div
-//       onClick={handleClick}
-//       {...props}
-//       className={` text-black hover:text-blue-600 cursor-pointer ${props.className || ""}`}
-//     >
-//       {children}
-//     </div>
-//   );
-// };
+const withCustomLink = (WrapComponent) => {
+  return ({ item, pathname, query, ...props }) => (
+    <Link
+      href={{
+        pathname: pathname,
+        query: query,
+      }}
+    >
+      <div className="cursor-pointer">
+        <WrapComponent item={item} {...props} />
+      </div>
+    </Link>
+  );
+};
 
-// export default CustomLink;
+export default withCustomLink;

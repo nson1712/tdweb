@@ -58,18 +58,18 @@ const sendRequest = async ({
   config,
   accessToken = "",
 }) => {
-  const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_SECRET_KEY);
+  // const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_SECRET_KEY);
   const access_token =
     accessToken ||
     (typeof window !== "undefined" ? localStorage.getItem("accessToken") : "");
-  const clientToken = await new jose.SignJWT({ "urn:example:claim": true })
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setIssuer("urn:example:issuer")
-    .setAudience("urn:example:audience")
-    .setExpirationTime("1m")
-    .sign(secret);
-  console.log("clientToken ===>", clientToken);
+  // const clientToken = await new jose.SignJWT({ "urn:example:claim": true })
+  //   .setProtectedHeader({ alg: "HS256" })
+  //   .setIssuedAt()
+  //   .setIssuer("urn:example:issuer")
+  //   .setAudience("urn:example:audience")
+  //   .setExpirationTime("1m")
+  //   .sign(secret);
+  // console.log("clientToken ===>", clientToken);
   return instance({
     url,
     method,
@@ -83,7 +83,7 @@ const sendRequest = async ({
       channelId: "WEB",
       deviceId:
         typeof window !== "undefined" ? localStorage.getItem("DEVICE_ID") : "",
-      "Client-Auth": clientToken,
+      // "Client-Auth": clientToken,
       ...headers,
     },
     ...options,

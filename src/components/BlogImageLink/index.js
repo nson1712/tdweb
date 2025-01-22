@@ -1,25 +1,16 @@
-// import Image from "next/image";
-// import CustomLink from "../CustomLink";
-// import { isEmpty } from "../../utils/utils";
+import Image from "next/image";
+import withCustomLink from "../CustomLink";
 
-// const BlogImageLink = ({ item, router, className }) => {
-//   const query = router.query
+const BlogImageLink = ({ item, className }) => (
+  <div className={className}>
+    <Image
+      width={1280}
+      height={720}
+      className="rounded-lg"
+      src={item.coverImage || ""}
+      alt={item?.alt || "Blog image"}
+    />
+  </div>
+);
 
-//   return (
-//     <CustomLink
-//       router={router}
-//       href={isEmpty(query) ? `blog/${item.slug}` : `/${item.slug}`}
-//       query={{ id: item.id }}
-//     >
-//       <Image
-//         width={1280}
-//         height={720}
-//         className={`rounded-lg ${className} cursor-pointer`}
-//         src={item.coverImage || ""}
-//         alt={item?.alt || "Blog image"}
-//       />
-//     </CustomLink>
-//   );
-// };
-
-// export default BlogImageLink;
+export default withCustomLink(BlogImageLink);
