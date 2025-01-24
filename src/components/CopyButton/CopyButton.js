@@ -17,7 +17,7 @@ const CopyButton = ({ text, placement }) => {
           }, 3000)
         }}
       >
-        <img className='w-[16px]' ref={target} src='/images/copy.svg'/>
+        <img className='w-[20px]' ref={target} src='/images/icon-copy.png'/>
       </CopyToClipboard>
       <Overlay target={target.current} show={showTooltip} placement={placement || 'right'}>
         {(props) => (

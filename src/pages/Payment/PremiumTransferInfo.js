@@ -10,7 +10,6 @@ import { QRCode } from "react-qrcode-logo";
 import { formatStringToNumber } from "../../utils/utils";
 import Button from "../../components/Button/Button";
 import { Alert } from "antd";
-import ocbIcon from "../../../public/images/ocb.png";
 
 const PremiumTransferInfo = ({ type }) => {
   const [accountName, setAccountName] = useState("");
@@ -204,7 +203,7 @@ const PremiumTransferInfo = ({ type }) => {
                     <div className="m-2 flex">
                       <div className="mr-3 flex justify-center">
                         <div className="w-16">
-                          <Image className="self-center" src={ocbIcon} />
+                          <img className="self-center" src='/images/ocb.png' />
                         </div>
                       </div>
                       <div>

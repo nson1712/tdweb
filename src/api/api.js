@@ -1,9 +1,7 @@
 import axios from "axios";
 import Router from "next/router";
-import { toast } from "react-toastify";
-import { removeToken } from "../utils/storage";
-
-import * as jose from "jose";
+import { removeToken, getItem, getRefreshToken, getAccessToken, setAccessToken, setRefreshToken } from "../utils/storage";
+import GlobalStore from "../stores/GlobalStore";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -31,7 +29,6 @@ const handleError = async (error, hideError) => {
   if (error?.response?.status === 401 || error?.response?.status === 403) {
     errorMessage = errorMessages.sessionExprire;
     removeToken();
-    ProfileStore.setProfile({});
     Router.push("/login");
     // logout
   }
@@ -58,37 +55,30 @@ const sendRequest = async ({
   config,
   accessToken = "",
 }) => {
-  const secret = new TextEncoder().encode(process.env.NEXT_PUBLIC_SECRET_KEY);
-  const access_token =
-    accessToken ||
-    (typeof window !== "undefined" ? localStorage.getItem("accessToken") : "");
-  const clientToken = await new jose.SignJWT({ "urn:example:claim": true })
-    .setProtectedHeader({ alg: "HS256" })
-    .setIssuedAt()
-    .setIssuer("urn:example:issuer")
-    .setAudience("urn:example:audience")
-    .setExpirationTime("1m")
-    .sign(secret);
-  console.log("clientToken ===>", clientToken);
+  accessToken = await getAccessToken();
+  const refreshToken = await getRefreshToken();
+  const guid = await getItem('DEVICE_ID');
   return instance({
     url,
     method,
-    params,
+    params: {
+      ...params,
+      'guid': guid
+    },
     data,
     config,
-    headers: {
+    headers: Object.assign({
+      ...headers,
       "Content-Type": "application/json",
       "Cache-Control": "no-cache",
-      Authorization: access_token ? `${access_token}` : "",
       channelId: "WEB",
-      deviceId:
-        typeof window !== "undefined" ? localStorage.getItem("DEVICE_ID") : "",
-      "Client-Auth": clientToken,
-      ...headers,
+      deviceId: guid,
     },
+    accessToken && {Authorization: accessToken},
+    refreshToken && {'refresh-token': refreshToken}),
     ...options,
   })
-    .then((response) => {
+    .then(async(response) => {
       if (response.data.status && +response.data.status > 300) {
         throw {
           response: {
@@ -98,9 +88,38 @@ const sendRequest = async ({
           },
         };
       }
+
+      console.log("Path: ", url);
+      const accessToken = response?.headers['access-token'];
+      const refreshToken = response?.headers['refresh-token'];
+      console.log("Response: ", response);
+      console.log("New accessToken: ", accessToken);
+      console.log("New refreshToken: ", refreshToken);
+      if(accessToken) {
+        await setAccessToken(accessToken);
+        await GlobalStore.updateProfile(accessToken);
+      }
+      if (refreshToken) {
+        await setRefreshToken(refreshToken);
+      }
       return response.data;
     })
-    .catch((error) =>
+    .catch(async(error) => {
+      console.log('Error: ', error);
+      if ((error?.response?.status === 401 || error?.response?.status === 403 || error?.response?.status === 406) && url.includes('/data/chapter/slug')) {
+        await removeToken();
+        GlobalStore.isLoggedIn = false;
+        return {
+          'data': {
+            'price': 0,
+            'free': false,
+            'contentEnabled': true,
+            'next': '',
+            'previous': '',
+            'contents': []
+          }
+        }
+      }
       handleError(error, hideError, () =>
         sendRequest({
           url,
@@ -114,6 +133,7 @@ const sendRequest = async ({
           config,
         })
       )
+    }
     );
 };
 
@@ -286,3 +306,4 @@ export const getHTTPMethod = (baseURL) => ({
 });
 
 export const server = getHTTPMethod(process.env.NEXT_PUBLIC_API_URL);
+export const customer = getHTTPMethod(process.env.NEXT_CUSTOMER_API_URL);

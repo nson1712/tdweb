@@ -2,9 +2,14 @@
 import moment from "moment";
 import { pancakeSwapAbi, pancakeSwapContract } from "../contracts/pancake";
 import { tokenAbi } from "../contracts/tokenABI";
+import {Base64} from 'js-base64';
+import GlobalStore from "../stores/GlobalStore";
+import crypto from 'crypto'
 
 export const zeroPad = (num, places) => String(num).padStart(places, "0");
-
+const secret_key = 'MlsHlea8IaH3qS8MjoXB1kMnlMImwCE7'
+const secret_iv = 'HIwhXNiX7d1z7VxZ'
+const ecnryption_method = 'aes-256-cbc'
 export const getMobileOperatingSystem = () => {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
   return Boolean(
@@ -232,4 +237,83 @@ export const isEmpty = (obj) => {
   }
 
   return true;
+}
+
+export const base64URLdecode = (str) => {
+  const base64Encoded = str.replace(/-/g, '+').replace(/_/g, '/');
+  const padding = str.length % 4 === 0 ? '' : '='.repeat(4 - (str.length % 4));
+  const base64WithPadding = base64Encoded + padding;
+  
+  const binaryString = Base64.atob(base64WithPadding);
+  const binaryLength = binaryString.length;
+  const bytes = new Uint8Array(binaryLength);
+  
+  for (let i = 0; i < binaryLength; i++) {
+    bytes[i] = binaryString.charCodeAt(i);
+  }
+  
+  return utf8Decode(bytes);
+};
+
+function utf8Decode(bytes) {
+  let result = '';
+  let i = 0;
+
+  while (i < bytes.length) {
+    let byte1 = bytes[i++];
+    
+    if (byte1 < 0x80) {
+      result += String.fromCharCode(byte1);
+    } else if (byte1 < 0xE0) {
+      let byte2 = bytes[i++];
+      result += String.fromCharCode(((byte1 & 0x1F) << 6) | (byte2 & 0x3F));
+    } else if (byte1 < 0xF0) {
+      let byte2 = bytes[i++];
+      let byte3 = bytes[i++];
+      result += String.fromCharCode(((byte1 & 0x0F) << 12) | ((byte2 & 0x3F) << 6) | (byte3 & 0x3F));
+    } else {
+      let byte2 = bytes[i++];
+      let byte3 = bytes[i++];
+      let byte4 = bytes[i++];
+      let codepoint = ((byte1 & 0x07) << 18) | ((byte2 & 0x3F) << 12) | ((byte3 & 0x3F) << 6) | (byte4 & 0x3F);
+      codepoint -= 0x10000;
+      result += String.fromCharCode(0xD800 + (codepoint >> 10), 0xDC00 + (codepoint & 0x3FF));
+    }
+  }
+
+  return result;
+}
+
+export const decryptData = (encryptedText) => {
+  if (!encryptedText || typeof encryptedText !== 'string') {
+    return '';
+  }
+  if (!secret_key || secret_key.length !== 32) {
+    return '';
+  }
+  if (!secret_iv || secret_iv.length !== 16) {
+    return '';
+  }
+
+  try {
+    const keyBuffer = Buffer.from(secret_key, 'utf8'); // Convert key to Buffer
+    const ivBuffer = Buffer.from(secret_iv, 'utf8');   // Convert IV to Buffer
+    const encryptedBuffer = Buffer.from(encryptedText, 'base64'); // Convert base64 to Buffer
+
+    const decipher = crypto.createDecipheriv(ecnryption_method, keyBuffer, ivBuffer);
+    let decrypted = decipher.update(encryptedBuffer, 'base64', 'utf8');
+    decrypted += decipher.final('utf8'); // Finalize decryption
+    return decrypted.toString();
+  } catch (error) {
+    console.error('Decryption error:', error.message);
+    return '';
+  }
+}
+
+export const decodeAccessToken = async(accessToken) => {
+  const tokens = accessToken.split('.');
+  console.log('updateProfileInfo start decode token')
+  const decoded = base64URLdecode(tokens[1]);
+  const jsonObj = JSON.parse(decoded);
+  return jsonObj;
 }

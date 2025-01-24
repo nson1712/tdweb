@@ -5,7 +5,7 @@ import Router from 'next/router'
 const Chapters = ({
   setShowChapter,
   story,
-  currentChappter
+  currentChapter
 }) => {
   return (
     <div className='md:hidden fixed top-0 right-0 left-0 bottom-0 z-[99] bg-story'>
@@ -28,17 +28,25 @@ const Chapters = ({
         <div className='px-[20px] chapter-content'>
           { story.chapters
                 && story.chapters.map((chapter, i) => (
-                  <a className={classNames('block py-[4px] text-[16px] leading-[32px] font-medium secondary-text', currentChappter?.id === chapter?.id && 'primary-text')}
-                  onClick={() => {
-                    Router.replace(`/${story.slug}/${chapter.slug}`)
-                    setShowChapter(false)
-                  }}
-                  key={chapter.id}
-                  href={`/${story.slug}/${chapter.slug}`}
-                  title={`${story?.title} - ${chapter.title}`}
-                  >
-                    {i + 1}. {chapter.title}
-                  </a>
+                  <div className='grid-item-chapter'>
+                    {!chapter?.isFree ?
+                      <img src='/images/lock.png' style={{'width': '20px', 'float': 'left', 'marginRight': '5px'}}/>
+                      :
+                      <img src='/images/Done.png' style={{'width': '20px', 'float': 'left', 'marginRight': '5px'}}/>
+                    }
+                    <a className={classNames('block py-[4px] text-[16px] font-medium secondary-text title-truncate-style', currentChapter?.id === chapter?.id && 'primary-text')}
+                    onClick={() => {
+                      Router.replace(`/${story.slug}/${chapter.slug}`)
+                      setShowChapter(false)
+                    }}
+                    key={chapter.id}
+                    href={`/${story.slug}/${chapter.slug}`}
+                    title={`${story?.title} - ${chapter.title}`}
+                    >
+                      {i + 1}. {chapter.title}
+                    </a>
+                  </div>
+                  
                 ))
               }
         </div>

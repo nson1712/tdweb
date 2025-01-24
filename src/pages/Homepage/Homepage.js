@@ -10,6 +10,7 @@ import HotStories from './HotStories'
 import ModalComponent from '../../components/Modal/Modal'
 import Feedback from './Feedback'
 import StoryItem from '../../components/StoryItem/StoryItem'
+import GlobalStore from '../../stores/GlobalStore'
 
 const Homepage = () => {
   const {
@@ -55,19 +56,19 @@ const Homepage = () => {
     setTimeout(() => {
       const selectedCategoriesStore = localStorage.getItem('SELECTED_CATEGORIES')
 
-      if (!selectedCategoriesStore) {
+      // if (!selectedCategoriesStore) {
         // Router.replace('/the-loai-yeu-thich')
-        const defaultCategories = ['ngon-tinh','sung','nguoc','tien-hiep'];
+        // const defaultCategories = ['ngon-tinh','sung','nguoc','tien-hiep'];
         // setSelectedCategories(defaultCategories.split(','))
-        saveFavoriteCategories(defaultCategories);
-        localStorage.setItem('SELECTED_CATEGORIES', defaultCategories.join(','));
-        getFavouriteCategories();
+        // saveFavoriteCategories(defaultCategories);
+        // localStorage.setItem('SELECTED_CATEGORIES', defaultCategories.join(','));
+        // getFavouriteCategories();
         // selectedCategories.forEach((category) => {
         //   getStoryByCategory(category, undefined, 10, {sort: 'hot'})
         // })
-      } else {
-        setSelectedCategories(selectedCategoriesStore.split(','))
-      }
+      // } else {
+      //   setSelectedCategories(selectedCategoriesStore.split(','))
+      // }
       // checkCustomerClickAffLocal();
       setShowModal(true)
       
@@ -76,12 +77,12 @@ const Homepage = () => {
   }, [])
 
   const handleSaveCategoies = async () => {
-    await saveFavoriteCategories(selectedCategories)
-    localStorage.setItem('SELECTED_CATEGORIES', selectedCategories.join(',')),
-    getFavouriteCategories()
-    selectedCategories.forEach((category) => {
-      getStoryByCategory(category, undefined, 10, {sort: 'hot'})
-    })
+    // await saveFavoriteCategories(selectedCategories)
+    // localStorage.setItem('SELECTED_CATEGORIES', selectedCategories.join(',')),
+    // getFavouriteCategories()
+    // selectedCategories.forEach((category) => {
+    //   getStoryByCategory(category, undefined, 10, {sort: 'hot'})
+    // })
   }
 
   const handleClick = (e, code) => {
@@ -107,13 +108,13 @@ const Homepage = () => {
   }
 
   useEffect(() => {
-    const selectedCategoriesStore = localStorage.getItem('SELECTED_CATEGORIES');
-    const defaultCategories = ['ngon-tinh','sung','nguoc','tien-hiep'];
-    const list = selectedCategoriesStore ? selectedCategoriesStore.split(',') : defaultCategories
-    if (!selectedCategoriesStore) {
-      saveFavoriteCategories(defaultCategories)
-      localStorage.setItem('SELECTED_CATEGORIES', defaultCategories.join(','));
-    }
+    // const selectedCategoriesStore = localStorage.getItem('SELECTED_CATEGORIES');
+    // const defaultCategories = ['ngon-tinh','sung','nguoc','tien-hiep'];
+    // const list = selectedCategoriesStore ? selectedCategoriesStore.split(',') : defaultCategories
+    // if (!selectedCategoriesStore) {
+    //   saveFavoriteCategories(defaultCategories)
+    //   localStorage.setItem('SELECTED_CATEGORIES', defaultCategories.join(','));
+    // }
 
     // list.forEach((category) => {
     //   getStoryByCategory(category, undefined, 20, {sort: 'hot'})
@@ -146,7 +147,7 @@ const Homepage = () => {
             <div className='home-content pt-[16px] md:pt-0'>
               <div className='flex items-center justify-between px-[20px] mb-[16px]'>
                 <p className='mb-0 text-[14px] font-semibold label-text'>
-                  Xin chào, <b className='main-text text-[15px]'>bạn</b>
+                  Xin chào, <b className='main-text text-[15px]'>{GlobalStore.profile?.displayName || 'bạn'}</b>
                 </p>
 
                 <div className='flex items-center'>

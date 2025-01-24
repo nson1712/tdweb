@@ -1,6 +1,8 @@
 import { makeAutoObservable } from 'mobx'
-import { toast } from 'react-toastify'
+import GlobalStore from './GlobalStore'
 import * as Api from '../api/api'
+import { decryptData } from '../utils/utils'
+import { getItem } from '../utils/storage'
 
 class StoryStore {
 
@@ -14,6 +16,8 @@ class StoryStore {
   storyDetail = {}
 
   chappers = []
+
+  latestReadingChapter = {}
 
   lastestStory = {}
 
@@ -46,7 +50,6 @@ class StoryStore {
   loadingChapterDetail = false
 
   isClickAff = false
-
 
   constructor() {
     makeAutoObservable(this)
@@ -104,31 +107,60 @@ class StoryStore {
     }
   }
 
-  getChapterDetail = async (storySlug, slug) => {
+  getChapterDetail = async (storySlug, slug, isLoggedIn) => {
     try {
-      this.loadingChapterDetail = true
-      if (this.currentChapter !== slug) {
-        this.chapterDetail = []
-        this.currentChapter = slug
-      }
+      this.loadingChapterDetail = true;
+      
       const result = await Api.get({
-        url: 'data/private/data/chapter/slug',
+        url:  isLoggedIn ? '/data/private/data/chapter/detail' : '/data/private/data/chapter/slug',
         params: {
           storySlug,
           slug
         }
       })
 
-      this.chapterDetail = result.data
+      const contents = result.data?.contents?.map((obj) => {
+        // Decrypt the `encryptedContent` field
+        const decryptedContent = decryptData(obj.content);
+    
+        // Return a new object with the decrypted content
+        return {
+          ...obj,
+          content: decryptedContent, // Add or replace the decrypted content field
+        };
+      });
 
+      console.log('Decrypted content: ', contents);
       this.loadingChapterDetail = false
+      this.chapterDetail = {
+        ...result.data,
+        contents
+      }
 
-      return result.data
-
+      console.log('chapterDetail content: ', this.chapterDetail);
+      return this.chapterDetail;
       
     } catch(e) {
       console.log(e)
       this.loadingChapterDetail = false
+    }
+  }
+
+  getReadingLatestChapter = async (storySlug) => {
+    try {
+      const result = await Api.get({
+        url:  '/data/private/data/story/reading/progress',
+        params: {
+          storySlug,
+        }
+      })
+
+
+      this.latestReadingChapter = result.data
+      return result.data
+
+    } catch(e) {
+      console.log(e)
     }
   }
 
@@ -414,17 +446,20 @@ class StoryStore {
     }
   }
 
-  saveLastStory = async (data) => {
-    try {
-      // await Api.post({
-      //   url: '/customer/public/story/history/save',
-      //   data: data,
-      //   hideError: true
-      // })
 
+  saveLastStory = async(storySlug, chapterSlug) => {
+    try {
+      Api.post({
+        url: '/data/private/data/story/reading/progress',
+        data: {
+          storySlug,
+          chapterSlug
+        }
+      })
     } catch(e) {
-      console.log(e)
+
     }
+
   }
 
   getLastStory = async () => {
@@ -510,50 +545,56 @@ class StoryStore {
     }
   }
 
-  getStoryHistory = async (page = 1, pageSize = 10) => {
+  getStoryHistory = async (page = 0, size = 100) => {
     try {
-      // const result = await Api.get({
-      //   url: '/customer/public/story/reads',
-      //   params: {
-      //     page,
-      //     pageSize
-      //   },
-      //   hideError: true
-      // })
-
-      // if (page === 1) {
-      //   this.history  = result
-      // } else {
-      //   this.history = {
-      //     ...result,
-      //     data: [...this.history.data, ...result.data]
-      //   }
-      // }
+      try {
+        const result = await Api.get({
+          url: '/data/private/data/customer/reading',
+          params: {
+            page,
+            size,
+            reading: false
+          },
+          hideError: true
+        })
+  
+        if (page === 0) {
+          this.history  = result?.data
+        } else {
+          this.history = {
+            data: [...this.history.data, ...result?.data?.data]
+          }
+        }
+      } catch(e) {
+        console.log(e)
+      }
 
     } catch(e) {
       console.log(e)
     }
   }
 
-  getStoryViewings = async (page = 1, pageSize = 10) => {
+  getStoryViewings = async(page = 0, size = 100) => {
     try {
-      // const result = await Api.get({
-      //   url: '/customer/public/story/viewings?pageSize=10',
-      //   params: {
-      //     page
-      //   },
-      //   hideError: true
-      // })
+      const result = await Api.get({
+        url: '/data/private/data/customer/reading',
+        params: {
+          page,
+          size,
+          reading: true
+        },
+        hideError: true
+      })
 
-      // if (page === 1) {
-      //   this.viewings  = result
-      // } else {
-      //   this.viewings = {
-      //     ...result,
-      //     data: [...this.viewings.data, ...result.data]
-      //   }
-      // }
-
+      
+      if (page === 0) {
+        this.viewings  = result?.data
+      } else {
+        this.viewings = {
+          data: [...this.viewings.data, ...result?.data?.data]
+        }
+      }
+      console.log('Readings: ', this.viewings);
     } catch(e) {
       console.log(e)
     }

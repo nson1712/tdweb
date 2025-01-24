@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import Router from 'next/router'
+import GlobalStore from '../../stores/GlobalStore'
 
 const MobileHeader = ({show}) => {
   const ref = useRef(null)
@@ -88,7 +89,7 @@ const MobileHeader = ({show}) => {
                Khám phá
             </p>
           </div>
-          <div className={classNames('flex items-center py-[10px]')}
+          {/*<div className={classNames('flex items-center py-[10px]')}
             onClick={() => {
               Router.push('/thu-vien')
             }}
@@ -98,22 +99,22 @@ const MobileHeader = ({show}) => {
             )}>
               Thư viện
             </p>
-          </div>
-          {/* <div className={classNames('flex items-center py-[10px]')}
+          </div>*/}
+          <div className={classNames('flex items-center py-[10px]')}
             onClick={() => {
-              if (localStorage.getItem('accessToken')) {
-                Router.push('/trang-ca-nhan')
+              if (GlobalStore.isLoggedIn) {
+                Router.push('/tai-khoan')
               } else {
                 Router.push('/dang-nhap')
               }
             }}
           >
-            <img src={'/images/user.svg'} className='w-[24px] mr-[11px]' alt='user'/>
+            <img src={GlobalStore?.profile?.avatar ? GlobalStore?.profile?.avatar : '/images/user.svg'} className='w-[24px] mr-[11px] bd-radius-24' alt='user'/>
             <p className={classNames('mb-0 text-[15px] font-semibold main-text leading-[20px] whitespace-nowrap'
             )}>
-              Cá nhân
+              {GlobalStore?.isLoggedIn ? 'Tài khoản' : 'Đăng nhập'}
             </p>
-          </div> */}
+          </div>
         </div>
     </div>
   )

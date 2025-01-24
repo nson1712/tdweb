@@ -8,8 +8,11 @@ import CommonLayout from '../../layouts/CommonLayout/CommonLayout'
 import { validateEmail } from '../../utils/validators'
 import * as Api from '../../api/api'
 import Router from 'next/router'
-import { toast } from 'react-toastify'
+import { setAccessToken, setRefreshToken } from '../../utils/storage'
 import Form from '../../components/Form/Form'
+import { base64URLdecode } from '../../utils/utils'
+import GlobalStore from '../../stores/GlobalStore'
+import { useGoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
 
 const Login = ({
   values,
@@ -18,7 +21,7 @@ const Login = ({
   submitForm
 }) => {
   const [loading, setLoading] = useState(false)
-  const handleLogin = async (data) => {
+  const handleLoginEmail = async (data) => {
     try {
       setLoading(true)
 
@@ -28,17 +31,51 @@ const Login = ({
       })
 
       setLoading(false)
+      await setAccessToken(result?.data?.accessToken);
+      await setRefreshToken(result?.data?.refreshToken);
 
-      localStorage.setItem('accessToken', result.data.token)
+      const tokens = result?.data?.accessToken.split('.');
+      const decoded = base64URLdecode(tokens[1]);
+      const jsonObj = JSON.parse(decoded);
+      GlobalStore.profile = {
+        ...GlobalStore.profile,
+        ...jsonObj,
+      };
+      GlobalStore.isLoggedIn = true;
 
-
-      Router.push('/')
-
+      Router.push('/tai-khoan');
      
     } catch(e){
       setLoading(false)
     }
   }
+
+  const handleLoginGoogle = useGoogleLogin({
+    onSuccess: async(tokenResponse) => {
+      console.log('tokenResponse: ', tokenResponse);
+      const loginResult = await Api.post({
+        url: '/customer/public/login-by-social',
+        data: {
+          token: tokenResponse.access_token,
+          socialType: 'GOOGLE',
+        },
+      });
+
+      await setAccessToken(loginResult?.data?.accessToken);
+      await setRefreshToken(loginResult?.data?.refreshToken);
+
+      const tokens = loginResult?.data?.accessToken.split('.');
+      console.log('updateProfileInfo start decode token')
+      const decoded = base64URLdecode(tokens[1]);
+      const jsonObj = JSON.parse(decoded);
+      console.log('updateProfileInfo jsonObj: ', jsonObj);
+      GlobalStore.profile = {
+        ...GlobalStore.profile,
+        ...jsonObj,
+      };
+      GlobalStore.isLoggedIn = true;
+      Router.push('/tai-khoan');
+    }});
 
   return (
     <CommonLayout >
@@ -48,7 +85,7 @@ const Login = ({
           <p className='text-[20px] font-bold main-text text-center'>
             Đăng nhập
           </p>
-          <Form onSubmit={submitForm(handleLogin)} className='max-w-[420px] w-full mx-auto'>
+          <Form onSubmit={submitForm(handleLoginEmail)} className='max-w-[420px] w-full mx-auto'>
             <Field name='email'
               value={values.email}
               updateProperty={updateProperty}
@@ -74,13 +111,13 @@ const Login = ({
               Đăng nhập
             </Button>
 
-            <p className='text-[14px] secondary-text mt-[50px] text-center cursor-pointer'
-              onClick={() => {
-                Router.push('/dang-ky')
-              }}
-            >
-              Chưa có tài khoản? <a className='link'>Đăng ký</a>
-            </p>
+            <div style={{'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center', 'marginTop': '20px'}}>
+              <p className='text-[14px] secondary-text text-center cursor-pointer fl margin-auto'>
+                Bạn chưa có tài khoản? 
+              </p>
+              <Button className='link text-underline' onClick={(e) => handleLoginGoogle(e)}>Đăng ký qua tài khoản Google</Button>
+            </div>
+            
           </Form>
           
         </div>

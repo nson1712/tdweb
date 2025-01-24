@@ -1,12 +1,21 @@
-import React from 'react'
+import React, { useEffect }from 'react'
 // import { useAmp } from "next/amp";
 import HomepageComponent from '../src/pages/Homepage'
 // import ResearchComponent from '../src/pages/Research'
 import HeaderServer from '../src/components/HeaderServer'
 // export const config = { amp: 'hybrid' }
+import GlobalStore from '../src/stores/GlobalStore'
 
 const Homepage = () => {
 
+  useEffect(() => {
+    const checkLogin = async() => {
+      if (!GlobalStore.isLoggedIn) {
+        await GlobalStore.checkIsLogin();
+      }
+    }
+    checkLogin();
+  }, [])
   function addHomeJsonLd() {
     return {
       __html: `{

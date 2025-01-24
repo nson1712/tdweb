@@ -25,9 +25,9 @@ StorySummary.getInitialProps = async (ctx) => {
   const getDetail = async () => {
     try {
       if (ctx.query.storySlug !== 'images' && ctx.query.storySlug !== 'img') {
-        const result = await axios.get(`http://10.8.22.205:8082/private/data/story/detail?slug=${ctx.query.storySlug}`)
+        const result = await axios.get(`https://uatapi.truyenso1.xyz/data/private/data/story/detail?slug=${ctx.query.storySlug}`)
         return {
-          detail: result.data.data,
+          detail: result?.data?.data,
         }
       }
 

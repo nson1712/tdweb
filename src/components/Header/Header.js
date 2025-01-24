@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import classNames from "classnames";
 import { observer } from "mobx-react";
 import Router, { useRouter } from "next/router";
+import GlobalStore from "../../stores/GlobalStore";
 
 let timeout;
 
@@ -142,7 +143,7 @@ const Header = ({ selectedTab }) => {
               Tác Giả
             </p>
           </div>
-          <div
+          {/*<div
             className={classNames(
               "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
               selectedTab === "CONTACT" && "bg-tab-active text-active"
@@ -170,28 +171,28 @@ const Header = ({ selectedTab }) => {
             >
               Liên hệ
             </p>
+          </div>*/}
+          <div className={classNames('flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer',
+            selectedTab === 'PROFILE' && 'bg-tab-active text-active'
+          )}
+          onClick={() => {
+            if (GlobalStore.isLoggedIn) {
+              Router.push('/tai-khoan')
+            } else {
+              Router.push('/dang-nhap')
+            }
+          
+          }}
+          >
+            <img src={GlobalStore?.profile?.avatar ? GlobalStore?.profile?.avatar : selectedTab === 'PROFILE' ? '/images/user-active.svg' : '/images/user.svg'} className='w-[24px] mr-[4px] bd-radius-24'
+              alt='user'
+            />
+            <p className={classNames('mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap',
+              selectedTab === 'PROFILE'? 'text-active block' : 'hidden md:block'
+            )}>
+              {GlobalStore?.isLoggedIn ? 'Tài khoản' : 'Đăng nhập'}
+            </p>
           </div>
-          {/* <div className={classNames('flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer',
-          selectedTab === 'PROFILE' && 'bg-tab-active text-active'
-        )}
-        onClick={() => {
-          if (localStorage.getItem('accessToken')) {
-            Router.push('/trang-ca-nhan')
-          } else {
-            Router.push('/dang-nhap')
-          }
-        
-        }}
-        >
-          <img src={selectedTab === 'PROFILE' ? '/images/user-active.svg' : '/images/user.svg'} className='w-[24px] mr-[4px]'
-            alt='user'
-          />
-          <p className={classNames('mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap',
-             selectedTab === 'PROFILE'? 'text-active block' : 'hidden md:block'
-          )}>
-            Cá nhân
-          </p>
-        </div> */}
         </div>
 
         <div className="relative ml-[10px] w-[157px] hidden md:block">
