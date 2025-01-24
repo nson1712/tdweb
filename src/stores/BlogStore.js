@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
 import * as Api from "../api/api";
+import { useRouter } from "next/router";
 
-export const useGetBlog = ({ blogId }) => {
+export const useGetBlog = () => {
+  const router = useRouter();
+  const blogId = router.query.id
   const [blog, setBlog] = useState(null);
+
   useEffect(() => {
     if (!blogId) {
       return;
@@ -10,7 +14,7 @@ export const useGetBlog = ({ blogId }) => {
     const getBlogById = async () => {
       try {
         const result = await Api.get({
-          url: `https://api.toidoc.com/data/post/${blogId}`,
+          url: `https://api.toidoc.com/data/article/${blogId}`,
         });
         setBlog({
           ...result.data,

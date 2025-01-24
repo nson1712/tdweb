@@ -1,11 +1,8 @@
 import { observer } from "mobx-react";
 import React, { useEffect, useState } from "react";
 import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
-import { DateTime } from "luxon";
-import { CalendarTwoTone } from "@ant-design/icons";
 import Content from "./Content";
 import Menu from "./Menu";
-import RelatedBlog from "./RelatedBlog";
 import parse from "html-react-parser";
 import PinMenu from "../../components/PinMenu/PinMenu";
 import {
@@ -15,11 +12,18 @@ import {
 } from "../../utils/utils";
 import AuthorMessage from "../../components/AuthorMessage";
 import Header from "../../components/Header/Header";
+import { quotes } from "../../data/quotes";
+import CategoriesTag from "../../components/CategoriesTag";
+import CreateAndUpdateTimeZone from "../../components/CreateAndUpdateTimeZone";
+import ArticleTitle from "../../components/ArticleTitle";
+import ArticleShortDescription from "../../components/ArticleShortDescription";
+import RelatedBlog from "../../components/RelatedBlog";
 
-const BlogDetails = ({data}) => {
+const BlogDetails = ({ data }) => {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState([]);
   const [randomList, setRandomList] = useState([]);
+  const [randomQuotes, setRandomQuotes] = useState([]);
 
   const [page, setPage] = useState(0);
   const size = 10000;
@@ -29,7 +33,7 @@ const BlogDetails = ({data}) => {
   }, []);
 
   const fetchData = () => {
-    const fetchUrl = `https://api.toidoc.com/data/post/list?size=${size}`;
+    const fetchUrl = `https://api.toidoc.com/data/article/list?size=${size}`;
 
     setLoading(true);
     fetch(fetchUrl)
@@ -46,13 +50,12 @@ const BlogDetails = ({data}) => {
   };
 
   const getRandom = (arr, n) => {
-    var result = new Array(n),
+    n = Math.min(n, arr.length);
+    let result = new Array(n),
       len = arr.length,
       taken = new Array(len);
-    if (n > len)
-      throw new RangeError("getRandom: more elements taken than available");
     while (n--) {
-      var x = Math.floor(Math.random() * len);
+      let x = Math.floor(Math.random() * len);
       result[n] = arr[x in taken ? taken[x] : x];
       taken[x] = --len in taken ? taken[len] : len;
     }
@@ -64,6 +67,12 @@ const BlogDetails = ({data}) => {
       setRandomList(getRandom(list, 6));
     }
   }, [list]);
+
+  useEffect(() => {
+    if (quotes.length !== 0) {
+      setRandomQuotes(getRandom(quotes, 1));
+    }
+  }, [quotes]);
 
   const updatedContent = appendNewLineAfterCloseHTag(data?.content || "");
 
@@ -87,16 +96,18 @@ const BlogDetails = ({data}) => {
     const tagName = doc.type;
 
     const levelMap = {
-      "h3": 1,
-      "h4": 2,
-      "h5": 3,
-      "h6": 4,
+      h3: 1,
+      h4: 2,
+      h5: 3,
+      h6: 4,
     };
     const level = levelMap[tagName] || null;
     return {
-      label: doc.props.children,
+      label: doc.props.children || doc.props.children.props.children,
       id: getSlugfromSlugGenerate(
-        slugGenerate(doc.props.children.props.children || "")
+        slugGenerate(
+          doc.props.children || doc.props.children.props.children || ""
+        )
       ),
       level: level,
     };
@@ -117,35 +128,35 @@ const BlogDetails = ({data}) => {
 
   return (
     <CommonLayout className="text-base bg-transparent">
-      <Header selectedTab={"LIBRARY"} />
-      <div className="md:-mt-12 relative pb-[100px] max-w-[950px] mx-auto p-3 bg-white min-h-[100vh] sm:shadow-md sm:border sm:border-slate-100 rounded-2xl space-y-4">
-        <div className="bg-[#DF062D] text-white font-semibold w-fit py-1 px-3 rounded-md">
-          Blog
-        </div>
-        <PinMenu headingList={headingList} scrollIntoView={handleScrollTo} />
+      <div className="top-0">
+        <Header selectedTab={"LIBRARY"} />
+      </div>
+      <div className="max-w-[950px] mx-auto space-y-4 pb-24">
+        <div className="md:-mt-32 relative p-3 bg-white min-h-[100vh] sm:shadow-sm sm:border sm:border-slate-100 rounded-2xl space-y-4">
+          <CategoriesTag title="Blog" className="hidden sm:block" />
 
-        <div className="hidden sm:text-[30px] sm:block font-semibold">
-          {parse(data?.title || "")}
-        </div>
+          <PinMenu headingList={headingList} scrollIntoView={handleScrollTo} />
 
-        <div className="text-[12px] md:text-sm text-slate-500">
-          <CalendarTwoTone /> Ngày đăng:{" "}
-          {DateTime.fromMillis(data?.createdAt ?? 0, { zone: "utc" }).toFormat(
-            "dd/MM/yyyy"
-          )}{" "}
-          - Cập nhật:{" "}
-          {DateTime.fromMillis(data?.updatedAt ?? 0, { zone: "utc" }).toFormat(
-            "dd/MM/yyyy"
+          <ArticleTitle
+            className="hidden sm:text-[30px] sm:block font-semibold"
+            title={data?.title}
+          />
+
+          <CreateAndUpdateTimeZone
+            createdAt={data?.createdAt}
+            updatedAt={data?.updatedAt}
+          />
+
+          <ArticleShortDescription shortDescription={data?.shortDescription} />
+
+          {headingList.length !== 0 && (
+            <Menu headingList={headingList} scrollIntoView={handleScrollTo} />
           )}
+
+          <Content content={contentArr} />
         </div>
 
-        <div>{parse(data?.shortDescription || "")}</div>
-
-        <Menu headingList={headingList} scrollIntoView={handleScrollTo} />
-
-        <Content content={contentArr} />
-
-        {/* <AuthorMessage /> */}
+        <AuthorMessage message={randomQuotes} />
 
         <RelatedBlog relatedBlogList={randomList} />
       </div>

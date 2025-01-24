@@ -65,11 +65,11 @@ const sendRequest = async ({
   const clientToken = await new jose.SignJWT({ "urn:example:claim": true })
     .setProtectedHeader({ alg: "HS256" })
     .setIssuedAt()
-    .setIssuer('urn:example:issuer')
-    .setAudience('urn:example:audience')
-    .setExpirationTime('1m')
-    .sign(secret)
-  console.log('clientToken ===>', clientToken)
+    .setIssuer("urn:example:issuer")
+    .setAudience("urn:example:audience")
+    .setExpirationTime("1m")
+    .sign(secret);
+  console.log("clientToken ===>", clientToken);
   return instance({
     url,
     method,
@@ -128,7 +128,7 @@ export const get = ({
 }) =>
   sendRequest({
     url,
-    params: { ...params},
+    params: { ...params },
     method: "GET",
     loading,
     headers,

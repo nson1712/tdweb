@@ -1,16 +1,12 @@
 import { observer } from "mobx-react";
 import React, { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
-import StoryStore from "../../stores/StoryStore";
-
-import { Button, Image, List, Skeleton, Typography } from "antd";
-import { DateTime } from "luxon";
-import { ClockCircleOutlined } from "@ant-design/icons";
-import Link from "next/link";
-import { Router } from "next/router";
+import { Button, List, Skeleton } from "antd";
 import UnderLineTitle from "../../components/UnderLineTitle/UnderLineTitle";
 import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
-import { cleanHtml } from "../../utils/utils";
+import BlogTitleLink from "../../components/BlogTitleLink";
+import BlogImageLink from "../../components/BlogImageLink";
+import BlogShortDescription from "../../components/BlogShortDescription";
 
 const Blog = () => {
   const [page, setPage] = useState(0);
@@ -28,7 +24,7 @@ const Blog = () => {
   }, []);
 
   const fetchData = (currentPage) => {
-    const fetchUrl = `https://api.toidoc.com/data/post/list?size=${size}&page=${currentPage}`;
+    const fetchUrl = `https://api.toidoc.com/data/article/list?size=${size}&page=${currentPage}`;
 
     setLoading(true);
     fetch(fetchUrl)
@@ -83,69 +79,40 @@ const Blog = () => {
 
   return (
     <CommonLayout>
-      <div className="">
-        <Header selectedTab={"LIBRARY"} />
-        <div className="relative pb-[100px] max-w-[768px] mx-auto bg-white pt-4 px-0 sm:mt-20 md:px-[8px] min-h-[100vh]">
-          <UnderLineTitle title="Bài đăng mới nhất" />
-          <List
-            className="px-2"
-            loading={initLoading}
-            itemCommonLayout="horizontal"
-            loadMore={loadMore}
-            dataSource={list}
-            renderItem={(item) => (
-              <List.Item>
-                <Skeleton title={false} loading={item.loading} active>
-                  <List.Item.Meta
-                    avatar={
-                      <div className="w-36 sm:w-52 md:w-60">
-                        <Link href={{
-                          pathname: `blog/${item.slug}`,
-                          query: {
-                            id: item.id
-                          }
-                        }}>
-                          <Image
-                            preview={false}
-                            className="rounded-lg"
-                            src={item?.coverImage || ""}
-                          />
-                        </Link>
-                      </div>
-                    }
-                    title={
-                      <div className="line-clamp-2 text-md sm:text-base font-[500] sm:font-semibold hover:text-blue-600">
-                        <Link href={{
-                          pathname: `blog/${item.slug}`,
-                          query: {
-                            id: item.id
-                          }
-                        }}>
-                          <div className="text-black cursor-pointer hover:text-blue-600">
-                          {item.title}
-                          </div>
-                        </Link>
-                      </div>
-                    }
-                    description={
-                      <>
-                        <div className="line-clamp-2 w-full text-slate-600">
-                          {cleanHtml(item.shortDescription)}
-                        </div>
-                        <div>
-                          <ClockCircleOutlined />{" "}
-                          {DateTime.fromMillis(item.createdAt ?? 0).toFormat(
-                            "dd/MM/yyyy HH:mm"
-                          )}
-                        </div>
-                      </>
-                    }
-                  />
-                </Skeleton>
-              </List.Item>
-            )}
-          />
-        </div>
+      <Header selectedTab={"LIBRARY"} />
+      <div className="relative pb-[100px] max-w-[768px] mx-auto bg-white pt-4 px-0 sm:mt-20 md:px-[8px] min-h-[100vh]">
+        <UnderLineTitle title="Bài đăng mới nhất" />
+        <List
+          className="px-2"
+          loading={initLoading}
+          loadMore={loadMore}
+          dataSource={list}
+          renderItem={(item) => (
+            <List.Item>
+              <Skeleton title={false} loading={item.loading} active>
+                <List.Item.Meta
+                  avatar={
+                    <BlogImageLink
+                      item={item}
+                      className="w-36 sm:w-52 md:w-60"
+                      pathname={`blog/${item.slug}`}
+                      query={{ id: item.id }}
+                    />
+                  }
+                  title={
+                    <BlogTitleLink
+                      item={item}
+                      className="line-clamp-3 text-md sm:text-base font-[500] sm:font-semibold hover:text-blue-600 text-black"
+                      pathname={`blog/${item.slug}`}
+                      query={{ id: item.id }}
+                    />
+                  }
+                  description={<BlogShortDescription item={item} />}
+                />
+              </Skeleton>
+            </List.Item>
+          )}
+        />
       </div>
     </CommonLayout>
   );
