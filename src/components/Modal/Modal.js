@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useState} from "react";
 import { Modal } from 'react-bootstrap'
 import { isMobile } from "react-device-detect";
 
-const ModalComponent = ({ show, handleClose, title, children, className, isCountDown, countDownTime}) => {
+const ModalComponent = ({ show, handleClose, title, children, className, isCountDown, countDownTime, styleBody}) => {
 
   const [time, setTime] = useState(countDownTime || 10)
   
@@ -26,8 +26,9 @@ const ModalComponent = ({ show, handleClose, title, children, className, isCount
       onHide={handleOnHide}
       centered
       className={className}
+      backdropClassName="modal-backdrop-show"
     >
-      <div className='modal-body'>
+      <div className={`modal-body ${styleBody}`}>
         { title ? 
           <div className='flex items-center justify-between mb-[16px] mx-[4px] md:mx-[24px] mt-[0]'>
             <h3 className='mb-0 text-[20px] lg:text-[32px] font-bold main-text'>

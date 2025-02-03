@@ -2,11 +2,14 @@ import React, { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import Router from 'next/router'
 import GlobalStore from '../../stores/GlobalStore'
+import ShortLogin from '../../pages/Login/ShortLogin'
+import ModalComponent from '../Modal/Modal'
 
 const MobileHeader = ({show}) => {
   const ref = useRef(null)
   const ref2 = useRef(null)
-  const [showMenus, setShowMenus] = useState(false)
+  const [showMenus, setShowMenus] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -34,6 +37,14 @@ const MobileHeader = ({show}) => {
       window.removeEventListener('scroll', trackScrolling);
     }
   }, [showMenus])
+
+  const handleButtonAccount = () => {
+    if (GlobalStore.isLoggedIn) {
+      Router.push('/tai-khoan')
+    } else {
+      setShowLogin(true);
+    }
+  }
 
   return (
     <div className={classNames('flex items-center justify-between md:hidden px-[20px] py-[10px] border-b-[1px] border-color border-t-[1px] fixed top-0 right-0 left-0 z-[99] background-white mobile-header', show && 'mobile-header-show')}>
@@ -101,13 +112,7 @@ const MobileHeader = ({show}) => {
             </p>
           </div>*/}
           <div className={classNames('flex items-center py-[10px]')}
-            onClick={() => {
-              if (GlobalStore.isLoggedIn) {
-                Router.push('/tai-khoan')
-              } else {
-                Router.push('/dang-nhap')
-              }
-            }}
+            onClick={() => handleButtonAccount()}
           >
             <img src={GlobalStore?.profile?.avatar ? GlobalStore?.profile?.avatar : '/images/user.svg'} className='w-[24px] mr-[11px] bd-radius-24' alt='user'/>
             <p className={classNames('mb-0 text-[15px] font-semibold main-text leading-[20px] whitespace-nowrap'
@@ -116,6 +121,13 @@ const MobileHeader = ({show}) => {
             </p>
           </div>
         </div>
+        {showLogin && 
+          <ModalComponent
+              show={showLogin}
+              handleClose={(e) => setShowLogin(false)}>
+            <ShortLogin description='Bạn chưa đăng nhập. Hãy 👆 vào lựa chọn đăng nhập dưới để sử dụng tính năng này.' closeModal= {() => setShowLogin(false)}/>
+          </ModalComponent>
+        }
     </div>
   )
 }

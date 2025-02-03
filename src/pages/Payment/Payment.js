@@ -15,8 +15,9 @@ import FooterDesktop from "../../components/FooterDesktop";
 import ChatSupport from "../../components/Button/ChatSupport";
 import ModalComponent from "../../components/Modal/Modal";
 import HeaderPayment from "./HeaderPayment";
+import GlobalStore from "../../stores/GlobalStore";
 
-const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
+const Payment = ({ values, updateProperty, handleTouched, submitForm, referralCode}) => {
   const [loading, setLoading] = useState(false);
   const [cash, setCash] = useState(0);
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -35,33 +36,37 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
       value: 18000,
     },
     {
-      label: "52,500",
+      label: "50,000",
       deposit: "50,000VNĐ",
       value: 50000,
     },
     {
-      label: "110,000",
+      label: "105,000",
       deposit: "100,000VNĐ",
       value: 100000,
     },
     {
-      label: "330,000",
+      label: "315,000",
       deposit: "300,000VNĐ",
       value: 300000,
     },
     {
-      label: "550,000",
+      label: "530,000",
       deposit: "500,000VNĐ",
       value: 500000,
     },
     {
-      label: "1,100,000",
+      label: "1,060,000",
       deposit: "1,000,000VNĐ",
       value: 1000000,
     },
   ];
 
   useEffect(() => {
+    const checkLogin = async() => {
+      await GlobalStore.checkIsLogin();
+    }
+    checkLogin();
     setPackageValue(null);
     setClickedIndex(null);
   }, []);
@@ -88,7 +93,14 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
         data.token = token;
         data.amount = cash;
         const timestamp = Date.now();
-        data.requestId = data.customerCode + "_" + timestamp;
+        if (referralCode === '') {
+          data.requestId = data.customerCode + "_" + timestamp;
+        } else {
+          data.requestId = referralCode + "_" + timestamp;
+          console.log('referralCode: ', referralCode);
+          data.customerCode = referralCode;
+        }
+        
 
         const result = await Api.post({
           url: "/customer/public/customer/deposit/qr",
@@ -134,7 +146,7 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
             Web Nạp KC Tự Động Chính Thức của Toidoc
           </p>
           <div className="pl-[20px] pr-[20px] mb-[20px]">
-            <div className="max-w-[450px] w-full mx-auto alert alert--secondary admonition_LlT9 pl-[20px] pr-[20px]">
+            {referralCode === '' &&  <div className="max-w-[450px] w-full mx-auto alert alert--secondary admonition_LlT9 pl-[20px] pr-[20px]">
               <div className="admonitionHeading_tbUL">
                 <span className="admonitionIcon_kALy w-[20px]">
                   <svg viewBox="0 0 14 16">
@@ -146,7 +158,7 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
                 </span>
                 Lưu ý:
               </div>
-              <div class="admonitionContent_S0QG">
+              <div className="admonitionContent_S0QG">
                 <p>
                   Mã khách hàng: là mã TD.... được lấy từ màn hình "Tài Khoản"
                   trên App Toidoc
@@ -158,21 +170,27 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
               >
                 Xem hướng dẫn
               </a>
-            </div>
+            </div>}
+            
             <Form
               onSubmit={submitForm(handleRequestPayment)}
-              className="max-w-[450px] w-full mx-auto"
+              className="max-w-[450px] w-full mx-auto mt-[20px]"
             >
-              <Field
+              {referralCode !== '' && 
+                <p className='text-[18px]'>
+                  Chào <b className='main-text text-[15px]'>{GlobalStore.profile?.displayName || 'bạn'}</b>,
+                </p>
+              }
+              {referralCode === '' && <Field
                 name="customerCode"
                 value={values.customerCode}
                 updateProperty={updateProperty}
                 handleTouched={handleTouched}
                 component={InputField}
                 label="1. Copy và Paste mã KH vào ô dưới"
-              />
+              />}
               <p className="text-[14px] font-semibold">
-                2. Bấm chọn gói nạp bên dưới
+                {referralCode === '' ? '2. Bấm chọn gói nạp bên dưới' : 'Bạn vui lòng bấm chọn gói nạp bên dưới'}
               </p>
               {showWarningPackage && (
                 <p className="text-[14px] text-red">
@@ -222,15 +240,17 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
                   </a>
                 )}
                 {hideMorePackage && (
-                  <a
-                    onClick={(e) => {
-                      setShowMorePackage(!showMorePackage);
-                      setHideMorePackage(!hideMorePackage);
-                    }}
-                    className="text-[#0693ee] underline"
-                  >
-                    Ẩn bớt gói
-                  </a>
+                  <div className='align-center'>
+                    <a
+                      onClick={(e) => {
+                        setShowMorePackage(!showMorePackage);
+                        setHideMorePackage(!hideMorePackage);
+                      }}
+                      className="text-[#0693ee] underline"
+                    >
+                      Ẩn bớt gói
+                    </a>
+                  </div>
                 )}
               </div>
 
@@ -246,7 +266,7 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
                 type="submit"
                 loading={loading}
               >
-                Hiển thị thông tin chuyển khoản
+                Hiển thị mã QR chuyển khoản
               </Button>
 
               <Button
@@ -262,6 +282,21 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
               >
                 Báo lỗi không nạp được
               </Button>
+              <div className='split-line-dark my-[20px] mx-[20px]'></div>
+              <div style={{display: 'flex', alignItems: 'center'}}>
+                <img src='/images/iconInfo.png' style={{width: '30px', height: '30px', marginRight: '10px'}}/>
+                <p style={{color:'rgb(204 46 73)', margin: 0}}>
+                  <i>Trường hợp bạn ở nước ngoài không tiện chuyển khoản, vui lòng tải <a href='https://toidoc.onelink.me/59bO/d42503wz'>App Toidoc</a> thực hiện purchase in app nhé.</i>
+                </p>
+              </div>
+              <div className='align-center mt-[20px]'>
+                <a href='https://toidoc.onelink.me/59bO/d42503wz'>
+                  <img src='/images/apple-icon-min.png' style={{'float': 'left', 'marginRight': '10px', 'width': '135px'}}/>
+                </a>
+                <a href='https://toidoc.onelink.me/59bO/d42503wz'>
+                  <img src='/images/android-icon-min.png'  style={{'float': 'left', 'marginRight': '10px', 'width': '135px'}}/>
+                </a>
+              </div>
             </Form>
           </div>
           <FooterDesktop />
@@ -287,15 +322,17 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm }) => {
 
 const validate = (values) => {
   const errors = {};
-
-  if (!values.customerCode) {
-    errors.customerCode = "Vui lòng nhập mã khách hàng";
-  } else if (
-    !values.customerCode.startsWith("TD") ||
-    values.customerCode.length < 12
-  ) {
-    errors.customerCode = "Mã khách hàng không chính xác.";
-  }
+  // if(referralCode !== '') {
+  //   return errors;
+  // }
+  // if (!values.customerCode) {
+  //   errors.customerCode = "Vui lòng nhập mã khách hàng";
+  // } else if (
+  //   !values.customerCode.startsWith("TD") ||
+  //   values.customerCode.length < 12
+  // ) {
+  //   errors.customerCode = "Mã khách hàng không chính xác.";
+  // }
   return errors;
 };
 

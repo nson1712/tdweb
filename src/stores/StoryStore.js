@@ -119,30 +119,55 @@ class StoryStore {
         }
       })
 
-      const contents = result.data?.contents?.map((obj) => {
+      const contents = result.data?.contents?.map((obj, i) => {
         // Decrypt the `encryptedContent` field
-        const decryptedContent = decryptData(obj.content);
+        const decryptedContent = obj.content;
+        let isCanvas = true
+        if (result.data?.contents.length > 7) {
+          if (i > (result.data?.contents.length - 3) || i < (result.data?.contents.length - 5)) {
+            isCanvas = false;
+            decryptedContent = decryptData(obj.content);
+          }
+        } else {
+          isCanvas = false;
+          decryptedContent = decryptData(obj.content);
+        }
     
         // Return a new object with the decrypted content
         return {
           ...obj,
           content: decryptedContent, // Add or replace the decrypted content field
+          isCanvas: isCanvas
         };
       });
 
-      console.log('Decrypted content: ', contents);
       this.loadingChapterDetail = false
       this.chapterDetail = {
         ...result.data,
         contents
       }
 
-      console.log('chapterDetail content: ', this.chapterDetail);
       return this.chapterDetail;
       
     } catch(e) {
       console.log(e)
       this.loadingChapterDetail = false
+    }
+  }
+
+  getStoryPrice = async(storySlug) => {
+    try {
+      const result = await Api.get({
+        url:  '/data/private/data/story/price',
+        params: {
+          slug: storySlug,
+        }
+      })
+
+      return result.data
+
+    } catch(e) {
+      console.log(e)
     }
   }
 
@@ -375,7 +400,6 @@ class StoryStore {
   getStoryByCategory = async (categoryCode, last = undefined, limit = 5, params = {}) => {
     try {
       this.loadingStories = true
-      console.log('Start get category story')
       const result = await Api.get({
         url: 'data/private/data/category/stories1',
         params: {
@@ -385,7 +409,7 @@ class StoryStore {
           ...params
         }
       })
-      console.log('Start get category story: ', result)
+      
       if (last === undefined) {
         this.storyByCategory = {
           ...this.storyByCategory,
@@ -452,12 +476,16 @@ class StoryStore {
       Api.post({
         url: '/data/private/data/story/reading/progress',
         data: {
-          storySlug,
-          chapterSlug
+          eventName: 'READ_CHAPTER',
+          screenName: 'STORY_CONTENT',
+          eventProperties: {
+            'storySlug': storySlug,
+            'chapterSlug': chapterSlug
+          }
         }
       })
     } catch(e) {
-
+      console.log(e);
     }
 
   }
@@ -594,7 +622,6 @@ class StoryStore {
           data: [...this.viewings.data, ...result?.data?.data]
         }
       }
-      console.log('Readings: ', this.viewings);
     } catch(e) {
       console.log(e)
     }

@@ -4,17 +4,28 @@ import classNames from "classnames";
 import { observer } from "mobx-react";
 import Router, { useRouter } from "next/router";
 import GlobalStore from "../../stores/GlobalStore";
+import ShortLogin from "../../pages/Login/ShortLogin";
+import ModalComponent from "../Modal/Modal";
 
 let timeout;
 
 const Header = ({ selectedTab }) => {
   const [text, setText] = useState("");
+  const [showLogin, setShowLogin] = useState(false);
 
   const router = useRouter();
 
   useEffect(() => {
     setText(router.query.tukhoa || "");
   }, [router.query.tukhoa]);
+
+  const handleButtonAccount = () => {
+    if (GlobalStore.isLoggedIn) {
+      Router.push('/tai-khoan')
+    } else {
+      setShowLogin(true);
+    }
+  }
 
   return (
     <div className="py-[16px] shadow-header fixed bottom-[0px] md:bottom-auto md:top-0 left-0 right-0 z-[99] border-t-[1px] md:border-t-0 border-color ">
@@ -31,7 +42,7 @@ const Header = ({ selectedTab }) => {
         <div className="flex items-center justify-between px-[24px] md:px-0 w-full md:w-auto">
           <div
             className={classNames(
-              "flex items-center justify-between mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
+              "menu-header justify-between mx-[2px] px-[20px] h-[40px] rounded-[30px] cursor-pointer",
               selectedTab === "HOME" && "bg-tab-active text-active"
             )}
             onClick={() => {
@@ -50,7 +61,7 @@ const Header = ({ selectedTab }) => {
             <p
               className={classNames(
                 "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
-                selectedTab === "HOME" ? "text-active block" : "hidden md:block"
+                selectedTab === "HOME" && "text-active block"
               )}
             >
               Toidoc
@@ -58,7 +69,7 @@ const Header = ({ selectedTab }) => {
           </div>
           <div
             className={classNames(
-              "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
+              "menu-header mx-[2px] px-[20px] py-[8px] h-[45px] rounded-[30px] cursor-pointer",
               selectedTab === "RESEARCH" && "bg-tab-active text-active"
             )}
             onClick={() => {
@@ -78,14 +89,14 @@ const Header = ({ selectedTab }) => {
               className={classNames(
                 "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
                 selectedTab === "RESEARCH"
-                  ? "text-active block"
-                  : "hidden md:block"
+                  && "text-active block"
+                //   : "hidden md:block"
               )}
             >
               Khám phá
             </p>
           </div>
-          <div
+          {/*<div
             className={classNames(
               "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
               selectedTab === "LIBRARY" && "bg-tab-active text-active"
@@ -113,14 +124,14 @@ const Header = ({ selectedTab }) => {
             >
               Blog
             </p>
-          </div>
+          </div>*/}
           <div
             className={classNames(
-              "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
+              "menu-header mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
               selectedTab === "AUTHOR" && "bg-tab-active text-active"
             )}
             onClick={() => {
-              Router.push("/tac-gia");
+              window.open('https://tacgia.toidoc.vn', '_blank')
             }}
           >
             <img
@@ -136,8 +147,7 @@ const Header = ({ selectedTab }) => {
               className={classNames(
                 "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
                 selectedTab === "AUTHOR"
-                  ? "text-active block"
-                  : "hidden md:block"
+                  && "text-active block"
               )}
             >
               Tác Giả
@@ -172,23 +182,16 @@ const Header = ({ selectedTab }) => {
               Liên hệ
             </p>
           </div>*/}
-          <div className={classNames('flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer',
+          <div className={classNames('menu-header mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer',
             selectedTab === 'PROFILE' && 'bg-tab-active text-active'
           )}
-          onClick={() => {
-            if (GlobalStore.isLoggedIn) {
-              Router.push('/tai-khoan')
-            } else {
-              Router.push('/dang-nhap')
-            }
-          
-          }}
+          onClick={() => handleButtonAccount()}
           >
             <img src={GlobalStore?.profile?.avatar ? GlobalStore?.profile?.avatar : selectedTab === 'PROFILE' ? '/images/user-active.svg' : '/images/user.svg'} className='w-[24px] mr-[4px] bd-radius-24'
               alt='user'
             />
             <p className={classNames('mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap',
-              selectedTab === 'PROFILE'? 'text-active block' : 'hidden md:block'
+              selectedTab === 'PROFILE'&& 'text-active block'
             )}>
               {GlobalStore?.isLoggedIn ? 'Tài khoản' : 'Đăng nhập'}
             </p>
@@ -198,7 +201,7 @@ const Header = ({ selectedTab }) => {
         <div className="relative ml-[10px] w-[157px] hidden md:block">
           <input
             className="search h40 border-primary border-width-1"
-            placeholder="Nhập tên truyện mà bạn muốn tìm..."
+            placeholder="Tìm kiếm truyện..."
             value={text}
             onChange={(e) => {
               const value = e.target.value;
@@ -212,6 +215,14 @@ const Header = ({ selectedTab }) => {
           <img src="/images/search.svg" className="search-icon" alt="search" />
         </div>
       </div>
+
+      {showLogin && 
+        <ModalComponent
+            show={showLogin}
+            handleClose={(e) => setShowLogin(false)}>
+          <ShortLogin description='Bạn chưa đăng nhập. Hãy 👆 vào lựa chọn đăng nhập dưới để sử dụng tính năng này.' closeModal= {() => setShowLogin(false)}/>
+        </ModalComponent>
+      }
     </div>
   );
 };

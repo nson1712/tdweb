@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Button from '../../components/Button/Button'
 import Field from '../../components/Form/Field'
 import LocalForm from '../../components/Form/LocalForm'
@@ -12,7 +12,8 @@ import { setAccessToken, setRefreshToken } from '../../utils/storage'
 import Form from '../../components/Form/Form'
 import { base64URLdecode } from '../../utils/utils'
 import GlobalStore from '../../stores/GlobalStore'
-import { useGoogleLogin, GoogleOAuthProvider } from '@react-oauth/google';
+import { useGoogleLogin } from '@react-oauth/google';
+import ShortLogin from './ShortLogin'
 
 const Login = ({
   values,
@@ -21,6 +22,16 @@ const Login = ({
   submitForm
 }) => {
   const [loading, setLoading] = useState(false)
+  useEffect(() => {
+    const checkLogin = async() => {
+      const isLogin = await GlobalStore.checkIsLogin();
+      if (isLogin) {
+        Router.push('/tai-khoan');
+      }
+    }
+
+    checkLogin();
+  }, [])
   const handleLoginEmail = async (data) => {
     try {
       setLoading(true)
@@ -52,7 +63,6 @@ const Login = ({
 
   const handleLoginGoogle = useGoogleLogin({
     onSuccess: async(tokenResponse) => {
-      console.log('tokenResponse: ', tokenResponse);
       const loginResult = await Api.post({
         url: '/customer/public/login-by-social',
         data: {
@@ -65,10 +75,8 @@ const Login = ({
       await setRefreshToken(loginResult?.data?.refreshToken);
 
       const tokens = loginResult?.data?.accessToken.split('.');
-      console.log('updateProfileInfo start decode token')
       const decoded = base64URLdecode(tokens[1]);
       const jsonObj = JSON.parse(decoded);
-      console.log('updateProfileInfo jsonObj: ', jsonObj);
       GlobalStore.profile = {
         ...GlobalStore.profile,
         ...jsonObj,
@@ -82,7 +90,7 @@ const Login = ({
       <div>
         <Header selectedTab={'PROFILE'}/>
         <div className='relative pb-[100px] max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] md:px-[8px] min-h-[100vh] flex flex-col justify-center px-[20px]'>
-          <p className='text-[20px] font-bold main-text text-center'>
+          {/*<p className='text-[20px] font-bold main-text text-center'>
             Đăng nhập
           </p>
           <Form onSubmit={submitForm(handleLoginEmail)} className='max-w-[420px] w-full mx-auto'>
@@ -120,6 +128,10 @@ const Login = ({
             
           </Form>
           
+          <div style={{'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center', 'marginTop': '20px'}}>
+            <a className='link text-underline' href='https://m.me/185169981351799?text=Mình muốn đăng nhập trên web không được. Trợ giúp mình với.'>Báo lỗi đăng nhập</a>
+          </div>*/}
+          <ShortLogin description='Bạn đăng nhập nhanh qua Google nhé' navigate='/tai-khoan'/>
         </div>
       </div>
     </CommonLayout>

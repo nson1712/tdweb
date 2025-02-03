@@ -14,7 +14,7 @@ export const useGetBlog = () => {
     const getBlogById = async () => {
       try {
         const result = await Api.get({
-          url: `https://api.toidoc.com/data/article/${blogId}`,
+          url: `https://fsdfssf.truyenso1.xyz/data/article/${blogId}`,
         });
         setBlog({
           ...result.data,

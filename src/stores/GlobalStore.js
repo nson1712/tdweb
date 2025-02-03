@@ -4,7 +4,7 @@ import { decodeAccessToken } from '../utils/utils';
 
 class GlobalStore {
   showConfirm = false
-
+  copyData = false;
   confirm = {}
 
   profile = {};
@@ -32,7 +32,6 @@ class GlobalStore {
       if (accessToken) {
         const jsonObj = await decodeAccessToken(accessToken);
         this.profile = jsonObj;
-        console.log('Profile: ', JSON.stringify(this.profile));
       }
     }
     this.isLoggedIn = accessToken && refreshToken ? true : false;
@@ -43,7 +42,6 @@ class GlobalStore {
   updateProfile = async(accessToken) => {
     const jsonObj = await decodeAccessToken(accessToken);
     this.profile = jsonObj;
-    console.log('Profile renew: ', JSON.stringify(this.profile));
   }
 }
 

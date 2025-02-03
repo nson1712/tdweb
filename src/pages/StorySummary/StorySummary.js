@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Router, { useRouter } from 'next/router'
+import * as Api from '../../api/api';
 import Button from '../../components/Button/Button'
 import { formatStringToNumber } from '../../utils/utils'
 import CommonLayout from '../../layouts/CommonLayout/CommonLayout'
@@ -17,6 +18,8 @@ import ModalComponent from '../../components/Modal/Modal'
 import ChatSupportAutoClose from '../../components/Button/ChatSupportAutoClose'
 import PaginatedList from './PaginatedList'
 import GlobalStore from '../../stores/GlobalStore'
+import PriceInfo from './PriceInfo'
+import ShortLogin from '../Login/ShortLogin';
 
 const TABS = [{
   label: 'Nội dung',
@@ -79,10 +82,15 @@ const StorySummary = () => {
   const [showModal, setShowModal] = useState(false)
   const [showModalApp, setShowModalApp] = useState(false)
   const [popupUrl, setPopUpUrl] = useState('/images/download-app/popup-1.png')
-  const [orderPopupUrl, setOrderPopupUrl] = useState(1)
+  const [availableCash, setAvailableCash] = useState({});
+  const [discountValue, setDiscountValue] = useState(0);
+  const [finalChargeDiamond, setFinalChargeDiamond] = useState(0);
+  const [showModalNotEnoughDiamond, setShowModalNotEnoughDiamond] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const { storyDetail, getStoryDetail, saveBookMark, bookmarkIds, unBookMark,
     getChapterDetail,
     loadingChapterDetail,
+    getStoryPrice,
     getReadingLatestChapter,
     latestReadingChapter,
     saveViewStory,
@@ -160,25 +168,50 @@ const StorySummary = () => {
         const isLoggedIn = await GlobalStore.checkIsLogin();
         if (isLoggedIn) {
           await getReadingLatestChapter(route.query.storySlug);
+          await getAvailableCash();
+          const storyPrice = await getStoryPrice(route.query.storySlug);
+          setDiscountValue(storyPrice?.discounted);
+          if (storyPrice?.remained > 0) {
+            setFinalChargeDiamond(storyPrice?.remained);
+          } else {
+            setFinalChargeDiamond(storyPrice?.totalCharge);
+          }
+        } else if(storyDetail) {
+          setDiscountValue(storyDetail?.discountDiamond);
+          if (storyDetail?.comboDiamond > 0) {
+            setFinalChargeDiamond(storyDetail?.comboDiamond);
+          } else {
+            setFinalChargeDiamond(storyDetail?.totalDiamond);
+          }
         }
       }
     }
     fetchData();
   }, [route.query.storySlug])
 
-  // useEffect(() => {
-  //   const getFirstChapter = async () => {
-  //     const result = await getChapterDetail(route.query.storySlug, storyDetail.chapters[0].slug)
-  //     setChapters([{
-  //       ...storyDetail.chapters[0],
-  //       chapterDetail: result
-  //     }])
-  //     setCurrentChapterDetail(result);
-  //   }
-  //   if (storyDetail?.id && storyDetail.chapters && storyDetail.chapters[0]) {
-  //     getFirstChapter()
-  //   }
-  // }, [storyDetail?.id])
+  useEffect(() => {
+    const getPriceInfo = async() => {
+      if (GlobalStore.isLoggedIn) {
+        const storyPrice = await getStoryPrice();
+        setDiscountValue(storyPrice?.net);
+        if (storyPrice?.remained > 0) {
+          setFinalChargeDiamond(storyPrice?.remained);
+        } else {
+          setFinalChargeDiamond(storyPrice?.totalCharge);
+        }
+      } else {
+        setDiscountValue(storyDetail?.discountDiamond);
+        if (storyDetail?.comboDiamond > 0) {
+          setFinalChargeDiamond(storyDetail?.comboDiamond);
+        } else {
+          setFinalChargeDiamond(storyDetail?.totalDiamond);
+        }
+      }
+    }
+
+    getPriceInfo();
+    
+  }, [storyDetail?.id])
 
   // useEffect(() => {
   //   const trackScrolling = () => {
@@ -246,6 +279,20 @@ const StorySummary = () => {
     return () => clearInterval(interval);
   },[]);
 
+
+  const getAvailableCash = async () => {
+    try {
+      const result = await Api.get({
+        url: '/customer/customer/availableCash',
+        params: {
+          intendedUse: storyDetail?.contributorId ? 'UNLOCK_EXCLUSIVE_CHAPTER' : 'UNLOCK_NORMAL_CHAPTER'
+        }
+      });
+      setAvailableCash(result?.data)
+    } catch (err) {
+      setAvailableCash({balance: 0});
+    }
+  }
   const handleSetFavorite = async () => {
     if (route.query.storySlug) {
 
@@ -256,19 +303,41 @@ const StorySummary = () => {
       }
 
     }
-
   }
 
   const handleReadingNow = () => {
-    
-    if (latestReadingChapter) {
-      console.log('handleReadingNow latestReadingChapter');
+    if (latestReadingChapter?.storySlug) {
       Router.push(`/${latestReadingChapter.storySlug}/${latestReadingChapter.chapterSlug}`)
     } else if (storyDetail?.chapters?.length > 0) {
-      console.log('handleReadingNow');
       Router.push(`/${storyDetail.slug}/${storyDetail?.chapters[0].slug}`);
     }
   }
+  
+  const handleOpenFullChapter = async() => {
+    try {
+    console.log('GlobalStore.isLoggedIn: ', GlobalStore.isLoggedIn);
+      if (!GlobalStore.isLoggedIn) {
+        setShowLoginModal(true);
+        return;
+      }
+      if (finalChargeDiamond > availableCash?.balance) {
+        setShowModalNotEnoughDiamond(true);
+        return;
+      }
+      await Api.post({
+        url: '/data/private/data/chapter/open',
+        data: {
+          storySlug: storyDetail.slug,
+          isOpenFull: true
+        },
+      });
+
+      await getAvailableCash();
+    } catch(e) {
+     console.log(e);
+    }
+  }
+
   const handleClick = (e, code) => {
     setShowModalApp(false)
     // saveCustomerClickBanner(code)
@@ -397,11 +466,11 @@ const StorySummary = () => {
                   {storyDetail?.status === 'ACTIVE' ? 
                   
                     <div>
-                      <img src='/images/Done.png' className='fl'/> <p className='st-status'>Hoàn thành</p>
+                      <img src='/images/Done.png' className='fl mr-[5px]'/> <p className='st-status' style={{margin: '0px'}}>Hoàn thành</p>
                     </div>
                   :
                     <div>
-                      <img src='/images/Loading.png' className='fl'/> <p className='st-status'>Đang cập nhật</p>
+                      <img src='/images/Loading.png' className='fl mr-[5px]'/> <p className='st-status' style={{margin: '0px'}}>Đang ra tiếp</p>
                     </div>
                   }
                 </div>
@@ -457,6 +526,13 @@ const StorySummary = () => {
             {(latestReadingChapter && latestReadingChapter?.chapterSlug) ? 'Đọc tiếp' : 'Đọc từ đầu'}
           </a>
         </div>
+        {finalChargeDiamond > 0 && 
+          <PriceInfo 
+            discountValue = {discountValue} 
+            finalChargeValue = {finalChargeDiamond}
+            storyDetail = {storyDetail}
+            handleOpenFullChapter = {handleOpenFullChapter}/>
+        }
         
         <div className='p-[16px] pr-[5px]'>
           <p className='text-[18px] font-bold main-text text-underline'>
@@ -532,6 +608,27 @@ const StorySummary = () => {
             <img src="https://media.truyenso1.xyz/ads/bxh-ve-vang-20-9.png" className='imgBanner' rel='nofollow'/>
           </a>
         </ModalComponent>}
+        {showModalNotEnoughDiamond && 
+          <ModalComponent
+            show={showModalNotEnoughDiamond}
+            handleClose={(e) => setShowModalNotEnoughDiamond(false)}
+            styleBody='background-gradient-gray'
+            >
+            <div className='h-[250px]'>
+              <p className='mt-[50px] p-[20px]' dangerouslySetInnerHTML={{ __html: `Hiện bạn có tổng <strong><span style='color:rgb(212, 39, 4); font-size: 20px'>${formatStringToNumber(availableCash?.balance)}</span></strong> kim cương, không đủ để mở chương này. Bạn hãy nạp thêm nhé` }} />
+              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
+                <a href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}`} className='button-deposit-diamond'>Nạp kim cương</a>
+              </div>
+            </div>
+          </ModalComponent>
+        }
+        {showLoginModal && 
+          <ModalComponent
+              show={showLoginModal}
+              handleClose={(e) => setShowLoginModal(false)}>
+            <ShortLogin description='Vui lòng đăng nhập để mở khoá tất cả các chương đang có của truyện này.' closeModal= {() => setShowLoginModal(false)}/>
+          </ModalComponent>
+        }
       </div>
       {/*<MobileShare showBubble={showBubble} setShowBubble={setShowBubble}/>*/}
       {/*<ChatSupportAutoClose/>*/}

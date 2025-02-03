@@ -35,7 +35,7 @@ BlogDetailPage.getInitialProps = async (ctx) => {
     try {
       if (ctx.query.id) {
         const result = await axios.get(
-          `https://api.toidoc.com/data/article/${ctx.query.id}`
+          `https://fsdfssf.truyenso1.xyz/data/article/${ctx.query.id}`
         );
         return {
           detail: result.data.data,

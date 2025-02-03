@@ -11,6 +11,7 @@ import Search from '../Search/Search'
 import CollectionItem from './CollectionItem'
 import SlideCollections from './SlideCollections'
 import ChatSupport from '../../components/Button/ChatSupport'
+import { setItem, getItem } from '../../utils/storage'
 
 let timeout;
 
@@ -69,9 +70,13 @@ const Research = () => {
 
   useEffect(() => {
     const checkCustomerClickAffLocal = async() => {
-      const isClickAff = await checkCustomerClickAff(localStorage.getItem('DEVICE_ID'))
-      if (!isClickAff) {
-        setShowModal(true)
+      // const isClickAff = await checkCustomerClickAff(localStorage.getItem('DEVICE_ID'))
+      // if (!isClickAff) {
+      //   setShowModal(true)
+      // }
+      const isShowBanner = await shouldShowBanner();
+      if (isShowBanner) {
+        setShowModal(true);
       }
     }
     
@@ -87,7 +92,7 @@ const Research = () => {
 
     getcollections1()
     getcollections2()
-    setShowModal(true)
+    // setShowModal(true)
     // checkCustomerClickAffLocal();
     
   }, [])
@@ -99,10 +104,25 @@ const Research = () => {
     }
   }, [favouriteCategories])
 
-  const handleClick = (e, code) => {
+  const shouldShowBanner = async() => {
+    const lastClosed = await getItem('bannerClosedAt');
+    if (!lastClosed) return true;
+
+    const today = new Date().toISOString().split('T')[0];
+    return lastClosed !== today;
+  }
+
+  // Hàm lưu trạng thái đóng banner
+  const closeBanner = async() => {
+    const today = new Date().toISOString().split('T')[0];
+    await setItem('bannerClosedAt', today);
+    setShowModal(false);
+  }
+  
+  const handleClick = async(e, code) => {
     // saveCustomerClickBanner(code)
     // recordClickAff(localStorage.getItem('DEVICE_ID'), 'RESEARCH')
-    setShowModal(false)
+    await closeBanner();
     if (code === 'tai-app-research') {
       window.open('https://toidoc.onelink.me/59bO/d42503wz')
     } else {
@@ -114,7 +134,7 @@ const Research = () => {
     // recordClickAff(localStorage.getItem('DEVICE_ID'), 'RESEARCH')
     // window.open(`https://shope.ee/2q75o9ztbC`, '_blank', 'Toidoc')
     if (code === 'aff') {
-      setShowModal(false)
+      await closeBanner();
     }
     // setShowModal(false)
   }
@@ -129,7 +149,7 @@ const Research = () => {
             <div className='pb-[16px] mb-[0] border-b-[1px] border-color relative'>
               <div className='relative float-left mr-[10px]'>
                 <input className='search border-primary border-width-1'
-                  placeholder='Nhập tên truyện mà bạn muốn tìm...'
+                  placeholder='Tìm kiếm truyện...'
                   value={text}
                   onChange={(e) => {
                     const value = e.target.value
@@ -320,7 +340,7 @@ const Research = () => {
           countDownTime={5}
         >
           <a onClick={(e) => handleClick(e, 'big-banner-research')}>
-            <img src="https://media.truyenso1.xyz/ads/banner-lixi-tet.png" className='imgBanner'/>
+            <img src="https://media.truyenso1.xyz/ads/banner-lixi-tet-1.png" className='imgBanner'/>
           </a>
         </ModalComponent>}
       </div>

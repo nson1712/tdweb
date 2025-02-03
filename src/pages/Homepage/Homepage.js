@@ -11,6 +11,8 @@ import ModalComponent from '../../components/Modal/Modal'
 import Feedback from './Feedback'
 import StoryItem from '../../components/StoryItem/StoryItem'
 import GlobalStore from '../../stores/GlobalStore'
+import { setItem, getItem } from '../../utils/storage'
+import { IssuesCloseOutlined } from '@ant-design/icons'
 
 const Homepage = () => {
   const {
@@ -47,14 +49,18 @@ const Homepage = () => {
 
   useEffect(() => {
     const checkCustomerClickAffLocal = async() => {
-      const isClickAff = await checkCustomerClickAff(localStorage.getItem('DEVICE_ID'))
-      if (!isClickAff) {
+      // const isClickAff = await checkCustomerClickAff(localStorage.getItem('DEVICE_ID'))
+      // if (!isClickAff) {
+      //   
+      // }
+      const isShowBanner = await shouldShowBanner();
+      if (isShowBanner) {
         setShowModal(true)
       }
     }
 
     setTimeout(() => {
-      const selectedCategoriesStore = localStorage.getItem('SELECTED_CATEGORIES')
+      // const selectedCategoriesStore = localStorage.getItem('SELECTED_CATEGORIES')
 
       // if (!selectedCategoriesStore) {
         // Router.replace('/the-loai-yeu-thich')
@@ -70,7 +76,7 @@ const Homepage = () => {
       //   setSelectedCategories(selectedCategoriesStore.split(','))
       // }
       // checkCustomerClickAffLocal();
-      setShowModal(true)
+      
       
     }, 2000)
     
@@ -85,10 +91,25 @@ const Homepage = () => {
     // })
   }
 
-  const handleClick = (e, code) => {
+  const shouldShowBanner = async() => {
+    const lastClosed = await getItem('bannerClosedAt');
+    if (!lastClosed) return true;
+
+    const today = new Date().toISOString().split('T')[0];
+    return lastClosed !== today;
+  }
+
+  // Hàm lưu trạng thái đóng banner
+  const closeBanner = async() => {
+    const today = new Date().toISOString().split('T')[0];
+    await setItem('bannerClosedAt', today);
+    setShowModal(false);
+  }
+
+  const handleClick = async(e, code) => {
     // saveCustomerClickBanner(code)
     // recordClickAff(localStorage.getItem('DEVICE_ID'), 'HOME')
-    setShowModal(false)
+    await closeBanner();
     if (code === 'tai-app-home') {
       window.open('https://toidoc.onelink.me/59bO/d42503wz', '_blank', 'Toidoc')
     } else {
@@ -101,7 +122,7 @@ const Homepage = () => {
     // recordClickAff(localStorage.getItem('DEVICE_ID'), 'HOME')
     // window.open(`https://shope.ee/7UsvLxx7Ui`, '_blank', 'Toidoc')
     if (code === 'aff') {
-      setShowModal(false)
+      await closeBanner();
     } else {
       setShowFeedback(false)
     }
@@ -290,7 +311,7 @@ const Homepage = () => {
           countDownTime={5}
         >
           <a onClick={(e) => handleClick(e, 'big-banner')}>
-            <img src='https://media.truyenso1.xyz/ads/banner-lixi-tet.png' className='imgBanner'/>
+            <img src='https://media.truyenso1.xyz/ads/banner-lixi-tet-1.png' className='imgBanner'/>
           </a>
         </ModalComponent>}
         <ChatSupport showChat={showChat} setShowChat={setShowChat} />

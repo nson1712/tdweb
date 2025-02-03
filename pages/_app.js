@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import Head from 'next/head'
 import '../public/styles/styles.css'
 import '@fortawesome/fontawesome-free/css/all.css';
@@ -10,9 +11,140 @@ import 'react-circular-progressbar/dist/styles.css';
 import '../public/styles/react-datetime.scss'
 import '../public/styles/styles.scss'
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import GlobalStore from '../src/stores/GlobalStore';
+import { isMobileDevice } from '../src/utils/utils';
 
 
 export default function App({ Component, pageProps }) {
+
+  useEffect(() => {
+    // Function to handle text selection
+    const handleSelectionChange = () => {
+      const selection = window.getSelection();
+      if (selection && selection.toString().length > 0) {
+        GlobalStore.copyData = true;
+      }
+    };
+
+    // Function to handle text copying
+    const handleCopy = (e) => {
+      const selection = window.getSelection();
+      if (selection && selection.toString().length > 0) {
+        GlobalStore.copyData = true;
+
+        // Optional: Modify the copied text
+        e.preventDefault(); // Prevent default copy behavior
+      }
+    };
+
+    // Add event listeners
+    document.addEventListener("selectionchange", handleSelectionChange);
+    document.addEventListener("copy", handleCopy);
+
+    // Cleanup on component unmount
+    return () => {
+      document.removeEventListener("selectionchange", handleSelectionChange);
+      document.removeEventListener("copy", handleCopy);
+    };
+  }, []);
+
+  useEffect(() => {
+    const clearCookies = () => {
+      // Get all cookies for the current domain
+      const cookies = document.cookie.split("; ");
+      cookies.forEach((cookie) => {
+        // Get the cookie name
+        const name = cookie.split("=")[0];
+        // Set the cookie with an expired date to delete it
+        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+      });
+      console.log("All cookies for this website have been cleared.");
+    };
+
+    const handleRightClick = (e) => {
+      // Prevent the default right-click menu
+      e.preventDefault();
+    };
+
+    // Function to handle key detection
+    const detectDevTools = (e) => {
+      // Detect F12 key
+      if (e.key === "F12" || e.keyCode === 123) {
+        // Clear the entire document's HTML
+        document.documentElement.innerHTML = "";
+
+        // Clear localStorage and sessionStorage
+        localStorage.clear();
+        sessionStorage.clear();
+        console.clear();
+        clearCookies();
+
+        // Stop ongoing network requests
+        if (window.stop) {
+          window.stop(); // Modern browsers
+        }
+        if ("caches" in window) {
+          caches.keys().then((keys) => {
+            keys.forEach((key) => {
+              caches.delete(key);
+            });
+          });
+        }
+        e.preventDefault();
+      }
+    };
+    
+    const checkDevTools = () => {
+      // const isMobile = isMobileDevice();
+      // const devtoolsOpened =
+      //   window.outerWidth - window.innerWidth > 100 ||
+      //   window.outerHeight - window.innerHeight > 200;
+      const start = performance.now();
+      console.log('Checking...');
+      const end = performance.now();
+      if (end - start > 100) {
+        // Clear the entire document's HTML
+        document.documentElement.innerHTML = "";
+
+        // Clear localStorage and sessionStorage
+        localStorage.clear();
+        sessionStorage.clear();
+        console.clear();
+        clearCookies();
+
+        // Stop ongoing network requests
+        if (window.stop) {
+          window.stop(); // Modern browsers
+        }
+        if ("caches" in window) {
+          caches.keys().then((keys) => {
+            keys.forEach((key) => {
+              caches.delete(key);
+            });
+          });
+        }
+
+        window.location.href = "about:blank";
+      }
+    }
+
+    checkDevTools();
+    // Add event listener for keydown
+    document.addEventListener("keydown", detectDevTools);
+    document.addEventListener("contextmenu", handleRightClick);
+
+    // Detect DevTools with specific behaviors
+    const interval = setInterval(() => {
+      checkDevTools();
+    }, 1000);
+
+    // Cleanup event listener and interval
+    return () => {
+      document.removeEventListener("keydown", detectDevTools);
+      clearInterval(interval);
+    };
+  }, []);
+
   return (
     <>
       <Head>

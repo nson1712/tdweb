@@ -9,14 +9,16 @@ import Chapters from './Chapters'
 import MobileShare from '../StorySummary/MobileShare'
 import Link from 'next/link'
 import LaunchCountdown from "../../components/LaunchCountdown";
-import { getMobileOperatingSystem, dycryptData} from "../../utils/utils";
+import { getMobileOperatingSystem, formatStringToNumber} from "../../utils/utils";
 import ModalComponent from '../../components/Modal/Modal'
+import ModalWithoutCloseButton from '../../components/Modal/ModalWithoutCloseButton';
 import ChatSupportAutoClose from '../../components/Button/ChatSupportAutoClose'
 import ShortLogin from '../Login/ShortLogin';
 import GlobalStore from '../../stores/GlobalStore'
-import Button from '../../components/Button';
+import Question from './Question';
 import OpenInAppInfo from './OpenInAppInfo'
 import OpenChapterInfo from './OpenChapterInfo'
+import ContentDisplay from './ContentDisplay';
 
 const StoryDetail = ({chapterTitle, storyTitle}) => {
   const [showBubble, setShowBubble] = useState('up');
@@ -28,7 +30,7 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
     saveLastStory, 
     saveFavoriteCategories, 
     saveViewStory, 
-    saveCustomerClickBanner,
+    getStoryPrice,
     checkCustomerClickAff,
     recordClickAff } = StoryStore
 
@@ -44,12 +46,17 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
   const [allowOpenWeb, setAllowOpenWeb] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
   const [time, setTime] = useState(180)
+  const [fdfssfds, setFdfssfds] = useState('MlsHlea8IaH3qS8MjoXB1kMnlMImwCE7');
+  const [jkdjfk, setJkdjfk] = useState('HIwhXNiX7d1z7VxZ');
   const [showModal, setShowModal] = useState(false)
+  const [showQuestion, setShowQuestion] = useState(false);
   const [showModalApp, setShowModalApp] = useState(false)
-  const [popupUrl, setPopUpUrl] = useState('/images/download-app/popup-1.png')
+  const [isEnoughDiamond, setIsEnoughDiamond] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [availableCash, setAvailableCash] = useState({});
   const [showModalNotEnoughDiamond, setShowModalNotEnoughDiamond] = useState(false);
+  const [fullPriceStory, setFullPriceStory] = useState({});
+  const [question, setQuestion] = useState({});
 
 
   // const checkCustomerClickAffLocal = async() => {
@@ -80,7 +87,7 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
   
   //   // Disable copying (Ctrl+C, Cmd+C, etc.)
   //   const disableCopy = (event) => {
-  //     event.clipboardData.setData('text/plain', 'Copying is not allowed.');
+  //     event.clipboardData.setData('text/plain', 'Bạn đừng copy dữ liệu của chúng tôi nhé ☹️, tội lắm.');
   //     event.preventDefault();
 
   //   };
@@ -143,6 +150,11 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
       });
       setLoggedIn(isLoggedIn || result?.free);
       setNeedOpenChapter(!result?.free);
+
+      if (result?.order % 20 === 0 && result?.price > 0 && isLoggedIn && result?.contents?.length > 0) {
+        await getQuestion();
+        setShowQuestion(true);
+      }
   
       if ((result?.contentEnabled && result?.free) || (result?.contentEnabled && !GlobalStore.profile?.subscription)) {
         setAllowOpenWeb(true);
@@ -153,8 +165,10 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
       if (isLoggedIn && result?.free && result?.contentEnabled) {
         saveLastStory(route.query.storySlug, route.query.chapterSlug)
       }
-      if (isLoggedIn && !result?.isFree) {
+      if (isLoggedIn && !result?.free) {
         await getAvailableCash();
+        const priceStory = await getStoryPrice(route.query.storySlug);
+        setFullPriceStory(priceStory);
       }
     } catch (e) {
 
@@ -173,9 +187,25 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
           intendedUse: storyDetail?.contributorId ? 'UNLOCK_EXCLUSIVE_CHAPTER' : 'UNLOCK_NORMAL_CHAPTER'
         }
       });
-      setAvailableCash(result?.data)
+      setAvailableCash(result?.data);
+      if (currentChapterDetail?.price > result?.data?.balance) {
+        setIsEnoughDiamond(false);
+      }
     } catch (err) {
       setAvailableCash({balance: 0});
+    }
+  }
+
+  const getQuestion = async() => {
+    if (!GlobalStore.isLoggedIn) {
+      return;
+    }
+    try {
+      const result = await Api.get({
+        url: '/data/private/data/question'
+      });
+      setQuestion(result?.data);
+    } catch (err) {
     }
   }
 
@@ -310,7 +340,9 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
       url: '/data/private/data/chapter/open',
       data: {
         storySlug: storyDetail.slug,
+        numberChapter: 1,
         chapterSlug: route.query.chapterSlug,
+        isOpenFull: false
       },
     });
 
@@ -318,11 +350,11 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
   }
 
   const handleSupport = async() => {
-    window.open(`https://m.me/185169981351799?text=Mình đang đọc chương ${chapterTitle} bị khoá. Truyện ${storyTitle}. Giờ mình phải làm sao?`, "_blank");
+    window.open(`https://m.me/185169981351799?text=Mình đang đọc chương ${chapterTitle} bị khoá trên web. Truyện ${storyTitle}. Giờ mình phải làm sao?`, "_blank");
   }
 
   const handleSupportNotAllow = async() => {
-    window.open(`https://m.me/185169981351799?text=Mình đang đọc chương ${chapterTitle} chỉ được xem trên App. Truyện ${storyTitle}. Giờ mình phải làm sao?`, "_blank");
+    window.open(`https://m.me/185169981351799?text=Mình đang đọc chương ${chapterTitle} ở trên web mà chương này chỉ được xem trên App. Truyện ${storyTitle}. Giờ mình phải làm sao?`, "_blank");
   }
 
   const handleShowChapterList = async() => {
@@ -384,21 +416,26 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
               Router.back()
             }}
           >
-            <img src='/images/arrow-left.svg' className='w-[24px]' alt={`Quay lại truyện ${storyDetail?.title}`}/>
+            <img src='/images/arrow-left.svg' className='w-[35px]' alt={`Quay lại truyện ${storyDetail?.title}`}/>
           </a>
 
           <a href={`/${storyDetail?.slug}`} title={`Truyện ${storyDetail?.title}`}>
-            <h1 className='text-[20px] leading-[20px] font-bold main-text mb-0 line-clamp-1'>
+            <h1 className='text-[20px] leading-[24px] font-bold main-text mb-0 line-clamp-1'>
               {storyDetail?.title}
             </h1>
           </a>
-
-          <a className='w-[68px] p-[20px] md:hidden' title={`Danh sách chương truyện ${storyDetail?.title}`}
+          <a className='w-[68px] p-[10px] md:hidden ml-[5px]' title={`Trang chủ Toidoc`} href='/'>
+            <img src='/images/main-home.png' className='w-[24px]' alt={`Trang chủ Toidoc`}/>
+          </a>
+          <a className='w-[68px] p-[10px] md:hidden' title={`Bìa truyện ${storyDetail?.title}`} href={`/${storyDetail?.slug}`}>
+            <img src='/images/icon-book-open.png' className='w-[24px]' alt={`Danh sách chương truyện ${storyDetail?.title}`}/>
+          </a>
+          <a className='w-[68px] p-[10px] md:hidden' title={`Danh sách chương truyện ${storyDetail?.title}`}
             onClick={() => {
               handleShowChapterList()
             }}
           >
-            <img src='/images/checkmark.svg' className='w-[24px]' alt={`Danh sách chương truyện ${storyDetail?.title}`}/>
+            <img src='/images/list.png' className='w-[24px]' alt={`Danh sách chương truyện ${storyDetail?.title}`}/>
           </a>
         </div>
         <div className='story-content px-[20px]'>
@@ -410,17 +447,27 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
             <div className='text-[20px] leading-[32px]  breakword'>
               {allowOpenWeb ? 
                 <>
-                  {chapterContents?.map((item, i) => (
-                    <div key={`${item.order}-${i}`}>
-                      <p  className='font-content' dangerouslySetInnerHTML={{__html: item.content}} />
-                      {i === 6 && <a href='https://m.me/185169981351799?text=Mình quan tâm tới gói Premium. Hỗ trợ mình với'><img src='https://media.truyenso1.xyz/ads/upgrade-premium.png' className='img-ads' alt='Toidoc premium'/></a>}
-                    </div>
-                  ))}
+                  {GlobalStore.copyData ? 
+                    <>
+                      <p className='alert-text'>Chúng tôi nghiêm cấm các hành vi sao chép và phát tán dữ liệu từ nền tảng mà chưa được phép.<br/>Hãy tải lại trang để đọc truyện nhé!</p>
+                    </>
+                    :
+                    <>
+                      {chapterContents?.map((item, i) => (
+                        <div key={`${item.order}-${i}`}>
+                          <ContentDisplay item={item} fdsfsjs={fdfssfds} dfjkdsfds={jkdjfk} order={i}/>
+                          {i === 6 && <a href='https://m.me/185169981351799?text=Mình quan tâm tới gói Premium. Hỗ trợ mình trên web với'><img src='https://media.truyenso1.xyz/ads/upgrade-premium.png' className='img-ads' alt='Toidoc premium'/></a>}
+                        </div>
+                      ))}
+                    </>
+                    }
+                  
+                  
                   {!loggedIn ?
                     <ShortLogin />
                   : needOpenChapter ?
                     <div>
-                      <OpenChapterInfo story={storyDetail} chapter={currentChapter} handleOpenChapter={handleOpenChapter} handleSupport={handleSupport}/>
+                      <OpenChapterInfo story={storyDetail} chapter={currentChapter} handleOpenChapter={handleOpenChapter} handleSupport={handleSupport} availableCash={availableCash}/>
                     </div>
                   : <></>
                   }
@@ -428,14 +475,16 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
               :
                 isLoading ? <><p>Đang tải dữ liệu .....</p></>
               : 
-                <OpenInAppInfo handleSupport={handleSupportNotAllow}/>
+                <OpenInAppInfo handleSupport={handleSupportNotAllow} chapterDetail={currentChapterDetail} storyDetail={storyDetail} handleOpenChapter={handleOpenChapter}/>
               }
               
 
-              <div className='navigation-buttons'>
-                {currentChapter?.previous && <a className='back-button' href={`/${storyDetail?.slug}/${currentChapter?.previous}`}>{'< Chương trước'}</a>}
-                {currentChapter?.next && <a className='next-button' href={`/${storyDetail?.slug}/${currentChapter?.next}`}>{'Chương tiếp >'}</a>}
-              </div>
+              {currentChapter && 
+                <div className='navigation-buttons'>
+                  {currentChapter?.previous && <a className='back-button' href={`/${storyDetail?.slug}/${currentChapter?.previous}`}>{'< Chương trước'}</a>}
+                  {currentChapter?.next && <a className='next-button' href={`/${storyDetail?.slug}/${currentChapter?.next}`}>{'Chương tiếp >'}</a>}
+                </div>
+              }
             </div>
           </div>
         </div>
@@ -473,15 +522,25 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
         </ModalComponent>}
         {showModalNotEnoughDiamond && 
           <ModalComponent
-             show={showModalNotEnoughDiamond}
-              handleClose={(e) => setShowModalNotEnoughDiamond(false)}>
-            <div className='h-[300px]'>
-              <p className='mt-[50px] p-[20px]' dangerouslySetInnerHTML={{ __html: `Hiện bạn có tổng <strong><span style='color:rgb(212, 39, 4); font-size: 20px'>${availableCash?.balance}</span></strong> kim cương, không đủ để mở chương này. Bạn hãy nạp thêm nhé` }} />
+            show={showModalNotEnoughDiamond}
+            handleClose={(e) => setShowModalNotEnoughDiamond(false)}
+            styleBody='background-gradient-gray'>
+            <div className='h-[250px]'>
+              <p className='mt-[50px] px-[20px]' dangerouslySetInnerHTML={{ __html: `Hiện bạn có tổng <strong><span style='color:rgb(212, 39, 4); font-size: 20px'>${availableCash?.balance}</span></strong> kim cương, không đủ để mở chương này. Bạn hãy nạp thêm nhé` }} />
+              <p className='px-[20px]' dangerouslySetInnerHTML={{ __html: `Mở toàn bộ truyện này hết tổng <strong><span style='color:rgb(212, 39, 4); font-size: 20px'>${formatStringToNumber(fullPriceStory?.remained)}</span></strong> kim cương.`}} />
               <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                <a href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}`} className='button-open-chapter'>Nạp kim cương</a>
+                <a href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}`} className='button-deposit-diamond'>Nạp kim cương</a>
               </div>
             </div>
           </ModalComponent>
+        }
+        {showQuestion &&
+          <ModalWithoutCloseButton
+            show={showQuestion}
+            handleClose={(e) => setShowQuestion(false)}
+            styleBody='background-gradient-gray'>
+            <Question question={question} closeModal = {() => setShowQuestion(false)} />
+          </ModalWithoutCloseButton>
         }
       </div>
     {/*<MobileShare showBubble={showBubble} setShowBubble={setShowBubble}/>*/}

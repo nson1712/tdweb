@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Button from '../../components/Button';
 
 const PaginatedList = ({items}) => {
-  const [itemsPerPage, setItemsPerPage] = useState(20);
+  const [itemsPerPage, setItemsPerPage] = useState(50);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);

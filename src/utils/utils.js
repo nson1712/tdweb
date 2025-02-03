@@ -71,6 +71,18 @@ export const getMobileOperatingSystemStr = () => {
   // return 'unknown'
 };
 
+export const isMobileDevice = () => {
+  const userAgent = navigator.userAgent || window.opera;
+  const isMobileUserAgent = /android|iphone|ipad|ipod|blackberry|windows phone/i.test(userAgent);
+
+  // Step 6: Combine all checks
+  if (isMobileUserAgent) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 export function formatStringToNumber(
   value,
   maximumFractionDigits = 2,
@@ -312,7 +324,6 @@ export const decryptData = (encryptedText) => {
 
 export const decodeAccessToken = async(accessToken) => {
   const tokens = accessToken.split('.');
-  console.log('updateProfileInfo start decode token')
   const decoded = base64URLdecode(tokens[1]);
   const jsonObj = JSON.parse(decoded);
   return jsonObj;

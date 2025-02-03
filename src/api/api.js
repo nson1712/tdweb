@@ -29,7 +29,7 @@ const handleError = async (error, hideError) => {
   if (error?.response?.status === 401 || error?.response?.status === 403) {
     errorMessage = errorMessages.sessionExprire;
     removeToken();
-    Router.push("/login");
+    Router.push("/dang-nhap");
     // logout
   }
   if (!hideErrorNoti && errorMessage) {
@@ -72,6 +72,7 @@ const sendRequest = async ({
       "Content-Type": "application/json",
       "Cache-Control": "no-cache",
       channelId: "WEB",
+      deviceType: "WEB",
       deviceId: guid,
     },
     accessToken && {Authorization: accessToken},
@@ -88,13 +89,9 @@ const sendRequest = async ({
           },
         };
       }
-
-      console.log("Path: ", url);
+      
       const accessToken = response?.headers['access-token'];
       const refreshToken = response?.headers['refresh-token'];
-      console.log("Response: ", response);
-      console.log("New accessToken: ", accessToken);
-      console.log("New refreshToken: ", refreshToken);
       if(accessToken) {
         await setAccessToken(accessToken);
         await GlobalStore.updateProfile(accessToken);

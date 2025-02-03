@@ -4,6 +4,7 @@ import Header from '../../components/Header/Header'
 import CommonLayout from '../../layouts/CommonLayout/CommonLayout'
 import StoryStore from '../../stores/StoryStore'
 import CollectionItem from '../Research/CollectionItem'
+import GlobalStore from '../../stores/GlobalStore'
 
 let timeout;
 const Collections = () => {
@@ -13,6 +14,13 @@ const Collections = () => {
   useEffect(() => {
     getCollections(page, 20)
   }, [page])
+
+  useEffect(() => {
+    const checkLogin = async() => {
+      await GlobalStore.checkIsLogin();
+    }
+    checkLogin();
+  }, [])
 
   // const data = useMemo(() => {
   //     return collectionData

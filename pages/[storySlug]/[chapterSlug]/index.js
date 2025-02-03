@@ -27,7 +27,8 @@ StoryDetail.getInitialProps = async(ctx) => {
     try {
       if (ctx.query.storySlug !== 'images' && ctx.query.storySlug !== 'img') {
         const result = await axios.get(
-        typeof window !== 'undefined' ? 'https://uatapi.truyenso1.xyz/data/private/data/story/chapter/detail' : 'https://uatapi.truyenso1.xyz/data/private/data/story/chapter/detail',
+        typeof window !== 'undefined' ? 'https://fsdfssf.truyenso1.xyz/data/private/data/story/chapter/detail' : 'http://10.8.22.205:8082/private/data/story/chapter/detail',
+        // 'https://fsdfssf.truyenso1.xyz/data/private/data/story/chapter/detail',
         {
           params: {
             storySlug: ctx.query.storySlug,
@@ -36,7 +37,6 @@ StoryDetail.getInitialProps = async(ctx) => {
         });
         const canonical = 'https://toidoc.vn/' + ctx.query.storySlug + '/' + ctx.query.chapterSlug;
 
-        console.log('SEO chapter detail: ', result.data);
         return {
           detail: result.data?.data,
           canonical: canonical,

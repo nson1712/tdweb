@@ -93,7 +93,7 @@ const Search = ({hiddenSearch, setShowSearch}) => {
 
           <div className='relative ml-[10px] flex-1 mr-[20px]'>
           <input className='search h40 border-primary border-width-1'
-            placeholder='Nhập tên truyện mà bạn muốn tìm...'
+            placeholder='Tìm kiếm truyện...'
             value={text}
             onChange={(e) => {
               const value = e.target.value

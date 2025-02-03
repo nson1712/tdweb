@@ -1,15 +1,16 @@
 import React from 'react';
 import Button from '../../components/Button';
+import { formatStringToNumber } from '../../utils/utils';
 
-const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport}) => {
+const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, availableCash}) => {
   
   return (
     <>
       <div className='box-login'>
         <p className='white-text' style={{'margin': '10px 20px', 'fontWeight': 'bold'}}>
           <span className='fl mr-[5px]'>Chương này nhà đăng đặt khoá.</span>
-          <span className='fl mr-[5px]'>Bạn cần ủng hộ</span>
-          <span className='fl mr-[5px]'>{chapter?.price}</span>
+          <span className='fl mr-[5px]'>Hãy ủng hộ</span>
+          <span className='fl mr-[5px]'>{formatStringToNumber(chapter?.price)}</span>
           <span className='fl  mr-[5px]'><img src={story?.contributorId ? '/images/red-diamond.png' : '/images/blue-diamond.png'} style={{'width': '25px'}}/></span>
           để đọc tiếp!
         </p>
@@ -39,7 +40,11 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport}) => 
         }
         <div className='diamond-info'>
           <img src='/images/icon-check.png' style={{'width': '20px', 'marginRight': '5px'}}/>
-          <p style={{'margin': '0px', 'fontSize': '14px', 'color': '#fff'}}>Các chương đã mở bằng kim cương sẽ được đọc mãi</p>
+          <p style={{'margin': '0px', 'fontSize': '14px', 'color': '#fff'}}>Bạn có thể "Đọc lại chương" của truyện này nhiều lần mà không cần ủng hộ thêm kim cương.</p>
+        </div>
+        <div className='diamond-info'>
+          <img src='/images/icon-check.png' style={{'width': '20px', 'marginRight': '5px'}}/>
+          <p style={{'margin': '0px', 'fontSize': '14px', 'color': '#fff'}}>Nếu truyện chưa hoàn, thì bạn cần ủng hộ thêm kim cương cho chương mới.</p>
         </div>
         {story?.contributorId && <div className='diamond-info'>
           <img src='/images/icon-check.png' style={{'width': '20px', 'marginRight': '5px'}}/>
@@ -52,7 +57,7 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport}) => 
           </p>
         </div>}
         <div style={{'marginTop': '30px', 'display': 'flex', 'justifyContent': 'center'}}>
-          <Button onClick={() => handleOpenChapter()} className='button-open-chapter'>Mở khoá chương</Button>
+          <Button onClick={() => handleOpenChapter()} className='button-open-chapter'>{chapter?.price <= availableCash?.balance ? 'Mở khoá chương' : 'Nạp kim cương'}</Button>
         </div>
         <div style={{'marginTop': '30px', 'display': 'flex', 'justifyContent': 'center'}}>
          

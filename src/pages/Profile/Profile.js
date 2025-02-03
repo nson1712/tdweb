@@ -3,7 +3,6 @@ import Header from '../../components/Header/Header'
 import * as Api from '../../api/api'
 import Router from 'next/router'
 import CommonLayout from '../../layouts/CommonLayout/CommonLayout'
-import Button from '../../components/Button'
 import GlobalStore from '../../stores/GlobalStore'
 import { removeToken } from '../../utils/storage'
 import StoryStore from '../../stores/StoryStore'
@@ -30,8 +29,6 @@ const Profile = () => {
     
   const [selfProfile, setSelfProfile] = useState({});
   const [activeTab, setActiveTab] = useState(0); // Tab mặc định là 0
-  const [storyReading, setStoryReading] = useState([]); // Dữ liệu tab 1
-  const [storyComplete, setStoryComplete] = useState([]); // Dữ liệu tab 2
   const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
 
   useEffect(() => {
@@ -181,6 +178,9 @@ const Profile = () => {
             </div>
           </div>
           
+          <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center', marginTop: '20px'}}>
+            <a className='button-open-chapter' href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}`}>Nạp Kim Cương</a>
+          </div>
           <div style={{ display: "flex", margin: '20px 15px'}}>
             <div
               onClick={() => setActiveTab(0)}

@@ -33,7 +33,7 @@ const BlogDetails = ({ data }) => {
   }, []);
 
   const fetchData = () => {
-    const fetchUrl = `https://api.toidoc.com/data/article/list?size=${size}`;
+    const fetchUrl = `https://fsdfssf.truyenso1.xyz/data/article/list?size=${size}`;
 
     setLoading(true);
     fetch(fetchUrl)
