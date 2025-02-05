@@ -7,6 +7,7 @@ import Header from '../../components/Header/Header'
 import { observer } from 'mobx-react'
 import Router, { useRouter } from 'next/router'
 import StoryStore from '../../stores/StoryStore'
+import GlobalStore from '../../stores/GlobalStore'
 import Search from '../Search/Search'
 import CollectionItem from './CollectionItem'
 import SlideCollections from './SlideCollections'
@@ -85,7 +86,7 @@ const Research = () => {
         await GlobalStore.checkIsLogin();
       } catch(e) {}
     }
-    
+
     checkLogin();
     getCategories();
     getFavouriteCategories();

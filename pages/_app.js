@@ -102,10 +102,10 @@ export default function App({ Component, pageProps }) {
       // const devtoolsOpened =
       //   window.outerWidth - window.innerWidth > 100 ||
       //   window.outerHeight - window.innerHeight > 200;
-      const start = performance.now();
-      console.log('Checking...');
-      const end = performance.now();
-      if (end - start > 100) {
+      // const start = performance.now();
+      // console.log('Checking...');
+      // const end = performance.now();
+      if (window.outerWidth - window.innerWidth > 200) {
         // Clear the entire document's HTML
         document.documentElement.innerHTML = "";
 

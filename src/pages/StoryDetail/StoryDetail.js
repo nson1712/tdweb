@@ -413,7 +413,15 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
           ))}
         </div>
         <div className='max-w-[768px] md:bg-white'>
-        <div className={`align-center border-b-[1px] border-color px-[5px] py-[10px] ${isMobile && 'hidden'}`} style={{backgroundColor: '#f0f0f0', color: '#5C95C6', fontWeight: '600', fontFamily: 'sans-serif'}}><a>Trang khám phá</a> <img className='h-[20px] mx-[10px]' src='/images/arrowright.png'/> <a>{storyDetail?.title}</a> <img className='h-[20px] mx-[10px]' src='/images/arrowright.png'/> <a>{chapterTitle}</a></div>
+        {!isMobile && 
+          <div className={`align-center border-b-[1px] border-color px-[5px] py-[10px] ${isMobile && 'hidden'}`} style={{backgroundColor: '#f0f0f0', color: '#5C95C6', fontWeight: '600', fontFamily: 'sans-serif'}}>
+            <a href='/tim-kiem'>Trang khám phá</a>
+            <img className='h-[20px] mx-[10px]' src='/images/arrowright.png'/>
+            <a href={`/${storyDetail?.slug}`}>{storyDetail?.title}</a>
+            <img className='h-[20px] mx-[10px]' src='/images/arrowright.png'/>
+            <a href={`/${storyDetail?.slug}/${route.query.chapterSlug}`}>{chapterTitle}</a>
+          </div>
+        }
         {isMobile && <div className={`flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 bg-story`}>
           <a className='p-[20px]' title={`Truyện ${storyDetail?.title}`}
             onClick={() => {

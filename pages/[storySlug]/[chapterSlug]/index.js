@@ -27,8 +27,9 @@ StoryDetail.getInitialProps = async(ctx) => {
     try {
       if (ctx.query.storySlug !== 'images' && ctx.query.storySlug !== 'img') {
         const result = await axios.get(
-        typeof window !== 'undefined' ? 'https://fsdfssf.truyenso1.xyz/data/private/data/story/chapter/detail' : 'http://10.8.22.205:8082/private/data/story/chapter/detail',
+        // typeof window !== 'undefined' ? 'https://fsdfssf.truyenso1.xyz/data/private/data/story/chapter/detail' : 'http://10.8.22.205:8082/private/data/story/chapter/detail',
         // 'https://fsdfssf.truyenso1.xyz/data/private/data/story/chapter/detail',
+        typeof window !== 'undefined' ? 'https://uatapi.truyenso1.xyz/data/private/data/story/chapter/detail' : 'http://10.8.22.203:8081/private/data/story/chapter/detail',
         {
           params: {
             storySlug: ctx.query.storySlug,
