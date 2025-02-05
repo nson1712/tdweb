@@ -1,14 +1,14 @@
 // import Web3 from 'web3'
 import moment from "moment";
 import { pancakeSwapAbi, pancakeSwapContract } from "../contracts/pancake";
-import { toast } from 'react-toastify';
-import {Base64} from 'js-base64';
-import crypto from 'crypto'
+import { toast } from "react-toastify";
+import { Base64 } from "js-base64";
+import crypto from "crypto";
 
 export const zeroPad = (num, places) => String(num).padStart(places, "0");
-const secret_key = 'MlsHlea8IaH3qS8MjoXB1kMnlMImwCE7'
-const secret_iv = 'HIwhXNiX7d1z7VxZ'
-const ecnryption_method = 'aes-256-cbc'
+const secret_key = "MlsHlea8IaH3qS8MjoXB1kMnlMImwCE7";
+const secret_iv = "HIwhXNiX7d1z7VxZ";
+const ecnryption_method = "aes-256-cbc";
 export const getMobileOperatingSystem = () => {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
   return Boolean(
@@ -72,7 +72,8 @@ export const getMobileOperatingSystemStr = () => {
 
 export const isMobileDevice = () => {
   const userAgent = navigator.userAgent || window.opera;
-  const isMobileUserAgent = /android|iphone|ipad|ipod|blackberry|windows phone/i.test(userAgent);
+  const isMobileUserAgent =
+    /android|iphone|ipad|ipod|blackberry|windows phone/i.test(userAgent);
 
   // Step 6: Combine all checks
   if (isMobileUserAgent) {
@@ -237,7 +238,7 @@ export const appendNewLineAfterCloseHTag = (string) => {
     .replaceAll("</h5>", "</h5> \n")
     .replaceAll("</h6>", "</h6> \n")
     .replaceAll("</p>", "</p> \n")
-    .replaceAll("</figure>", "</figure> \n")
+    .replaceAll("</figure>", "</figure> \n");
 };
 
 export const isEmpty = (obj) => {
@@ -248,47 +249,56 @@ export const isEmpty = (obj) => {
   }
 
   return true;
-}
+};
 
 export const base64URLdecode = (str) => {
-  const base64Encoded = str.replace(/-/g, '+').replace(/_/g, '/');
-  const padding = str.length % 4 === 0 ? '' : '='.repeat(4 - (str.length % 4));
+  const base64Encoded = str.replace(/-/g, "+").replace(/_/g, "/");
+  const padding = str.length % 4 === 0 ? "" : "=".repeat(4 - (str.length % 4));
   const base64WithPadding = base64Encoded + padding;
-  
+
   const binaryString = Base64.atob(base64WithPadding);
   const binaryLength = binaryString.length;
   const bytes = new Uint8Array(binaryLength);
-  
+
   for (let i = 0; i < binaryLength; i++) {
     bytes[i] = binaryString.charCodeAt(i);
   }
-  
+
   return utf8Decode(bytes);
 };
 
 function utf8Decode(bytes) {
-  let result = '';
+  let result = "";
   let i = 0;
 
   while (i < bytes.length) {
     let byte1 = bytes[i++];
-    
+
     if (byte1 < 0x80) {
       result += String.fromCharCode(byte1);
-    } else if (byte1 < 0xE0) {
+    } else if (byte1 < 0xe0) {
       let byte2 = bytes[i++];
-      result += String.fromCharCode(((byte1 & 0x1F) << 6) | (byte2 & 0x3F));
-    } else if (byte1 < 0xF0) {
+      result += String.fromCharCode(((byte1 & 0x1f) << 6) | (byte2 & 0x3f));
+    } else if (byte1 < 0xf0) {
       let byte2 = bytes[i++];
       let byte3 = bytes[i++];
-      result += String.fromCharCode(((byte1 & 0x0F) << 12) | ((byte2 & 0x3F) << 6) | (byte3 & 0x3F));
+      result += String.fromCharCode(
+        ((byte1 & 0x0f) << 12) | ((byte2 & 0x3f) << 6) | (byte3 & 0x3f)
+      );
     } else {
       let byte2 = bytes[i++];
       let byte3 = bytes[i++];
       let byte4 = bytes[i++];
-      let codepoint = ((byte1 & 0x07) << 18) | ((byte2 & 0x3F) << 12) | ((byte3 & 0x3F) << 6) | (byte4 & 0x3F);
+      let codepoint =
+        ((byte1 & 0x07) << 18) |
+        ((byte2 & 0x3f) << 12) |
+        ((byte3 & 0x3f) << 6) |
+        (byte4 & 0x3f);
       codepoint -= 0x10000;
-      result += String.fromCharCode(0xD800 + (codepoint >> 10), 0xDC00 + (codepoint & 0x3FF));
+      result += String.fromCharCode(
+        0xd800 + (codepoint >> 10),
+        0xdc00 + (codepoint & 0x3ff)
+      );
     }
   }
 
@@ -296,37 +306,41 @@ function utf8Decode(bytes) {
 }
 
 export const decryptData = (encryptedText) => {
-  if (!encryptedText || typeof encryptedText !== 'string') {
-    return '';
+  if (!encryptedText || typeof encryptedText !== "string") {
+    return "";
   }
   if (!secret_key || secret_key.length !== 32) {
-    return '';
+    return "";
   }
   if (!secret_iv || secret_iv.length !== 16) {
-    return '';
+    return "";
   }
 
   try {
-    const keyBuffer = Buffer.from(secret_key, 'utf8'); // Convert key to Buffer
-    const ivBuffer = Buffer.from(secret_iv, 'utf8');   // Convert IV to Buffer
-    const encryptedBuffer = Buffer.from(encryptedText, 'base64'); // Convert base64 to Buffer
+    const keyBuffer = Buffer.from(secret_key, "utf8"); // Convert key to Buffer
+    const ivBuffer = Buffer.from(secret_iv, "utf8"); // Convert IV to Buffer
+    const encryptedBuffer = Buffer.from(encryptedText, "base64"); // Convert base64 to Buffer
 
-    const decipher = crypto.createDecipheriv(ecnryption_method, keyBuffer, ivBuffer);
-    let decrypted = decipher.update(encryptedBuffer, 'base64', 'utf8');
-    decrypted += decipher.final('utf8'); // Finalize decryption
+    const decipher = crypto.createDecipheriv(
+      ecnryption_method,
+      keyBuffer,
+      ivBuffer
+    );
+    let decrypted = decipher.update(encryptedBuffer, "base64", "utf8");
+    decrypted += decipher.final("utf8"); // Finalize decryption
     return decrypted.toString();
   } catch (error) {
-    console.error('Decryption error:', error.message);
-    return '';
+    console.error("Decryption error:", error.message);
+    return "";
   }
-}
+};
 
-export const decodeAccessToken = async(accessToken) => {
-  const tokens = accessToken.split('.');
+export const decodeAccessToken = async (accessToken) => {
+  const tokens = accessToken.split(".");
   const decoded = base64URLdecode(tokens[1]);
   const jsonObj = JSON.parse(decoded);
   return jsonObj;
-}
+};
 
 export const isInAppBrowser = () => {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
@@ -345,25 +359,28 @@ export const redirectToBrowser = () => {
     const encodedUrl = encodeURIComponent(url);
 
     // Trường hợp 1: Mở bằng Google Chrome trên iOS/Android
-    const chromeUrl = `googlechrome://${url.replace(/^https?:\/\//, '')}`;
+    const chromeUrl = `googlechrome://${url.replace(/^https?:\/\//, "")}`;
 
     // Trường hợp 2: Dành cho Android (Intent)
-    const androidIntent = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end;`;
+    const androidIntent = `intent://${url.replace(
+      /^https?:\/\//,
+      ""
+    )}#Intent;scheme=https;package=com.android.chrome;end;`;
 
     // Trường hợp 3: Dành cho Safari trên iOS
     const safariUrl = `https://www.google.com/search?q=${encodedUrl}`;
     const safari1 = `safari-${url}`;
-    const safari2 = `x-safari-${url}`
+    const safari2 = `x-safari-${url}`;
 
     const webOS = getMobileOperatingSystemStr();
-    if ('Android' === webOS) {
+    if ("Android" === webOS) {
       try {
         window.location.href = chromeUrl;
         setTimeout(() => {
           window.location.href = androidIntent;
         }, 500);
         setTimeout(() => {
-          window.open(url, '_blank');
+          window.open(url, "_blank");
         }, 500);
       } catch (e) {
         try {
@@ -371,19 +388,22 @@ export const redirectToBrowser = () => {
             window.location.href = androidIntent;
           }, 500);
         } catch (e) {
-           try {
+          try {
             setTimeout(() => {
-              window.open(url, '_blank');
+              window.open(url, "_blank");
             }, 500);
           } catch (e) {
-            toast('Vui lòng copy link và mở trên trình duyệt chrome\nhoặc safari trên máy bạn', {
-                    type: "error",
-                    theme: "colored",
-                  })
+            toast(
+              "Vui lòng copy link và mở trên trình duyệt chrome\nhoặc safari trên máy bạn",
+              {
+                type: "error",
+                theme: "colored",
+              }
+            );
           }
         }
       }
-    } else if ('iOS' === webOS) {
+    } else if ("iOS" === webOS) {
       // try {
       //   setTimeout(() => {
       //     window.location.href = safari1;
@@ -412,21 +432,32 @@ export const redirectToBrowser = () => {
       //     }
       //   }
       // }
-      toast('Vui lòng ấn vào nút 3 chấm bên trên rồi chọn mở bằng trình duyệt\nđể có trải nghiệm mượt mà', {
-        type: "error",
-        theme: "colored",
-      })
+      toast(
+        "Vui lòng ấn vào nút 3 chấm bên trên rồi chọn mở bằng trình duyệt\nđể có trải nghiệm mượt mà",
+        {
+          type: "error",
+          theme: "colored",
+        }
+      );
     } else {
       try {
         setTimeout(() => {
           window.location.href = androidIntent;
         }, 500);
       } catch (e) {
-        toast('Vui lòng copy link và mở trên trình duyệt chrome\nhoặc safari trên máy bạn', {
-          type: "error",
-          theme: "colored",
-        })
+        toast(
+          "Vui lòng copy link và mở trên trình duyệt chrome\nhoặc safari trên máy bạn",
+          {
+            type: "error",
+            theme: "colored",
+          }
+        );
       }
     }
   }
+};
+
+export const calculateTotalCategories = (totalCategories) => {
+  return totalCategories > 2 ? `+${totalCategories - 2}` : totalCategories;
+  // return totalCategories > visibleCategories ? `+${totalCategories - visibleCategories}` : totalCategories
 };

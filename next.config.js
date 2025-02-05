@@ -14,6 +14,6 @@ module.exports = {
     ];
   },
   images: {
-    domains: ['media.truyenso1.xyz'],
+    domains: ['media.truyenso1.xyz', 'lh3.googleusercontent.com', 'static.truyenfull.bio'],
   },
 };

@@ -1,3 +1,3 @@
-import Research from './Research'
+import Research from './NewResearch'
 
 export default Research
