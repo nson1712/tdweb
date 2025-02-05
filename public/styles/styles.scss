@@ -351,7 +351,13 @@ a {
   @media (max-width: 767px) {
     padding: 0 12px;
   }
+}
 
+.input-search {
+  @media (max-width: 375px) {
+    width: 220px !important;
+    height: 40px !important;
+  }
 }
 
 .btnWhite {
@@ -1854,6 +1860,9 @@ a {
 
 .download-btn {
   background: linear-gradient(98deg, #849EBF 0%, #5A6A7D 100%);
+  @media (max-width: 375px) {
+    height: 40px !important;
+  }
 }
 
 .imgBanner {

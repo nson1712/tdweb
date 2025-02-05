@@ -7,7 +7,7 @@ import StoryStore from '../../stores/StoryStore'
 import classNames from 'classnames'
 import Chapters from './Chapters'
 import MobileShare from '../StorySummary/MobileShare'
-import Link from 'next/link'
+import Header from '../../components/Header/Header';
 import LaunchCountdown from "../../components/LaunchCountdown";
 import { getMobileOperatingSystem, formatStringToNumber} from "../../utils/utils";
 import ModalComponent from '../../components/Modal/Modal'
@@ -151,7 +151,7 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
       setLoggedIn(isLoggedIn || result?.free);
       setNeedOpenChapter(!result?.free);
 
-      if (result?.order % 20 === 0 && result?.price > 0 && isLoggedIn && result?.contents?.length > 0) {
+      if (result?.order % 5 === 0 && result?.price > 0 && isLoggedIn && result?.contents?.length > 0) {
         await getQuestion();
         setShowQuestion(true);
       }
@@ -383,7 +383,10 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
   }
   return (
     <CommonLayout>
-      <div className='bg-story flex items-start justify-center'>
+      <div className='hidden md:block'>
+        <Header />
+      </div>
+      <div className={`bg-story flex items-start justify-center ${!isMobile && 'mt-[100px]'}`}>
         <div className={`${isMobile && 'hidden'} md:block w-[200px] mt-[27px] mr-[18px]`}>
           <p className='text-[14px] font-bold main-text mb-[16px]'>
             Danh mục
@@ -410,7 +413,8 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
           ))}
         </div>
         <div className='max-w-[768px] md:bg-white'>
-        <div className={`flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 bg-story`}>
+        <div className={`align-center border-b-[1px] border-color px-[5px] py-[10px] ${isMobile && 'hidden'}`} style={{backgroundColor: '#f0f0f0', color: '#5C95C6', fontWeight: '600', fontFamily: 'sans-serif'}}><a>Trang khám phá</a> <img className='h-[20px] mx-[10px]' src='/images/arrowright.png'/> <a>{storyDetail?.title}</a> <img className='h-[20px] mx-[10px]' src='/images/arrowright.png'/> <a>{chapterTitle}</a></div>
+        {isMobile && <div className={`flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 bg-story`}>
           <a className='p-[20px]' title={`Truyện ${storyDetail?.title}`}
             onClick={() => {
               Router.back()
@@ -437,7 +441,7 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
           >
             <img src='/images/list.png' className='w-[24px]' alt={`Danh sách chương truyện ${storyDetail?.title}`}/>
           </a>
-        </div>
+        </div>}
         <div className='story-content px-[20px]'>
           <div>
             <a href={`/${currentChapter?.storySlug}/${currentChapter?.chapterSlug}`} title={`${storyDetail?.title} - ${chapterTitle}`}>

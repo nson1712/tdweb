@@ -196,14 +196,14 @@ const Homepage = () => {
               </div>
               {/* <HotStories data={topTrending?.data?.slice(0, 10)}/> */}
               <div className='px-[8px] flex flex-row flex-wrap'>
-                {toidocStories?.data?.map((item) => (
-                  <div key={item.id} className='px-[8px] w-[25%] md:w-[25%] py-[8px]'>
+                {toidocStories?.data?.map((item, i) => (
+                  <div key={i} className='px-[8px] w-[25%] md:w-[25%] py-[8px]'>
                     <StoryItem item={item} fromSlide={true}/>
                   </div>
                 ))}
               </div>
               {/* <SlideStories
-                  title='Truyen HOT Toidoc'
+                  title='Truyen HOT Toidoc' 
                   data={toidocStories?.data?.slice(0, 100)}
                   url={`/danh-sach-truyen/hot`}
                 /> */}

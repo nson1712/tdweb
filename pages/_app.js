@@ -12,7 +12,7 @@ import '../public/styles/react-datetime.scss'
 import '../public/styles/styles.scss'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import GlobalStore from '../src/stores/GlobalStore';
-import { isMobileDevice } from '../src/utils/utils';
+import { redirectToBrowser } from '../src/utils/utils';
 
 
 export default function App({ Component, pageProps }) {
@@ -36,6 +36,9 @@ export default function App({ Component, pageProps }) {
         e.preventDefault(); // Prevent default copy behavior
       }
     };
+
+    // Redirect to browser instead of open webview
+    redirectToBrowser();
 
     // Add event listeners
     document.addEventListener("selectionchange", handleSelectionChange);

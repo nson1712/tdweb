@@ -1,9 +1,8 @@
 // import Web3 from 'web3'
 import moment from "moment";
 import { pancakeSwapAbi, pancakeSwapContract } from "../contracts/pancake";
-import { tokenAbi } from "../contracts/tokenABI";
+import { toast } from 'react-toastify';
 import {Base64} from 'js-base64';
-import GlobalStore from "../stores/GlobalStore";
 import crypto from 'crypto'
 
 export const zeroPad = (num, places) => String(num).padStart(places, "0");
@@ -328,3 +327,106 @@ export const decodeAccessToken = async(accessToken) => {
   const jsonObj = JSON.parse(decoded);
   return jsonObj;
 }
+
+export const isInAppBrowser = () => {
+  const userAgent = navigator.userAgent || navigator.vendor || window.opera;
+
+  // Kiểm tra WebView của Facebook, Instagram, LinkedIn
+  const isFacebookApp = /FBAN|FBAV|FB_IAB|FB4A|FBIOS|FBSSO/.test(userAgent);
+  const isInstagramApp = /Instagram/.test(userAgent);
+  const isLinkedInApp = /LinkedInApp/.test(userAgent);
+
+  return isFacebookApp || isInstagramApp || isLinkedInApp;
+};
+
+export const redirectToBrowser = () => {
+  if (isInAppBrowser()) {
+    const url = window.location.href;
+    const encodedUrl = encodeURIComponent(url);
+
+    // Trường hợp 1: Mở bằng Google Chrome trên iOS/Android
+    const chromeUrl = `googlechrome://${url.replace(/^https?:\/\//, '')}`;
+
+    // Trường hợp 2: Dành cho Android (Intent)
+    const androidIntent = `intent://${url.replace(/^https?:\/\//, '')}#Intent;scheme=https;package=com.android.chrome;end;`;
+
+    // Trường hợp 3: Dành cho Safari trên iOS
+    const safariUrl = `https://www.google.com/search?q=${encodedUrl}`;
+    const safari1 = `safari-${url}`;
+    const safari2 = `x-safari-${url}`
+
+    const webOS = getMobileOperatingSystemStr();
+    if ('Android' === webOS) {
+      try {
+        window.location.href = chromeUrl;
+        setTimeout(() => {
+          window.location.href = androidIntent;
+        }, 500);
+        setTimeout(() => {
+          window.open(url, '_blank');
+        }, 500);
+      } catch (e) {
+        try {
+          setTimeout(() => {
+            window.location.href = androidIntent;
+          }, 500);
+        } catch (e) {
+           try {
+            setTimeout(() => {
+              window.open(url, '_blank');
+            }, 500);
+          } catch (e) {
+            toast('Vui lòng copy link và mở trên trình duyệt chrome\nhoặc safari trên máy bạn', {
+                    type: "error",
+                    theme: "colored",
+                  })
+          }
+        }
+      }
+    } else if ('iOS' === webOS) {
+      // try {
+      //   setTimeout(() => {
+      //     window.location.href = safari1;
+      //   }, 500);
+      //   setTimeout(() => {
+      //     window.location.href = safari2;
+      //   }, 500);
+      //   setTimeout(() => {
+      //     window.location.href = safariUrl;
+      //   }, 500);
+      // } catch (e) {
+      //   try {
+      //     setTimeout(() => {
+      //       window.location.href = safari2;
+      //     }, 500);
+      //   } catch (e) {
+      //     try {
+      //       setTimeout(() => {
+      //         window.location.href = safariUrl;
+      //       }, 500);
+      //     } catch (e) {
+      //       toast('Vui lòng copy link và mở trên trình duyệt chrome\nhoặc safari trên máy bạn', {
+      //         type: "error",
+      //         theme: "colored",
+      //       })
+      //     }
+      //   }
+      // }
+      toast('Vui lòng ấn vào nút 3 chấm bên trên rồi chọn mở bằng trình duyệt\nđể có trải nghiệm mượt mà', {
+        type: "error",
+        theme: "colored",
+      })
+    } else {
+      try {
+        setTimeout(() => {
+          window.location.href = androidIntent;
+        }, 500);
+      } catch (e) {
+        toast('Vui lòng copy link và mở trên trình duyệt chrome\nhoặc safari trên máy bạn', {
+          type: "error",
+          theme: "colored",
+        })
+      }
+    }
+  }
+};

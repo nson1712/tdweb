@@ -79,19 +79,23 @@ const Research = () => {
         setShowModal(true);
       }
     }
+
+    const checkLogin = async() => {
+      try {
+        await GlobalStore.checkIsLogin();
+      } catch(e) {}
+    }
     
-    getCategories()
-
-    getFavouriteCategories()
-
-    getTopTrending()
-    getHotStories()
-    getTopViews()
-    getTopNew()
-    getTopFull()
-
-    getcollections1()
-    getcollections2()
+    checkLogin();
+    getCategories();
+    getFavouriteCategories();
+    getTopTrending();
+    getHotStories();
+    getTopViews();
+    getTopNew();
+    getTopFull();
+    getcollections1();
+    getcollections2();
     // setShowModal(true)
     // checkCustomerClickAffLocal();
     
@@ -148,7 +152,7 @@ const Research = () => {
           <div className='px-[16px] pt-[16px] mt-0 fixed top-0 left-0 right-0 bg-white md:hidden z-[9]'>
             <div className='pb-[16px] mb-[0] border-b-[1px] border-color relative'>
               <div className='relative float-left mr-[10px]'>
-                <input className='search border-primary border-width-1'
+                <input className='search border-primary border-width-1 input-search'
                   placeholder='Tìm kiếm truyện...'
                   value={text}
                   onChange={(e) => {
