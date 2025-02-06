@@ -8,15 +8,9 @@ const HotCategories = ({ data }) => {
     Router.push("/the-loai");
   };
 
-  const handleItemClick = (item) => {
-    console.log("ITEM: ", item)
-    Router.push(`/the-loai/${item.code}`);
-  };
   return (
     <div className="py-2 space-y-4">
-      <div className="text-xl font-bold pt-3 md:pl-6">
-        Thể loại nổi bật
-      </div>
+      <div className="text-xl font-bold pt-3 md:pl-6">Thể loại nổi bật</div>
 
       <div className="flex flex-wrap sm:grid-rows-4 gap-2 rounded-2xl justify-center sm:hidden">
         {data.slice(0, 9).map((item) => (
@@ -31,7 +25,7 @@ const HotCategories = ({ data }) => {
       <div className="hidden sm:flex flex-wrap sm:grid-rows-4 gap-2 rounded-2xl justify-center">
         {data.slice(0, 15).map((item) => (
           <CategoryItem
-          handleItemClick={() => Router.push(`/the-loai/${item.code}`)}
+            handleItemClick={() => Router.push(`/the-loai/${item.code}`)}
             name={item.name}
             thumbnail={item.image}
           />

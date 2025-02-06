@@ -1,37 +1,44 @@
-import React, { useEffect, useState } from 'react'
-import classNames from 'classnames'
-import SlideStories from '../../components/SlideStories/SlideStories'
-import ModalComponent from '../../components/Modal/Modal'
-import CommonLayout from '../../layouts/CommonLayout/CommonLayout'
-import Header from '../../components/Header/Header'
-import { observer } from 'mobx-react'
-import Router, { useRouter } from 'next/router'
-import StoryStore from '../../stores/StoryStore'
-import Search from '../Search/Search'
-import CollectionItem from './CollectionItem'
-import SlideCollections from './SlideCollections'
-import ChatSupport from '../../components/Button/ChatSupport'
-import { setItem, getItem } from '../../utils/storage'
-import Section1 from './Section1'
+import React, { useEffect, useState } from "react";
+import classNames from "classnames";
+import SlideStories from "../../components/SlideStories/SlideStories";
+import ModalComponent from "../../components/Modal/Modal";
+import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
+import Header from "../../components/Header/Header";
+import { observer } from "mobx-react";
+import Router, { useRouter } from "next/router";
+import StoryStore from "../../stores/StoryStore";
+import Search from "../Search/Search";
+import CollectionItem from "./CollectionItem";
+import SlideCollections from "./SlideCollections";
+import ChatSupport from "../../components/Button/ChatSupport";
+import { setItem, getItem } from "../../utils/storage";
+import Section1 from "./Section1";
+import Section2 from "./Section2";
+import Section3 from "./Section3";
 
 let timeout;
 
-const tags = ['#Hashtag1', '#Hashtag1', '#Hashtag1', '#Hashtag1', '#Hashtag1', '#Hashtag1']
+const tags = [
+  "#Hashtag1",
+  "#Hashtag1",
+  "#Hashtag1",
+  "#Hashtag1",
+  "#Hashtag1",
+  "#Hashtag1",
+];
 
 const Research = () => {
-  const [selectedCategory, setSelectedCategory] = useState('')
-  const [ text, setText ] = useState('')
-  const [ showSearch, setShowSearch ] = useState(false)
-  const [showModal, setShowModal] = useState(false)
-  const [showChat, setShowChat] = useState(true)
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [text, setText] = useState("");
+  const [showSearch, setShowSearch] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showChat, setShowChat] = useState(true);
 
-  const router = useRouter()
+  const router = useRouter();
 
   useEffect(() => {
-
-    setText(router.query.tukhoa || '')
-
-  }, [router.query.tukhoa])
+    setText(router.query.tukhoa || "");
+  }, [router.query.tukhoa]);
 
   const {
     categories,
@@ -60,17 +67,16 @@ const Research = () => {
 
     getcollections2,
     collections2,
-    
+
     saveCustomerClickBanner,
 
     checkCustomerClickAff,
 
-    recordClickAff
-
-  } = StoryStore
+    recordClickAff,
+  } = StoryStore;
 
   useEffect(() => {
-    const checkCustomerClickAffLocal = async() => {
+    const checkCustomerClickAffLocal = async () => {
       // const isClickAff = await checkCustomerClickAff(localStorage.getItem('DEVICE_ID'))
       // if (!isClickAff) {
       //   setShowModal(true)
@@ -79,14 +85,14 @@ const Research = () => {
       if (isShowBanner) {
         setShowModal(true);
       }
-    }
+    };
 
-    const checkLogin = async() => {
+    const checkLogin = async () => {
       try {
         await GlobalStore.checkIsLogin();
-      } catch(e) {}
-    }
-    
+      } catch (e) {}
+    };
+
     checkLogin();
     getCategories();
     getFavouriteCategories();
@@ -99,72 +105,127 @@ const Research = () => {
     getcollections2();
     // setShowModal(true)
     // checkCustomerClickAffLocal();
-    
-  }, [])
-
+  }, []);
 
   useEffect(() => {
     if (favouriteCategories && favouriteCategories?.length > 0) {
-      setSelectedCategory(favouriteCategories[0].categoryCode)
+      setSelectedCategory(favouriteCategories[0].categoryCode);
     }
-  }, [favouriteCategories])
+  }, [favouriteCategories]);
 
-  const shouldShowBanner = async() => {
-    const lastClosed = await getItem('bannerClosedAt');
+  const shouldShowBanner = async () => {
+    const lastClosed = await getItem("bannerClosedAt");
     if (!lastClosed) return true;
 
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().split("T")[0];
     return lastClosed !== today;
-  }
+  };
 
   // Hàm lưu trạng thái đóng banner
-  const closeBanner = async() => {
-    const today = new Date().toISOString().split('T')[0];
-    await setItem('bannerClosedAt', today);
+  const closeBanner = async () => {
+    const today = new Date().toISOString().split("T")[0];
+    await setItem("bannerClosedAt", today);
     setShowModal(false);
-  }
-  
-  const handleClick = async(e, code) => {
+  };
+
+  const handleClick = async (e, code) => {
     // saveCustomerClickBanner(code)
     // recordClickAff(localStorage.getItem('DEVICE_ID'), 'RESEARCH')
     await closeBanner();
-    if (code === 'tai-app-research') {
-      window.open('https://toidoc.onelink.me/59bO/d42503wz')
+    if (code === "tai-app-research") {
+      window.open("https://toidoc.onelink.me/59bO/d42503wz");
     } else {
-      window.open(`https://www.facebook.com/toidoc.support/posts/pfbid02FE94wAvXZLq3cAVT3TSppkFLM8uabRcJ8AwMuHa9LYdbCFM7TfnpqW1crVnadNPel`, '_blank', 'Toidoc')
+      window.open(
+        `https://www.facebook.com/toidoc.support/posts/pfbid02FE94wAvXZLq3cAVT3TSppkFLM8uabRcJ8AwMuHa9LYdbCFM7TfnpqW1crVnadNPel`,
+        "_blank",
+        "Toidoc"
+      );
     }
   };
 
-  const handleCloseModal = async(code) => {
+  const handleCloseModal = async (code) => {
     // recordClickAff(localStorage.getItem('DEVICE_ID'), 'RESEARCH')
     // window.open(`https://shope.ee/2q75o9ztbC`, '_blank', 'Toidoc')
-    if (code === 'aff') {
+    if (code === "aff") {
       await closeBanner();
     }
     // setShowModal(false)
-  }
+  };
 
   return (
-    <CommonLayout active='HOME'>
+    <CommonLayout active="HOME">
       <div>
-        <Header selectedTab={'RESEARCH'}/>
-        <div className='max-w-[1116px] mx-auto bg-white md:pt-[88px] px-0 md:px-[8px]'>
+        <Header selectedTab={"RESEARCH"} />
+        <div className="max-w-[1116px] mx-auto bg-white md:pt-[88px] px-0 md:px-[8px] space-y-6">
+          <div className="px-[16px] pt-[16px] mt-0 fixed top-0 left-0 right-0 bg-white md:hidden z-[9]">
+            <div className="pb-[16px] mb-[0] border-b-[1px] border-color relative">
+              <div className="relative float-left mr-[10px]">
+                <input
+                  className="search border-primary border-width-1 input-search"
+                  placeholder="Tìm kiếm truyện..."
+                  value={text}
+                  onChange={(e) => {
+                    const value = e.target.value;
+                    setText(value);
+                    clearTimeout(timeout);
+                    timeout = setTimeout(() => {
+                      Router.replace(`/tim-kiem?tukhoa=${value}`);
+                    }, 600);
+                  }}
+                  onFocus={() => {
+                    setShowSearch(true);
+                  }}
+                  onBlur={() => {
+                    setTimeout(() => {
+                      setShowSearch(false);
+                    }, 1000);
+                  }}
+                />
+                <img
+                  src="/images/search.svg"
+                  className="search-icon"
+                  alt="Tìm kiếm truyện full"
+                  title="Tìm kiếm truyện full"
+                />
+              </div>
+              <a
+                className="w-[109px] h-[45px] flex items-center justify-center rounded-full download-btn text-white pr-[10px]"
+                onClick={(e) => handleClick(e, "tai-app-research")}
+              >
+                <img
+                  src="/images/download-arrow.png"
+                  className="w-[24px]"
+                  alt="Góp ý truyện fulll"
+                  title="Góp ý truyện full"
+                />
+                Tải app
+              </a>
+            </div>
+          </div>
 
-        {/*SECTION 1*/}
-        {/* <HotCategories /> */}
-        <Section1 />
-        
-        {/*SECTION 2*/}
+          {text ? (
+            <div className="mb-[20px] pt-[20px] md:pt-0">
+              <Search hiddenSearch={true} />
+            </div>
+          ) : (
+            <>
+              {/*SECTION 1*/}
+              <Section1 />
 
-        {/*SECTION 3*/}
+              {/*SECTION 2 
+              chưa xong reload data
+              */}
 
-        {/*SECTION 4*/}
+              <Section2 />
 
+              {/*SECTION 3*/}
 
+              <Section3 />
+              {/*SECTION 4*/}
 
-
-
-
+              {/*SECTION 5*/}
+            </>
+          )}
         </div>
 
         {/* {showModal && <ModalComponent
@@ -180,7 +241,7 @@ const Research = () => {
       </div>
       <ChatSupport showChat={showChat} setShowChat={setShowChat} />
     </CommonLayout>
-  )
-}
+  );
+};
 
-export default observer(Research)
+export default observer(Research);

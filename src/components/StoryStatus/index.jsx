@@ -1,0 +1,47 @@
+import Image from "next/image";
+import CompleteIcon from "../../images/Completed.svg";
+import PendingIcon from "../../images/pendingIcon.svg";
+import clsx from "clsx";
+
+const STORY_STATUSES = [
+  {
+    status: "completed",
+    icon: CompleteIcon,
+    label: "Hoàn thành",
+  },
+  {
+    status: "pending",
+    icon: PendingIcon,
+    label: "Đang ra",
+  },
+];
+
+const StoryStatus = ({ status, lightBg }) => {
+  const currentStatus = STORY_STATUSES.find((item) => item.status === status);
+  return (
+    <div
+      className={clsx(" flex w-fit rounded-[10px] gap-x-[4px] pl-1 pr-1", {
+        "bg-white": lightBg,
+        "bg-black bg-opacity-60": !lightBg,
+      })}
+    >
+      <Image
+        width={14}
+        height={14}
+        className="max-w-[14px] max-h-[14px] rounded-full self-center"
+        src={currentStatus?.icon}
+        alt={currentStatus?.label ?? "story status"}
+      />
+
+      <div
+        className={clsx("flex text-[12px]  font-medium self-center pr-1", {
+          "text-green": currentStatus?.status === "completed",
+          "text-[#256077]": currentStatus?.status === "pending",
+        })}
+      >
+        {currentStatus?.label}
+      </div>
+    </div>
+  );
+};
+export default StoryStatus;

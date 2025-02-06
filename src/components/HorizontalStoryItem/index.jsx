@@ -1,33 +1,40 @@
 import React from "react";
 import HorizontalStoryItem from "./HorizontalStoryItem";
 
-const HorizontalStory = ({ items }) => {
+const HorizontalStory = ({
+  items,
+  type,
+  whiteBg,
+  tagVisible,
+  viewVisible,
+  statusVisible,
+  starVisible,
+}) => {
   return (
-    <div className="max-w-auto flex flex-row rounded-t-2xl gap-x-4">
-      {items.map((item) => (
+    <div className="flex rounded-t-2xl gap-x-4">
+      {items?.map((item) => (
         <HorizontalStoryItem
           key={item.id}
           id={item.id}
           title={item.title}
-          thumbnail={item.thumbnail}
+          coverImage={item.coverImage}
           starRate={item.starRate}
           status={item.status}
           totalView={item.totalView}
           totalCategories={item.totalCategories}
           categories={item.categories}
           mainCategories={item.mainCategories}
-          tagVisible={item.tagVisible}
-          viewVisible={item.viewVisible}
-          statusVisible={item.statusVisible}
-          starVisible={item.starVisible}
+          tagVisible={tagVisible}
+          viewVisible={viewVisible}
+          statusVisible={statusVisible}
+          starVisible={starVisible}
           categoriesVisible={item.categoriesVisible}
           mainCategoriesVisible={item.mainCategoriesVisible}
           totalCategoriesVisible={item.totalCategoriesVisible}
-          secondary={item.secondary}
-          primary={item.primary}
+          type={type}
           goldenTicketPercent={item.goldenTicketPercent}
           goldenTicketVisible={item.goldenTicketVisible}
-          hasBackground={item.hasBackground}
+          whiteBg={whiteBg}
         />
       ))}
     </div>

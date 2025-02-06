@@ -6,7 +6,7 @@ import axios from 'axios'
 const StorySummary = ({detail}) => {
   return (
     <>
-      <HeaderServerSchema title={`✅ ${(detail.status === 'ACTIVE' ? '[FULL] ' : '') + detail?.title} | Nền tảng cộng đồng đọc truyện online hấp dẫn`}
+      <HeaderServerSchema title={`✅ ${(detail?.status === 'ACTIVE' ? '[FULL] ' : '') + detail?.title} | Nền tảng cộng đồng đọc truyện online hấp dẫn`}
         description={detail?.metaDescription ? detail?.metaDescription.replace(/"/g,'') : detail?.metaDescription}
         keywords={detail?.metaKeywords}
         image={detail?.coverImage}
