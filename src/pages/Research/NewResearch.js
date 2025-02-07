@@ -15,6 +15,7 @@ import { setItem, getItem } from "../../utils/storage";
 import Section1 from "./Section1";
 import Section2 from "./Section2";
 import Section3 from "./Section3";
+import Section4 from "./Section4";
 
 let timeout;
 
@@ -222,6 +223,8 @@ const Research = () => {
 
               <Section3 />
               {/*SECTION 4*/}
+
+              <Section4 />
 
               {/*SECTION 5*/}
             </>

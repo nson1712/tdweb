@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
 const StarsRate= ({
-  starRate,
+  rate,
   lightBg,
   color,
   className,
@@ -14,7 +14,7 @@ const StarsRate= ({
         "text-slate-400 text-[12px]": color === "primary",
       })}
     >
-      {starRate}
+      {Math.round((rate + Number.EPSILON) * 10) / 10}
       <svg
         className={clsx("max-w-[12px] max-h-[12px] text-yellow", {
           "mt-0.5": lightBg,
@@ -51,8 +51,6 @@ const StarsRate= ({
           </radialGradient>
         </defs>
       </svg>
-
-      {/* <StarIcon /> */}
     </div>
   );
 };

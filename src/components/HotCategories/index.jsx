@@ -2,6 +2,7 @@ import Router from "next/router";
 import CategoryItem from "../CategoryItem";
 import { DownOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import uuid from "react-uuid";
 
 const HotCategories = ({ data }) => {
   const handleViewAll = () => {
@@ -15,6 +16,7 @@ const HotCategories = ({ data }) => {
       <div className="flex flex-wrap sm:grid-rows-4 gap-2 rounded-2xl justify-center sm:hidden">
         {data.slice(0, 9).map((item) => (
           <CategoryItem
+            key={uuid()}
             handleItemClick={() => Router.push(`/the-loai/${item.code}`)}
             name={item.name}
             thumbnail={item.image}
@@ -25,6 +27,7 @@ const HotCategories = ({ data }) => {
       <div className="hidden sm:flex flex-wrap sm:grid-rows-4 gap-2 rounded-2xl justify-center">
         {data.slice(0, 15).map((item) => (
           <CategoryItem
+            key={uuid()}
             handleItemClick={() => Router.push(`/the-loai/${item.code}`)}
             name={item.name}
             thumbnail={item.image}

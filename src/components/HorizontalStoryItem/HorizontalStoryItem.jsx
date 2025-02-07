@@ -10,7 +10,7 @@ import GoldenTicket from "../GoldenTicket";
 const HorizontalStoryItem = ({
   title,
   coverImage,
-  starRate,
+  rate,
   status,
   totalView,
   categories,
@@ -30,8 +30,8 @@ const HorizontalStoryItem = ({
 }) => {
   return (
     <div
-      className={clsx("w-full flex flex-row gap-x-4 cursor-pointer", {
-        "w-auto rounded-e-[20px] rounded-tl-[20px] rounded-bl-[20px] shadow-md hover:translate-y-[-5%] transition delay-75":
+      className={clsx("w-full flex gap-x-4 cursor-pointer", {
+        "w-full h- rounded-e-[20px] rounded-tl-[20px] rounded-bl-[20px] shadow-md hover:translate-y-[-5%] transition delay-75":
           type !== "secondary" && type !== "primary",
         "max-w-full px-2 py-2 rounded-t-[20px] drop-shadow-sm":
           type === "secondary",
@@ -40,28 +40,33 @@ const HorizontalStoryItem = ({
         "bg-white": whiteBg,
       })}
     >
-      <Image
-        className={clsx("rounded-e-[5px] rounded-tl-[20px] rounded-bl-[5px]", {
-          "max-w-[107px] max-h-fit": type !== "secondary" && type !== "primary",
-          "max-w-[40px] max-h-[60px]": type === "secondary",
-          "max-w-[66px] max-h-[100px]": type === "primary",
+      <div
+        className={clsx("self-center", {
+          "max-w-[120px] relative": type !== "secondary" && type !== "primary",
+          "max-w-[40px] max-h-[60px] relative": type === "secondary",
+          "max-w-[66px] max-h-[100px] relative": type === "primary",
         })}
-        src={coverImage || ""}
-        alt={title}
-        width={50}
-        height={40}
-      />
+      >
+        <Image
+          className={clsx("rounded-e-[5px] rounded-tl-[20px] rounded-bl-[5px]")}
+          src={coverImage || ""}
+          alt={title}
+          width={type !== "secondary" && type !== "primary" ? 160 : 50}
+          height={type !== "secondary" && type !== "primary" ? 210 : 70}
+          style={{ objectFit: "cover" }}
+        />
+      </div>
+
       <div
         className={clsx("flex flex-col py-2 ", {
-          "max-w-[230px] max-h-[120px] mr-2 gap-y-1.5":
-            type !== "secondary" && type !== "primary",
-          "max-w-[260px] max-h-[66px] gap-y-2": type === "secondary",
+          "w-full mr-2 gap-y-1.5": type !== "secondary" && type !== "primary",
+          " gap-y-2": type === "secondary",
           "self-center": type === "primary",
         })}
       >
         <div
           className={clsx("", {
-            "max-h-[72px] font-semibold text-[16px] text-black leading-normal":
+            "font-semibold text-[16px] text-black leading-normal w-full line-clamp-2":
               type !== "secondary" && type !== "primary",
             "max-h-10 font-medium text-[14px] text-black line-clamp-1":
               type === "secondary",
@@ -72,7 +77,7 @@ const HorizontalStoryItem = ({
           {title}
         </div>
 
-        <div className="flex flex-wrap max-w-[230px] whitespace-normal gap-x-1 max-h-fit gap-y-2">
+        <div className="flex flex-wrap whitespace-normal gap-x-1 max-h-fit gap-y-2">
           {tagVisible && (
             <>
               <TagComponent
@@ -90,7 +95,7 @@ const HorizontalStoryItem = ({
             className={clsx("flex flex-row gap-x-2.5 ", {
               "max-h-3.5 self-center":
                 type !== "secondary" && type !== "primary",
-              "w-fit max-h-[22px] py-1 -mt-[1px]": type === "secondary",
+              "w-fit max-h-[22px] py-1": type === "secondary",
             })}
           >
             {starVisible && (
@@ -99,7 +104,7 @@ const HorizontalStoryItem = ({
                   "mt-1": type === "primary",
                 })}
               >
-                <StarsRate starRate={starRate} lightBg={true} />
+                <StarsRate rate={rate} lightBg={true} />
               </div>
             )}
             {viewVisible && <TotalView totalView={totalView || 0} />}

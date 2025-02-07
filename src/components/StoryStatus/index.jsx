@@ -14,13 +14,27 @@ const STORY_STATUSES = [
     icon: PendingIcon,
     label: "Đang ra",
   },
+  {
+    status: "ACTIVE", // Trạng thái mới ánh xạ đến completed
+    icon: CompleteIcon,
+    label: "Hoàn thành",
+  },
+  {
+    status: "PENDING", // Trạng thái mới ánh xạ đến pending
+    icon: PendingIcon,
+    label: "Đang ra",
+  },
 ];
 
 const StoryStatus = ({ status, lightBg }) => {
-  const currentStatus = STORY_STATUSES.find((item) => item.status === status);
+  const normalizedStatus = status.toLowerCase(); // Đảm bảo không bị lỗi do viết hoa/thường
+  const currentStatus = STORY_STATUSES.find(
+    (item) => item.status.toLowerCase() === normalizedStatus
+  );
+
   return (
     <div
-      className={clsx(" flex w-fit rounded-[10px] gap-x-[4px] pl-1 pr-1", {
+      className={clsx("flex w-fit rounded-[10px] gap-x-[4px] pl-1 pr-1", {
         "bg-white": lightBg,
         "bg-black bg-opacity-60": !lightBg,
       })}
@@ -34,9 +48,13 @@ const StoryStatus = ({ status, lightBg }) => {
       />
 
       <div
-        className={clsx("flex text-[12px]  font-medium self-center pr-1", {
-          "text-green": currentStatus?.status === "completed",
-          "text-[#256077]": currentStatus?.status === "pending",
+        className={clsx("flex text-[12px] font-medium self-center pr-1", {
+          "text-green":
+            currentStatus?.status.toLowerCase() === "completed" ||
+            currentStatus?.status === "ACTIVE",
+          "text-[#256077]":
+            currentStatus?.status.toLowerCase() === "pending" ||
+            currentStatus?.status === "PENDING",
         })}
       >
         {currentStatus?.label}
@@ -44,4 +62,5 @@ const StoryStatus = ({ status, lightBg }) => {
     </div>
   );
 };
+
 export default StoryStatus;

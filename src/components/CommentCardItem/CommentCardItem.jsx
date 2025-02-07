@@ -18,20 +18,19 @@ const CommentCardItem = ({
     setIsReadMore(!isReadMore);
   };
   return (
-    <div className="flex max-w-full px-2 py-2 rounded-b-[20px] bg-[#F5F8FF] shadow-md">
-      <div className="max-w-[308px] flex flex-row gap-x-2 ">
-      
+    <div className="flex w-full px-2 py-2 rounded-b-[20px] bg-[#F5F8FF] shadow-md">
+      <div className="flex flex-row gap-x-2 ">
         <div className="max-w-[32px] max-h-[32px]">
-        <Image
-        className="rounded-full"
-          width={32}
-          height={32}
-          src={userAvatar}
-          alt="userAvatar"
-        />
+          <Image
+            className="rounded-full"
+            width={32}
+            height={32}
+            src={userAvatar}
+            alt="userAvatar"
+          />
         </div>
 
-        <div className="max-w-[268px] flex flex-col gap-y-2">
+        <div className="w-full flex flex-col gap-y-2">
           <div className="font-medium text-[14px] text-[#707070] overflow-hidden leading-tight">
             <p>
               {isReadMore ? text.slice(0, 100) : text}
