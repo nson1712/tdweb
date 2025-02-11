@@ -1,6 +1,6 @@
 import Image from "next/image";
 import CompleteIcon from "../../images/Completed.svg";
-import PendingIcon from "../../images/pendingIcon.svg";
+import PendingIcon from "../../images/Loading.svg";
 import clsx from "clsx";
 
 const STORY_STATUSES = [
@@ -34,7 +34,7 @@ const StoryStatus = ({ status, lightBg }) => {
 
   return (
     <div
-      className={clsx("flex w-fit rounded-[10px] gap-x-[4px] pl-1 pr-1", {
+      className={clsx("flex w-fit rounded-[10px] gap-x-[4px] pr-1", {
         "bg-white": lightBg,
         "bg-black bg-opacity-60": !lightBg,
       })}

@@ -4,9 +4,9 @@ import CommentCardItem from "./CommentCardItem";
 const CommentCard = ({ items }) => {
   return (
     <div>
-      {items.map((item) => (
+      {items.map((item, index) => (
         <CommentCardItem
-          key={item.id}
+          key={index}
           id={item.id}
           comment={item.comment}
           commentStarRate={item.commentStarRate}

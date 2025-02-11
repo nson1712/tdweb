@@ -1,8 +1,13 @@
 import Image from "next/image";
+import { useRouter } from "next/router";
 
-const VerticalStoryItem = ({ title, coverImage }) => {
+const VerticalStoryItem = ({ title, slug, coverImage }) => {
+  const router = useRouter()
+  const handleClick = () => {
+  router.push(`/${slug}`)
+  }
   return (
-    <div className="max-w-fit flex flex-col gap-y-2 cursor-pointer hover:translate-y-[-5%] transition delay-75">
+    <div className="max-w-fit flex flex-col gap-y-2 cursor-pointer hover:translate-y-[-5%] transition delay-75" onClick={handleClick}>
       <Image
         className="max-w-[125px] max-h-[235px] rounded-tl-[25px] rounded-bl-[5px] rounded-e-[5px]"
         width={150}

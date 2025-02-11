@@ -12,18 +12,18 @@ const TagComponent = ({
   totalCategoriesVisible,
 }) => {
   return (
-    <div className="flex flex-wrap gap-x-1">
+    <div className="flex flex-wrap gap-1">
       {mainCategoriesVisible && (
         <MainCategories mainCategories={mainCategories} />
       )}
       {categoriesVisible && (
         <>
           {categories?.map((item, index) => (
-            <Categories key={index} categories={item} />
+            <Categories key={index} item={item} />
           ))}
         </>
       )}
-      {totalCategoriesVisible && (
+      {totalCategoriesVisible && totalCategories > 2 && (
         <TotalCategories totalCategories={totalCategories} />
       )}
     </div>

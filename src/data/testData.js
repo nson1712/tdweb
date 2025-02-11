@@ -224,7 +224,7 @@ export const commentItem = [
         title: "Tên bộ truyện có thể hiển thị tối đa 2 dòng như thế này asdjakjsd kjhkjhasdkjsad dsab dsb akds baksd",
         coverImage: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
         starRate: "3.9",
-        status: "completed",
+        status: "PENDING",
         totalView: 4231,
         categories: ["Huyền Nguyễn", "Linh Dị"],
         mainCategories: "Hề Hước",

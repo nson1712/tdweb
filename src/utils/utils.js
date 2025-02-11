@@ -501,3 +501,38 @@ export const convertToShortScale = (value) => {
     return Math.sign(value) * absValue;
   }
 };
+
+export const roundTo1Digits = (number) => {
+  return Math.round(number * 10) / 10;
+};
+
+export const getRadomNumber = (min, max) => {
+  return Math.floor(Math.random() * (max - min) + min);
+};
+
+export const getOS = () => {
+  if (typeof navigator !== "undefined") {
+    const userAgent = navigator.userAgent.toLowerCase();
+    console.log("USER AGENT: ", userAgent);
+    if (/iphone|ipad|ipod/.test(userAgent)) {
+      return "ios";
+    }
+    if (userAgent.includes("android")) {
+      return "android";
+    }
+  }
+  return "android";
+};
+
+export const handleStoreOpen = (osType) => {
+  let url = "https://play.google.com/store/search?q=toidoc&c=apps&hl=vi"; // Default to Android link
+
+  if (osType === "ios") {
+    url = "https://toidoc.onelink.me/59bO/d42503wz";
+  }
+
+  // Mở link trong tab mới
+  if (typeof window !== "undefined") {
+    window.open(url, "_blank", "Toidoc");
+  }
+};

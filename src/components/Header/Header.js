@@ -39,7 +39,7 @@ const Header = ({ selectedTab }) => {
           alt="logo"
         />
 
-        <div className="flex items-center justify-between px-[24px] md:px-0 w-full md:w-auto">
+        <div className="flex items-center justify-between w-full md:w-auto">
           <div
             className={classNames(
               "menu-header justify-between mx-[2px] px-[20px] h-[40px] rounded-[30px] cursor-pointer",

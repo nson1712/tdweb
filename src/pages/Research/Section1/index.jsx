@@ -3,7 +3,7 @@ import HotCategories from "../../../components/HotCategories";
 import UnfinishedStory from "../../../components/UnfinishedStory";
 import StoryStore from "../../../stores/StoryStore";
 const Section1 = () => {
-  const { categories, getCategories } = StoryStore;
+  const { categories, getCategories, viewings, getStoryViewings } = StoryStore;
 
   useEffect(() => {
     // const checkLogin = async() => {
@@ -15,6 +15,7 @@ const Section1 = () => {
     // checkLogin();
     // getCategories();
     getCategories();
+    getStoryViewings();
   }, []);
 
   return (
@@ -22,13 +23,15 @@ const Section1 = () => {
       <UnfinishedStory
         items={[
           {
-            totalReadingStory: 10,
+            totalReadingStory: viewings ? viewings.totalElements : 0,
             unfinishedStory: {
-              completedPercent: 12,
-              name: "Y Phi Tái SinhY Phi Tái SinhY Phi Tái SinhY Phi Tái SinhY Phi Tái Sinh ",
-              thumbnail:
-                "https://lh3.googleusercontent.com/pw/AP1GczOOLanAR0xqw5J0r_brX0bEKtbFV_vnrYtB98DJi6VU0AZkmpMzzT0TtjtjOL1_V8ltGPxg8Umi3aQzmUpyvpx_Bv-AHQ_wKF6mB9v1_EVHnRjFafUV0XkP9hvGFAcOj69pBOV2mR7DaRSVUm-h91Z9=w215-h322-s-no-gm?authuser=4",
-              unfinishedChapter: 10,
+              readingPercent: viewings.data?.[0].readingPercent,
+              title: viewings.data?.[0].story.title,
+              coverImage:
+                viewings.data?.[0].story.coverImage,
+              currentChapterOrder: viewings.data?.[0].currentChapterOrder,
+              storySlug: viewings.data?.[0].storySlug,
+              chapterSlug: viewings.data?.[0].chapterSlug
             },
           },
         ]}

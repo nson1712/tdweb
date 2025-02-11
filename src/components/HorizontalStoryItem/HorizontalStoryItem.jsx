@@ -31,7 +31,7 @@ const HorizontalStoryItem = ({
   return (
     <div
       className={clsx("w-full flex gap-x-4 cursor-pointer", {
-        "w-full h- rounded-e-[20px] rounded-tl-[20px] rounded-bl-[20px] shadow-md hover:translate-y-[-5%] transition delay-75":
+        "w-full rounded-e-[20px] rounded-tl-[20px] rounded-bl-[20px] shadow-md hover:translate-y-[-5%] transition delay-75":
           type !== "secondary" && type !== "primary",
         "max-w-full px-2 py-2 rounded-t-[20px] drop-shadow-sm":
           type === "secondary",
@@ -41,8 +41,8 @@ const HorizontalStoryItem = ({
       })}
     >
       <div
-        className={clsx("self-center", {
-          "max-w-[120px] relative": type !== "secondary" && type !== "primary",
+        className={clsx("self-center flex", {
+          "max-w-[120px]": type !== "secondary" && type !== "primary",
           "max-w-[40px] max-h-[60px] relative": type === "secondary",
           "max-w-[66px] max-h-[100px] relative": type === "primary",
         })}
@@ -51,16 +51,15 @@ const HorizontalStoryItem = ({
           className={clsx("rounded-e-[5px] rounded-tl-[20px] rounded-bl-[5px]")}
           src={coverImage || ""}
           alt={title}
-          width={type !== "secondary" && type !== "primary" ? 160 : 50}
-          height={type !== "secondary" && type !== "primary" ? 210 : 70}
-          style={{ objectFit: "cover" }}
+          width={type !== "secondary" && type !== "primary" ? 180 : 50}
+          height={type !== "secondary" && type !== "primary" ? 250 : 70}
         />
       </div>
 
       <div
         className={clsx("flex flex-col py-2 ", {
           "w-full mr-2 gap-y-1.5": type !== "secondary" && type !== "primary",
-          " gap-y-2": type === "secondary",
+          "gap-y-2": type === "secondary",
           "self-center": type === "primary",
         })}
       >
@@ -77,7 +76,7 @@ const HorizontalStoryItem = ({
           {title}
         </div>
 
-        <div className="flex flex-wrap whitespace-normal gap-x-1 max-h-fit gap-y-2">
+        <div className="whitespace-normal gap-x-1 max-h-fit space-y-2">
           {tagVisible && (
             <>
               <TagComponent
@@ -108,8 +107,9 @@ const HorizontalStoryItem = ({
               </div>
             )}
             {viewVisible && <TotalView totalView={totalView || 0} />}
+            {statusVisible && <StoryStatus status={status} lightBg={true} />}
           </div>
-          {statusVisible && <StoryStatus status={status} lightBg={true} />}
+
           {goldenTicketVisible && (
             <GoldenTicket goldenTicketPercent={goldenTicketPercent} />
           )}

@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 import uuid from 'react-uuid';
 import classes from './CommonLayout.module.scss'
 // import Header from '../../components/Header'
-// import Footer from '../../components/Footer'
+import Footer from '../../components/Footer'
 import { Modal } from 'react-bootstrap'
 import GlobalStore from '../../stores/GlobalStore'
 import Confirm from '../../components/Confirm'
@@ -30,9 +30,9 @@ const CommonLayout = ({children, active}) => {
         {children}
       </div>
       
-      {/* <div className={classes.footer}>
+      <div className={classes.footer}>
         <Footer />
-      </div> */}
+      </div>
 
       <Modal show={showConfirm} onHide={handleHideConfirmDialog} centered>
         <Confirm handleClose={handleHideConfirmDialog} confirmData={confirm} />

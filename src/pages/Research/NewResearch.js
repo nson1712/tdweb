@@ -16,6 +16,9 @@ import Section1 from "./Section1";
 import Section2 from "./Section2";
 import Section3 from "./Section3";
 import Section4 from "./Section4";
+import Section5 from "./Section5";
+import RatingList from "../../components/RatingList";
+import { commentItem } from "../../data/testData";
 
 let timeout;
 
@@ -157,10 +160,10 @@ const Research = () => {
     <CommonLayout active="HOME">
       <div>
         <Header selectedTab={"RESEARCH"} />
-        <div className="max-w-[1116px] mx-auto bg-white md:pt-[88px] px-0 md:px-[8px] space-y-6">
-          <div className="px-[16px] pt-[16px] mt-0 fixed top-0 left-0 right-0 bg-white md:hidden z-[9]">
-            <div className="pb-[16px] mb-[0] border-b-[1px] border-color relative">
-              <div className="relative float-left mr-[10px]">
+        <div className="max-w-[1116px] mx-auto bg-white md:pt-[88px] px-0 md:px-2 space-y-6 pb-20">
+          <div className="pt-4 mt-0 fixed top-0 left-0 right-0 bg-white md:hidden z-[9] flex justify-center">
+            <div className="pb-4 border-b-[1px] border-color flex gap-x-2">
+              <div className="relative float-left">
                 <input
                   className="search border-primary border-width-1 input-search"
                   placeholder="Tìm kiếm truyện..."
@@ -190,12 +193,12 @@ const Research = () => {
                 />
               </div>
               <a
-                className="w-[109px] h-[45px] flex items-center justify-center rounded-full download-btn text-white pr-[10px]"
+                className="w-[109px] h-[45px] flex items-center justify-center rounded-full download-btn text-white pr-2.5"
                 onClick={(e) => handleClick(e, "tai-app-research")}
               >
                 <img
                   src="/images/download-arrow.png"
-                  className="w-[24px]"
+                  className="w-6"
                   alt="Góp ý truyện fulll"
                   title="Góp ý truyện full"
                 />
@@ -205,28 +208,24 @@ const Research = () => {
           </div>
 
           {text ? (
-            <div className="mb-[20px] pt-[20px] md:pt-0">
+            <div className="mb-5 pt-5 md:pt-0">
               <Search hiddenSearch={true} />
             </div>
           ) : (
             <>
-              {/*SECTION 1*/}
               <Section1 />
 
-              {/*SECTION 2 
-              chưa xong reload data
-              */}
-
-              <Section2 />
-
-              {/*SECTION 3*/}
+              <Section2 newStories={topNew.data} />
 
               <Section3 />
-              {/*SECTION 4*/}
+
+              <div className="block md:hidden bg-[#F5F8FF] p-2 rounded-xl mx-2">
+                <RatingList data={commentItem} />
+              </div>
+
+              <Section5 />
 
               <Section4 />
-
-              {/*SECTION 5*/}
             </>
           )}
         </div>

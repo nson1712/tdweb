@@ -4,12 +4,12 @@ const VerticalStory = ({ items }) => {
   const convertedItems = Array.isArray(items) ? items : [items];
   return (
     <div>
-      {convertedItems.map((item) => (
+      {convertedItems.map((item, index) => (
         <VerticalStoryItem
-          key={item.id}
+          key={index}
           id={item.id}
           title={item.title}
-          thumbnail={item.thumbnail}
+          coverImage={item.coverImage}
         />
       ))}
     </div>
