@@ -24,7 +24,8 @@ module.exports = {
       "static.8cache.com",
       "i.pinimg.com",
       "cdn.truyenfull.com",
-      "toidoc.vn"
+      "toidoc.vn",
+      "static.truyenfull.bio"
     ],
   },
 };

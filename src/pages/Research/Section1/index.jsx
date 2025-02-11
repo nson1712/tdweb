@@ -18,6 +18,8 @@ const Section1 = () => {
     getStoryViewings();
   }, []);
 
+  console.log("VIEWINGS: ", viewings)
+
   return (
     <div className="px-2 sm:grid sm:grid-flow-col sm:grid-cols-12 gap-x-4">
       <UnfinishedStory
@@ -25,13 +27,13 @@ const Section1 = () => {
           {
             totalReadingStory: viewings ? viewings.totalElements : 0,
             unfinishedStory: {
-              readingPercent: viewings.data?.[0].readingPercent,
-              title: viewings.data?.[0].story.title,
+              readingPercent: viewings?.data?.[0].readingPercent,
+              title: viewings?.data?.[0].story.title,
               coverImage:
-                viewings.data?.[0].story.coverImage,
-              currentChapterOrder: viewings.data?.[0].currentChapterOrder,
-              storySlug: viewings.data?.[0].storySlug,
-              chapterSlug: viewings.data?.[0].chapterSlug
+                viewings?.data?.[0].story.coverImage,
+              currentChapterOrder: viewings?.data?.[0].currentChapterOrder,
+              storySlug: viewings?.data?.[0].storySlug,
+              chapterSlug: viewings?.data?.[0].chapterSlug
             },
           },
         ]}
