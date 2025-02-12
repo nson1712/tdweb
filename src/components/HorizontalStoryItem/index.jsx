@@ -12,6 +12,7 @@ const HorizontalStory = ({
   categoriesVisible,
   mainCategoriesVisible,
   totalCategoriesVisible,
+  goldenTicketVisible,
   handleViewDetail,
 }) => {
   const convertedItems = Array.isArray(items) ? items : [items];
@@ -27,7 +28,7 @@ const HorizontalStory = ({
           status={item.status}
           totalView={item.totalView}
           totalCategories={item.categories?.length - 1}
-          categories={item.categories?.slice(0,2)}
+          categories={item.categories?.slice(0, 2)}
           mainCategories={item.mainCategories?.[0]?.name}
           tagVisible={tagVisible}
           viewVisible={viewVisible}
@@ -36,9 +37,9 @@ const HorizontalStory = ({
           categoriesVisible={categoriesVisible}
           mainCategoriesVisible={mainCategoriesVisible}
           totalCategoriesVisible={totalCategoriesVisible}
+          goldenTicketVisible={goldenTicketVisible}
           type={type}
           goldenTicketPercent={item.goldenTicketPercent}
-          goldenTicketVisible={item.goldenTicketVisible}
           whiteBg={whiteBg}
         />
       ))}

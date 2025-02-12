@@ -18,7 +18,7 @@ const STORY_STATUSES = [
 ];
 
 const StoryStatus = ({ status, lightBg }) => {
-  const normalizedStatus = status.toLowerCase(); // Đảm bảo không bị lỗi do viết hoa/thường
+  const normalizedStatus = status?.toLowerCase(); // Đảm bảo không bị lỗi do viết hoa/thường
   const currentStatus = STORY_STATUSES.find(
     (item) => item.status.toLowerCase() === normalizedStatus
   );
@@ -30,14 +30,16 @@ const StoryStatus = ({ status, lightBg }) => {
         "bg-black bg-opacity-60": !lightBg,
       })}
     >
-      {currentStatus?.icon ? <Image
-        loader={imageLoader}
-        width={14}
-        height={14}
-        className="max-w-[14px] max-h-[14px] rounded-full self-center"
-        src={currentStatus?.icon}
-        alt={currentStatus?.label ?? "story status"}
-      /> : null}
+      {currentStatus?.icon ? (
+        <Image
+          loader={imageLoader}
+          width={14}
+          height={14}
+          className="max-w-[14px] max-h-[14px] rounded-full self-center"
+          src={currentStatus?.icon}
+          alt={currentStatus?.label ?? "story status"}
+        />
+      ) : null}
 
       <div
         className={clsx("flex text-[12px] font-medium self-center pr-1", {

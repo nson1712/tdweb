@@ -8,10 +8,10 @@ const CommentCard = ({ items }) => {
         <CommentCardItem
           key={index}
           id={item.id}
-          comment={item.comment}
-          commentStarRate={item.commentStarRate}
-          totalComments={item.totalComments}
-          totalLikes={item.totalLikes}
+          message={item.message}
+          customerRate={item.customerRate}
+          totalLike={item.totalLike}
+          totalComment={item.totalComment}
           userAvatar={item.userAvatar}
         />
       ))}

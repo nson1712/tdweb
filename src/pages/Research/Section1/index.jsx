@@ -1,21 +1,7 @@
-import { useEffect } from "react";
 import HotCategories from "../../../components/HotCategories";
 import UnfinishedStory from "../../../components/UnfinishedStory";
-import StoryStore from "../../../stores/StoryStore";
-import GlobalStore from "../../../stores/GlobalStore";
 
-const Section1 = ({viewings, categories}) => {
-  // const { categories, getCategories, viewings, getStoryViewings } = StoryStore;
-  // const { isLoggedIn, checkIsLogin } = GlobalStore;
-
-  // useEffect(() => {
-  //   checkIsLogin();
-  //   getCategories();
-  //   if(isLoggedIn){
-  //     getStoryViewings();
-  //   }
-  // }, [isLoggedIn]);
-
+const Section1 = ({ viewings, categories }) => {
   return (
     <div className="px-2 sm:grid sm:grid-flow-col sm:grid-cols-12 gap-x-4">
       <UnfinishedStory
@@ -25,7 +11,9 @@ const Section1 = ({viewings, categories}) => {
             unfinishedStory: {
               readingPercent: viewings?.data?.[0].readingPercent,
               title: viewings?.data?.[0].story.title,
-              coverImage: viewings?.data?.[0].story.thumbnail || viewings?.data?.[0].story.coverImage,
+              coverImage:
+                viewings?.data?.[0].story.thumbnail ||
+                viewings?.data?.[0].story.coverImage,
               currentChapterOrder: viewings?.data?.[0].currentChapterOrder,
               storySlug: viewings?.data?.[0].storySlug,
               chapterSlug: viewings?.data?.[0].chapterSlug,

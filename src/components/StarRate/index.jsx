@@ -1,7 +1,7 @@
 import { StarFilled, StarTwoTone } from "@ant-design/icons";
 import clsx from "clsx";
 
-const StarsRate= ({
+const StarsRate = ({
   rate,
   lightBg,
   color,

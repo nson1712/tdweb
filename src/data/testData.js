@@ -221,7 +221,8 @@ export const commentItem = [
     storyItem: [
       {
         id: 3,
-        title: "Tên bộ truyện có thể hiển thị tối đa 2 dòng như thế này asdjakjsd kjhkjhasdkjsad dsab dsb akds baksd",
+        title:
+          "Tên bộ truyện có thể hiển thị tối đa 2 dòng như thế này asdjakjsd kjhkjhasdkjsad dsab dsb akds baksd",
         coverImage: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
         starRate: "3.9",
         status: "PENDING",
@@ -243,8 +244,7 @@ export const commentItem = [
         commentStarRate: "5",
         totalComments: 12,
         totalLikes: 12,
-        userAvatar:
-          "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+        userAvatar: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       },
     ],
   },
@@ -256,7 +256,7 @@ export const commentItem = [
         title: "Tên bộ truyện có thể hiển thị tối đa 2 dòng như thế này",
         coverImage: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
         starRate: "3.9",
-        status: "completed",
+        status: "ACTIVE",
         totalView: 4231,
         categories: ["Huyền Nguyễn", "Linh Dị"],
         mainCategories: "Hề Hước",
@@ -275,8 +275,7 @@ export const commentItem = [
         commentStarRate: "5",
         totalComments: 12,
         totalLikes: 12,
-        userAvatar:
-          "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+        userAvatar: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       },
     ],
   },
@@ -307,8 +306,7 @@ export const commentItem = [
         commentStarRate: "5",
         totalComments: 12,
         totalLikes: 12,
-        userAvatar:
-          "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+        userAvatar: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       },
     ],
   },
@@ -339,8 +337,7 @@ export const commentItem = [
         commentStarRate: "5",
         totalComments: 12,
         totalLikes: 12,
-        userAvatar:
-          "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+        userAvatar: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       },
     ],
   },
@@ -351,8 +348,7 @@ export const categories = [
     {
       id: 1,
       storyType: "Tiên Hiệp",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "primary",
     },
   ],
@@ -360,8 +356,7 @@ export const categories = [
     {
       id: 2,
       storyType: "Ngôn Tình",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "primary",
     },
   ],
@@ -369,8 +364,7 @@ export const categories = [
     {
       id: 3,
       storyType: "Trinh Thám",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "primary",
     },
   ],
@@ -378,8 +372,7 @@ export const categories = [
     {
       id: 4,
       storyType: "Bách Hợp",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "primary",
     },
   ],
@@ -387,8 +380,7 @@ export const categories = [
     {
       id: 5,
       storyType: "Đam Mỹ",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "primary",
     },
   ],
@@ -396,8 +388,7 @@ export const categories = [
     {
       id: 6,
       storyType: "Tiểu Thuyết",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "primary",
     },
   ],
@@ -1209,23 +1200,20 @@ export const horizontalLeaderBoard = [
       {
         id: 2,
         rank: 1,
-        userAvatar:
-          "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+        userAvatar: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
         userName: "Username có thể 2 dòng",
       },
       {
         id: 3,
         rank: 2,
-        userAvatar:
-          "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+        userAvatar: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
         userName: "Username có thể 2 dòng",
       },
 
       {
         id: 4,
         rank: 3,
-        userAvatar:
-          "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+        userAvatar: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
         userName: "Username có thể 2 dòng",
       },
     ],
@@ -1968,8 +1956,7 @@ export const unfinishedStory = [
     unfinishedStory: {
       completedPercent: 21,
       name: "Tên truyện đang đọc dở hehehe",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       unfinishedChapter: "45",
     },
   },
@@ -2030,8 +2017,7 @@ export const smallCategories = [
     {
       id: 1,
       storyType: "Ngôn Tình",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2039,8 +2025,7 @@ export const smallCategories = [
     {
       id: 2,
       storyType: "Tiên Hiệp",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2048,8 +2033,7 @@ export const smallCategories = [
     {
       id: 3,
       storyType: "Đam Mỹ",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2057,8 +2041,7 @@ export const smallCategories = [
     {
       id: 4,
       storyType: "Huyền Nguyễn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2066,8 +2049,7 @@ export const smallCategories = [
     {
       id: 5,
       storyType: "Tiểu Thuyết",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2075,8 +2057,7 @@ export const smallCategories = [
     {
       id: 6,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2087,8 +2068,7 @@ export const smallCategoriess = [
     {
       id: 1,
       storyType: "Ngôn Tình",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2096,8 +2076,7 @@ export const smallCategoriess = [
     {
       id: 2,
       storyType: "Tiên Hiệp",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2105,8 +2084,7 @@ export const smallCategoriess = [
     {
       id: 3,
       storyType: "Đam Mỹ",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2114,8 +2092,7 @@ export const smallCategoriess = [
     {
       id: 4,
       storyType: "Huyền Nguyễn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2123,8 +2100,7 @@ export const smallCategoriess = [
     {
       id: 5,
       storyType: "Tiểu Thuyết",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2132,8 +2108,7 @@ export const smallCategoriess = [
     {
       id: 6,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2141,8 +2116,7 @@ export const smallCategoriess = [
     {
       id: 7,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2150,8 +2124,7 @@ export const smallCategoriess = [
     {
       id: 8,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2159,8 +2132,7 @@ export const smallCategoriess = [
     {
       id: 9,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2168,8 +2140,7 @@ export const smallCategoriess = [
     {
       id: 10,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2177,8 +2148,7 @@ export const smallCategoriess = [
     {
       id: 11,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2186,8 +2156,7 @@ export const smallCategoriess = [
     {
       id: 12,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2195,8 +2164,7 @@ export const smallCategoriess = [
     {
       id: 13,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2204,8 +2172,7 @@ export const smallCategoriess = [
     {
       id: 14,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2213,8 +2180,7 @@ export const smallCategoriess = [
     {
       id: 15,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2222,8 +2188,7 @@ export const smallCategoriess = [
     {
       id: 16,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2231,8 +2196,7 @@ export const smallCategoriess = [
     {
       id: 17,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2240,8 +2204,7 @@ export const smallCategoriess = [
     {
       id: 1,
       storyType: "Ngôn Tình",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2249,8 +2212,7 @@ export const smallCategoriess = [
     {
       id: 2,
       storyType: "Tiên Hiệp",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2258,8 +2220,7 @@ export const smallCategoriess = [
     {
       id: 3,
       storyType: "Đam Mỹ",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2267,8 +2228,7 @@ export const smallCategoriess = [
     {
       id: 4,
       storyType: "Huyền Nguyễn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2276,8 +2236,7 @@ export const smallCategoriess = [
     {
       id: 5,
       storyType: "Tiểu Thuyết",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2285,8 +2244,7 @@ export const smallCategoriess = [
     {
       id: 6,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2294,8 +2252,7 @@ export const smallCategoriess = [
     {
       id: 7,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2303,8 +2260,7 @@ export const smallCategoriess = [
     {
       id: 8,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2312,8 +2268,7 @@ export const smallCategoriess = [
     {
       id: 9,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2321,8 +2276,7 @@ export const smallCategoriess = [
     {
       id: 10,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2330,8 +2284,7 @@ export const smallCategoriess = [
     {
       id: 11,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2339,8 +2292,7 @@ export const smallCategoriess = [
     {
       id: 12,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2348,8 +2300,7 @@ export const smallCategoriess = [
     {
       id: 13,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2357,8 +2308,7 @@ export const smallCategoriess = [
     {
       id: 14,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2366,8 +2316,7 @@ export const smallCategoriess = [
     {
       id: 15,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2375,8 +2324,7 @@ export const smallCategoriess = [
     {
       id: 16,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2384,8 +2332,7 @@ export const smallCategoriess = [
     {
       id: 17,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2393,8 +2340,7 @@ export const smallCategoriess = [
     {
       id: 1,
       storyType: "Ngôn Tình",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2402,8 +2348,7 @@ export const smallCategoriess = [
     {
       id: 2,
       storyType: "Tiên Hiệp",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2411,8 +2356,7 @@ export const smallCategoriess = [
     {
       id: 3,
       storyType: "Đam Mỹ",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2420,8 +2364,7 @@ export const smallCategoriess = [
     {
       id: 4,
       storyType: "Huyền Nguyễn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2429,8 +2372,7 @@ export const smallCategoriess = [
     {
       id: 5,
       storyType: "Tiểu Thuyết",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2438,8 +2380,7 @@ export const smallCategoriess = [
     {
       id: 6,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2447,8 +2388,7 @@ export const smallCategoriess = [
     {
       id: 7,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2456,8 +2396,7 @@ export const smallCategoriess = [
     {
       id: 8,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2465,8 +2404,7 @@ export const smallCategoriess = [
     {
       id: 9,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2474,8 +2412,7 @@ export const smallCategoriess = [
     {
       id: 10,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2483,8 +2420,7 @@ export const smallCategoriess = [
     {
       id: 11,
       storyType: "Điền Văn",
-      thumbnail:
-        "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
+      thumbnail: "https://static.truyenfull.bio/img/ad/fly4.jpg?v=144",
       variant: "secondary",
     },
   ],
@@ -2820,8 +2756,8 @@ export const cmtRatingTabs = {
       value: "support",
       tabsName: "Ủng hộ",
     },
-  }
-}
+  },
+};
 
 export const storyStatusTabs = {
   tabs: {
@@ -2833,59 +2769,69 @@ export const storyStatusTabs = {
       value: "finished",
       tabsName: "Đã hoàn thành",
     },
-  }
-}
+  },
+};
 
 export const tvCmtRatingData = [
   [
     {
       thumbnail: "http://localhost:3001/images/hanh1.png",
       createdAt: "2022-01-22 14:10:39",
-      comment: "Truyện này theo cá nhân mình đánh giá he he he he he heh eh eh ehe heh heh",
+      comment:
+        "Truyện này theo cá nhân mình đánh giá he he he he he heh eh eh ehe heh heh",
       userName: "Usernamehehehehehehehehh",
-      storyName: "Tên truyện hiển thị heh ehh e he heh e jej ej ejh e he he he "
-    }
+      storyName:
+        "Tên truyện hiển thị heh ehh e he heh e jej ej ejh e he he he ",
+    },
   ],
   [
     {
       thumbnail: "http://localhost:3001/images/hanh1.png",
       createdAt: "2022-01-22 14:10:39",
-      comment: "Truyện này theo cá nhân mình đánh giá he he he he he heh eh eh ehe heh heh",
+      comment:
+        "Truyện này theo cá nhân mình đánh giá he he he he he heh eh eh ehe heh heh",
       userName: "Usernamehehehehehehehehh",
-      storyName: "Tên truyện hiển thị heh ehh e he heh e jej ej ejh e he he he "
-    }
-  ]
-]
+      storyName:
+        "Tên truyện hiển thị heh ehh e he heh e jej ej ejh e he he he ",
+    },
+  ],
+];
 
 export const tvHorizontalData = [
   [
     {
       thumbnail: "http://localhost:3001/images/coverImage1.png",
-      title: "Tên bộ truyện có thể hiển thị tối đa 2 dòng như thế này (demo) hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe",
-      chapterName: "Ch.11: Tên mới của chương đang viết hiển thị hehe hehe hehe hehe hehe",
+      title:
+        "Tên bộ truyện có thể hiển thị tối đa 2 dòng như thế này (demo) hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe",
+      chapterName:
+        "Ch.11: Tên mới của chương đang viết hiển thị hehe hehe hehe hehe hehe",
       status: "pending",
       totalChapter: 12,
-      isWrapped: true
-    }
+      isWrapped: true,
+    },
   ],
   [
     {
       thumbnail: "http://localhost:3001/images/coverImage1.png",
-      title: "Tên bộ truyện có thể hiển thị tối đa 2 dòng như thế này (demo) hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe",
-      chapterName: "Ch.11: Tên mới của chương đang viết hiển thị hehe hehe hehe hehe hehe",
+      title:
+        "Tên bộ truyện có thể hiển thị tối đa 2 dòng như thế này (demo) hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe",
+      chapterName:
+        "Ch.11: Tên mới của chương đang viết hiển thị hehe hehe hehe hehe hehe",
       status: "pending",
       totalChapter: 12,
-      isPublish: true
-    }
+      isPublish: true,
+    },
   ],
   [
     {
       thumbnail: "http://localhost:3001/images/coverImage1.png",
-      title: "Tên bộ truyện có thể hiển thị tối đa 2 dòng như thế này (demo) hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe",
-      chapterName: "Ch.11: Tên mới của chương đang viết hiển thị hehe hehe hehe hehe hehe",
+      title:
+        "Tên bộ truyện có thể hiển thị tối đa 2 dòng như thế này (demo) hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe hehe",
+      chapterName:
+        "Ch.11: Tên mới của chương đang viết hiển thị hehe hehe hehe hehe hehe",
       status: "pending",
       totalChapter: 12,
-      isPublish: true
-    }
+      isPublish: true,
+    },
   ],
-]
+];

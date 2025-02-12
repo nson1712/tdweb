@@ -17,10 +17,10 @@ const UnfinishedStoryItem = ({ totalReadingStory, unfinishedStory }) => {
       `${unfinishedStory.storySlug}/${unfinishedStory.chapterSlug}`
     );
   };
-  const {isLoggedIn, checkIsLogin} = GlobalStore
+  const { isLoggedIn, checkIsLogin } = GlobalStore;
   useEffect(() => {
-    checkIsLogin()
-  }, [isLoggedIn])
+    checkIsLogin();
+  }, [isLoggedIn]);
   return (
     <Flex vertical className="space-y-4">
       <div className="text-xl text-black font-bold pt-4">

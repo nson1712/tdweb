@@ -7,17 +7,20 @@ import StarsRate from "../StarRate";
 import imageLoader from "../../loader/imageLoader";
 
 const CommentCardItem = ({
-  comment,
-  commentStarRate,
-  totalLikes,
-  totalComments,
+  message,
+  customerRate,
+  totalLike,
+  totalComment,
   userAvatar,
 }) => {
-  const text = comment;
+  const text = message;
   const [isReadMore, setIsReadMore] = useState(true);
   const toggleReadMore = () => {
     setIsReadMore(!isReadMore);
   };
+
+  console.log("cmt rate: ", customerRate);
+
   return (
     <div className="flex w-full px-2 py-2 rounded-b-[20px] bg-[#F5F8FF] shadow-md">
       <div className="flex flex-row gap-x-2 ">
@@ -37,26 +40,28 @@ const CommentCardItem = ({
         <div className="w-full flex flex-col gap-y-2">
           <div className="font-medium text-[14px] text-[#707070] overflow-hidden leading-tight">
             <p>
-              {isReadMore ? text.slice(0, 100) : text}
-              <span
-                className="text-blue-500 text-[14px] cursor-pointer"
-                onClick={toggleReadMore}
-              >
-                {isReadMore ? "... Xem thêm" : " Thu gọn"}
-              </span>
+              {text?.length > 100 ? (
+                <>
+                  {isReadMore ? text.slice(0, 100) : text}
+                  <span
+                    className="text-blue-500 text-[14px] cursor-pointer"
+                    onClick={toggleReadMore}
+                  >
+                    {isReadMore ? "... Xem thêm" : " Thu gọn"}
+                  </span>
+                </>
+              ) : (
+                text
+              )}
             </p>
           </div>
 
           <div className="flex flex-row gap-x-2 max-h-4 w-fit">
             <div className="mt-0.5">
-              <StarsRate
-                starRate={commentStarRate}
-                lightBg={true}
-                color="primary"
-              />
+              <StarsRate rate={customerRate} lightBg={true} color="primary" />
             </div>
-            <TotalLike totalLikes={totalLikes} />
-            <TotalComments totalComments={totalComments} />
+            <TotalLike totalLike={totalLike} />
+            <TotalComments totalComment={totalComment} />
           </div>
         </div>
       </div>

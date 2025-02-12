@@ -60,7 +60,7 @@ const Research = () => {
     getStoryViewings,
 
     ratings,
-    getRatings
+    getRatings,
 
     // getcollections1,
     // collections1,
@@ -73,10 +73,15 @@ const Research = () => {
     // checkCustomerClickAff,
 
     // recordClickAff,
-    
   } = StoryStore;
 
   const { isLoggedIn, checkIsLogin } = GlobalStore;
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      getStoryViewings();
+    }
+  }, [isLoggedIn]);
 
   useEffect(() => {
     const checkCustomerClickAffLocal = async () => {
@@ -98,14 +103,11 @@ const Research = () => {
     getTopViews();
     getTopNew();
     getTopFull();
-    getRatings()
+    getRatings();
     // getcollections1();
     // getcollections2();
     // setShowModal(true)
     // checkCustomerClickAffLocal();
-    if (isLoggedIn) {
-      getStoryViewings();
-    }
   }, []);
 
   // useEffect(() => {
@@ -212,7 +214,7 @@ const Research = () => {
             <>
               <Section1 viewings={viewings} categories={categories} />
 
-              <Section2 topNew={topNew} />
+              <Section2 topNew={topNew} ratings={ratings} />
 
               <Section3 topTrending={topTrending} />
 
