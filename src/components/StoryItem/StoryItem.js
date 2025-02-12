@@ -34,7 +34,7 @@ const StoryItem = ({item, direction = 'col', chapterSlug, currentChap, isBookMar
     >
       <div  className={classNames('bg-gray', direction === 'row' ? 'mr-[8px]' : 'mb-[10px] rounded-[10px] overflow-hidden')}>
         <a href={`${chapterSlug ? `/${item.slug}/${chapterSlug}` : `/${item.slug}`}`} title={`Truyện ${item.title}`}>
-          <img src={item.coverImage} alt={`Truyện ${item.title}`} title={`Truyện ${item.title}`} className={classNames('w-full', direction === 'row' ? 'w-[40px] rounded-[10px]' : 'h-[90px] object-cover')}
+          <img src={item.thumbnail || item.coverImage} alt={`Truyện ${item.title}`} title={`Truyện ${item.title}`} className={classNames('w-full', direction === 'row' ? 'w-[40px] rounded-[10px]' : 'h-[90px] object-cover')}
             style={fromSlide ? {
               width: `${((contentWidth - 16) / 4) - 16}px`,
               height: `${((((contentWidth - 16) / 4) - 16) * 90) / 75}px`

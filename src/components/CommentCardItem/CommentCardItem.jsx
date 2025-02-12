@@ -4,6 +4,7 @@ import TotalLike from "./TotalLikes";
 import TotalComments from "./TotalComments";
 import { useState } from "react";
 import StarsRate from "../StarRate";
+import imageLoader from "../../loader/imageLoader";
 
 const CommentCardItem = ({
   comment,
@@ -21,13 +22,16 @@ const CommentCardItem = ({
     <div className="flex w-full px-2 py-2 rounded-b-[20px] bg-[#F5F8FF] shadow-md">
       <div className="flex flex-row gap-x-2 ">
         <div className="max-w-[32px] max-h-[32px]">
-          <Image
-            className="rounded-full"
-            width={32}
-            height={32}
-            src={userAvatar}
-            alt="userAvatar"
-          />
+          {userAvatar ? (
+            <Image
+              loader={imageLoader}
+              className="rounded-full"
+              width={32}
+              height={32}
+              src={userAvatar}
+              alt="userAvatar"
+            />
+          ) : null}
         </div>
 
         <div className="w-full flex flex-col gap-y-2">

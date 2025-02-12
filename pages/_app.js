@@ -1,22 +1,20 @@
-import { useEffect } from 'react';
-import Head from 'next/head'
-import '../public/styles/styles.css'
-import '@fortawesome/fontawesome-free/css/all.css';
-import 'bootstrap/dist/css/bootstrap.css'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import "slick-carousel/slick/slick.css"; 
+import { useEffect } from "react";
+import Head from "next/head";
+import "../public/styles/styles.css";
+import "@fortawesome/fontawesome-free/css/all.css";
+import "bootstrap/dist/css/bootstrap.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import 'react-circular-progressbar/dist/styles.css';
-import '../public/styles/react-datetime.scss'
-import '../public/styles/styles.scss'
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import GlobalStore from '../src/stores/GlobalStore';
-import { redirectToBrowser } from '../src/utils/utils';
-
+import "react-circular-progressbar/dist/styles.css";
+import "../public/styles/react-datetime.scss";
+import "../public/styles/styles.scss";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import GlobalStore from "../src/stores/GlobalStore";
+import { redirectToBrowser } from "../src/utils/utils";
 
 export default function App({ Component, pageProps }) {
-
   useEffect(() => {
     // Function to handle text selection
     const handleSelectionChange = () => {
@@ -96,7 +94,7 @@ export default function App({ Component, pageProps }) {
   //       e.preventDefault();
   //     }
   //   };
-    
+
   //   const checkDevTools = () => {
   //     // const isMobile = isMobileDevice();
   //     // const devtoolsOpened =
@@ -152,8 +150,10 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <title>Tôi đọc</title>
-        <meta name="viewport" 
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+        />
         <link rel="icon" href="/favicon.ico" />
         {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
@@ -161,12 +161,11 @@ export default function App({ Component, pageProps }) {
         <link href="https://fonts.googleapis.com/css2?family=Palatino%20Linotype:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" /> */}
       </Head>
 
-      <GoogleOAuthProvider clientId='195908018380-ehemlqtqp4b7kej9ah7hpglqtjict07r.apps.googleusercontent.com'>
-       <Component {...pageProps} />
+      <GoogleOAuthProvider clientId="195908018380-ehemlqtqp4b7kej9ah7hpglqtjict07r.apps.googleusercontent.com">
+        <Component {...pageProps} />
       </GoogleOAuthProvider>
-      
 
       <ToastContainer />
     </>
-  )
+  );
 }

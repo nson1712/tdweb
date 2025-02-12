@@ -2,6 +2,7 @@ import Router from "next/router";
 import CategoryItem from "../CategoryItem";
 import { DownOutlined } from "@ant-design/icons";
 import { Button } from "antd";
+import ButtonViewAll from "../ButtonViewAll";
 
 const HotCategories = ({ data }) => {
   const handleViewAll = () => {
@@ -34,7 +35,7 @@ const HotCategories = ({ data }) => {
         ))}
       </div>
 
-      <div className="w-full flex justify-center">
+      {/* <div className="w-full flex justify-center">
         <Button
           className="text-base font-semibold cursor-pointer"
           type="default"
@@ -43,7 +44,11 @@ const HotCategories = ({ data }) => {
         >
           Xem Thêm <DownOutlined className="mt-0.5" />
         </Button>
-      </div>
+      </div> */}
+      <ButtonViewAll
+        className="w-full text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2 shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:text-white"
+        url="/the-loai"
+      />
     </div>
   );
 };

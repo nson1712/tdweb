@@ -46,6 +46,8 @@ class StoryStore {
 
   collectionStories = {};
 
+  ratings = {};
+
   loadingChapterDetail = false;
 
   isClickAff = false;
@@ -289,18 +291,22 @@ class StoryStore {
         },
       });
 
-      if (page === 1) {
-        runInAction(() => {
-          this.topViews = result.data;
-        });
-      } else {
-        runInAction(() => {
-          this.topViews = {
-            ...result.data,
-            data: [...this.topViews.data, ...result.data.data],
-          };
-        });
-      }
+      runInAction(() => {
+        this.topViews = result.data;
+      });
+
+      // if (page === 1) {
+      //   runInAction(() => {
+      //     this.topViews = result.data;
+      //   });
+      // } else {
+      //   runInAction(() => {
+      //     this.topViews = {
+      //       ...result.data,
+      //       data: [...this.topViews.data, ...result.data.data],
+      //     };
+      //   });
+      // }
     } catch (e) {
       console.log(e);
     }
@@ -335,7 +341,7 @@ class StoryStore {
   getTopNew = async (page = 1, pageSize = 20) => {
     try {
       const result = await Api.get({
-        url: "/data/private/data/story/newest",
+        url: "https://uatapi.truyenso1.xyz/data/private/data/story/newest",
         params: {
           page,
           pageSize,
@@ -745,6 +751,24 @@ class StoryStore {
           };
         });
       }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  getRatings = async (page = 1, pageSize = 20) => {
+    try {
+      const result = await Api.get({
+        url: "https://uatapi.truyenso1.xyz/data/web/rating/v2/list",
+        params: {
+          page,
+          pageSize,
+        },
+      });
+
+      runInAction(() => {
+        this.ratings = result.data;
+      });
     } catch (e) {
       console.log(e);
     }

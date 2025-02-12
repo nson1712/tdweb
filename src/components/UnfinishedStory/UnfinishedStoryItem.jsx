@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import UnfinishedStoryDetailItem from "./UnfinishedStoryDetailItem";
 import GooglePlayStoreIcon from "../../../public/icons/GooglePlayStoreIcon";
 import AppStoreIcon from "../../../public/icons/AppStoreIcon";
@@ -6,6 +6,9 @@ import AppStoreIcon from "../../../public/icons/AppStoreIcon";
 import { Flex } from "antd";
 import { getOS, handleStoreOpen } from "../../utils/utils";
 import { useRouter } from "next/router";
+import { ArrowRightOutlined } from "@ant-design/icons";
+import GlobalStore from "../../stores/GlobalStore";
+import { observer } from "mobx-react";
 
 const UnfinishedStoryItem = ({ totalReadingStory, unfinishedStory }) => {
   const router = useRouter();
@@ -14,6 +17,10 @@ const UnfinishedStoryItem = ({ totalReadingStory, unfinishedStory }) => {
       `${unfinishedStory.storySlug}/${unfinishedStory.chapterSlug}`
     );
   };
+  const {isLoggedIn, checkIsLogin} = GlobalStore
+  useEffect(() => {
+    checkIsLogin()
+  }, [isLoggedIn])
   return (
     <Flex vertical className="space-y-4">
       <div className="text-xl text-black font-bold pt-4">
@@ -27,22 +34,26 @@ const UnfinishedStoryItem = ({ totalReadingStory, unfinishedStory }) => {
           </div>
         </div> */}
 
-        <UnfinishedStoryDetailItem
-          readingPercent={unfinishedStory.readingPercent}
-          title={unfinishedStory.title}
-          coverImage={unfinishedStory?.coverImage}
-          currentChapterOrder={unfinishedStory.currentChapterOrder}
-          storySlug={unfinishedStory.storySlug}
-          chapterSlug={unfinishedStory.chapterSlug}
-        />
+        {isLoggedIn && (
+          <>
+            <UnfinishedStoryDetailItem
+              readingPercent={unfinishedStory.readingPercent}
+              title={unfinishedStory.title}
+              coverImage={unfinishedStory?.coverImage}
+              currentChapterOrder={unfinishedStory.currentChapterOrder}
+              storySlug={unfinishedStory.storySlug}
+              chapterSlug={unfinishedStory.chapterSlug}
+            />
 
-        <button
-          type="button"
-          className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-base p-2.5 text-center me-2 mb-2 shadow-md"
-          onClick={handleContinueReading}
-        >
-          Đọc tiếp
-        </button>
+            <button
+              type="button"
+              className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-base p-2.5 text-center me-2 mb-2 shadow-md"
+              onClick={handleContinueReading}
+            >
+              Đọc tiếp <ArrowRightOutlined />
+            </button>
+          </>
+        )}
 
         <div className="flex flex-row gap-x-2 cursor-pointer ml-3">
           <div className="flex flex-col gap-y-1 ">
@@ -71,4 +82,4 @@ const UnfinishedStoryItem = ({ totalReadingStory, unfinishedStory }) => {
   );
 };
 
-export default UnfinishedStoryItem;
+export default observer(UnfinishedStoryItem);

@@ -2,23 +2,19 @@ import { useEffect } from "react";
 import HotCategories from "../../../components/HotCategories";
 import UnfinishedStory from "../../../components/UnfinishedStory";
 import StoryStore from "../../../stores/StoryStore";
-const Section1 = () => {
-  const { categories, getCategories, viewings, getStoryViewings } = StoryStore;
+import GlobalStore from "../../../stores/GlobalStore";
 
-  useEffect(() => {
-    // const checkLogin = async() => {
-    //   try {
-    //     await GlobalStore.checkIsLogin();
-    //   } catch(e) {}
-    // }
+const Section1 = ({viewings, categories}) => {
+  // const { categories, getCategories, viewings, getStoryViewings } = StoryStore;
+  // const { isLoggedIn, checkIsLogin } = GlobalStore;
 
-    // checkLogin();
-    // getCategories();
-    getCategories();
-    getStoryViewings();
-  }, []);
-
-  console.log("VIEWINGS: ", viewings)
+  // useEffect(() => {
+  //   checkIsLogin();
+  //   getCategories();
+  //   if(isLoggedIn){
+  //     getStoryViewings();
+  //   }
+  // }, [isLoggedIn]);
 
   return (
     <div className="px-2 sm:grid sm:grid-flow-col sm:grid-cols-12 gap-x-4">
@@ -29,11 +25,10 @@ const Section1 = () => {
             unfinishedStory: {
               readingPercent: viewings?.data?.[0].readingPercent,
               title: viewings?.data?.[0].story.title,
-              coverImage:
-                viewings?.data?.[0].story.coverImage,
+              coverImage: viewings?.data?.[0].story.thumbnail || viewings?.data?.[0].story.coverImage,
               currentChapterOrder: viewings?.data?.[0].currentChapterOrder,
               storySlug: viewings?.data?.[0].storySlug,
-              chapterSlug: viewings?.data?.[0].chapterSlug
+              chapterSlug: viewings?.data?.[0].chapterSlug,
             },
           },
         ]}

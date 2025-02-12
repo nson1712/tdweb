@@ -4,8 +4,8 @@ import NewStory from "../../../components/NewStory";
 import { categories, commentItem } from "../../../data/testData";
 import RatingList from "../../../components/RatingList";
 
-const Section2 = ({newStories}) => {
-  console.log("NEW STORIESSSSSSSS: ", newStories)
+const Section2 = ({topNew}) => {
+  console.log("NEW STORIESSSSSSSS: ", topNew.data)
   const newStory = [
     {
         "title": "Bắt Đầu 10 Lần Rút Sau Đó Vô Địch",

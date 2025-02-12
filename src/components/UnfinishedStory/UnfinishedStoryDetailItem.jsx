@@ -3,6 +3,7 @@ import DotIcon from "../../../public/icons/DotIcon";
 import { roundTo1Digits } from "../../utils/utils";
 import { Spin } from "antd";
 import { useRouter } from "next/router";
+import imageLoader from "../../loader/imageLoader";
 
 const UnfinishedStoryDetailItem = ({
   readingPercent,
@@ -26,6 +27,7 @@ const UnfinishedStoryDetailItem = ({
         <div className="w-[40px]">
           {coverImage ? (
             <Image
+              loader={imageLoader}
               className="rounded-[5px]"
               width={35}
               height={45}

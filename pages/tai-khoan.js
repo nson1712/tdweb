@@ -1,6 +1,6 @@
-import React from 'react'
-import ProfileComponent from '../src/pages/Profile'
-import HeaderServer from '../src/components/HeaderServer'
+import React from "react";
+import ProfileComponent from "../src/pages/Profile";
+import HeaderServer from "../src/components/HeaderServer";
 
 const Profile = () => {
   return (
@@ -8,7 +8,7 @@ const Profile = () => {
       <HeaderServer />
       <ProfileComponent />
     </>
-  )
-}
+  );
+};
 
-export default Profile
+export default Profile;

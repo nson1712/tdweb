@@ -43,7 +43,7 @@ const PriceInfo = ({discountValue, finalChargeValue, storyDetail, handleOpenFull
               />
             </p>
             <p className="white-text mt-[3px]">
-              {`Để mở khoá toàn bộ chương truyện ${storyDetail.title}`}
+              {`Để mở khoá toàn bộ chương truyện ${storyDetail?.title}`}
             </p>
           </div>
           {discountValue > 0 && (

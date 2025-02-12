@@ -6,6 +6,7 @@ import TotalView from "../TotalView";
 import StarsRate from "../StarRate";
 import StoryStatus from "../StoryStatus";
 import GoldenTicket from "../GoldenTicket";
+import imageLoader from "../../loader/imageLoader";
 
 const HorizontalStoryItem = ({
   title,
@@ -47,13 +48,18 @@ const HorizontalStoryItem = ({
           "max-w-[66px] max-h-[100px] relative": type === "primary",
         })}
       >
-        <Image
-          className={clsx("rounded-e-[5px] rounded-tl-[20px] rounded-bl-[5px]")}
-          src={coverImage || ""}
-          alt={title}
-          width={type !== "secondary" && type !== "primary" ? 180 : 50}
-          height={type !== "secondary" && type !== "primary" ? 250 : 70}
-        />
+        {coverImage ? (
+          <Image
+            loader={imageLoader}
+            className={clsx(
+              "rounded-e-[5px] rounded-tl-[20px] rounded-bl-[5px]"
+            )}
+            src={coverImage}
+            alt={title}
+            width={type !== "secondary" && type !== "primary" ? 180 : 50}
+            height={type !== "secondary" && type !== "primary" ? 250 : 70}
+          />
+        ) : null}
       </div>
 
       <div

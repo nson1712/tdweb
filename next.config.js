@@ -14,18 +14,7 @@ module.exports = {
     ];
   },
   images: {
-    domains: [
-      "media.truyenso1.xyz",
-      "lh3.googleusercontent.com",
-      "static.truyenfull.bio",
-      "localhost",
-      "media.toidoc.vn",
-      "yymedia.codeprime.net",
-      "static.8cache.com",
-      "i.pinimg.com",
-      "cdn.truyenfull.com",
-      "toidoc.vn",
-      "static.truyenfull.bio"
-    ],
+    loader: "custom",
+    path: "/"
   },
 };

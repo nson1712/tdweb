@@ -1,8 +1,8 @@
-import React from 'react'
-import ResearchComponent from '../src/pages/Research'
-import HeaderServer from '../src/components/HeaderServer'
+import React from "react";
+import ResearchComponent from "../src/pages/Research";
+import HeaderServer from "../src/components/HeaderServer";
 
-const Research = ({canonical}) => {
+const Research = ({ canonical }) => {
   function addKhamphaJsonLd() {
     return {
       __html: `{
@@ -22,31 +22,30 @@ const Research = ({canonical}) => {
   }
   return (
     <>
-      <HeaderServer description = "Khám phá các thể loại truyện khác nhau như ngôn tình, sủng, ngược, tiên hiệp, kiếm hiệp, đam mỹ. Ngoài ra bạn có thể xem danh sách top các loại truyện mà chung tôi cung cấp sẵn"
-                    title = "🌟[Đề Cử] Khám phá Truyện Full Độc Đáo | Nền tảng cộng cồng đọc truyện Online Toidoc"
-                    canonical={canonical}
-                    snipet={addKhamphaJsonLd()}
+      <HeaderServer
+        description="Khám phá các thể loại truyện khác nhau như ngôn tình, sủng, ngược, tiên hiệp, kiếm hiệp, đam mỹ. Ngoài ra bạn có thể xem danh sách top các loại truyện mà chung tôi cung cấp sẵn"
+        title="🌟[Đề Cử] Khám phá Truyện Full Độc Đáo | Nền tảng cộng cồng đọc truyện Online Toidoc"
+        canonical={canonical}
+        snipet={addKhamphaJsonLd()}
       />
       <ResearchComponent />
     </>
-  )
-}
-
+  );
+};
 
 Research.getInitialProps = async (ctx) => {
   try {
-    let canonical = 'https://toidoc.vn/tim-kiem?tukhoa='
+    let canonical = "https://toidoc.vn/tim-kiem?tukhoa=";
     if (ctx.query.tukhoa) {
-      canonical = canonical + ctx.query.categorySlug
+      canonical = canonical + ctx.query.categorySlug;
     }
-   
+
     return {
       canonical,
-    }
-  } catch(e) {
-    return 'https://toidoc.vn/tim-kiem'
+    };
+  } catch (e) {
+    return "https://toidoc.vn/tim-kiem";
   }
-  
-}
+};
 
-export default Research
+export default Research;

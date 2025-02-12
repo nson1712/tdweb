@@ -8,8 +8,6 @@ import { observer } from "mobx-react";
 import Router, { useRouter } from "next/router";
 import StoryStore from "../../stores/StoryStore";
 import Search from "../Search/Search";
-import CollectionItem from "./CollectionItem";
-import SlideCollections from "./SlideCollections";
 import ChatSupport from "../../components/Button/ChatSupport";
 import { setItem, getItem } from "../../utils/storage";
 import Section1 from "./Section1";
@@ -19,17 +17,9 @@ import Section4 from "./Section4";
 import Section5 from "./Section5";
 import RatingList from "../../components/RatingList";
 import { commentItem } from "../../data/testData";
+import GlobalStore from "../../stores/GlobalStore";
 
 let timeout;
-
-const tags = [
-  "#Hashtag1",
-  "#Hashtag1",
-  "#Hashtag1",
-  "#Hashtag1",
-  "#Hashtag1",
-  "#Hashtag1",
-];
 
 const Research = () => {
   const [selectedCategory, setSelectedCategory] = useState("");
@@ -66,18 +56,27 @@ const Research = () => {
     topFull,
     getTopFull,
 
-    getcollections1,
-    collections1,
+    viewings,
+    getStoryViewings,
 
-    getcollections2,
-    collections2,
+    ratings,
+    getRatings
 
-    saveCustomerClickBanner,
+    // getcollections1,
+    // collections1,
 
-    checkCustomerClickAff,
+    // getcollections2,
+    // collections2,
 
-    recordClickAff,
+    // saveCustomerClickBanner,
+
+    // checkCustomerClickAff,
+
+    // recordClickAff,
+    
   } = StoryStore;
+
+  const { isLoggedIn, checkIsLogin } = GlobalStore;
 
   useEffect(() => {
     const checkCustomerClickAffLocal = async () => {
@@ -91,13 +90,7 @@ const Research = () => {
       }
     };
 
-    const checkLogin = async () => {
-      try {
-        await GlobalStore.checkIsLogin();
-      } catch (e) {}
-    };
-
-    checkLogin();
+    checkIsLogin();
     getCategories();
     getFavouriteCategories();
     getTopTrending();
@@ -105,17 +98,21 @@ const Research = () => {
     getTopViews();
     getTopNew();
     getTopFull();
-    getcollections1();
-    getcollections2();
+    getRatings()
+    // getcollections1();
+    // getcollections2();
     // setShowModal(true)
     // checkCustomerClickAffLocal();
+    if (isLoggedIn) {
+      getStoryViewings();
+    }
   }, []);
 
-  useEffect(() => {
-    if (favouriteCategories && favouriteCategories?.length > 0) {
-      setSelectedCategory(favouriteCategories[0].categoryCode);
-    }
-  }, [favouriteCategories]);
+  // useEffect(() => {
+  //   if (favouriteCategories && favouriteCategories?.length > 0) {
+  //     setSelectedCategory(favouriteCategories[0].categoryCode);
+  //   }
+  // }, [favouriteCategories]);
 
   const shouldShowBanner = async () => {
     const lastClosed = await getItem("bannerClosedAt");
@@ -160,7 +157,7 @@ const Research = () => {
     <CommonLayout active="HOME">
       <div>
         <Header selectedTab={"RESEARCH"} />
-        <div className="max-w-[1116px] mx-auto bg-white md:pt-[88px] px-0 md:px-2 space-y-6 pb-20">
+        <div className="max-w-[1116px] mx-auto bg-white md:pt-[88px] px-0 md:px-2 space-y-10 pb-20">
           <div className="pt-4 mt-0 fixed top-0 left-0 right-0 bg-white md:hidden z-[9] flex justify-center">
             <div className="pb-4 border-b-[1px] border-color flex gap-x-2">
               <div className="relative float-left">
@@ -208,24 +205,24 @@ const Research = () => {
           </div>
 
           {text ? (
-            <div className="mb-5 pt-5 md:pt-0">
+            <div className="mb-5 pt-5 md:pt-0 h-full">
               <Search hiddenSearch={true} />
             </div>
           ) : (
             <>
-              <Section1 />
+              <Section1 viewings={viewings} categories={categories} />
 
-              <Section2 newStories={topNew.data} />
+              <Section2 topNew={topNew} />
 
-              <Section3 />
+              <Section3 topTrending={topTrending} />
 
               <div className="block md:hidden bg-[#F5F8FF] p-2 rounded-xl mx-2">
                 <RatingList data={commentItem} />
               </div>
 
-              <Section5 />
+              <Section5 topViews={topViews} />
 
-              <Section4 />
+              <Section4 topFull={topFull} />
             </>
           )}
         </div>

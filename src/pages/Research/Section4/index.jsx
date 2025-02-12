@@ -1,25 +1,16 @@
-import { useEffect, useState } from "react";
-import StoryStore from "../../../stores/StoryStore";
-import TopFull from "../../../components/TopFull";
 import Title from "./title";
-import { getRadomNumber } from "../../../utils/utils";
+import TopFull from "../../../components/TopFull";
+import ButtonViewAll from "../../../components/ButtonViewAll";
 
-const Section4 = () => {
-  const [randomPage, setRandomPage] = useState(1);
-  const { topFull, getTopFull } = StoryStore;
-  // const randomPage = getRadomNumber(0, topFull.totalPages);
-  useEffect(() => {
-    getTopFull(randomPage, 20);
-  }, [randomPage]);
-
-  const handleRefreshData = () => {
-    setRandomPage(getRadomNumber(1, topFull.totalPages));
-  };
-
+const Section4 = ({ topFull }) => {
   return (
     <div className="px-2 space-y-4">
-      <Title handleRefreshData={handleRefreshData} />
+      <Title />
       <TopFull data={topFull?.data} />
+      <ButtonViewAll
+        className="w-full text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2 shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:text-white"
+        url="/danh-sach-truyen/truyen-full"
+      />
     </div>
   );
 };

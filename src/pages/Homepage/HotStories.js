@@ -51,7 +51,7 @@ const HotStories = ({data}) => {
               <div  className='flex items-center justify-center w-[75px] h-[98px]'
               >
                 <img className={classNames('coverImage object-cover rounded-[10px] overflow-hidden', currentIndex === i ? 'w-[75px] h-[98px] border-w-[1px] border-white' : 'w-[65px] h-[85px]')}
-                  src={item.coverImage}
+                  src={item.thumbnail || item.coverImage}
                   alt={`Truyện ${item.title}`} title={item.title}
                 />
               </div>

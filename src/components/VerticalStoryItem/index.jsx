@@ -9,7 +9,8 @@ const VerticalStory = ({ items }) => {
           key={index}
           id={item.id}
           title={item.title}
-          coverImage={item.coverImage}
+          coverImage={item.thumbnail || item.coverImage}
+          slug={item.slug}
         />
       ))}
     </div>
