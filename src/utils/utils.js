@@ -462,9 +462,9 @@ export const calculateTotalCategories = (totalCategories) => {
   // return totalCategories > visibleCategories ? `+${totalCategories - visibleCategories}` : totalCategories
 };
 
-export const calculateCreatedTime = (pastTimestamp) => {
+export const calculateCreatedTime = (pastTime) => {
   const now = Date.now();
-
+  const pastTimestamp = new Date(pastTime).getTime(); // Chuyển đổi ISO string sang timestamp
   const elapsedMilliseconds = now - pastTimestamp;
 
   if (elapsedMilliseconds < 0) return "Vừa xong"; // Trường hợp thời gian trong tương lai

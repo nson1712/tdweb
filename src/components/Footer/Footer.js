@@ -10,7 +10,7 @@ import AppStoreIcon from "../../../public/icons/AppStoreIcon";
 const Footer = () => {
   return (
     <div className="mb-20 md:mb-0">
-      <div className="bg-[#F2F5F7] px-1 py-6 justify-between mx-auto hidden md:block">
+      {/* <div className="bg-[#F2F5F7] px-1 py-6 justify-between mx-auto hidden md:block">
         <div className="max-w-[1116px] justify-between mx-auto flex">
           <div className="">
             <div className="flex gap-x-2">
@@ -45,7 +45,8 @@ const Footer = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
+
       <div className="bg-black w-full py-2">
         <div className="max-w-[1116px] md:flex justify-between mx-auto px-1 space-y-2">
           <div className="order-2 flex justify-center text-sm md:text-base font-medium text-gray-500 dark:text-gray-400 sm:mt-0 gap-x-2 sm:py-2">

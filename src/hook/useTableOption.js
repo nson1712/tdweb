@@ -23,7 +23,7 @@ export const useTableOptions = () => {
       width: "25%",
       render: (item) => (
         <div className="line-clamp-1 text-gray-500 font-medium cursor-pointer">
-          {item.join(", ")}
+          {item?.join(", ")}
         </div>
       ),
     },

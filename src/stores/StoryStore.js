@@ -283,7 +283,7 @@ class StoryStore {
   getTopViews = async (page = 1, pageSize = 20) => {
     try {
       const result = await Api.get({
-        url: "/data/private/data/story/view/top",
+        url: "data/private/data/story/view/top",
         params: {
           page,
           pageSize,
@@ -315,7 +315,7 @@ class StoryStore {
   getHotStories = async (page = 1, pageSize = 20) => {
     try {
       const result = await Api.get({
-        url: "/data/private/data/story/hot1",
+        url: "data/private/data/story/hot1",
         params: {
           page,
           pageSize,
@@ -341,7 +341,7 @@ class StoryStore {
   getTopNew = async (page = 1, pageSize = 20) => {
     try {
       const result = await Api.get({
-        url: "https://uatapi.truyenso1.xyz/data/private/data/story/newest",
+        url: "data/private/data/story/newest",
         params: {
           page,
           pageSize,
@@ -395,7 +395,7 @@ class StoryStore {
   getCategories = async () => {
     try {
       const result = await Api.get({
-        url: "/data/private/data/categories",
+        url: "data/private/data/categories",
       });
 
       runInAction(() => {

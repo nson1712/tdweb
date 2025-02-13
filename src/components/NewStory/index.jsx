@@ -16,7 +16,7 @@ const NewStory = ({ data }) => {
           return {
             onClick: () => {
               router.push(
-                `${getSlugfromSlugGenerate(slugGenerate(record.title))}`
+                `${record.slug}`
               );
             },
           };

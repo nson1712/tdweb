@@ -207,7 +207,7 @@ const Research = () => {
           </div>
 
           {text ? (
-            <div className="mb-5 pt-5 md:pt-0 h-full">
+            <div className="mb-5 pt-5 md:pt-0">
               <Search hiddenSearch={true} />
             </div>
           ) : (

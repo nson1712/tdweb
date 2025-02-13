@@ -30,9 +30,9 @@ const CommonLayout = ({children, active}) => {
         {children}
       </div>
       
-      <div className={classes.footer}>
+      {/* <div className={classes.footer}>
         <Footer />
-      </div>
+      </div> */}
 
       <Modal show={showConfirm} onHide={handleHideConfirmDialog} centered>
         <Confirm handleClose={handleHideConfirmDialog} confirmData={confirm} />
