@@ -155,8 +155,8 @@ const Payment = ({
             title="Hướng dẫn nạp kim cương"
             src={
               referralCode
-                ? "https://www.youtube.com/embed/-m4Lwj7_GOA"
-                : "https://www.youtube.com/embed/BDyN143ZQ6Q"
+                ? "https://www.youtube.com/embed/-m4Lwj7_GOA?playlist=-m4Lwj7_GOA&loop=1&autoplay=1&mute=1"
+                : "https://www.youtube.com/embed/BDyN143ZQ6Q?playlist=BDyN143ZQ6Q&loop=1&autoplay=1&mute=1"
             }
             allowfullscreen
           />
