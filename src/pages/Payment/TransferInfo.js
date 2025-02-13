@@ -174,7 +174,7 @@ const TransferInfo = () => {
                 className="btnSecond-Second max-w-[300px] mx-auto"
                 onClick={(e) => {
                   window.open(
-                    `https://m.me/185169981351799?text=Mình qua web với nội dung ${description} không được. Hỗ trợ giúp mình với.`
+                    `https://m.me/185169981351799?text=Mình nạp qua web với nội dung ${description} không được. Hỗ trợ giúp mình với.`
                   );
                 }}
               >

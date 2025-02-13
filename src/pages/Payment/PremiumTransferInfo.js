@@ -169,7 +169,7 @@ const PremiumTransferInfo = ({ type }) => {
                 className="btnSecond-Second max-w-[300px] mx-auto"
                 onClick={() => {
                   window.open(
-                    `https://m.me/185169981351799?text=Mình qua web với nội dung ${description} không được. Hỗ trợ giúp mình với.`
+                    `https://m.me/185169981351799?text=Mình đăng ký premium qua web với nội dung ${description} không được. Hỗ trợ giúp mình với.`
                   );
                 }}
               >
@@ -323,13 +323,13 @@ const PremiumTransferInfo = ({ type }) => {
                   className="btnSecond-Second"
                   onClick={() => {
                     window.open(
-                      `https://m.me/185169981351799?text=Mình nạp qua web không được. Hỗ trợ giúp mình với.`,
+                      `https://m.me/185169981351799?text=Mình đăng ký premium qua web không được. Hỗ trợ giúp mình với.`,
                       "_blank",
                       "Toidoc"
                     );
                   }}
                 >
-                  Báo lỗi không nạp được
+                  Báo lỗi không đky được Premium
                 </Button>
               </div>
             </>

@@ -234,7 +234,7 @@ const PremiumPayment = ({
                 className="btnSecond-Second"
                 onClick={() => {
                   window.open(
-                    `https://m.me/185169981351799?text=Mình nạp qua web không được. Hỗ trợ giúp mình với.`,
+                    `https://m.me/185169981351799?text=Mình đăng ký premium qua web không được. Hỗ trợ giúp mình với.`,
                     "_blank",
                     "Toidoc"
                   );

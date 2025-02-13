@@ -8,11 +8,10 @@ import StoryStore from '../../stores/StoryStore'
 import ChatSupport from '../../components/Button/ChatSupport'
 import HotStories from './HotStories'
 import ModalComponent from '../../components/Modal/Modal'
-import Feedback from './Feedback'
+import Button from '../../components/Button'
 import StoryItem from '../../components/StoryItem/StoryItem'
 import GlobalStore from '../../stores/GlobalStore'
 import { setItem, getItem } from '../../utils/storage'
-import { IssuesCloseOutlined } from '@ant-design/icons'
 
 const Homepage = () => {
   const {
@@ -287,8 +286,6 @@ const Homepage = () => {
               </a>
             </div>
             }
-            
-            
           </div>
         </div>
 

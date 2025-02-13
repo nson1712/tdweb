@@ -163,7 +163,7 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
       }
       setChapterContents(result?.contents);
       if (isLoggedIn && result?.free && result?.contentEnabled) {
-        saveLastStory(route.query.storySlug, route.query.chapterSlug)
+        saveLastStory(route.query.storySlug, route.query.chapterSlug);
       }
       if (isLoggedIn && !result?.free) {
         await getAvailableCash();
@@ -347,6 +347,7 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
     });
 
     fetchData();
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }
 
   const handleSupport = async() => {

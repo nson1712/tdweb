@@ -129,7 +129,6 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm, referralCo
         }
       }
     } catch (e) {
-      console.log("Error get token: ", e);
       setLoading(false);
     }
   };
@@ -178,7 +177,7 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm, referralCo
             >
               {referralCode !== '' && 
                 <p className='text-[18px]'>
-                  Chào <b className='main-text text-[15px]'>{GlobalStore.profile?.displayName || 'bạn'}</b>,
+                  Chào <b className='main-text text-[15px]'>{GlobalStore.profile?.displayName || 'bạn'}</b> <i className='text-[14px]'>(Mã KH: {referralCode})</i>,
                 </p>
               }
               {referralCode === '' && <Field
@@ -254,21 +253,21 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm, referralCo
                 )}
               </div>
 
-              <p className="text-[16px] font-bold">
+              {cash > 0 && <p className="text-[16px] font-bold">
                 Số tiền bạn cần chuyển là:{" "}
                 <span className="text-[20px] font-bold main-text">
                   {formatStringToNumber(cash)} VNĐ
                 </span>
-              </p>
+              </p>}
 
               <Button
                 className="btnMain btnSecond"
                 type="submit"
                 loading={loading}
               >
-                Hiển thị mã QR chuyển khoản
+                Hiển thị STK, Mã QR chuyển khoản
               </Button>
-
+              <p className='mt-[8px]'>✅ Kim cương sẽ vào tài khoản ngay sau khi thanh toán thành công</p>
               <Button
                 className="btnSecond-Second"
                 onClick={() => {

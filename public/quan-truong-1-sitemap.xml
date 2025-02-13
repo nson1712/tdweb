@@ -5,24 +5,28 @@
       xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
             http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-  <loc>https://toidoc.vn/nguoi-tinh-de-vuong</loc>
-  <lastmod>2024-04-16T10:10:20+00:00</lastmod>
+  <loc>https://toidoc.vn/bao-tang-son-hai</loc>
+  <lastmod>2025-02-11T03:10:20+00:00</lastmod>
 </url>
 <url>
-  <loc>https://toidoc.vn/phien-ngoai-nang-dau-vuong-phu</loc>
-  <lastmod>2024-04-16T10:10:20+00:00</lastmod>
+  <loc>https://toidoc.vn/trum-tai-nguyen</loc>
+  <lastmod>2025-02-11T03:10:20+00:00</lastmod>
 </url>
 <url>
-  <loc>https://toidoc.vn/quan-sach</loc>
-  <lastmod>2024-04-16T10:10:20+00:00</lastmod>
+  <loc>https://toidoc.vn/ta-bi-huynh-truong-co-chap-cuong-che-ai</loc>
+  <lastmod>2025-02-11T03:10:20+00:00</lastmod>
 </url>
 <url>
-  <loc>https://toidoc.vn/quan-dao-thien-kieu</loc>
-  <lastmod>2024-04-16T10:10:20+00:00</lastmod>
+  <loc>https://toidoc.vn/nam-thu-nam-sau-khi-roi-cung</loc>
+  <lastmod>2025-02-11T03:10:20+00:00</lastmod>
 </url>
 <url>
-  <loc>https://toidoc.vn/dinh-cao-quyen-luc</loc>
-  <lastmod>2024-04-16T10:10:20+00:00</lastmod>
+  <loc>https://toidoc.vn/nam-duong</loc>
+  <lastmod>2025-02-11T03:10:20+00:00</lastmod>
+</url>
+<url>
+  <loc>https://toidoc.vn/nuong-tu-chi-thich-lam-ruong</loc>
+  <lastmod>2025-02-11T03:10:20+00:00</lastmod>
 </url>
 
 </urlset>

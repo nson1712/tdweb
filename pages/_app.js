@@ -12,7 +12,7 @@ import '../public/styles/react-datetime.scss'
 import '../public/styles/styles.scss'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import GlobalStore from '../src/stores/GlobalStore';
-import { redirectToBrowser } from '../src/utils/utils';
+import { redirectToBrowser, isCocCoc } from '../src/utils/utils';
 
 
 export default function App({ Component, pageProps }) {
@@ -37,6 +37,13 @@ export default function App({ Component, pageProps }) {
       }
     };
 
+    isCocCoc().then((result) => {
+      if (result) {
+        console.log("Người dùng đang sử dụng trình duyệt Cốc Cốc.");
+      } else {
+        console.log("Không phải trình duyệt Cốc Cốc.");
+      }
+    });
     // Redirect to browser instead of open webview
     redirectToBrowser();
 

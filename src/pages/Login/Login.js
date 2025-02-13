@@ -131,7 +131,7 @@ const Login = ({
           <div style={{'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center', 'marginTop': '20px'}}>
             <a className='link text-underline' href='https://m.me/185169981351799?text=Mình muốn đăng nhập trên web không được. Trợ giúp mình với.'>Báo lỗi đăng nhập</a>
           </div>*/}
-          <ShortLogin description='Bạn đăng nhập nhanh qua Google nhé' navigate='/tai-khoan'/>
+          <ShortLogin description='Chỉ cần 1 chạm đăng nhập qua các phương thức dưới nhé' navigate='/tai-khoan'/>
         </div>
       </div>
     </CommonLayout>

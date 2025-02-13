@@ -448,7 +448,7 @@ const StorySummary = () => {
               </div>
             </div>
             <div className='flex items-start'>
-              <img src={storyDetail.coverImage} alt={`Truyện ${storyDetail.title}`} title={storyDetail.title} className='w-[65px] mr-[12px] rounded-[10px]' />
+              <img src={storyDetail.thumbnail || storyDetail.coverImage} alt={`Truyện ${storyDetail.title}`} title={storyDetail.title} className='w-[65px] mr-[12px] rounded-[10px]' />
               <div className='flex-1'>
                 <a href={`${storyDetail.slug}`} title={`Truyện ${storyDetail.title}`}>
                   <h1 className='text-[16px] font-bold text-white mb-0'>{storyDetail.title}</h1>
@@ -626,7 +626,7 @@ const StorySummary = () => {
           <ModalComponent
               show={showLoginModal}
               handleClose={(e) => setShowLoginModal(false)}>
-            <ShortLogin description='Vui lòng đăng nhập để mở khoá tất cả các chương đang có của truyện này.' closeModal= {() => setShowLoginModal(false)}/>
+            <ShortLogin description='Đăng nhập 1 chạm để mở khoá tất cả các chương đang có của truyện này.' closeModal= {() => setShowLoginModal(false)}/>
           </ModalComponent>
         }
       </div>

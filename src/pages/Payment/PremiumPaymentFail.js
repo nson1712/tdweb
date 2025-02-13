@@ -34,7 +34,7 @@ const PremiumPaymentFail = () => {
             className="btnSecond-Second max-w-[300px] mx-auto"
             onClick={() => {
               window.open(
-                "https://m.me/185169981351799?text=Mình qua web không được. Hỗ trợ giúp mình với."
+                "https://m.me/185169981351799?text=Mình đăng ký premium qua web không được. Hỗ trợ giúp mình với."
               );
             }}
           >

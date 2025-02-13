@@ -339,6 +339,22 @@ export const isInAppBrowser = () => {
   return isFacebookApp || isInstagramApp || isLinkedInApp;
 };
 
+export const isCocCoc = async() => {
+  const styles = document.querySelectorAll("style");
+  for (let i = 0; i < styles.length; i++) {
+    if (styles[i].classList.contains("coc-coc-fonts")) {
+      return true;
+    }
+  }
+  
+  if (navigator.userAgentData) {
+    const brands = await navigator.userAgentData.getHighEntropyValues(["brands"]);
+    return brands.brands.some((brand) => brand.brand.toLowerCase().includes("coc coc"));
+  }
+  return false;
+}
+
+
 export const redirectToBrowser = () => {
   if (isInAppBrowser()) {
     const url = window.location.href;

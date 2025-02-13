@@ -15,6 +15,30 @@ class WebDocument extends Document {
             }}
           />
 
+
+          <script dangerouslySetInnerHTML={{
+              __html: `
+          window.fbAsyncInit = function() {
+            FB.init({
+              appId      : '939240831358946',
+              cookie     : true,
+              xfbml      : true,
+              version    : 'v21.0'
+            });
+              
+            FB.AppEvents.logPageView();   
+              
+          };
+
+          (function(d, s, id){
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) {return;}
+            js = d.createElement(s); js.id = id;
+            js.src = "https://connect.facebook.net/en_US/sdk.js";
+            fjs.parentNode.insertBefore(js, fjs);
+          }(document, 'script', 'facebook-jssdk'));
+          `}}/>
+
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130623220-1"></script>
           <script
             dangerouslySetInnerHTML={{
@@ -24,8 +48,8 @@ class WebDocument extends Document {
                       gtag('config', 'UA-130623220-1');`
             }}
           />
-          <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3889009823396535"
-              crossOrigin="anonymous"></script>
+          {/*<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3889009823396535"
+              crossOrigin="anonymous"></script>*/}
           <script
             dangerouslySetInnerHTML={{
               __html: `(function(h,e,a,t,m,p) {
