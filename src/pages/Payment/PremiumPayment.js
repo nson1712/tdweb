@@ -20,6 +20,7 @@ import { Alert, notification, Spin } from "antd";
 import crownIcon from "../../../public/images/queen-crown.png";
 import Image from "next/image";
 import { CloseCircleOutlined } from "@ant-design/icons";
+import imageLoader from "../../loader/imageLoader";
 
 const PremiumPayment = ({
   values,
@@ -192,7 +193,7 @@ const PremiumPayment = ({
                     onClick={() => handleChangePremiumPackages(index, item)}
                   >
                     <div className="self-center">
-                      <Image width={24} height={24} src={crownIcon} />
+                      <Image loader={imageLoader} width={24} height={24} src={crownIcon} />
                     </div>
                     <div className="self-center">
                       {`${item.tier} ${moment

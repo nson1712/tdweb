@@ -144,6 +144,9 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm, referralCo
           <p className="text-[20px] font-bold main-text text-center">
             Web Nạp KC Tự Động Chính Thức của Toidoc
           </p>
+
+          <iframe className="self-center w-full aspect-video mb-4" title="Hướng dẫn nạp kim cương" src={referralCode ? "https://www.youtube.com/embed/-m4Lwj7_GOA" : "https://www.youtube.com/embed/BDyN143ZQ6Q"} allowfullscreen={true}></iframe>
+
           <div className="pl-[20px] pr-[20px] mb-[20px]">
             {referralCode === '' &&  <div className="max-w-[450px] w-full mx-auto alert alert--secondary admonition_LlT9 pl-[20px] pr-[20px]">
               <div className="admonitionHeading_tbUL">
