@@ -103,7 +103,7 @@ const Research = () => {
     getTopViews();
     getTopNew();
     getTopFull();
-    getRatings();
+    getRatings(1, 4);
     // getcollections1();
     // getcollections2();
     // setShowModal(true)

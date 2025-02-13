@@ -759,7 +759,7 @@ class StoryStore {
   getRatings = async (page = 1, pageSize = 20) => {
     try {
       const result = await Api.get({
-        url: "https://uatapi.truyenso1.xyz/data/web/rating/v2/list",
+        url: "/data/web/rating/v2/list",
         params: {
           page,
           pageSize,
