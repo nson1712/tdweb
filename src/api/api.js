@@ -55,9 +55,9 @@ const sendRequest = async ({
   config,
   accessToken = "",
 }) => {
-  accessToken = await getAccessToken();
-  const refreshToken = await getRefreshToken();
-  const guid = await getItem('DEVICE_ID');
+  accessToken = !isServer ? await getAccessToken() : "";
+  const refreshToken = !isServer ? await getRefreshToken() : "";
+  const guid = !isServer ? await getItem('DEVICE_ID') : "";
   return instance({
     url,
     method,
@@ -80,7 +80,7 @@ const sendRequest = async ({
     ...options,
   })
     .then(async(response) => {
-      if (response.data.status && +response.data.status > 300) {
+      if (response?.data?.status && +response?.data?.status > 300) {
         throw {
           response: {
             data: {
@@ -102,7 +102,6 @@ const sendRequest = async ({
       return response.data;
     })
     .catch(async(error) => {
-      console.log('Error: ', error);
       if ((error?.response?.status === 401 || error?.response?.status === 403 || error?.response?.status === 406) && url.includes('/data/chapter/slug')) {
         await removeToken();
         GlobalStore.isLoggedIn = false;

@@ -626,7 +626,7 @@ const StorySummary = () => {
           <ModalComponent
               show={showLoginModal}
               handleClose={(e) => setShowLoginModal(false)}>
-            <ShortLogin description='Vui lòng đăng nhập để mở khoá tất cả các chương đang có của truyện này.' closeModal= {() => setShowLoginModal(false)}/>
+            <ShortLogin description='Đăng nhập 1 chạm để mở khoá tất cả các chương đang có của truyện này.' closeModal= {() => setShowLoginModal(false)}/>
           </ModalComponent>
         }
       </div>

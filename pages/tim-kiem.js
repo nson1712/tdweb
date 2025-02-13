@@ -22,11 +22,10 @@ const Research = ({ canonical }) => {
   }
   return (
     <>
-      <HeaderServer
-        description="Khám phá các thể loại truyện khác nhau như ngôn tình, sủng, ngược, tiên hiệp, kiếm hiệp, đam mỹ. Ngoài ra bạn có thể xem danh sách top các loại truyện mà chung tôi cung cấp sẵn"
-        title="🌟[Đề Cử] Khám phá Truyện Full Độc Đáo | Nền tảng cộng cồng đọc truyện Online Toidoc"
-        canonical={canonical}
-        snipet={addKhamphaJsonLd()}
+      <HeaderServer description = "Khám phá các bộ truyện full được cập nhật liên tục và được nhiều độc giả đánh giá cao. Các thể loại truyện bao gồm như ngôn tình hiện đại, sủng, ngược, tiên hiệp, điền văn, đoản văn, zhihu, đam mỹ."
+                    title = "🌟[Đề Cử] Khám phá Truyện Full Độc Đáo | Nền tảng cộng cồng đọc truyện Online Toidoc"
+                    canonical={canonical}
+                    snipet={addKhamphaJsonLd()}
       />
       <ResearchComponent />
     </>

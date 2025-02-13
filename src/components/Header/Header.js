@@ -141,7 +141,7 @@ const Header = ({ selectedTab }) => {
                   : "/images/author.svg"
               }
               className="w-[28px] mr-[4px]"
-              alt="Liên hệ"
+              alt="Đăng truyện tại Toidoc"
             />
             <p
               className={classNames(
@@ -150,7 +150,7 @@ const Header = ({ selectedTab }) => {
                   && "text-active block"
               )}
             >
-              Tác Giả
+              Đăng truyện
             </p>
           </div>
           {/*<div
@@ -220,7 +220,7 @@ const Header = ({ selectedTab }) => {
         <ModalComponent
             show={showLogin}
             handleClose={(e) => setShowLogin(false)}>
-          <ShortLogin description='Bạn chưa đăng nhập. Hãy 👆 vào lựa chọn đăng nhập dưới để sử dụng tính năng này.' closeModal= {() => setShowLogin(false)}/>
+          <ShortLogin description='Đăng nhập 1 chạm bằng các phương thức dưới đây để sử dụng tính năng này.' closeModal= {() => setShowLogin(false)}/>
         </ModalComponent>
       }
     </div>

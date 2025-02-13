@@ -2196,8 +2196,16 @@ ul>li {
   padding: 10px 5px;
   border-radius: 10px;
   width: 270px;
-  background: linear-gradient(90deg, #79ffb8 0%, #267ada 100%);
-  color: #161515
+  color: #fff;
+  font-size: 16px;
+}
+
+.login-google-bg {
+  background-color: #cb5632;
+}
+
+.login-fb-bg {
+  background-color: #3241cb;
 }
 
 .login-email-button {

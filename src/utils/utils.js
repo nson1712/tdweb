@@ -353,6 +353,22 @@ export const isInAppBrowser = () => {
   return isFacebookApp || isInstagramApp || isLinkedInApp;
 };
 
+export const isCocCoc = async() => {
+  const styles = document.querySelectorAll("style");
+  for (let i = 0; i < styles.length; i++) {
+    if (styles[i].classList.contains("coc-coc-fonts")) {
+      return true;
+    }
+  }
+  
+  if (navigator.userAgentData) {
+    const brands = await navigator.userAgentData.getHighEntropyValues(["brands"]);
+    return brands.brands.some((brand) => brand.brand.toLowerCase().includes("coc coc"));
+  }
+  return false;
+}
+
+
 export const redirectToBrowser = () => {
   if (isInAppBrowser()) {
     const url = window.location.href;
@@ -432,13 +448,55 @@ export const redirectToBrowser = () => {
       //     }
       //   }
       // }
-      toast(
-        "Vui lòng ấn vào nút 3 chấm bên trên rồi chọn mở bằng trình duyệt\nđể có trải nghiệm mượt mà",
-        {
+      // setTimeout(() => {
+      //   window.location.href = `x-web-search://${url}`;
+      // }, 500);
+      try {
+        setTimeout(() => {
+          window.location.href = chromeUrl;
+        }, 100);
+      } catch (e) {
+        
+      }
+
+      try {
+        setTimeout(() => {
+          window.location.href = safari2;
+        }, 100);
+      } catch (e) {
+        
+      }
+
+      setTimeout(() => {
+        toast('Vui lòng ấn vào nút 3 chấm hoặc mũi tên góc dưới màn hình rồi chọn mở bằng safari\nđể có trải nghiệm tốt hơn', {
           type: "error",
           theme: "colored",
-        }
-      );
+          autoClose: 60000,
+          closeOnClick: false,
+        })
+      }, 1000);
+      
+      // setTimeout(() => {
+      //   const fullPath = window.location.pathname + window.location.search; // Lấy toàn bộ đường dẫn
+      //   const encodedPath = encodeURIComponent(fullPath); // Mã hóa URL tránh lỗi ký tự đặc biệt
+      //   const redirectURL = `truyenso1.xyz/redirect.html?path=${encodedPath}`;
+      //   window.location.href = `x-web-search://?"${fullPath}"`;
+      //   // const newWindow = window.open(redirectURL, "_blank");
+      // }, 100);
+      
+
+      // setTimeout(() => {
+      //   toast('window.location.replace', {
+      //     type: "error",
+      //     theme: "colored",
+      //   })
+      //   window.location.replace(url);
+      // }, 500);
+      
+      // toast('Vui lòng ấn vào nút 3 chấm bên trên rồi chọn mở bằng trình duyệt\nđể có trải nghiệm mượt mà', {
+      //   type: "error",
+      //   theme: "colored",
+      // })
     } else {
       try {
         setTimeout(() => {

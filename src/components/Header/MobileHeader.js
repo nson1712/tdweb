@@ -125,7 +125,7 @@ const MobileHeader = ({show}) => {
           <ModalComponent
               show={showLogin}
               handleClose={(e) => setShowLogin(false)}>
-            <ShortLogin description='Bạn chưa đăng nhập. Hãy 👆 vào lựa chọn đăng nhập dưới để sử dụng tính năng này.' closeModal= {() => setShowLogin(false)}/>
+            <ShortLogin description='Đăng nhập 1 chạm bằng các phương thức dưới đây để sử dụng tính năng này.' closeModal= {() => setShowLogin(false)}/>
           </ModalComponent>
         }
     </div>

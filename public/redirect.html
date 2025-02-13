@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đang chuyển hướng...</title>
+    <script>
+        function getQueryParam(param) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(param);
+        }
+
+        // Lấy đường dẫn đã mã hóa từ query string
+        const encodedPath = getQueryParam('path');
+        
+        if (encodedPath) {
+            // Giải mã đường dẫn
+            const originalPath = decodeURIComponent(encodedPath);
+
+            // Chuyển hướng sau 100ms
+            setTimeout(() => {
+                window.location.href = `https://truyenso1.xyz${originalPath}`;
+            }, 100);
+        } else {
+            document.write("<p>Lỗi: Không tìm thấy đường dẫn hợp lệ.</p>");
+        }
+    </script>
+</head>
+<body>
+    <p>Đang chuyển hướng...</p>
+    <p>Nếu bạn không được chuyển hướng, hãy <a id="redirectLink" href="#">nhấn vào đây</a>.</p>
+    <script>
+        document.getElementById("redirectLink").href = `https://truyenso1.xyz${decodeURIComponent(getQueryParam('path'))}`;
+    </script>
+</body>
+</html>
