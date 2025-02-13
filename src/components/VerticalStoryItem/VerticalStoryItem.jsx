@@ -15,11 +15,12 @@ const VerticalStoryItem = ({ title, slug, coverImage }) => {
       {coverImage ? (
         <Image
           loader={imageLoader}
-          className="max-w-[125px] max-h-[235px] rounded-tl-[25px] rounded-bl-[5px] rounded-e-[5px]"
+          className="max-w-[125px] max-h-[235px] rounded-tl-[25px] rounded-bl-[5px] rounded-e-[5px] "
           width={150}
           height={200}
           src={coverImage}
           alt={title}
+          title={title}
         />
       ) : null}
 

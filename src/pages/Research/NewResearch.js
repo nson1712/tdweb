@@ -18,6 +18,8 @@ import Section5 from "./Section5";
 import RatingList from "../../components/RatingList";
 import { commentItem } from "../../data/testData";
 import GlobalStore from "../../stores/GlobalStore";
+import { toJS } from "mobx";
+import Hashtag from "../../components/Hashtag";
 
 let timeout;
 
@@ -62,6 +64,9 @@ const Research = () => {
     ratings,
     getRatings,
 
+    hashtags,
+    getHashtags,
+
     // getcollections1,
     // collections1,
 
@@ -104,6 +109,7 @@ const Research = () => {
     getTopNew();
     getTopFull();
     getRatings();
+    getHashtags();
     // getcollections1();
     // getcollections2();
     // setShowModal(true)
@@ -154,6 +160,8 @@ const Research = () => {
     }
     // setShowModal(false)
   };
+
+  console.log("HASHTAGS: ", hashtags.data)
 
   return (
     <CommonLayout active="HOME">
@@ -218,8 +226,24 @@ const Research = () => {
 
               <Section3 topTrending={topTrending} />
 
-              <div className="block md:hidden bg-[#F5F8FF] p-2 rounded-xl mx-2">
-                <RatingList data={commentItem} />
+              <div className="block md:hidden bg-[#F5F8FF] px-2 py-4 rounded-xl mx-2">
+                <RatingList ratings={ratings} />
+              </div>
+
+              <div>Hashtag nổi bật</div>
+              <div className="hidden md:block px-2">
+                <div className="flex flex-wrap gap-4 justify-center">
+                {hashtags.data?.map((item) => (
+                  <Hashtag key={item.id} hashtag={item.name} />
+                ))}
+                </div>
+              </div>
+              <div className="block md:hidden px-2">
+                <div className="flex flex-wrap gap-4 justify-center">
+                {hashtags.data?.slice(0,10).map((item) => (
+                  <Hashtag key={item.id} hashtag={item.name} />
+                ))}
+                </div>
               </div>
 
               <Section5 topViews={topViews} />

@@ -48,6 +48,8 @@ class StoryStore {
 
   ratings = {};
 
+  hashtags = {};
+
   loadingChapterDetail = false;
 
   isClickAff = false;
@@ -773,6 +775,26 @@ class StoryStore {
       console.log(e);
     }
   };
+
+  getHashtags = async (page = 1, size = 22) => {
+    try {
+      const result = await Api.get({
+        url: "https://uatapi.truyenso1.xyz/data/private/hash-tag/popular",
+        params: {
+          page,
+          size,
+        },
+      });
+
+      runInAction(() => {
+        this.hashtags = result.data;
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 }
+
+  
 
 export default new StoryStore();

@@ -2,7 +2,7 @@ import VerticalStoryItem from "../VerticalStoryItem/VerticalStoryItem";
 
 const HotStories = ({ data }) => {
   return (
-    <div className="grid grid-cols-4 justify-center md:grid-cols-8 md:grid-rows-2 gap-x-2 gap-y-6">
+    <div className="grid grid-cols-4 justify-center md:grid-cols-8 md:grid-rows-2 gap-3">
       {data?.slice(0, 16).map((item, index) => (
         <VerticalStoryItem
           key={index}

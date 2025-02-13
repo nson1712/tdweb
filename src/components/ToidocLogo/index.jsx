@@ -7,7 +7,8 @@ const Logo = () => {
       <Image
         loader={imageLoader}
         src="https://toidoc.vn/images/logo-toidoc.svg"
-        alt="loo"
+        alt="Toidoc"
+        title="Toidoc"
         width={56}
         height={56}
       />

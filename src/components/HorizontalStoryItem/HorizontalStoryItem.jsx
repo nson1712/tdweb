@@ -7,6 +7,7 @@ import StarsRate from "../StarRate";
 import StoryStatus from "../StoryStatus";
 import GoldenTicket from "../GoldenTicket";
 import imageLoader from "../../loader/imageLoader";
+import { getSlugfromSlugGenerate, slugGenerate } from "../../utils/utils";
 
 const HorizontalStoryItem = ({
   title,
@@ -56,20 +57,24 @@ const HorizontalStoryItem = ({
             )}
             src={coverImage}
             alt={title}
+            title={title}
             width={type !== "secondary" && type !== "primary" ? 180 : 50}
             height={type !== "secondary" && type !== "primary" ? 250 : 70}
           />
         ) : null}
       </div>
 
-      <div
-        className={clsx("flex flex-col py-2 ", {
-          "w-full mr-2 gap-y-1.5": type !== "secondary" && type !== "primary",
-          "gap-y-2": type === "secondary",
+      <a
+        href={`/${getSlugfromSlugGenerate(slugGenerate(title))}`}
+        title={title}
+        className={clsx("py-2", {
+          "w-full mr-2 space-y-1.5": type !== "secondary" && type !== "primary",
+          "space-y-2": type === "secondary",
           "self-center": type === "primary",
         })}
       >
         <div
+          // href={`/${getSlugfromSlugGenerate(slugGenerate(title))}`}
           className={clsx("", {
             "font-semibold text-[16px] text-black leading-normal w-full line-clamp-2":
               type !== "secondary" && type !== "primary",
@@ -120,7 +125,7 @@ const HorizontalStoryItem = ({
             <GoldenTicket goldenTicketPercent={goldenTicketPercent} />
           )}
         </div>
-      </div>
+      </a>
     </div>
   );
 };

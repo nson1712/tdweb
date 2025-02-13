@@ -14,7 +14,8 @@ const CategoryItem = ({ thumbnail, name, handleItemClick }) => {
           width={130}
           height={60}
           src={thumbnail}
-          alt="Thể loại"
+          alt={name}
+          title={name}
         />
       ) : null}
       <div className="font-semibold self-center">{name}</div>

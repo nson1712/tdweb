@@ -1,9 +1,11 @@
 import { RightOutlined } from "@ant-design/icons";
-import { calculateCreatedTime } from "../utils/utils";
-import { useRouter } from "next/router";
+import {
+  calculateCreatedTime,
+  getSlugfromSlugGenerate,
+  slugGenerate,
+} from "../utils/utils";
 
 export const useTableOptions = () => {
-  const router = useRouter();
   const newStoryColumns = [
     {
       title: "Tên truyện",
@@ -11,9 +13,13 @@ export const useTableOptions = () => {
       key: "title",
       width: "60%",
       render: (item) => (
-        <div className="font-bold line-clamp-1 cursor-pointer hover:text-blue-500">
+        <a
+          href={`/${getSlugfromSlugGenerate(slugGenerate(item))}`}
+          title={item}
+          className="text-black font-bold line-clamp-1 cursor-pointer"
+        >
           <RightOutlined /> {item}
-        </div>
+        </a>
       ),
     },
     {
