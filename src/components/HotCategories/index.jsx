@@ -3,6 +3,7 @@ import CategoryItem from "../CategoryItem";
 import { DownOutlined } from "@ant-design/icons";
 import { Button } from "antd";
 import ButtonViewAll from "../ButtonViewAll";
+import CategoryIcon from "../../../public/icons/CategoryIcon";
 
 const HotCategories = ({ data }) => {
   const handleViewAll = () => {
@@ -11,7 +12,10 @@ const HotCategories = ({ data }) => {
 
   return (
     <div className="py-2 space-y-4">
-      <div className="text-xl font-bold pt-3 md:pl-6">Thể loại nổi bật</div>
+      <div className="text-lg font-bold pt-3 md:pl-6 flex gap-x-2">
+        <CategoryIcon />
+        Thể loại nổi bật
+      </div>
 
       <div className="flex flex-wrap sm:grid-rows-4 gap-2 rounded-2xl justify-center sm:hidden">
         {data.slice(0, 9).map((item, index) => (

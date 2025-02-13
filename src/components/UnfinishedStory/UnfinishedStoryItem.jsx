@@ -23,7 +23,7 @@ const UnfinishedStoryItem = ({ totalReadingStory, unfinishedStory }) => {
   }, [isLoggedIn]);
   return (
     <Flex vertical className="space-y-4">
-      <div className="text-xl text-black font-bold pt-4">
+      <div className="text-lg text-black font-bold pt-4">
         Danh sách đang đọc
       </div>
       <div className="rounded-[8px] bg-[#FAFAFA] px-2 flex flex-col gap-y-4 pt-3">

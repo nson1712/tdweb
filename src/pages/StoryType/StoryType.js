@@ -8,6 +8,7 @@ import { observer } from "mobx-react";
 import StoryStore from "../../stores/StoryStore";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
+import Link from "next/link";
 
 const data = [
   {
@@ -78,13 +79,14 @@ const StoryType = () => {
                   />
                 )}
                 <div>
-                  <a
-                    className="text-[16px] leading-[16px] font-semibold mb-[8px] main-text"
-                    href={`/the-loai/${item.code}`}
-                    title={`Truyện ${item.name}`}
-                  >
-                    {item.name}
-                  </a>
+                  <Link href={`/the-loai/${item.code}`}>
+                    <a
+                      className="text-[16px] leading-[16px] font-semibold mb-[8px] main-text"
+                      title={`Truyện ${item.name}`}
+                    >
+                      {item.name}
+                    </a>
+                  </Link>
                   <p className="text-[14px] mb-0 label-text">
                     {formatStringToNumber(item.totalStory)} truyện
                   </p>

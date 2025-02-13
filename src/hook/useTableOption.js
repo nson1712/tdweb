@@ -4,6 +4,7 @@ import {
   getSlugfromSlugGenerate,
   slugGenerate,
 } from "../utils/utils";
+import Link from "next/link";
 
 export const useTableOptions = () => {
   const newStoryColumns = [
@@ -13,13 +14,14 @@ export const useTableOptions = () => {
       key: "title",
       width: "60%",
       render: (item) => (
-        <a
-          href={`/${getSlugfromSlugGenerate(slugGenerate(item))}`}
-          title={item}
-          className="text-black font-bold line-clamp-1 cursor-pointer"
-        >
-          <RightOutlined /> {item}
-        </a>
+        <Link href={`/${getSlugfromSlugGenerate(slugGenerate(item))}`}>
+          <a
+            title={item}
+            className="text-black font-bold line-clamp-1 cursor-pointer"
+          >
+            <RightOutlined /> {item}
+          </a>
+        </Link>
       ),
     },
     {

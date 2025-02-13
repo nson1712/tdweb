@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import classNames from "classnames";
-import SlideStories from "../../components/SlideStories/SlideStories";
 import ModalComponent from "../../components/Modal/Modal";
 import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import Header from "../../components/Header/Header";
@@ -16,15 +14,14 @@ import Section3 from "./Section3";
 import Section4 from "./Section4";
 import Section5 from "./Section5";
 import RatingList from "../../components/RatingList";
-import { commentItem } from "../../data/testData";
 import GlobalStore from "../../stores/GlobalStore";
 import { toJS } from "mobx";
 import Hashtag from "../../components/Hashtag";
+import HashtagSection from "./HashtagSection";
 
 let timeout;
 
 const Research = () => {
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [text, setText] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -109,7 +106,7 @@ const Research = () => {
     getTopNew();
     getTopFull();
     getRatings();
-    getHashtags();
+    getHashtags(1, 40);
     // getcollections1();
     // getcollections2();
     // setShowModal(true)
@@ -161,7 +158,7 @@ const Research = () => {
     // setShowModal(false)
   };
 
-  console.log("HASHTAGS: ", hashtags.data)
+  console.log("HASHTAGS: ", hashtags.data);
 
   return (
     <CommonLayout active="HOME">
@@ -230,21 +227,7 @@ const Research = () => {
                 <RatingList ratings={ratings} />
               </div>
 
-              <div>Hashtag nổi bật</div>
-              <div className="hidden md:block px-2">
-                <div className="flex flex-wrap gap-4 justify-center">
-                {hashtags.data?.map((item) => (
-                  <Hashtag key={item.id} hashtag={item.name} />
-                ))}
-                </div>
-              </div>
-              <div className="block md:hidden px-2">
-                <div className="flex flex-wrap gap-4 justify-center">
-                {hashtags.data?.slice(0,10).map((item) => (
-                  <Hashtag key={item.id} hashtag={item.name} />
-                ))}
-                </div>
-              </div>
+              <HashtagSection hashtags={hashtags} />
 
               <Section5 topViews={topViews} />
 

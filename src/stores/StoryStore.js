@@ -12,6 +12,8 @@ class StoryStore {
 
   storyByCategory = {};
 
+  storiesByHashtag = {};
+
   storyDetail = {};
 
   chappers = [];
@@ -293,22 +295,18 @@ class StoryStore {
         },
       });
 
-      runInAction(() => {
-        this.topViews = result.data;
-      });
-
-      // if (page === 1) {
-      //   runInAction(() => {
-      //     this.topViews = result.data;
-      //   });
-      // } else {
-      //   runInAction(() => {
-      //     this.topViews = {
-      //       ...result.data,
-      //       data: [...this.topViews.data, ...result.data.data],
-      //     };
-      //   });
-      // }
+      if (page === 1) {
+        runInAction(() => {
+          this.topViews = result.data;
+        });
+      } else {
+        runInAction(() => {
+          this.topViews = {
+            ...result.data,
+            data: [...this.topViews.data, ...result.data.data],
+          };
+        });
+      }
     } catch (e) {
       console.log(e);
     }
@@ -776,7 +774,7 @@ class StoryStore {
     }
   };
 
-  getHashtags = async (page = 1, size = 22) => {
+  getHashtags = async (page = 1, size = 20) => {
     try {
       const result = await Api.get({
         url: "https://uatapi.truyenso1.xyz/data/private/hash-tag/popular",
@@ -786,15 +784,50 @@ class StoryStore {
         },
       });
 
-      runInAction(() => {
-        this.hashtags = result.data;
+      if (page === 1) {
+        runInAction(() => {
+          this.hashtags = result?.data;
+        });
+      } else {
+        runInAction(() => {
+          this.hashtags = {
+            ...result?.data,
+            data: [...this.hashtags.data, ...result.data?.data],
+          };
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  getStoriesByHashtag = async (page = 1, size = 20, hashtag) => {
+    try {
+      const result = await Api.get({
+        url: "https://uatapi.truyenso1.xyz/data/private/data/story/search-by-hashtag",
+        params: {
+          hashtag,
+          page,
+          size,
+        },
       });
+
+      if (page === 1) {
+        runInAction(() => {
+          this.storiesByHashtag = result?.data;
+        });
+      } else {
+        runInAction(() => {
+          this.storiesByHashtag = {
+            ...result?.data,
+            data: [...this.storiesByHashtag.data, ...result.data?.data],
+          };
+        });
+      }
     } catch (e) {
       console.log(e);
     }
   };
 }
-
-  
 
 export default new StoryStore();
