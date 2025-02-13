@@ -20,7 +20,6 @@ Payment.getInitialProps = async (ctx) => {
   const getDetail = async () => {
     try {
       if (ctx.query.ref) {
-        console.log('ctx.query.ref: ', ctx.query.ref);
         return {
           referralCode: ctx.query.ref,
         };
