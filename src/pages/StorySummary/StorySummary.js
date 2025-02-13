@@ -296,10 +296,10 @@ const StorySummary = () => {
   const handleSetFavorite = async () => {
     if (route.query.storySlug) {
 
-      if (bookmarkIds.indexOf(storyDetail.id) === -1) {
-        await saveBookMark(route.query.storySlug, storyDetail.id)
+      if (bookmarkIds.indexOf(storyDetail?.id) === -1) {
+        await saveBookMark(route.query.storySlug, storyDetail?.id)
       } else {
-        await unBookMark(route.query.storySlug, storyDetail.id)
+        await unBookMark(route.query.storySlug, storyDetail?.id)
       }
 
     }
@@ -375,9 +375,9 @@ const StorySummary = () => {
 
   return (
     <CommonLayout>
-      <div className='hidden md:block'>
+      {/* <div className='hidden md:block'> */}
         <Header />
-      </div>
+      {/* </div> */}
       <div className='max-w-[620px] mx-[auto] pt-[40px] bg-story'>
         <div className={classNames('flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 top-0 z-[99] bg-white mobile-header', scrollOffset > 100 && 'mobile-header-show', `${scrollDirection === 'down' ? 'hide' : 'show-header'}`)}>
           <a className='p-[10px]' title={`Truyện ${storyDetail?.title}`}
@@ -407,7 +407,7 @@ const StorySummary = () => {
         <div style={{'marginTop': '14px'}} dangerouslySetInnerHTML={{__html: `<a id='link-video-header' href='https://toidoc.onelink.me/59bO/d42503wz'> <video autoplay loop muted playsinline><source src='https://media.truyenso1.xyz/ads/top-banner.mp4' type='video/mp4' rel='nofollow'/></video> </a>`}} />
         <div className='h-[200px] relative mb-[20px]'>
           <div className='bg-story-summary' />
-          <img src={storyDetail.coverImage} alt={`Truyện ${storyDetail.title}`} title={storyDetail.title} className='w-full h-[200px] object-cover' />
+          <img src={storyDetail?.thumbnail || storyDetail?.coverImage} alt={`Truyện ${storyDetail?.title}`} title={storyDetail?.title} className='w-full h-[200px] object-cover' />
           <div className='absolute left-0 right-0 bottom-0 top-0 summary-banner z-[2] flex flex-col justify-between px-[20px] pt-[10px] pb-[30px]'>
             <div className='relative flex items-center justify-between'>
               <a className='relative z-[2]' title={`Nền tảng cộng đồng đọc truyện toidoc.vn`}
@@ -421,10 +421,10 @@ const StorySummary = () => {
                 {/* Chi tiết */}
               </p>
               <div className='flex items-center relative z-[2]'>
-                <Button className={classNames('w-[32px] h-[32px] flex items-center justify-center bg-gray-3 rounded-full', bookmarkIds?.indexOf(storyDetail.id) !== -1 && 'bg-active')}
+                <Button className={classNames('w-[32px] h-[32px] flex items-center justify-center bg-gray-3 rounded-full', bookmarkIds?.indexOf(storyDetail?.id) !== -1 && 'bg-active')}
                   onClick={handleSetFavorite}
                 >
-                  <img src={'/images/heart-none.png'} className='w-[24px]' alt={`Lưu truyện ${storyDetail.title}`} />
+                  <img src={'/images/heart-none.png'} className='w-[24px]' alt={`Lưu truyện ${storyDetail?.title}`} />
                 </Button>
                 <a className='w-[32px] h-[32px] flex items-center justify-center bg-gray-3 ml-[8px] rounded-full'
                   onClick={() => {
@@ -448,10 +448,10 @@ const StorySummary = () => {
               </div>
             </div>
             <div className='flex items-start'>
-              <img src={storyDetail.thumbnail || storyDetail.coverImage} alt={`Truyện ${storyDetail.title}`} title={storyDetail.title} className='w-[65px] mr-[12px] rounded-[10px]' />
+              <img src={storyDetail?.thumbnail || storyDetail?.coverImage} alt={`Truyện ${storyDetail?.title}`} title={storyDetail?.title} className='w-[65px] mr-[12px] rounded-[10px]' />
               <div className='flex-1'>
-                <a href={`${storyDetail.slug}`} title={`Truyện ${storyDetail.title}`}>
-                  <h1 className='text-[16px] font-bold text-white mb-0'>{storyDetail.title}</h1>
+                <a href={`${storyDetail?.slug}`} title={`Truyện ${storyDetail?.title}`}>
+                  <h1 className='text-[16px] font-bold text-white mb-0'>{storyDetail?.title}</h1>
                 </a>
                 <h2 className='secondary-the-loai text-[14px] font-medium leading-[17px] mt-[4px] mb-0'>
                   {storyDetail?.categories?.slice(0, 3).map((item, i) => (
@@ -632,6 +632,7 @@ const StorySummary = () => {
       </div>
       {/*<MobileShare showBubble={showBubble} setShowBubble={setShowBubble}/>*/}
       {/*<ChatSupportAutoClose/>*/}
+
     </CommonLayout>
   )
 }

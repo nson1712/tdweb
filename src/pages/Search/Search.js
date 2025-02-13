@@ -75,7 +75,6 @@ const Search = ({hiddenSearch, setShowSearch}) => {
   }
 
   return (
-    <CommonLayout>
     <div>
       <div className='hidden md:block'>
         <Header />
@@ -110,7 +109,7 @@ const Search = ({hiddenSearch, setShowSearch}) => {
         }
 
         {!text && !router.query.tukhoa
-          && <div className='pt-[80px] px-[20px]'>
+          && <div className=' px-[20px]'>
           { recentSearchs?.keywords?.length > 0
             && <>
               <h1 className='text-[16px] font-bold label-text mb-[8px] '>
@@ -140,7 +139,7 @@ const Search = ({hiddenSearch, setShowSearch}) => {
 
           <div className='pt-[0] flex flex-wrap flex-row'>
             {recentSearchs?.stories?.map((item) => (
-              <div className='py-[8px] px-[4px] w-[50%]' key={item.id}>
+              <div className='px-[4px] w-[50%]' key={item.id}>
                 <StoryItem item={item}
                   direction='row'
                   fromSearch={true}
@@ -154,7 +153,7 @@ const Search = ({hiddenSearch, setShowSearch}) => {
         }
 
         {text
-          && <div className='px-[16px] md:pt-0 flex flex-wrap flex-row pt-[80px]'>
+          && <div className='px-[16px] md:pt-0 flex flex-wrap flex-row pt-20'>
           {stories?.list?.map((item) => (
             <div className='py-[8px] px-[4px] w-[50%]' key={item.id}>
             <StoryItem item={item}
@@ -181,7 +180,6 @@ const Search = ({hiddenSearch, setShowSearch}) => {
         
       </div>
     </div>
-    </CommonLayout>
   )
 }
 

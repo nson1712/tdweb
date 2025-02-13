@@ -1,130 +1,136 @@
-import { makeAutoObservable } from 'mobx'
-import GlobalStore from './GlobalStore'
-import * as Api from '../api/api'
-import { decryptData } from '../utils/utils'
-import { getItem } from '../utils/storage'
+import { makeAutoObservable, runInAction } from "mobx";
+import GlobalStore from "./GlobalStore";
+import * as Api from "../api/api";
+import { decryptData } from "../utils/utils";
+import { getItem } from "../utils/storage";
 
 class StoryStore {
+  categories = [];
+  collectionData = [];
 
-  categories = []
-  collectionData = []
+  favouriteCategories = [];
 
-  favouriteCategories = []
+  storyByCategory = {};
 
-  storyByCategory = {}
+  storyDetail = {};
 
-  storyDetail = {}
+  chappers = [];
 
-  chappers = []
+  latestReadingChapter = {};
 
-  latestReadingChapter = {}
+  lastestStory = {};
 
-  lastestStory = {}
+  loadingStories = false;
 
-  loadingStories = false
+  topTrending = {};
+  toidocStories = {};
+  topViews = {};
+  hotStories = [];
+  topNew = {};
+  topFull = {};
 
-  topTrending = {}
-  toidocStories = {}
-  topViews = {}
-  hotStories = []
-  topNew = {}
-  topFull = {}
+  chapterDetail = [];
+  currentChapter = "";
 
-  chapterDetail = []
-  currentChapter = ''
+  bookmark = {};
+  viewings = {};
+  history = {};
 
-  bookmark = {}
-  viewings = {}
-  history = {}
+  bookmarkIds = [];
 
-  bookmarkIds = []
+  recentSearchs = {};
 
-  recentSearchs = {}
+  collections1 = {};
 
-  collections1 = {}
+  collections2 = {};
 
-  collections2 = {}
+  collectionStories = {};
 
-  collectionStories = {}
+  ratings = {};
 
-  loadingChapterDetail = false
+  loadingChapterDetail = false;
 
-  isClickAff = false
+  isClickAff = false;
 
   constructor() {
-    makeAutoObservable(this)
-    this.getBookMark(1, 1000)
+    makeAutoObservable(this);
+    this.getBookMark(1, 1000);
   }
 
   getcollections1 = async () => {
     try {
       const result = await Api.get({
-        url: 'data/private/data/collections?page=1&pageSize=10'
-      })
+        url: "data/private/data/collections?page=1&pageSize=10",
+      });
 
-      this.collections1 = result.data
-    } catch(e) {
-
-    }
-  }
+      runInAction(() => {
+        this.collections1 = result.data;
+      });
+    } catch (e) {}
+  };
 
   getcollections2 = async () => {
     try {
       const result = await Api.get({
-        url: 'data/private/data/collections?page=2&pageSize=10'
-      })
+        url: "data/private/data/collections?page=2&pageSize=10",
+      });
 
-      this.collections2 = result.data
-    } catch(e) {
-
-    }
-  }
+      runInAction(() => {
+        this.collections2 = result.data;
+      });
+    } catch (e) {}
+  };
 
   getRecentSearchs = async () => {
     try {
       const result = await Api.get({
-        url: 'data/private/data/story/search/recent'
-      })
+        url: "data/private/data/story/search/recent",
+      });
 
-      this.recentSearchs = result.data
-    } catch(e) {
-
-    }
-  }
+      runInAction(() => {
+        this.recentSearchs = result.data;
+      });
+    } catch (e) {}
+  };
 
   saveStory = async (storySlug) => {
     try {
       const result = await Api.post({
-        url: 'data/private/data/story/search/save',
+        url: "data/private/data/story/search/save",
         data: {
-          storySlug
-        }
-      })
+          storySlug,
+        },
+      });
 
-      this.recentSearchs = result.data
-    } catch(e) {
-
-    }
-  }
+      runInAction(() => {
+        this.recentSearchs = result.data;
+      });
+    } catch (e) {}
+  };
 
   getChapterDetail = async (storySlug, slug, isLoggedIn) => {
     try {
       this.loadingChapterDetail = true;
-      
+
       const result = await Api.get({
-        url:  isLoggedIn ? '/data/private/data/chapter/detail' : '/data/private/data/chapter/slug',
+        url: isLoggedIn
+          ? "/data/private/data/chapter/detail"
+          : "/data/private/data/chapter/slug",
         params: {
           storySlug,
-          slug
-        }
-      })
+          slug,
+        },
+      });
 
       const contents = result.data?.contents?.map((obj, i) => {
         // Decrypt the `encryptedContent` field
         const decryptedContent = obj.content;
-        let isCanvas = true
+        let isCanvas = true;
         if (result.data?.contents.length > 7) {
-          if (i > (result.data?.contents.length - 3) || i < (result.data?.contents.length - 5)) {
+          if (
+            i > result.data?.contents.length - 3 ||
+            i < result.data?.contents.length - 5
+          ) {
             isCanvas = false;
             decryptedContent = decryptData(obj.content);
           }
@@ -132,255 +138,287 @@ class StoryStore {
           isCanvas = false;
           decryptedContent = decryptData(obj.content);
         }
-    
+
         // Return a new object with the decrypted content
         return {
           ...obj,
           content: decryptedContent, // Add or replace the decrypted content field
-          isCanvas: isCanvas
+          isCanvas: isCanvas,
         };
       });
 
-      this.loadingChapterDetail = false
-      this.chapterDetail = {
-        ...result.data,
-        contents
-      }
+      this.loadingChapterDetail = false;
+      runInAction(() => {
+        this.chapterDetail = {
+          ...result.data,
+          contents,
+        };
+      });
 
       return this.chapterDetail;
-      
-    } catch(e) {
-      console.log(e)
-      this.loadingChapterDetail = false
+    } catch (e) {
+      console.log(e);
+      this.loadingChapterDetail = false;
     }
-  }
+  };
 
-  getStoryPrice = async(storySlug) => {
+  getStoryPrice = async (storySlug) => {
     try {
       const result = await Api.get({
-        url:  '/data/private/data/story/price',
+        url: "/data/private/data/story/price",
         params: {
           slug: storySlug,
-        }
-      })
+        },
+      });
 
-      return result.data
-
-    } catch(e) {
-      console.log(e)
+      return result.data;
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   getReadingLatestChapter = async (storySlug) => {
     try {
       const result = await Api.get({
-        url:  '/data/private/data/story/reading/progress',
+        url: "/data/private/data/story/reading/progress",
         params: {
           storySlug,
-        }
-      })
+        },
+      });
 
-
-      this.latestReadingChapter = result.data
-      return result.data
-
-    } catch(e) {
-      console.log(e)
+      runInAction(() => {
+        this.latestReadingChapter = result.data;
+      });
+      return result.data;
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   getStoryByCollection = async (page = 1, pageSize = 20, slug) => {
     try {
       const result = await Api.get({
-        url: 'data/private/data/collection/detail',
+        url: "data/private/data/collection/detail",
         params: {
           page,
           pageSize,
-          slug
-        }
-      })
+          slug,
+        },
+      });
 
       if (page === 1) {
-        this.collectionStories  = {...result.data, data: result.data.stories}
+        runInAction(() => {
+          this.collectionStories = {
+            ...result.data,
+            data: result.data.stories,
+          };
+        });
       } else {
-        this.collectionStories = {
-          ...result.data,
-          data: [...this.collectionStories.data, ...result.data.stories]
-        }
+        runInAction(() => {
+          this.collectionStories = {
+            ...result.data,
+            data: [...this.collectionStories.data, ...result.data.stories],
+          };
+        });
       }
-
-      
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   getTopTrending = async (page = 1, pageSize = 20) => {
     try {
       const result = await Api.get({
-        url: 'data/private/data/story/trending',
+        url: "data/private/data/story/trending",
         params: {
           page,
-          pageSize
-        }
-      })
+          pageSize,
+        },
+      });
 
       if (page === 1) {
-        this.topTrending  = result.data
+        runInAction(() => {
+          this.topTrending = result.data;
+        });
       } else {
-        this.topTrending = {
-          ...result.data,
-          data: [...this.topTrending.data, ...result.data.data]
-        }
+        runInAction(() => {
+          this.topTrending = {
+            ...result.data,
+            data: [...this.topTrending.data, ...result.data.data],
+          };
+        });
       }
-
-      
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   getToidocStories = async (page = 1, pageSize = 20) => {
     try {
       const result = await Api.get({
-        url: 'data/private/data/story/toidoc',
+        url: "data/private/data/story/toidoc",
         params: {
           page,
-          pageSize
-        }
-      })
+          pageSize,
+        },
+      });
 
       if (page === 1) {
-        this.toidocStories  = result.data
+        runInAction(() => {
+          this.toidocStories = result.data;
+        });
       } else {
-        this.toidocStories = {
-          ...result.data,
-          data: [...this.toidocStories.data, ...result.data.data]
-        }
+        runInAction(() => {
+          this.toidocStories = {
+            ...result.data,
+            data: [...this.toidocStories.data, ...result.data.data],
+          };
+        });
       }
-
-      
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   getTopViews = async (page = 1, pageSize = 20) => {
     try {
       const result = await Api.get({
-        url: 'data/private/data/story/view/top',
+        url: "data/private/data/story/view/top",
         params: {
           page,
           pageSize,
-          key: 'view'
-        }
-      })
+          key: "view",
+        },
+      });
 
-      if (page === 1) {
-        this.topViews  = result.data
-      } else {
-        this.topViews = {
-          ...result.data,
-          data: [...this.topViews.data, ...result.data.data]
-        }
-      }
-    } catch(e) {
-      console.log(e)
+      runInAction(() => {
+        this.topViews = result.data;
+      });
+
+      // if (page === 1) {
+      //   runInAction(() => {
+      //     this.topViews = result.data;
+      //   });
+      // } else {
+      //   runInAction(() => {
+      //     this.topViews = {
+      //       ...result.data,
+      //       data: [...this.topViews.data, ...result.data.data],
+      //     };
+      //   });
+      // }
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   getHotStories = async (page = 1, pageSize = 20) => {
     try {
       const result = await Api.get({
-        url: 'data/private/data/story/hot1',
+        url: "data/private/data/story/hot1",
         params: {
           page,
-          pageSize
-        }
-      })
+          pageSize,
+        },
+      });
       if (page === 1) {
-        this.hotStories  = result.data
+        runInAction(() => {
+          this.hotStories = result.data;
+        });
       } else {
-        this.hotStories = {
-          ...result.data,
-          data: [...this.hotStories.data, ...result.data.data]
-        }
+        runInAction(() => {
+          this.hotStories = {
+            ...result.data,
+            data: [...this.hotStories.data, ...result.data.data],
+          };
+        });
       }
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   getTopNew = async (page = 1, pageSize = 20) => {
     try {
       const result = await Api.get({
-        url: 'data/private/data/story/newest',
+        url: "data/private/data/story/newest",
         params: {
           page,
-          pageSize
-        }
-      })
+          pageSize,
+        },
+      });
 
       if (page === 1) {
-        this.topNew  = result.data
+        runInAction(() => {
+          this.topNew = result.data;
+        });
       } else {
-        this.topNew = {
-          ...result.data,
-          data: [...this.topNew.data, ...result.data.data]
-        }
+        runInAction(() => {
+          this.topNew = {
+            ...result.data,
+            data: [...this.topNew.data, ...result.data.data],
+          };
+        });
       }
-
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   getTopFull = async (page = 1, pageSize = 20) => {
     try {
       const result = await Api.get({
-        url: 'data/private/data/story/fulls',
+        url: "data/private/data/story/fulls",
         params: {
           page,
-          pageSize
-        }
-      })
+          pageSize,
+        },
+      });
 
       if (page === 1) {
-        this.topFull  = result.data
+        runInAction(() => {
+          this.topFull = result.data;
+        });
       } else {
-        this.topFull = {
-          ...result.data,
-          data: [...this.topFull.data, ...result.data.data]
-        }
+        runInAction(() => {
+          this.topFull = {
+            ...result.data,
+            data: [...this.topFull.data, ...result.data.data],
+          };
+        });
       }
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   getCategories = async () => {
     try {
       const result = await Api.get({
-        url: 'data/private/data/categories'
-      })
+        url: "data/private/data/categories",
+      });
 
-      this.categories  = result.data
-    } catch(e) {
-      console.log(e)
+      runInAction(() => {
+        this.categories = result.data;
+      });
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   getFavouriteCategories = async () => {
     try {
       const result = await Api.get({
-        url: '/customer/public/customer/categories'
-      })
+        url: "/customer/public/customer/categories",
+      });
 
-      this.favouriteCategories  = result.data
-    } catch(e) {
-      console.log(e)
+      runInAction(() => {
+        this.favouriteCategories = result.data;
+      });
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   saveFavoriteCategories = async (categoryCodes) => {
     try {
@@ -390,105 +428,116 @@ class StoryStore {
       //     categoryCodes
       //   }
       // })
-
       // this.categories  = result.data
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
-  getStoryByCategory = async (categoryCode, last = undefined, limit = 5, params = {}) => {
+  getStoryByCategory = async (
+    categoryCode,
+    last = undefined,
+    limit = 5,
+    params = {}
+  ) => {
     try {
-      this.loadingStories = true
+      this.loadingStories = true;
       const result = await Api.get({
-        url: 'data/private/data/category/stories1',
+        url: "data/private/data/category/stories1",
         params: {
           categoryCode,
           last,
           limit,
-          ...params
-        }
-      })
-      
+          ...params,
+        },
+      });
+
       if (last === undefined) {
-        this.storyByCategory = {
-          ...this.storyByCategory,
-          [categoryCode]: {
-            ...result.data,
-            data: result.data.list
-          }
-        }
+        runInAction(() => {
+          this.storyByCategory = {
+            ...this.storyByCategory,
+            [categoryCode]: {
+              ...result.data,
+              data: result.data.list,
+            },
+          };
+        });
       } else {
-        this.storyByCategory = {
-          ...this.storyByCategory,
-          [categoryCode]: {
-            ...result.data,
-            data: [...this.storyByCategory[categoryCode]?.data, ...result.data.list]
-          }
-        }
+        runInAction(() => {
+          this.storyByCategory = {
+            ...this.storyByCategory,
+            [categoryCode]: {
+              ...result.data,
+              data: [
+                ...this.storyByCategory[categoryCode]?.data,
+                ...result.data.list,
+              ],
+            },
+          };
+        });
       }
 
-      this.loadingStories = false
-     
-    } catch(e) {
-      console.log(e)
-      this.loadingStories = false
+      this.loadingStories = false;
+    } catch (e) {
+      console.log(e);
+      this.loadingStories = false;
     }
-  }
+  };
 
   getStoryDetail = async (slug) => {
     try {
       if (slug !== this.storyDetail.slug) {
-        this.storyDetail = {}
+        this.storyDetail = {};
       }
       const result = await Api.get({
-        url: 'data/private/data/story/detail',
+        url: "data/private/data/story/detail",
         params: {
-          slug: slug
-        }
-      })
+          slug: slug,
+        },
+      });
 
-      this.storyDetail = result.data
-    } catch(e) {
-      console.log(e)
+      runInAction(() => {
+        runInAction(() => {
+          this.storyDetail = result.data;
+        });
+      });
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   findStories = async (keyword, last, limit) => {
     try {
       const result = await Api.get({
-        url: 'data/private/data/story/search',
+        url: "data/private/data/story/search",
         params: {
           keyword,
           last,
-          limit
-        }
-      })
-
-    } catch(e) {
-      console.log(e)
-    }
-  }
-
-
-  saveLastStory = async(storySlug, chapterSlug) => {
-    try {
-      Api.post({
-        url: '/data/private/data/story/reading/progress',
-        data: {
-          eventName: 'READ_CHAPTER',
-          screenName: 'STORY_CONTENT',
-          eventProperties: {
-            'storySlug': storySlug,
-            'chapterSlug': chapterSlug
-          }
-        }
-      })
-    } catch(e) {
+          limit,
+        },
+      });
+    } catch (e) {
       console.log(e);
     }
+  };
 
-  }
+  saveLastStory = async (storySlug, chapterSlug) => {
+    try {
+      Api.post({
+        url: "/data/private/data/story/reading/progress",
+        data: {
+          eventName: "READ_CHAPTER",
+          screenName: "STORY_CONTENT",
+          eventProperties: {
+            storySlug: storySlug,
+            chapterSlug: chapterSlug,
+          },
+        },
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   getLastStory = async () => {
     try {
@@ -496,13 +545,11 @@ class StoryStore {
       //   url: '/customer/public/story/latest',
       //   hideError: true
       // })
-
       // this.lastestStory = result.data
-
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   saveBookMark = async (slug, storyId) => {
     try {
@@ -512,18 +559,15 @@ class StoryStore {
       //     storySlug: slug
       //   }
       // })
-
       // this.bookmarkIds = [...this.bookmarkIds, storyId]
-
       // toast('Lưu truyện thành công', {
       //   type: "success",
       //   theme: "colored",
       // })
-
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   unBookMark = async (slug, storyId) => {
     try {
@@ -533,18 +577,15 @@ class StoryStore {
       //     storySlug: slug
       //   }
       // })
-
       // this.bookmarkIds = this.bookmarkIds.filter((item) => item !== storyId)
-
       // toast('Huỷ truyện thành công', {
       //   type: "success",
       //   theme: "colored",
       // })
-
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   getBookMark = async (page = 1, pageSize = 10) => {
     try {
@@ -556,7 +597,6 @@ class StoryStore {
       //   },
       //   hideError: true
       // })
-
       // if (page === 1) {
       //   this.bookmark  = result
       // } else {
@@ -565,67 +605,71 @@ class StoryStore {
       //     data: [...this.bookmark.data, ...result.data]
       //   }
       // }
-
       // this.bookmarkIds = result.data.map((item) => item.id)
-
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   getStoryHistory = async (page = 0, size = 100) => {
     try {
       try {
         const result = await Api.get({
-          url: '/data/private/data/customer/reading',
+          url: "/data/private/data/customer/reading",
           params: {
             page,
             size,
-            reading: false
+            reading: false,
           },
-          hideError: true
-        })
-  
+          hideError: true,
+        });
+
         if (page === 0) {
-          this.history  = result?.data
+          runInAction(() => {
+            this.history = result?.data;
+          });
         } else {
-          this.history = {
-            data: [...this.history.data, ...result?.data?.data]
-          }
+          runInAction(() => {
+            this.history = {
+              data: [...this.history.data, ...result?.data?.data],
+            };
+          });
         }
-      } catch(e) {
-        console.log(e)
+      } catch (e) {
+        console.log(e);
       }
-
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
-  getStoryViewings = async(page = 0, size = 100) => {
+  getStoryViewings = async (page = 0, size = 100) => {
     try {
       const result = await Api.get({
-        url: '/data/private/data/customer/reading',
+        url: "/data/private/data/customer/reading",
         params: {
           page,
           size,
-          reading: true
+          reading: true,
         },
-        hideError: true
-      })
+        hideError: true,
+      });
 
-      
       if (page === 0) {
-        this.viewings  = result?.data
+        runInAction(() => {
+          this.viewings = result?.data;
+        });
       } else {
-        this.viewings = {
-          data: [...this.viewings.data, ...result?.data?.data]
-        }
+        runInAction(() => {
+          this.viewings = {
+            data: [...this.viewings.data, ...result?.data?.data],
+          };
+        });
       }
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
   checkCustomerClickAff = async (guid) => {
     return true;
@@ -643,18 +687,17 @@ class StoryStore {
     // } catch(e) {
     //   console.log(e)
     // }
-  }
+  };
 
   saveViewStory = (slug) => {
     Api.post({
-      url: 'data/private/data/view/save',
+      url: "data/private/data/view/save",
       data: {
-        storySlug: slug
+        storySlug: slug,
       },
-      hideError: true
-    })
-  }
-
+      hideError: true,
+    });
+  };
 
   saveCustomerClickBanner = async (code) => {
     // try {
@@ -664,12 +707,11 @@ class StoryStore {
     //       code
     //     }
     //   })
-
     //   this.chappers = result.data
     // } catch(e) {
     //   console.log(e)
     // }
-  }
+  };
 
   recordClickAff = async (deviceId, code) => {
     // try {
@@ -680,38 +722,57 @@ class StoryStore {
     //       productCode: code
     //     }
     //   })
-
     //   this.chappers = result.data
     // } catch(e) {
     //   console.log(e)
     // }
-  }
+  };
 
   getCollections = async (page = 1, size = 20) => {
     try {
       const result = await Api.get({
-        url: 'data/private/data/collections',
+        url: "data/private/data/collections",
         params: {
           page,
-          pageSize: size
+          pageSize: size,
         },
-        hideError: true
-      })
+        hideError: true,
+      });
 
       if (page === 1) {
-        this.collectionData  = result?.data
+        runInAction(() => {
+          this.collectionData = result?.data;
+        });
       } else {
-        this.collectionData = {
-          ...result?.data,
-          data: [...this.collectionData.data, ...result.data?.data]
-        }
+        runInAction(() => {
+          this.collectionData = {
+            ...result?.data,
+            data: [...this.collectionData.data, ...result.data?.data],
+          };
+        });
       }
-
-    } catch(e) {
-      console.log(e)
+    } catch (e) {
+      console.log(e);
     }
-  }
+  };
 
+  getRatings = async (page = 1, pageSize = 20) => {
+    try {
+      const result = await Api.get({
+        url: "https://uatapi.truyenso1.xyz/data/web/rating/v2/list",
+        params: {
+          page,
+          pageSize,
+        },
+      });
+
+      runInAction(() => {
+        this.ratings = result.data;
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 }
 
-export default new StoryStore()
+export default new StoryStore();

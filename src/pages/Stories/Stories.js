@@ -8,7 +8,6 @@ import StoryStore from '../../stores/StoryStore'
 import ModalComponent from '../../components/Modal'
 import classNames from 'classnames'
 import { convertObjectToSearchParams } from '../../utils/utils'
-import Head from 'next/head'
 
 
 const SORTS = [{

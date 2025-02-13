@@ -3,7 +3,7 @@ import { observer } from 'mobx-react'
 import uuid from 'react-uuid';
 import classes from './CommonLayout.module.scss'
 // import Header from '../../components/Header'
-// import Footer from '../../components/Footer'
+import Footer from '../../components/Footer'
 import { Modal } from 'react-bootstrap'
 import GlobalStore from '../../stores/GlobalStore'
 import Confirm from '../../components/Confirm'

@@ -1,8 +1,8 @@
-import React from 'react'
-import ResearchComponent from '../src/pages/Research'
-import HeaderServer from '../src/components/HeaderServer'
+import React from "react";
+import ResearchComponent from "../src/pages/Research";
+import HeaderServer from "../src/components/HeaderServer";
 
-const Research = ({canonical}) => {
+const Research = ({ canonical }) => {
   function addKhamphaJsonLd() {
     return {
       __html: `{
@@ -29,24 +29,22 @@ const Research = ({canonical}) => {
       />
       <ResearchComponent />
     </>
-  )
-}
-
+  );
+};
 
 Research.getInitialProps = async (ctx) => {
   try {
-    let canonical = 'https://toidoc.vn/tim-kiem?tukhoa='
+    let canonical = "https://toidoc.vn/tim-kiem?tukhoa=";
     if (ctx.query.tukhoa) {
-      canonical = canonical + ctx.query.categorySlug
+      canonical = canonical + ctx.query.categorySlug;
     }
-   
+
     return {
       canonical,
-    }
-  } catch(e) {
-    return 'https://toidoc.vn/tim-kiem'
+    };
+  } catch (e) {
+    return "https://toidoc.vn/tim-kiem";
   }
-  
-}
+};
 
-export default Research
+export default Research;

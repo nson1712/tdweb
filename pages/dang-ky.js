@@ -1,8 +1,6 @@
-import React from 'react'
-import RegisterComponent from '../src/pages/Register'
-import HeaderServer from '../src/components/HeaderServer'
-
-
+import React from "react";
+import RegisterComponent from "../src/pages/Register";
+import HeaderServer from "../src/components/HeaderServer";
 
 const Register = () => {
   return (
@@ -10,7 +8,7 @@ const Register = () => {
       <HeaderServer />
       <RegisterComponent />
     </>
-  )
-}
+  );
+};
 
-export default Register
+export default Register;

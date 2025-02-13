@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
-import Head from 'next/head'
-import '../public/styles/styles.css'
-import '@fortawesome/fontawesome-free/css/all.css';
-import 'bootstrap/dist/css/bootstrap.css'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import "slick-carousel/slick/slick.css"; 
+import { useEffect } from "react";
+import Head from "next/head";
+import "../public/styles/styles.css";
+import "@fortawesome/fontawesome-free/css/all.css";
+import "bootstrap/dist/css/bootstrap.css";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'react-circular-progressbar/dist/styles.css';
 import '../public/styles/react-datetime.scss'
@@ -16,7 +16,6 @@ import { redirectToBrowser, isCocCoc } from '../src/utils/utils';
 
 
 export default function App({ Component, pageProps }) {
-
   useEffect(() => {
     // Function to handle text selection
     const handleSelectionChange = () => {
@@ -76,7 +75,7 @@ export default function App({ Component, pageProps }) {
       e.preventDefault();
     };
 
-    // Function to handle key detection
+  //   // Function to handle key detection
     const detectDevTools = (e) => {
       // Detect F12 key
       if (e.key === "F12" || e.keyCode === 123) {
@@ -116,7 +115,6 @@ export default function App({ Component, pageProps }) {
         // Clear the entire document's HTML
         document.documentElement.innerHTML = "";
 
-        // Clear localStorage and sessionStorage
         localStorage.clear();
         sessionStorage.clear();
         console.clear();
@@ -139,7 +137,7 @@ export default function App({ Component, pageProps }) {
     }
 
     checkDevTools();
-    // Add event listener for keydown
+  //   // Add event listener for keydown
     document.addEventListener("keydown", detectDevTools);
     document.addEventListener("contextmenu", handleRightClick);
 
@@ -148,7 +146,7 @@ export default function App({ Component, pageProps }) {
       checkDevTools();
     }, 1000);
 
-    // Cleanup event listener and interval
+  //   // Cleanup event listener and interval
     return () => {
       document.removeEventListener("keydown", detectDevTools);
       clearInterval(interval);
@@ -159,21 +157,22 @@ export default function App({ Component, pageProps }) {
     <>
       <Head>
         <title>Tôi đọc</title>
-        <meta name="viewport" 
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
+        />
         <link rel="icon" href="/favicon.ico" />
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        {/* <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-        <link href="https://fonts.googleapis.com/css2?family=Palatino%20Linotype:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Palatino%20Linotype:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" /> */}
       </Head>
 
-      <GoogleOAuthProvider clientId='195908018380-ehemlqtqp4b7kej9ah7hpglqtjict07r.apps.googleusercontent.com'>
-       <Component {...pageProps} />
+      <GoogleOAuthProvider clientId="195908018380-ehemlqtqp4b7kej9ah7hpglqtjict07r.apps.googleusercontent.com">
+        <Component {...pageProps} />
       </GoogleOAuthProvider>
-      
 
       <ToastContainer />
     </>
-  )
+  );
 }

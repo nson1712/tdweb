@@ -29,7 +29,7 @@ const Header = ({ selectedTab }) => {
 
   return (
     <div className="py-[16px] shadow-header fixed bottom-[0px] md:bottom-auto md:top-0 left-0 right-0 z-[99] border-t-[1px] md:border-t-0 border-color ">
-      <div className="flex items-center max-w-[768px] mx-auto">
+      <div className="flex justify-center max-w-[768px] mx-auto">
         <img
           src="/images/logo-toidoc.svg"
           className="mr-[24px] hidden md:block cursor-pointer"
@@ -39,7 +39,7 @@ const Header = ({ selectedTab }) => {
           alt="logo"
         />
 
-        <div className="flex items-center justify-between px-[24px] md:px-0 w-full md:w-auto">
+        <div className="flex items-center justify-between w-full md:w-auto">
           <div
             className={classNames(
               "menu-header justify-between mx-[2px] px-[20px] h-[40px] rounded-[30px] cursor-pointer",
@@ -198,7 +198,7 @@ const Header = ({ selectedTab }) => {
           </div>
         </div>
 
-        <div className="relative ml-[10px] w-[157px] hidden md:block">
+        <div className="relative mt-2 w-[157px] hidden md:block">
           <input
             className="search h40 border-primary border-width-1"
             placeholder="Tìm kiếm truyện..."
