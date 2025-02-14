@@ -15,8 +15,6 @@ import Section4 from "./Section4";
 import Section5 from "./Section5";
 import RatingList from "../../components/RatingList";
 import GlobalStore from "../../stores/GlobalStore";
-import { toJS } from "mobx";
-import Hashtag from "../../components/Hashtag";
 import HashtagSection from "./HashtagSection";
 
 let timeout;
@@ -157,8 +155,6 @@ const Research = () => {
     }
     // setShowModal(false)
   };
-
-  console.log("HASHTAGS: ", hashtags.data);
 
   return (
     <CommonLayout active="HOME">

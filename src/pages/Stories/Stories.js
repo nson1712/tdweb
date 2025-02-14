@@ -98,8 +98,6 @@ const Stories = () => {
   const [page, setPage] = useState(1);
   const [last, setLast] = useState();
 
-  console.log(route.query);
-
   const {
     storyByCategory,
     getStoryByCategory,
@@ -193,8 +191,6 @@ const Stories = () => {
   }, [
     route.query, topTrending, topViews, hotStories, topFull, topNew, storyByCategory, storiesByHashtag, collectionStories
   ]);
-
-  console.log("TOP FULL: ", toJS(topFull.data));
 
   const title = useMemo(() => {
     if (route.query.categorySlug && data?.data?.length) {

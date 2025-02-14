@@ -10,9 +10,6 @@ let timeout;
 const Hashtags = () => {
   const { hashtags, getHashtags } = StoryStore;
   const [page, setPage] = useState(1);
-  const [last, setLast] = useState();
-
-  console.log("HASHTAGS: ", toJS(hashtags));
 
   useEffect(() => {
     getHashtags(page, 20);
@@ -38,8 +35,6 @@ const Hashtags = () => {
         const windowBottom = windowHeight + window.pageYOffset;
         const isBottom = windowBottom >= docHeight - 600;
 
-        console.log("IS BOTTOM: ", isBottom);
-
         if (isBottom) {
           handleLoadmore();
         }
@@ -55,7 +50,6 @@ const Hashtags = () => {
   const handleLoadmore = () => {
     if (hashtags?.totalPages > page) {
       setPage(page + 1);
-      console.log("CURRENT PAGE: ", page);
     }
   };
 

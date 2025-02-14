@@ -19,8 +19,6 @@ const CommentCardItem = ({
     setIsReadMore(!isReadMore);
   };
 
-  console.log("cmt rate: ", customerRate);
-
   return (
     <div className="flex w-full px-2 py-2 rounded-b-[20px] bg-[#F5F8FF] shadow-md">
       <div className="flex flex-row gap-x-2 ">
