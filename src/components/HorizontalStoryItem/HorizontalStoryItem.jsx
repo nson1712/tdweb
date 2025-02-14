@@ -59,8 +59,8 @@ const HorizontalStoryItem = ({
             src={coverImage}
             alt={title}
             title={title}
-            width={type !== "secondary" && type !== "primary" ? 180 : 50}
-            height={type !== "secondary" && type !== "primary" ? 250 : 70}
+            width={type !== "secondary" && type !== "primary" ? 160 : 50}
+            height={type !== "secondary" && type !== "primary" ? 220 : 70}
           />
         ) : null}
       </div>
@@ -79,11 +79,11 @@ const HorizontalStoryItem = ({
         >
           <div
             className={clsx("", {
-              "font-semibold text-[16px] text-black leading-normal w-full line-clamp-2":
+              "font-[500] text-[16px] text-black leading-normal w-full line-clamp-2":
                 type !== "secondary" && type !== "primary",
               "max-h-10 font-medium text-[14px] text-black line-clamp-1":
                 type === "secondary",
-              "max-h-[42px] font-semibold text-[14px] leading-normal overflow-hidden line-clamp-2":
+              "max-h-[42px] font-[500] text-[14px] leading-normal overflow-hidden line-clamp-2":
                 type === "primary",
             })}
           >

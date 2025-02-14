@@ -17,7 +17,13 @@ import ModalComponent from "../../components/Modal/Modal";
 import HeaderPayment from "./HeaderPayment";
 import GlobalStore from "../../stores/GlobalStore";
 
-const Payment = ({ values, updateProperty, handleTouched, submitForm, referralCode}) => {
+const Payment = ({
+  values,
+  updateProperty,
+  handleTouched,
+  submitForm,
+  referralCode,
+}) => {
   const [loading, setLoading] = useState(false);
   const [cash, setCash] = useState(0);
   const { executeRecaptcha } = useGoogleReCaptcha();
@@ -63,9 +69,9 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm, referralCo
   ];
 
   useEffect(() => {
-    const checkLogin = async() => {
+    const checkLogin = async () => {
       await GlobalStore.checkIsLogin();
-    }
+    };
     checkLogin();
     setPackageValue(null);
     setClickedIndex(null);
@@ -93,14 +99,13 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm, referralCo
         data.token = token;
         data.amount = cash;
         const timestamp = Date.now();
-        if (referralCode === '') {
+        if (referralCode === "") {
           data.requestId = data.customerCode + "_" + timestamp;
         } else {
           data.requestId = referralCode + "_" + timestamp;
-          console.log('referralCode: ', referralCode);
+          console.log("referralCode: ", referralCode);
           data.customerCode = referralCode;
         }
-        
 
         const result = await Api.post({
           url: "/customer/public/customer/deposit/qr",
@@ -144,52 +149,74 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm, referralCo
           <p className="text-[20px] font-bold main-text text-center">
             Web Nạp KC Tự Động Chính Thức của Toidoc
           </p>
+
+          <iframe
+            className="self-center w-full aspect-video mb-4"
+            title="Hướng dẫn nạp kim cương"
+            src={
+              referralCode
+                ? "https://www.youtube.com/embed/-m4Lwj7_GOA?playlist=-m4Lwj7_GOA&loop=1&autoplay=1&mute=1"
+                : "https://www.youtube.com/embed/BDyN143ZQ6Q?playlist=BDyN143ZQ6Q&loop=1&autoplay=1&mute=1"
+            }
+            allowfullscreen
+          />
+
           <div className="pl-[20px] pr-[20px] mb-[20px]">
-            {referralCode === '' &&  <div className="max-w-[450px] w-full mx-auto alert alert--secondary admonition_LlT9 pl-[20px] pr-[20px]">
-              <div className="admonitionHeading_tbUL">
-                <span className="admonitionIcon_kALy w-[20px]">
-                  <svg viewBox="0 0 14 16">
-                    <path
-                      fillRule="evenodd"
-                      d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"
-                    ></path>
-                  </svg>
-                </span>
-                Lưu ý:
+            {referralCode === "" && (
+              <div className="max-w-[450px] w-full mx-auto alert alert--secondary admonition_LlT9 pl-[20px] pr-[20px]">
+                <div className="admonitionHeading_tbUL">
+                  <span className="admonitionIcon_kALy w-[20px]">
+                    <svg viewBox="0 0 14 16">
+                      <path
+                        fillRule="evenodd"
+                        d="M6.3 5.69a.942.942 0 0 1-.28-.7c0-.28.09-.52.28-.7.19-.18.42-.28.7-.28.28 0 .52.09.7.28.18.19.28.42.28.7 0 .28-.09.52-.28.7a1 1 0 0 1-.7.3c-.28 0-.52-.11-.7-.3zM8 7.99c-.02-.25-.11-.48-.31-.69-.2-.19-.42-.3-.69-.31H6c-.27.02-.48.13-.69.31-.2.2-.3.44-.31.69h1v3c.02.27.11.5.31.69.2.2.42.31.69.31h1c.27 0 .48-.11.69-.31.2-.19.3-.42.31-.69H8V7.98v.01zM7 2.3c-3.14 0-5.7 2.54-5.7 5.68 0 3.14 2.56 5.7 5.7 5.7s5.7-2.55 5.7-5.7c0-3.15-2.56-5.69-5.7-5.69v.01zM7 .98c3.86 0 7 3.14 7 7s-3.14 7-7 7-7-3.12-7-7 3.14-7 7-7z"
+                      ></path>
+                    </svg>
+                  </span>
+                  Lưu ý:
+                </div>
+                <div className="admonitionContent_S0QG">
+                  <p>
+                    Mã khách hàng: là mã TD.... được lấy từ màn hình "Tài Khoản"
+                    trên App Toidoc
+                  </p>
+                </div>
+                <a
+                  onClick={(e) => setShowModal(true)}
+                  className="text-[#0693ee] underline"
+                >
+                  Xem hướng dẫn
+                </a>
               </div>
-              <div className="admonitionContent_S0QG">
-                <p>
-                  Mã khách hàng: là mã TD.... được lấy từ màn hình "Tài Khoản"
-                  trên App Toidoc
-                </p>
-              </div>
-              <a
-                onClick={(e) => setShowModal(true)}
-                className="text-[#0693ee] underline"
-              >
-                Xem hướng dẫn
-              </a>
-            </div>}
-            
+            )}
+
             <Form
               onSubmit={submitForm(handleRequestPayment)}
               className="max-w-[450px] w-full mx-auto mt-[20px]"
             >
-              {referralCode !== '' && 
-                <p className='text-[18px]'>
-                  Chào <b className='main-text text-[15px]'>{GlobalStore.profile?.displayName || 'bạn'}</b> <i className='text-[14px]'>(Mã KH: {referralCode})</i>,
+              {referralCode !== "" && (
+                <p className="text-[18px]">
+                  Chào{" "}
+                  <b className="main-text text-[15px]">
+                    {GlobalStore.profile?.displayName || "bạn"}
+                  </b>{" "}
+                  <i className="text-[14px]">(Mã KH: {referralCode})</i>,
                 </p>
-              }
-              {referralCode === '' && <Field
-                name="customerCode"
-                value={values.customerCode}
-                updateProperty={updateProperty}
-                handleTouched={handleTouched}
-                component={InputField}
-                label="1. Copy và Paste mã KH vào ô dưới"
-              />}
+              )}
+              {referralCode === "" && (
+                <Field
+                  name="customerCode"
+                  value={values.customerCode}
+                  updateProperty={updateProperty}
+                  handleTouched={handleTouched}
+                  component={InputField}
+                  label="1. Copy và Paste mã KH vào ô dưới"
+                />
+              )}
               <p className="text-[14px] font-semibold">
-                {referralCode === '' ? '2. Bấm chọn gói nạp bên dưới' : 'Bạn vui lòng bấm chọn gói nạp bên dưới'}
+                {referralCode === ""
+                  ? "2. Bấm chọn gói nạp bên dưới"
+                  : "Bạn vui lòng bấm chọn gói nạp bên dưới"}
               </p>
               {showWarningPackage && (
                 <p className="text-[14px] text-red">
@@ -239,7 +266,7 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm, referralCo
                   </a>
                 )}
                 {hideMorePackage && (
-                  <div className='align-center'>
+                  <div className="align-center">
                     <a
                       onClick={(e) => {
                         setShowMorePackage(!showMorePackage);
@@ -253,12 +280,14 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm, referralCo
                 )}
               </div>
 
-              {cash > 0 && <p className="text-[16px] font-bold">
-                Số tiền bạn cần chuyển là:{" "}
-                <span className="text-[20px] font-bold main-text">
-                  {formatStringToNumber(cash)} VNĐ
-                </span>
-              </p>}
+              {cash > 0 && (
+                <p className="text-[16px] font-bold">
+                  Số tiền bạn cần chuyển là:{" "}
+                  <span className="text-[20px] font-bold main-text">
+                    {formatStringToNumber(cash)} VNĐ
+                  </span>
+                </p>
+              )}
 
               <Button
                 className="btnMain btnSecond"
@@ -267,7 +296,9 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm, referralCo
               >
                 Hiển thị STK, Mã QR chuyển khoản
               </Button>
-              <p className='mt-[8px]'>✅ Kim cương sẽ vào tài khoản ngay sau khi thanh toán thành công</p>
+              <p className="mt-[8px]">
+                ✅ Kim cương sẽ vào tài khoản ngay sau khi thanh toán thành công
+              </p>
               <Button
                 className="btnSecond-Second"
                 onClick={() => {
@@ -281,19 +312,43 @@ const Payment = ({ values, updateProperty, handleTouched, submitForm, referralCo
               >
                 Báo lỗi không nạp được
               </Button>
-              <div className='split-line-dark my-[20px] mx-[20px]'></div>
-              <div style={{display: 'flex', alignItems: 'center'}}>
-                <img src='/images/iconInfo.png' style={{width: '30px', height: '30px', marginRight: '10px'}}/>
-                <p style={{color:'rgb(204 46 73)', margin: 0}}>
-                  <i>Trường hợp bạn ở nước ngoài không tiện chuyển khoản, vui lòng tải <a href='https://toidoc.onelink.me/59bO/d42503wz'>App Toidoc</a> thực hiện purchase in app nhé.</i>
+              <div className="split-line-dark my-[20px] mx-[20px]"></div>
+              <div style={{ display: "flex", alignItems: "center" }}>
+                <img
+                  src="/images/iconInfo.png"
+                  style={{ width: "30px", height: "30px", marginRight: "10px" }}
+                />
+                <p style={{ color: "rgb(204 46 73)", margin: 0 }}>
+                  <i>
+                    Trường hợp bạn ở nước ngoài không tiện chuyển khoản, vui
+                    lòng tải{" "}
+                    <a href="https://toidoc.onelink.me/59bO/d42503wz">
+                      App Toidoc
+                    </a>{" "}
+                    thực hiện purchase in app nhé.
+                  </i>
                 </p>
               </div>
-              <div className='align-center mt-[20px]'>
-                <a href='https://toidoc.onelink.me/59bO/d42503wz'>
-                  <img src='/images/apple-icon-min.png' style={{'float': 'left', 'marginRight': '10px', 'width': '135px'}}/>
+              <div className="align-center mt-[20px]">
+                <a href="https://toidoc.onelink.me/59bO/d42503wz">
+                  <img
+                    src="/images/apple-icon-min.png"
+                    style={{
+                      float: "left",
+                      marginRight: "10px",
+                      width: "135px",
+                    }}
+                  />
                 </a>
-                <a href='https://toidoc.onelink.me/59bO/d42503wz'>
-                  <img src='/images/android-icon-min.png'  style={{'float': 'left', 'marginRight': '10px', 'width': '135px'}}/>
+                <a href="https://toidoc.onelink.me/59bO/d42503wz">
+                  <img
+                    src="/images/android-icon-min.png"
+                    style={{
+                      float: "left",
+                      marginRight: "10px",
+                      width: "135px",
+                    }}
+                  />
                 </a>
               </div>
             </Form>

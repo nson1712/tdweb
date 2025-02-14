@@ -9,7 +9,7 @@ const RatingList = ({ ratings }) => {
       <div className="font-bold text-lg leading-normal flex gap-x-2">
         <CommentIcon /> Đánh giá truyện
       </div>
-      {ratings?.data?.slice(0, 4).map((item, index) => (
+      {ratings?.data?.map((item, index) => (
         <div key={index}>
           <HorizontalStory
             items={[{ ...item.story, id: index }]}

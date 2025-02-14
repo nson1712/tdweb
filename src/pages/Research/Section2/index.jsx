@@ -18,7 +18,7 @@ const Section2 = ({ topNew, ratings }) => {
         <NewStory data={formatNewStories} />
       </div>
 
-      <div className="md:col-span-4 bg-[#F5F8FF] p-2 rounded-xl hidden md:block">
+      <div className="md:col-span-4 bg-[#F5F8FF] p-2 rounded-xl">
         <RatingList ratings={ratings} />
       </div>
     </div>

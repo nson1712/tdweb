@@ -756,13 +756,13 @@ class StoryStore {
     }
   };
 
-  getRatings = async (page = 1, pageSize = 20) => {
+  getRatings = async (page = 1, size = 20) => {
     try {
       const result = await Api.get({
         url: "data/web/rating/v2/list",
         params: {
           page,
-          pageSize,
+          size,
         },
       });
 
