@@ -759,7 +759,7 @@ class StoryStore {
   getRatings = async (page = 1, pageSize = 20) => {
     try {
       const result = await Api.get({
-        url: "https://uatapi.truyenso1.xyz/data/web/rating/v2/list",
+        url: "data/web/rating/v2/list",
         params: {
           page,
           pageSize,
@@ -777,7 +777,7 @@ class StoryStore {
   getHashtags = async (page = 1, size = 20) => {
     try {
       const result = await Api.get({
-        url: "https://uatapi.truyenso1.xyz/data/private/hash-tag/popular",
+        url: "data/private/hash-tag/popular",
         params: {
           page,
           size,
@@ -804,7 +804,7 @@ class StoryStore {
   getStoriesByHashtag = async (page = 1, size = 20, hashtag) => {
     try {
       const result = await Api.get({
-        url: "https://uatapi.truyenso1.xyz/data/private/data/story/search-by-hashtag",
+        url: "data/private/data/story/search-by-hashtag",
         params: {
           hashtag,
           page,

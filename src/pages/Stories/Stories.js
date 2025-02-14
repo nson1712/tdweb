@@ -10,6 +10,7 @@ import classNames from "classnames";
 import { convertObjectToSearchParams } from "../../utils/utils";
 import { hashtag } from "../../data/testData";
 import { toJS } from "mobx";
+import Link from "next/link";
 
 const SORTS = [
   {
@@ -148,30 +149,49 @@ const Stories = () => {
   }, [route.query, page, last]);
 
   const data = useMemo(() => {
-    return (
-      storyByCategory[route.query.categorySlug] ||
-      storiesByHashtag ||
-      collectionStories ||
-      {
-        trending: topTrending,
-        "moi-nhat": topNew,
-        "truyen-full": topFull,
-        "xem-nhieu-nhat": topViews,
-        hot: hotStories,
-        // hashtag: storiesByHashtag,
-      }[route.query.theloai] ||
-      []
-    );
+    // return (
+    //   storyByCategory[route.query.categorySlug] ||
+    //   storiesByHashtag ||
+    //   collectionStories ||
+    //   {
+    //     trending: topTrending,
+    //     "moi-nhat": topNew,
+    //     "truyen-full": topFull,
+    //     "xem-nhieu-nhat": topViews,
+    //     hot: hotStories,
+    //     // hashtag: storiesByHashtag,
+    //   }[route.query.theloai] ||
+    //   []
+    // );
+    if (route.query.categorySlug) {
+      return storyByCategory[route.query.categorySlug]
+    }
+    if (route.query.hashtag) {
+      return storiesByHashtag
+    }
+    if (route.query.collectionSlug) {
+      return collectionStories
+    }
+    if (route.query.theloai) {
+      if (route.query.theloai === 'trending') {
+        return topTrending
+      }
+      if (route.query.theloai === 'moi-nhat') {
+        return topNew
+      }
+      if (route.query.theloai === 'truyen-full') {
+        return topFull
+      }
+      if (route.query.theloai === 'xem-nhieu-nhat') {
+        return topViews
+      }
+      if (route.query.theloai === 'hot') {
+        return hotStories;
+      }
+    }
+    return []
   }, [
-    route.query,
-    topTrending,
-    topViews,
-    hotStories,
-    topFull,
-    topNew,
-    storyByCategory,
-    storiesByHashtag,
-    collectionStories,
+    route.query, topTrending, topViews, hotStories, topFull, topNew, storyByCategory, storiesByHashtag, collectionStories
   ]);
 
   console.log("TOP FULL: ", toJS(topFull.data));
@@ -247,10 +267,10 @@ const Stories = () => {
         <div className="max-w-[768px] mx-[auto] md:pt-[80px] md:bg-white pt-[64px]">
           <div className="flex items-center justify-between fixed md:static top-0 left-0 right-0 bg-white">
             <div className="flex items-center">
+              <Link href="/tim-kiem">
               <a
                 className="p-[20px]"
                 title="Nền tảng cộng đồng đọc truyện online hấp dẫn"
-                href="/tim-kiem"
                 onClick={() => {
                   if (route.query.from === "ads") {
                     Router.push("/tim-kiem");
@@ -265,6 +285,7 @@ const Stories = () => {
                   alt="Nền tảng cộng đồng đọc truyện online hấp dẫn"
                 />
               </a>
+              </Link>
 
               <h1 className="text-[16px] leading-[20px] font-bold main-text mb-0">
                 {title}
