@@ -29,6 +29,7 @@ export const useTableOptions = () => {
       dataIndex: "categories",
       key: "categories",
       width: "25%",
+      responsive: ["sm"],
       render: (item) => (
         <div className="line-clamp-1 text-gray-500 font-medium cursor-pointer">
           {item?.join(", ")}
