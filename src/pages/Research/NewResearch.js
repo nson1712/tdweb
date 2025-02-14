@@ -161,8 +161,8 @@ const Research = () => {
       <div>
         <Header selectedTab={"RESEARCH"} />
         <div className="max-w-[1116px] mx-auto bg-white md:pt-[88px] px-0 md:px-2 space-y-10 pb-20">
-          <div className="pt-4 mt-0 fixed top-0 left-0 right-0 bg-white md:hidden z-[9] flex justify-center">
-            <div className="pb-4 border-b-[1px] border-color flex gap-x-2">
+          <div className="pt-2 mt-0 fixed top-0 left-0 right-0 bg-white md:hidden z-[9] flex justify-center">
+            <div className="pb-2 border-b-[1px] border-color flex gap-x-2">
               <div className="relative float-left">
                 <input
                   className="search border-primary border-width-1 input-search"
