@@ -5,7 +5,7 @@ import TiktokIcon from "../../../public/icons/TiktokIcon";
 import InstagramIcon from "../../../public/icons/InstagramIcon";
 import GooglePlayStoreIcon from "../../../public/icons/GooglePlayStoreIcon";
 import AppStoreIcon from "../../../public/icons/AppStoreIcon";
-import { handleStoreOpen } from "../../utils/utils";
+import { getOS, handleStoreOpen } from "../../utils/utils";
 
 const Footer = () => {
   return (
@@ -19,7 +19,7 @@ const Footer = () => {
                 <div className="text-xs text-slate-500">
                   Tải app và khám phá đầy đủ tính năng
                 </div>
-                <div className="text-md font-bold">Tải xuống ngay</div>
+                <div className="text-md font-bold cursor-pointer" onClick={handleStoreOpen(getOS())}>Tải xuống ngay</div>
               </div>
 
               <div>
