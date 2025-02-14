@@ -1,9 +1,9 @@
-import * as React from "react"
-import { memo } from "react"
+import * as React from "react";
+import { memo } from "react";
 const SvgComponent = (props) => (
   <svg
-  width={30}
-  height={30}
+    width={25}
+    height={25}
     xmlns="http://www.w3.org/2000/svg"
     fillRule="evenodd"
     strokeLinejoin="round"
@@ -25,6 +25,6 @@ const SvgComponent = (props) => (
       d="m434.098 242.466-162.267 93.685-.014-.024-.014.024-108.086-62.403-115.843 66.881a14.4 14.4 0 0 1-19.67-5.27l-7.733-13.393a14.4 14.4 0 0 1 5.271-19.671l137.965-79.655.005-.008.005.003.004-.003.005.008 108.091 62.407 140.149-80.915-21.183-36.691 100.675 15.876-36.589 95.125z"
     />
   </svg>
-)
-const TrendingIcon = memo(SvgComponent)
-export default TrendingIcon
+);
+const TrendingIcon = memo(SvgComponent);
+export default TrendingIcon;

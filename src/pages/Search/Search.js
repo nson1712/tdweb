@@ -153,7 +153,7 @@ const Search = ({hiddenSearch, setShowSearch}) => {
         }
 
         {text
-          && <div className='px-[16px] md:pt-0 flex flex-wrap flex-row pt-20'>
+          && <div className='px-[16px] md:pt-0 flex flex-wrap flex-row pt-20 min-h-svh'>
           {stories?.list?.map((item) => (
             <div className='py-[8px] px-[4px] w-[50%]' key={item.id}>
             <StoryItem item={item}

@@ -1,14 +1,12 @@
-import { useRouter } from "next/router";
+import Link from "next/link";
 
 const ButtonViewAll = ({ className, url }) => {
-  const router = useRouter();
-  const handleViewAll = () => {
-    router.push(`${url}`);
-  };
   return (
-    <button className={className} type="button" onClick={handleViewAll}>
+    <Link href={`${url}`}>
+    <div title={url} className={className}>
       Xem thêm
-    </button>
+    </div>
+    </Link>
   );
 };
 

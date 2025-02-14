@@ -7,6 +7,8 @@ import StarsRate from "../StarRate";
 import StoryStatus from "../StoryStatus";
 import GoldenTicket from "../GoldenTicket";
 import imageLoader from "../../loader/imageLoader";
+import { getSlugfromSlugGenerate, slugGenerate } from "../../utils/utils";
+import Link from "next/link";
 
 const HorizontalStoryItem = ({
   title,
@@ -56,35 +58,40 @@ const HorizontalStoryItem = ({
             )}
             src={coverImage}
             alt={title}
+            title={title}
             width={type !== "secondary" && type !== "primary" ? 160 : 50}
             height={type !== "secondary" && type !== "primary" ? 220 : 70}
           />
         ) : null}
       </div>
 
-      <div
-        className={clsx("flex flex-col py-2 ", {
-          "w-full mr-2 gap-y-1.5": type !== "secondary" && type !== "primary",
-          "gap-y-2": type === "secondary",
-          "self-center": type === "primary",
-        })}
+      <Link
+        href={`/${getSlugfromSlugGenerate(slugGenerate(title))}`}
       >
-        <div
-          className={clsx("", {
-            "font-[500] text-[16px] text-black leading-normal w-full line-clamp-2":
+        <a
+          title={title}
+          className={clsx("py-2", {
+            "w-full mr-2 space-y-1.5":
               type !== "secondary" && type !== "primary",
-            "max-h-10 font-medium text-[14px] text-black line-clamp-1":
-              type === "secondary",
-            "max-h-[42px] font-[500] text-[14px] leading-normal overflow-hidden line-clamp-2":
-              type === "primary",
+            "space-y-2": type === "secondary",
+            "self-center": type === "primary",
           })}
         >
-          {title}
-        </div>
+          <div
+            className={clsx("", {
+              "font-[500] text-[16px] text-black leading-normal w-full line-clamp-2":
+                type !== "secondary" && type !== "primary",
+              "max-h-10 font-medium text-[14px] text-black line-clamp-1":
+                type === "secondary",
+              "max-h-[42px] font-[500] text-[14px] leading-normal overflow-hidden line-clamp-2":
+                type === "primary",
+            })}
+          >
+            {title}
+          </div>
 
-        <div className="whitespace-normal gap-x-1 max-h-fit space-y-2">
-          {tagVisible && (
-            <>
+          <div className="whitespace-normal gap-x-1 max-h-fit space-y-2">
+            {tagVisible && (
               <TagComponent
                 categories={categories}
                 categoriesVisible={categoriesVisible}
@@ -93,34 +100,30 @@ const HorizontalStoryItem = ({
                 totalCategories={totalCategories}
                 totalCategoriesVisible={totalCategoriesVisible}
               />
-            </>
-          )}
-
-          <div
-            className={clsx("flex flex-row gap-x-2.5 ", {
-              "max-h-3.5 self-center":
-                type !== "secondary" && type !== "primary",
-              "w-fit max-h-[22px] py-1": type === "secondary",
-            })}
-          >
-            {starVisible && (
-              <div
-                className={clsx("", {
-                  "mt-1": type === "primary",
-                })}
-              >
-                <StarsRate rate={rate} lightBg={true} />
-              </div>
             )}
-            {viewVisible && <TotalView totalView={totalView || 0} />}
-            {statusVisible && <StoryStatus status={status} lightBg={true} />}
-          </div>
 
-          {goldenTicketVisible && (
-            <GoldenTicket goldenTicketPercent={goldenTicketPercent} />
-          )}
-        </div>
-      </div>
+            <div
+              className={clsx("flex flex-row gap-x-2.5", {
+                "max-h-3.5 self-center":
+                  type !== "secondary" && type !== "primary",
+                "w-fit max-h-[22px] py-1": type === "secondary",
+              })}
+            >
+              {starVisible && (
+                <div className={clsx("", { "mt-1": type === "primary" })}>
+                  <StarsRate rate={rate} lightBg={true} />
+                </div>
+              )}
+              {viewVisible && <TotalView totalView={totalView || 0} />}
+              {statusVisible && <StoryStatus status={status} lightBg={true} />}
+            </div>
+
+            {goldenTicketVisible && (
+              <GoldenTicket goldenTicketPercent={goldenTicketPercent} />
+            )}
+          </div>
+        </a>
+      </Link>
     </div>
   );
 };

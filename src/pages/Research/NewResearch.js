@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import classNames from "classnames";
-import SlideStories from "../../components/SlideStories/SlideStories";
 import ModalComponent from "../../components/Modal/Modal";
 import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import Header from "../../components/Header/Header";
@@ -16,13 +14,12 @@ import Section3 from "./Section3";
 import Section4 from "./Section4";
 import Section5 from "./Section5";
 import RatingList from "../../components/RatingList";
-import { commentItem } from "../../data/testData";
 import GlobalStore from "../../stores/GlobalStore";
+import HashtagSection from "./HashtagSection";
 
 let timeout;
 
 const Research = () => {
-  const [selectedCategory, setSelectedCategory] = useState("");
   const [text, setText] = useState("");
   const [showSearch, setShowSearch] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -61,6 +58,9 @@ const Research = () => {
 
     ratings,
     getRatings,
+
+    hashtags,
+    getHashtags,
 
     // getcollections1,
     // collections1,
@@ -104,6 +104,7 @@ const Research = () => {
     getTopNew();
     getTopFull();
     getRatings(1, 4);
+    getHashtags(1, 40);
     // getcollections1();
     // getcollections2();
     // setShowModal(true)
@@ -218,9 +219,11 @@ const Research = () => {
 
               <Section3 topTrending={topTrending} />
 
-              <div className="block md:hidden bg-[#F5F8FF] p-2 rounded-xl mx-2">
-                <RatingList data={commentItem} />
+              <div className="block md:hidden bg-[#F5F8FF] px-2 py-4 rounded-xl mx-2">
+                <RatingList ratings={ratings} />
               </div>
+
+              <HashtagSection hashtags={hashtags} />
 
               <Section5 topViews={topViews} />
 

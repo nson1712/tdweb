@@ -75,7 +75,7 @@ export default function App({ Component, pageProps }) {
       e.preventDefault();
     };
 
-  //   // Function to handle key detection
+    // Function to handle key detection
     const detectDevTools = (e) => {
       // Detect F12 key
       if (e.key === "F12" || e.keyCode === 123) {
@@ -137,7 +137,7 @@ export default function App({ Component, pageProps }) {
     }
 
     checkDevTools();
-  //   // Add event listener for keydown
+    // Add event listener for keydown
     document.addEventListener("keydown", detectDevTools);
     document.addEventListener("contextmenu", handleRightClick);
 

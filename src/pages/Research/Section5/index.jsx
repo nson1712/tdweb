@@ -1,10 +1,7 @@
-import { useEffect } from "react";
-import StoryStore from "../../../stores/StoryStore";
 import HorizontalStory from "../../../components/HorizontalStoryItem";
 import VerticalStory from "../../../components/VerticalStoryItem";
 import Title from "./title";
 import { useRouter } from "next/router";
-import { observer } from "mobx-react";
 import ButtonViewAll from "../../../components/ButtonViewAll";
 
 const Section5 = ({ topViews }) => {
@@ -12,11 +9,11 @@ const Section5 = ({ topViews }) => {
   const handleViewDetail = (item) => {
     router.push(`/${item.slug}`);
   };
-  console.log("TOP VIEWS: ", topViews);
+
   return (
     <div className="space-y-4 px-2">
       <Title />
-      <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-3 gap-2">
+      <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-3 gap-3">
         {topViews.data?.slice(0, 3).map((item, index) => (
           <HorizontalStory
             key={index}
@@ -39,7 +36,7 @@ const Section5 = ({ topViews }) => {
         ))}
       </div>
       <ButtonViewAll
-        className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2 shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:text-white"
+        className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center me-2 mb-2 shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:text-white cursor-pointer"
         url="/danh-sach-truyen/xem-nhieu-nhat"
       />
     </div>

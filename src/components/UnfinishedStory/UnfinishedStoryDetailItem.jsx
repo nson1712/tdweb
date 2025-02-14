@@ -32,7 +32,8 @@ const UnfinishedStoryDetailItem = ({
               width={35}
               height={45}
               src={coverImage}
-              alt={title || "Unfinish story"}
+              alt={title}
+              title={title}
             />
           ) : (
             <Spin spinning={true} />

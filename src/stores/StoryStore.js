@@ -12,6 +12,8 @@ class StoryStore {
 
   storyByCategory = {};
 
+  storiesByHashtag = {};
+
   storyDetail = {};
 
   chappers = [];
@@ -47,6 +49,8 @@ class StoryStore {
   collectionStories = {};
 
   ratings = {};
+
+  hashtags = {};
 
   loadingChapterDetail = false;
 
@@ -291,22 +295,18 @@ class StoryStore {
         },
       });
 
-      runInAction(() => {
-        this.topViews = result.data;
-      });
-
-      // if (page === 1) {
-      //   runInAction(() => {
-      //     this.topViews = result.data;
-      //   });
-      // } else {
-      //   runInAction(() => {
-      //     this.topViews = {
-      //       ...result.data,
-      //       data: [...this.topViews.data, ...result.data.data],
-      //     };
-      //   });
-      // }
+      if (page === 1) {
+        runInAction(() => {
+          this.topViews = result.data;
+        });
+      } else {
+        runInAction(() => {
+          this.topViews = {
+            ...result.data,
+            data: [...this.topViews.data, ...result.data.data],
+          };
+        });
+      }
     } catch (e) {
       console.log(e);
     }
@@ -756,19 +756,74 @@ class StoryStore {
     }
   };
 
-  getRatings = async (page = 1, pageSize = 20) => {
+  getRatings = async (page = 1, size = 20) => {
     try {
       const result = await Api.get({
-        url: "/data/web/rating/v2/list",
+        url: "data/web/rating/v2/list",
         params: {
           page,
-          pageSize,
+          size,
         },
       });
 
       runInAction(() => {
         this.ratings = result.data;
       });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  getHashtags = async (page = 1, size = 20) => {
+    try {
+      const result = await Api.get({
+        url: "data/private/hash-tag/popular",
+        params: {
+          page,
+          size,
+        },
+      });
+
+      if (page === 1) {
+        runInAction(() => {
+          this.hashtags = result?.data;
+        });
+      } else {
+        runInAction(() => {
+          this.hashtags = {
+            ...result?.data,
+            data: [...this.hashtags.data, ...result.data?.data],
+          };
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  getStoriesByHashtag = async (page = 1, size = 20, hashtag) => {
+    try {
+      const result = await Api.get({
+        url: "data/private/data/story/search-by-hashtag",
+        params: {
+          hashtag,
+          page,
+          size,
+        },
+      });
+
+      if (page === 1) {
+        runInAction(() => {
+          this.storiesByHashtag = result?.data;
+        });
+      } else {
+        runInAction(() => {
+          this.storiesByHashtag = {
+            ...result?.data,
+            data: [...this.storiesByHashtag.data, ...result.data?.data],
+          };
+        });
+      }
     } catch (e) {
       console.log(e);
     }
