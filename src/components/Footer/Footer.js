@@ -19,7 +19,7 @@ const Footer = () => {
                 <div className="text-xs text-slate-500">
                   Tải app và khám phá đầy đủ tính năng
                 </div>
-                <div className="text-md font-bold cursor-pointer" onClick={handleStoreOpen(getOS())}>Tải xuống ngay</div>
+                <div className="text-md font-bold cursor-pointer" onClick={() => handleStoreOpen(getOS())}>Tải xuống ngay</div>
               </div>
 
               <div>
