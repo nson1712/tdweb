@@ -1,9 +1,5 @@
-import HorizontalStory from "../../../components/HorizontalStoryItem";
-import CommentCard from "../../../components/CommentCardItem";
 import NewStory from "../../../components/NewStory";
-import { categories, commentItem } from "../../../data/testData";
 import RatingList from "../../../components/RatingList";
-import { toJS } from "mobx";
 
 const Section2 = ({ topNew, ratings }) => {
 
@@ -18,7 +14,7 @@ const Section2 = ({ topNew, ratings }) => {
         <NewStory data={formatNewStories} />
       </div>
 
-      <div className="md:col-span-4 bg-[#F5F8FF] p-2 rounded-xl">
+      <div className="md:col-span-4 bg-[#F5F8FF] p-2 rounded-xl hidden md:block">
         <RatingList ratings={ratings} />
       </div>
     </div>
