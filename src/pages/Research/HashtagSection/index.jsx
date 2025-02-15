@@ -15,7 +15,7 @@ const HashtagSection = ({ hashtags }) => {
       </div>
       <div className="block md:hidden px-1">
         <div className="flex flex-wrap gap-4 justify-center">
-          {hashtags.data?.slice(0, 14).map((item) => (
+          {hashtags?.data?.slice(0, 14).map((item) => (
             <Hashtag key={item.id} hashtag={item.name} />
           ))}
         </div>

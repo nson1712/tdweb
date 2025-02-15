@@ -76,7 +76,7 @@ const Hashtags = () => {
           </div>
 
           <div className="px-[16px] pt-[64px] md:pt-0 sm:grid sm:grid-cols-3">
-            {hashtags.data?.map((item) => (
+            {hashtags?.data?.map((item) => (
               <div
                 className="py-[16px] border-b-[1px] border-color cursor-pointer flex gap-x-2"
                 key={item.code}

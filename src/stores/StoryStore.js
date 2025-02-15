@@ -792,7 +792,7 @@ class StoryStore {
         runInAction(() => {
           this.hashtags = {
             ...result?.data,
-            data: [...this.hashtags.data, ...result.data?.data],
+            data: [...this.hashtags?.data, ...result.data?.data],
           };
         });
       }
