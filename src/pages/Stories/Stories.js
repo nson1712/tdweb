@@ -162,34 +162,42 @@ const Stories = () => {
     //   []
     // );
     if (route.query.categorySlug) {
-      return storyByCategory[route.query.categorySlug]
+      return storyByCategory[route.query.categorySlug];
     }
     if (route.query.hashtag) {
-      return storiesByHashtag
+      return storiesByHashtag;
     }
     if (route.query.collectionSlug) {
-      return collectionStories
+      return collectionStories;
     }
     if (route.query.theloai) {
-      if (route.query.theloai === 'trending') {
-        return topTrending
+      if (route.query.theloai === "trending") {
+        return topTrending;
       }
-      if (route.query.theloai === 'moi-nhat') {
-        return topNew
+      if (route.query.theloai === "moi-nhat") {
+        return topNew;
       }
-      if (route.query.theloai === 'truyen-full') {
-        return topFull
+      if (route.query.theloai === "truyen-full") {
+        return topFull;
       }
-      if (route.query.theloai === 'xem-nhieu-nhat') {
-        return topViews
+      if (route.query.theloai === "xem-nhieu-nhat") {
+        return topViews;
       }
-      if (route.query.theloai === 'hot') {
+      if (route.query.theloai === "hot") {
         return hotStories;
       }
     }
-    return []
+    return [];
   }, [
-    route.query, topTrending, topViews, hotStories, topFull, topNew, storyByCategory, storiesByHashtag, collectionStories
+    route.query,
+    topTrending,
+    topViews,
+    hotStories,
+    topFull,
+    topNew,
+    storyByCategory,
+    storiesByHashtag,
+    collectionStories,
   ]);
 
   const title = useMemo(() => {
@@ -263,24 +271,24 @@ const Stories = () => {
         <div className="max-w-[768px] mx-[auto] md:pt-[80px] md:bg-white pt-[64px]">
           <div className="flex items-center justify-between fixed md:static top-0 left-0 right-0 bg-white">
             <div className="flex items-center">
-              <Link href="/tim-kiem">
-              <a
-                className="p-[20px]"
-                title="Nền tảng cộng đồng đọc truyện online hấp dẫn"
-                onClick={() => {
-                  if (route.query.from === "ads") {
-                    Router.push("/tim-kiem");
-                  } else {
-                    Router.back();
-                  }
-                }}
-              >
-                <img
-                  src="/images/arrow-left.svg"
-                  className="w-[24px]"
-                  alt="Nền tảng cộng đồng đọc truyện online hấp dẫn"
-                />
-              </a>
+              <Link href="/tim-kiem" passHref>
+                <a
+                  className="p-[20px]"
+                  title="Nền tảng cộng đồng đọc truyện online hấp dẫn"
+                  onClick={() => {
+                    if (route.query.from === "ads") {
+                      Router.push("/tim-kiem");
+                    } else {
+                      Router.back();
+                    }
+                  }}
+                >
+                  <img
+                    src="/images/arrow-left.svg"
+                    className="w-[24px]"
+                    alt="Nền tảng cộng đồng đọc truyện online hấp dẫn"
+                  />
+                </a>
               </Link>
 
               <h1 className="text-[16px] leading-[20px] font-bold main-text mb-0">
@@ -288,20 +296,21 @@ const Stories = () => {
               </h1>
             </div>
 
-            <a
-              className="w-[32px] h-[32px] flex items-center justify-center gray-bg rounded-full mr-[20px]"
-              title="Tìm kiếm truyện full hay, truyện ngôn tình, tiên hiệp, kiếm hiệp"
-              // onClick={() => {
-              //   Router.push(`/tim-kiem-truyen`)
-              // }}
-              href="/tim-kiem-truyen"
-            >
-              <img
-                src="/images/ic_search.svg"
-                className="w-[24px]"
-                alt="Tìm kiếm truyện full hay, truyện ngôn tình, tiên hiệp, kiếm hiệp"
-              />
-            </a>
+            <Link href="/tim-kiem-truyen" passHref>
+              <a
+                className="w-[32px] h-[32px] flex items-center justify-center gray-bg rounded-full mr-[20px]"
+                title="Tìm kiếm truyện full hay, truyện ngôn tình, tiên hiệp, kiếm hiệp"
+                // onClick={() => {
+                //   Router.push(`/tim-kiem-truyen`)
+                // }}
+              >
+                <img
+                  src="/images/ic_search.svg"
+                  className="w-[24px]"
+                  alt="Tìm kiếm truyện full hay, truyện ngôn tình, tiên hiệp, kiếm hiệp"
+                />
+              </a>
+            </Link>
           </div>
           {route.query.categorySlug && (
             <div className="flex items-center justify-between py-[15px] px-[20px] border-t-[1px] border-color border-b-[1px]">

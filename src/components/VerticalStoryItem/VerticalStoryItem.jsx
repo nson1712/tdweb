@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const VerticalStoryItem = ({ title, slug, coverImage }) => {
   return (
-    <Link href={`${slug}`}>
+    <Link href={`${slug}`} passHref>
       <a
         title={title}
         className="max-w-fit flex flex-col gap-y-2 cursor-pointer hover:translate-y-[-5%] transition delay-75"

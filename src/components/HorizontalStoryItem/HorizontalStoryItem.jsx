@@ -67,6 +67,7 @@ const HorizontalStoryItem = ({
 
       <Link
         href={`/${getSlugfromSlugGenerate(slugGenerate(title))}`}
+        passHref
       >
         <a
           title={title}

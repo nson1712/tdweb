@@ -9,14 +9,9 @@ import { useRouter } from "next/router";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import GlobalStore from "../../stores/GlobalStore";
 import { observer } from "mobx-react";
+import Link from "next/link";
 
 const UnfinishedStoryItem = ({ totalReadingStory, unfinishedStory }) => {
-  const router = useRouter();
-  const handleContinueReading = () => {
-    router.replace(
-      `${unfinishedStory.storySlug}/${unfinishedStory.chapterSlug}`
-    );
-  };
   const { isLoggedIn, checkIsLogin } = GlobalStore;
   useEffect(() => {
     checkIsLogin();
@@ -45,13 +40,17 @@ const UnfinishedStoryItem = ({ totalReadingStory, unfinishedStory }) => {
               chapterSlug={unfinishedStory.chapterSlug}
             />
 
-            <button
-              type="button"
-              className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-base p-2.5 text-center me-2 mb-2 shadow-md"
-              onClick={handleContinueReading}
+            <Link
+              href={`${unfinishedStory.storySlug}/${unfinishedStory.chapterSlug}`}
+              title={unfinishedStory.title}
+              passHref
             >
-              Đọc tiếp <ArrowRightOutlined />
-            </button>
+              <a>
+              <div className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-base p-2.5 text-center me-2 mb-2 shadow-md hover:text-black cursor-pointer">
+                Đọc tiếp <ArrowRightOutlined />
+              </div>
+              </a>
+            </Link>
           </>
         )}
 

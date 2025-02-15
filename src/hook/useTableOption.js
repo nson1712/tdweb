@@ -14,7 +14,7 @@ export const useTableOptions = () => {
       key: "title",
       width: "60%",
       render: (item) => (
-        <Link href={`/${getSlugfromSlugGenerate(slugGenerate(item))}`}>
+        <Link href={`/${getSlugfromSlugGenerate(slugGenerate(item))}`} passHref>
           <a
             title={item}
             className="text-black font-bold line-clamp-1 cursor-pointer"

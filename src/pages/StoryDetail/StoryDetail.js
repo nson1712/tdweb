@@ -19,6 +19,7 @@ import Question from './Question';
 import OpenInAppInfo from './OpenInAppInfo'
 import OpenChapterInfo from './OpenChapterInfo'
 import ContentDisplay from './ContentDisplay';
+import Link from 'next/link';
 
 const StoryDetail = ({chapterTitle, storyTitle}) => {
   const [showBubble, setShowBubble] = useState('up');
@@ -416,11 +417,17 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
         <div className='max-w-[768px] md:bg-white'>
         {!isMobile && 
           <div className={`align-center border-b-[1px] border-color px-[5px] py-[10px] ${isMobile && 'hidden'}`} style={{backgroundColor: '#f0f0f0', color: '#5C95C6', fontWeight: '600', fontFamily: 'sans-serif'}}>
-            <a href='/tim-kiem'>Trang khám phá</a>
+            <Link href='/tim-kiem' passHref>
+            <a>Trang khám phá</a>
+            </Link>
             <img className='h-[20px] mx-[10px]' src='/images/arrowright.png'/>
-            <a href={`/${storyDetail?.slug}`}>{storyDetail?.title}</a>
+            <Link href={`/${storyDetail?.slug}`} passHref>
+            <a title={storyDetail?.title}>{storyDetail?.title}</a>
+            </Link>
             <img className='h-[20px] mx-[10px]' src='/images/arrowright.png'/>
-            <a href={`/${storyDetail?.slug}/${route.query.chapterSlug}`}>{chapterTitle}</a>
+            <Link href={`/${storyDetail?.slug}/${route.query.chapterSlug}`} passHref>
+            <a title={chapterTitle}>{chapterTitle}</a>
+            </Link>
           </div>
         }
         {isMobile && <div className={`flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 bg-story`}>
@@ -432,17 +439,23 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
             <img src='/images/arrow-left.svg' className='w-[35px]' alt={`Quay lại truyện ${storyDetail?.title}`}/>
           </a>
 
-          <a href={`/${storyDetail?.slug}`} title={`Truyện ${storyDetail?.title}`}>
+          <Link href={`/${storyDetail?.slug}`} passHref>
+          <a title={`Truyện ${storyDetail?.title}`}>
             <h1 className='text-[20px] leading-[24px] font-bold main-text mb-0 line-clamp-1'>
               {storyDetail?.title}
             </h1>
           </a>
-          <a className='w-[68px] p-[10px] md:hidden ml-[5px]' title={`Trang chủ Toidoc`} href='/'>
+          </Link>
+          <Link href='/' passHref>
+          <a className='w-[68px] p-[10px] md:hidden ml-[5px]' title={`Trang chủ Toidoc`} >
             <img src='/images/main-home.png' className='w-[24px]' alt={`Trang chủ Toidoc`}/>
           </a>
-          <a className='w-[68px] p-[10px] md:hidden' title={`Bìa truyện ${storyDetail?.title}`} href={`/${storyDetail?.slug}`}>
+          </Link>
+          <Link href={`/${storyDetail?.slug}`} passHref>
+          <a className='w-[68px] p-[10px] md:hidden' title={`Bìa truyện ${storyDetail?.title}`} >
             <img src='/images/icon-book-open.png' className='w-[24px]' alt={`Danh sách chương truyện ${storyDetail?.title}`}/>
           </a>
+          </Link>
           <a className='w-[68px] p-[10px] md:hidden' title={`Danh sách chương truyện ${storyDetail?.title}`}
             onClick={() => {
               handleShowChapterList()
@@ -453,9 +466,11 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
         </div>}
         <div className='story-content px-[20px]'>
           <div>
-            <a href={`/${currentChapter?.storySlug}/${currentChapter?.chapterSlug}`} title={`${storyDetail?.title} - ${chapterTitle}`}>
+            <Link href={`/${currentChapter?.storySlug}/${currentChapter?.chapterSlug}`} passHref>
+            <a title={`${storyDetail?.title} - ${chapterTitle}`}>
               <h2 className='text-[20px] font-bold secondary-text mt-[16px] chapter-title'>{chapterTitle}</h2>
             </a>
+            </Link>
       
             <div className='text-[20px] leading-[32px]  breakword'>
               {allowOpenWeb ? 
@@ -494,8 +509,8 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
 
               {currentChapter && 
                 <div className='navigation-buttons'>
-                  {currentChapter?.previous && <a className='back-button' href={`/${storyDetail?.slug}/${currentChapter?.previous}`}>{'< Chương trước'}</a>}
-                  {currentChapter?.next && <a className='next-button' href={`/${storyDetail?.slug}/${currentChapter?.next}`}>{'Chương tiếp >'}</a>}
+                  {currentChapter?.previous && <Link href={`/${storyDetail?.slug}/${currentChapter?.previous}`}><a className='back-button'>{'< Chương trước'}</a></Link>}
+                  {currentChapter?.next && <Link href={`/${storyDetail?.slug}/${currentChapter?.next}`}><a className='next-button'>{'Chương tiếp >'}</a></Link>}
                 </div>
               }
             </div>
@@ -542,7 +557,7 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
               <p className='mt-[50px] px-[20px]' dangerouslySetInnerHTML={{ __html: `Hiện bạn có tổng <strong><span style='color:rgb(212, 39, 4); font-size: 20px'>${availableCash?.balance}</span></strong> kim cương, không đủ để mở chương này. Bạn hãy nạp thêm nhé` }} />
               <p className='px-[20px]' dangerouslySetInnerHTML={{ __html: `Mở toàn bộ truyện này hết tổng <strong><span style='color:rgb(212, 39, 4); font-size: 20px'>${formatStringToNumber(fullPriceStory?.remained)}</span></strong> kim cương.`}} />
               <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                <a href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}`} className='button-deposit-diamond'>Nạp kim cương</a>
+                <Link href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}`} passHref><a className='button-deposit-diamond'>Nạp kim cương</a></Link>
               </div>
             </div>
           </ModalComponent>

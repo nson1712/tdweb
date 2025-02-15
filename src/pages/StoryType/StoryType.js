@@ -79,7 +79,7 @@ const StoryType = () => {
                   />
                 )}
                 <div>
-                  <Link href={`/the-loai/${item.code}`}>
+                  <Link href={`/the-loai/${item.code}`} passHref>
                     <a
                       className="text-[16px] leading-[16px] font-semibold mb-[8px] main-text"
                       title={`Truyện ${item.name}`}

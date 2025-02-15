@@ -56,6 +56,7 @@ const StoryItem = ({
           href={`${
             chapterSlug ? `/${item.slug}/${chapterSlug}` : `/${item.slug}`
           }`}
+          passHref
         >
           <a title={`Truyện ${item.title}`}>
             <img
@@ -87,6 +88,7 @@ const StoryItem = ({
             href={`${
               chapterSlug ? `/${item.slug}/${chapterSlug}` : `/${item.slug}`
             }`}
+            passHref
           >
             <a
               className={classNames(
@@ -163,6 +165,7 @@ const StoryItem = ({
                     e.preventDefault();
                     e.stopPropagation();
                   }}
+                  passHref
                 >
                   <a
                     className="secondary-text text-[12px] font-medium leading-[16px] mt-[4px] mb-0 mr-[6px]"

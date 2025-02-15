@@ -24,26 +24,22 @@ const Profile = () => {
   const { balance, getBalance } = ProfileStore;
 
   const [selfProfile, setSelfProfile] = useState({});
-  const [activeTab, setActiveTab] = useState(0); // Tab mặc định là 0
-  const [isLoading, setIsLoading] = useState(true); // Trạng thái loading
+  const [activeTab, setActiveTab] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
       const isLoggedIn = await GlobalStore.checkIsLogin();
       if (!isLoggedIn) {
-        console.log("Go to dang nhap: ", GlobalStore.isLoggedIn);
         Router.push("/dang-nhap");
       }
-
       if (isLoggedIn) {
-        console.log("Start fetch data");
         await getStoryViewings();
         await getStoryHistory();
         await getBalance();
         setIsLoading(false);
       }
     };
-
     fetchData();
   }, []);
 
@@ -53,9 +49,7 @@ const Profile = () => {
 
   const handleLogout = async () => {
     try {
-      await Api.deleteData({
-        url: "/customer/customer/logout",
-      });
+      await Api.deleteData({ url: "/customer/customer/logout" });
       removeToken();
       GlobalStore.profile = {};
       GlobalStore.isLoggedIn = false;
@@ -65,220 +59,79 @@ const Profile = () => {
     }
   };
 
-  // Render dữ liệu theo tab được chọn
   const renderContent = () => {
-    if (isLoading) {
-      return <p>Loading...</p>;
-    }
-    if (activeTab === 0 && viewings?.data && viewings?.data.length <= 0) {
+    if (isLoading) return <p>Loading...</p>;
+    if (activeTab === 0 && viewings?.data?.length <= 0)
       return <p>Hiện tại bạn chưa lưu lịch sử đọc truyện...</p>;
-    }
-
-    if (activeTab === 1 && history?.data && history?.data.length <= 0) {
+    if (activeTab === 1 && history?.data?.length <= 0)
       return <p>Hiện tại bạn chưa lưu lịch sử đọc truyện...</p>;
-    }
 
-    if (activeTab === 0) {
-      return (
-        <ul>
-          {viewings?.data?.map((item, index) => (
-            <div
-              style={{
-                display: "flex",
-                borderBottom: "1px solid #ededed",
-                marginBottom: "10px",
-              }}
-              key={index}
-            >
+    return (
+      <ul>
+        {(activeTab === 0 ? viewings?.data : history?.data)?.map(
+          (item, index) => (
+            <div className="flex border-b border-gray-200 mb-2" key={index}>
               <StoryItem item={item?.story} direction="row" fromSearch={true} />
             </div>
-          ))}
-        </ul>
-      );
-    }
-
-    if (activeTab === 1) {
-      return (
-        <ul>
-          {history?.data?.map((item, index) => (
-            <div
-              style={{
-                display: "flex",
-                borderBottom: "1px solid #ededed",
-                marginBottom: "10px",
-              }}
-              key={index}
-            >
-              <StoryItem item={item?.story} direction="row" fromSearch={true} />
-            </div>
-          ))}
-        </ul>
-      );
-    }
+          )
+        )}
+      </ul>
+    );
   };
 
   const renderDiamond = () => {
-    return (
-      <>
-        {balance?.map((item, i) => (
-          <div key={i} style={{ marginRight: "20px" }}>
-            <div>
-              <p className="float-left mr-[5px]">{item?.denomination?.name}</p>
-              <img src={item?.denomination?.icon} className="w-[20px]" />
-            </div>
-            <p className="text-center font-bold">
-              {formatStringToNumber(item?.balance)}
-            </p>
-          </div>
-        ))}
-      </>
-    );
-  };
-
-  const renderPremiumInfo = () => {
-    return (
-      <div
-        style={{
-          padding: "5px",
-          borderRadius: "50px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          backgroundImage:
-            "linear-gradient(to right, #FDDC73 0%, #FFF3D3 50%, #E5A93F 100%)",
-          width: "73px",
-          height: "20px",
-        }}
-      >
-        <img
-          src="/images/queen-crown.png"
-          className="w-[15px] h-[15px] fl mr-[5px]"
-        />
-        <p
-          style={{
-            margin: 0,
-            fontSize: "10px",
-            fontWeight: "bold",
-            color: "#A54426",
-          }}
-        >
-          Premium
-        </p>
+    return balance?.map((item, i) => (
+      <div key={i} className="mr-5 text-center space-y-1">
+        <div className="flex items-center">
+          <div className="mr-1">{item?.denomination?.name}</div>
+          <img src={item?.denomination?.icon} className="w-5" />
+        </div>
+        <p className="font-bold">{formatStringToNumber(item?.balance)}</p>
       </div>
-    );
+    ));
   };
 
   return (
     <CommonLayout>
       <div>
         <Header selectedTab={"PROFILE"} />
-        <div className="relative pb-[100px] max-w-[768px] mx-auto bg-white md:pt-[88px] px-0 md:px-[8px] items-center justify-center h-[90vh]">
+        <div className="relative pb-24 max-w-[768px] mx-auto bg-white min-h-screen px-2 md:pt-24">
           <div className="flex justify-center mt-4">
-            <div className="flex">
+            <div className="flex gap-x-4">
               <img
                 src={GlobalStore.profile?.avatar || selfProfile?.avatar}
-                className="w-[80px] h-[80px] bd-radius-80"
+                className="w-20 h-20 rounded-full"
               />
-              <div className="ml-[10px]">
-                <div className="flex items-center">
-                  <p className="font-bold text-[18px] my-[0px] mr-[10px]">
-                    {GlobalStore.profile?.displayName ||
-                      selfProfile?.displayName}
-                  </p>
-                  {GlobalStore.profile?.subscription?.tier === "PREMIUM" &&
-                    renderPremiumInfo()}
+              <div>
+                <p className="font-bold text-lg mb-0">{GlobalStore.profile?.displayName || selfProfile?.displayName}</p>
+                <div className="flex items-center mt-1">
+                  <p className="font-bold text-lg">({GlobalStore.profile?.referralCode || selfProfile?.referralCode})</p>
+                  <CopyButton text={GlobalStore.profile?.referralCode || selfProfile?.referralCode} />
                 </div>
-
-                <div className="flex">
-                  <p className="font-bold text-[18px] my-[0px]">
-                    {`(${GlobalStore.profile?.referralCode})` ||
-                      selfProfile?.referralCode}
-                  </p>
-                  <CopyButton
-                    text={
-                      GlobalStore.profile?.referralCode ||
-                      selfProfile?.referralCode
-                    }
-                  />
-                </div>
-                <p className="account-title mt-[5px]">
-                  {GlobalStore.profile?.authorDate
-                    ? "Tác giả"
-                    : GlobalStore.profile?.translatorDate
-                    ? "Dịch giả"
-                    : "Độc giả"}
-                </p>
-                <div className="flex items-center">
-                  <a
-                    onClick={() => handleLogout()}
-                    className="fl"
-                    style={{ color: "#c6625c" }}
-                  >
-                    Đăng xuất
-                  </a>
-                  <img src="/images/logout.png" className="w-[30px] ml-[5px]" />
+                <p className="mt-1 account-title">{GlobalStore.profile?.authorDate ? "Tác giả" : GlobalStore.profile?.translatorDate ? "Dịch giả" : "Độc giả"}</p>
+                <div className="flex items-center mt-1 text-red-600 cursor-pointer" onClick={handleLogout}>
+                  <span>Đăng xuất</span>
+                  <img src="/images/logout.png" className="w-7 ml-2" />
                 </div>
               </div>
             </div>
           </div>
-
-          <div>
-            <div className="flex items-center justify-center mt-4">
-              {renderDiamond()}
-            </div>
-          </div>
-
-          <div
-          className="flex items-center justify-center mt-3"
-          >
-            <a
-              className="button-open-chapter"
-              href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}`}
-            >
-              Nạp Kim Cương
-            </a>
-          </div>
-          <div className="flex my-4" >
-            <div
+          <div className="flex items-center justify-center mt-4">{renderDiamond()}</div>
+          <div className="flex my-4 justify-center border-b">
+            <button
               onClick={() => setActiveTab(0)}
-              style={{
-                padding: "10px 20px",
-                border: "none",
-                borderBottom: activeTab === 0 ? "2px solid #5C95C6" : "none",
-                cursor: "pointer",
-                position: "relative",
-                color: activeTab === 0 ? "#5C95C6" : "#000000",
-                fontWeight: activeTab === 0 ? "bold" : "normal",
-              }}
+              className={`py-2 px-5 font-semibold ${activeTab === 0 ? "border-b-2 border-blue-500 text-blue-500" : "text-black"}`}
             >
               DS Đang Đọc
-            </div>
-            <div
+            </button>
+            <button
               onClick={() => setActiveTab(1)}
-              style={{
-                padding: "10px 20px",
-                border: "none",
-                borderBottom: activeTab === 1 ? "2px solid #5C95C6" : "none",
-                cursor: "pointer",
-                position: "relative",
-                color: activeTab === 1 ? "#5C95C6" : "#000000",
-                fontWeight: activeTab === 1 ? "bold" : "normal",
-              }}
+              className={`py-2 px-5 font-semibold ${activeTab === 1 ? "border-b-2 border-blue-500 text-blue-500" : "text-black"}`}
             >
               DS Đọc Xong
-            </div>
+            </button>
           </div>
-
-          {/* Content */}
-          <div
-            style={{
-              margin: "20px 15px",
-              backgroundColor: "#fff",
-              paddingBottom: "70px",
-            }}
-          >
-            {renderContent()}
-          </div>
+          <div className="bg-white pb-20">{renderContent()}</div>
         </div>
       </div>
     </CommonLayout>
@@ -286,3 +139,4 @@ const Profile = () => {
 };
 
 export default Profile;
+
