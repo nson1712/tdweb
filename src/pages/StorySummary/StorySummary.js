@@ -455,7 +455,7 @@ const StorySummary = () => {
                 </a>
                 <h2 className='secondary-the-loai text-[14px] font-medium leading-[17px] mt-[4px] mb-0'>
                   {storyDetail?.categories?.slice(0, 3).map((item, i) => (
-                    <Link href={`/the-loai/${item.code}`} key={item.code}>
+                    <Link href={`/the-loai/${item.code}`} key={item.code} passHref>
                       <a className='secondary-the-loai text-[14px] font-medium leading-[17px] mt-[4px] mb-0 mr-[6px] underline'>
                         {item.name}{i !== 2 && ','}
                       </a>

@@ -6,6 +6,7 @@ import Router, { useRouter } from "next/router";
 import GlobalStore from "../../stores/GlobalStore";
 import ShortLogin from "../../pages/Login/ShortLogin";
 import ModalComponent from "../Modal/Modal";
+import Link from "next/link";
 
 let timeout;
 
@@ -21,81 +22,80 @@ const Header = ({ selectedTab }) => {
 
   const handleButtonAccount = () => {
     if (GlobalStore.isLoggedIn) {
-      Router.push('/tai-khoan')
+      Router.push("/tai-khoan");
     } else {
       setShowLogin(true);
     }
-  }
+  };
 
   return (
     <div className="py-[16px] shadow-header fixed bottom-[0px] md:bottom-auto md:top-0 left-0 right-0 z-[99] border-t-[1px] md:border-t-0 border-color ">
       <div className="flex justify-center max-w-[768px] mx-auto">
-        <img
-          src="/images/logo-toidoc.svg"
-          className="mr-[24px] hidden md:block cursor-pointer"
-          onClick={() => {
-            Router.push("/");
-          }}
-          alt="logo"
-        />
+        <Link href="/" passHref>
+          <a>
+            <img
+              src="/images/logo-toidoc.svg"
+              className="mr-[24px] hidden md:block cursor-pointer"
+              alt="logo"
+            />
+          </a>
+        </Link>
 
         <div className="flex items-center justify-between w-full md:w-auto">
-          <div
-            className={classNames(
-              "menu-header justify-between mx-[2px] px-[20px] h-[40px] rounded-[30px] cursor-pointer",
-              selectedTab === "HOME" && "bg-tab-active text-active"
-            )}
-            onClick={() => {
-              Router.push("/");
-            }}
-          >
-            <img
-              src={
-                selectedTab === "HOME"
-                  ? "/images/star-home-active.svg"
-                  : "/images/star-home.svg"
-              }
-              className="w-[24px] mr-[4px]"
-              alt="home"
-            />
-            <p
+          <Link href="/" passHref>
+            <a
               className={classNames(
-                "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
-                selectedTab === "HOME" && "text-active block"
+                "menu-header justify-between mx-[2px] px-[20px] h-[40px] rounded-[30px] cursor-pointer",
+                selectedTab === "HOME" && "bg-tab-active text-active"
               )}
             >
-              Toidoc
-            </p>
-          </div>
-          <div
-            className={classNames(
-              "menu-header mx-[2px] px-[20px] py-[8px] h-[45px] rounded-[30px] cursor-pointer",
-              selectedTab === "RESEARCH" && "bg-tab-active text-active"
-            )}
-            onClick={() => {
-              Router.push("/tim-kiem");
-            }}
-          >
-            <img
-              src={
-                selectedTab === "RESEARCH"
-                  ? "/images/search-loupe-active.svg"
-                  : "/images/search-loupe.svg"
-              }
-              className="w-[24px] mr-[4px]"
-              alt="search"
-            />
-            <p
+              <img
+                src={
+                  selectedTab === "HOME"
+                    ? "/images/star-home-active.svg"
+                    : "/images/star-home.svg"
+                }
+                className="w-[24px] mr-[4px]"
+                alt="home"
+              />
+              <p
+                className={classNames(
+                  "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
+                  selectedTab === "HOME" && "text-active block"
+                )}
+              >
+                Toidoc
+              </p>
+            </a>
+          </Link>
+
+          <Link href="/tim-kiem" passHref>
+            <a
               className={classNames(
-                "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
-                selectedTab === "RESEARCH"
-                  && "text-active block"
-                //   : "hidden md:block"
+                "menu-header mx-[2px] px-[20px] py-[8px] h-[45px] rounded-[30px] cursor-pointer",
+                selectedTab === "RESEARCH" && "bg-tab-active text-active"
               )}
             >
-              Khám phá
-            </p>
-          </div>
+              <img
+                src={
+                  selectedTab === "RESEARCH"
+                    ? "/images/search-loupe-active.svg"
+                    : "/images/search-loupe.svg"
+                }
+                className="w-[24px] mr-[4px]"
+                alt="search"
+              />
+              <p
+                className={classNames(
+                  "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
+                  selectedTab === "RESEARCH" && "text-active block"
+                  //   : "hidden md:block"
+                )}
+              >
+                Khám phá
+              </p>
+            </a>
+          </Link>
           {/*<div
             className={classNames(
               "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
@@ -131,7 +131,7 @@ const Header = ({ selectedTab }) => {
               selectedTab === "AUTHOR" && "bg-tab-active text-active"
             )}
             onClick={() => {
-              window.open('https://tacgia.toidoc.vn', '_blank')
+              window.open("https://tacgia.toidoc.vn", "_blank");
             }}
           >
             <img
@@ -146,8 +146,7 @@ const Header = ({ selectedTab }) => {
             <p
               className={classNames(
                 "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
-                selectedTab === "AUTHOR"
-                  && "text-active block"
+                selectedTab === "AUTHOR" && "text-active block"
               )}
             >
               Đăng truyện
@@ -182,7 +181,7 @@ const Header = ({ selectedTab }) => {
               Liên hệ
             </p>
           </div>*/}
-          <div className={classNames('menu-header mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer',
+          {/* <div className={classNames('menu-header mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer',
             selectedTab === 'PROFILE' && 'bg-tab-active text-active'
           )}
           onClick={() => handleButtonAccount()}
@@ -195,7 +194,42 @@ const Header = ({ selectedTab }) => {
             )}>
               {GlobalStore?.isLoggedIn ? 'Tài khoản' : 'Đăng nhập'}
             </p>
-          </div>
+          </div> */}
+
+          <Link href={GlobalStore.isLoggedIn ? "/tai-khoan" : "#"} passHref>
+            <a
+              className={classNames(
+                "menu-header mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
+                selectedTab === "PROFILE" && "bg-tab-active text-active"
+              )}
+              onClick={(e) => {
+                if (!GlobalStore.isLoggedIn) {
+                  e.preventDefault();
+                  setShowLogin(true);
+                }
+              }}
+            >
+              <img
+                src={
+                  GlobalStore?.profile?.avatar
+                    ? GlobalStore?.profile?.avatar
+                    : selectedTab === "PROFILE"
+                    ? "/images/user-active.svg"
+                    : "/images/user.svg"
+                }
+                className="w-[24px] mr-[4px] bd-radius-24"
+                alt="user"
+              />
+              <p
+                className={classNames(
+                  "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
+                  selectedTab === "PROFILE" && "text-active block"
+                )}
+              >
+                {GlobalStore?.isLoggedIn ? "Tài khoản" : "Đăng nhập"}
+              </p>
+            </a>
+          </Link>
         </div>
 
         <div className="relative mt-2 w-[157px] hidden md:block">
@@ -216,13 +250,17 @@ const Header = ({ selectedTab }) => {
         </div>
       </div>
 
-      {showLogin && 
+      {showLogin && (
         <ModalComponent
-            show={showLogin}
-            handleClose={(e) => setShowLogin(false)}>
-          <ShortLogin description='Đăng nhập 1 chạm bằng các phương thức dưới đây để sử dụng tính năng này.' closeModal= {() => setShowLogin(false)}/>
+          show={showLogin}
+          handleClose={(e) => setShowLogin(false)}
+        >
+          <ShortLogin
+            description="Đăng nhập 1 chạm bằng các phương thức dưới đây để sử dụng tính năng này."
+            closeModal={() => setShowLogin(false)}
+          />
         </ModalComponent>
-      }
+      )}
     </div>
   );
 };

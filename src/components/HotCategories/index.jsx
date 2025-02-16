@@ -15,9 +15,10 @@ const HotCategories = ({ data }) => {
         {data.slice(0, 9).map((item, index) => (
           <CategoryItem
             key={index}
-            handleItemClick={() => Router.push(`/the-loai/${item.code}`)}
+            // handleItemClick={() => Router.push(`/the-loai/${item.code}`)}
             name={item.name}
             thumbnail={item.image}
+            code={item.code}
           />
         ))}
       </div>
@@ -26,9 +27,10 @@ const HotCategories = ({ data }) => {
         {data.slice(0, 15).map((item, index) => (
           <CategoryItem
             key={index}
-            handleItemClick={() => Router.push(`/the-loai/${item.code}`)}
+            // handleItemClick={() => Router.push(`/the-loai/${item.code}`)}
             name={item.name}
             thumbnail={item.image}
+            code={item.code}
           />
         ))}
       </div>
