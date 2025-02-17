@@ -46,7 +46,7 @@ const UnfinishedStoryItem = ({ totalReadingStory, unfinishedStory }) => {
               passHref
             >
               <a>
-              <div className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-base p-2.5 text-center me-2 mb-2 shadow-md hover:text-black cursor-pointer">
+              <div className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-base p-2.5 text-center shadow-md hover:text-black cursor-pointer">
                 Đọc tiếp <ArrowRightOutlined />
               </div>
               </a>
@@ -54,14 +54,14 @@ const UnfinishedStoryItem = ({ totalReadingStory, unfinishedStory }) => {
           </>
         )}
 
-        <div className="flex flex-row gap-x-2 cursor-pointer ml-3">
-          <div className="flex flex-col gap-y-1 ">
+        <div className="sm:flex sm:flex-col md:flex-row gap-x-2 cursor-pointer hidden ml-3">
+          <div className="space-y-1">
             <p className="text-[#707070] text-sm leading-normal font-medium">
               Tải app và khám phá đầy đủ tính năng
             </p>
             <button
               type="button"
-              className="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-base p-2.5 text-center me-2 mb-2 shadow-md"
+              className="w-full text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-base p-2.5 text-center shadow-md"
               onClick={() => handleStoreOpen(getOS())}
             >
               Tải App Ngay
