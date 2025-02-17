@@ -1,16 +1,18 @@
-const { default: Link } = require("next/link");
+import Link from "next/link";
 
 const withCustomLink = (WrapComponent) => {
   return ({ item, pathname, query, ...props }) => (
+    console.log("PATH NAME: ", pathname),
     <Link
       href={{
         pathname: pathname,
         query: query,
       }}
+      passHref
     >
-      <div className="cursor-pointer">
+      <a className="cursor-pointer" title={item.title}>
         <WrapComponent item={item} {...props} />
-      </div>
+      </a>
     </Link>
   );
 };

@@ -21,7 +21,7 @@ const SelectType = () => {
     if (selectedCategories?.length > 0) {
       await saveFavoriteCategories(selectedCategories)
       localStorage.setItem('SELECTED_CATEGORIES', selectedCategories?.join(','))
-      Router.push('/')
+      Router.push('/tim-kiem')
     }
     
   }

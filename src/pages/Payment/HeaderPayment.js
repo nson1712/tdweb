@@ -7,7 +7,7 @@ const HeaderPayment = () => {
       <div>
         <img src='/images/logo-toidoc.svg' className='mr-[24px] md:block cursor-pointer w-[50px] fl'
           onClick={() => {
-            Router.push('/')
+            Router.push('/tim-kiem')
           }}
           alt='logo'
         />

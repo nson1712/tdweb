@@ -79,7 +79,7 @@ const Blog = () => {
 
   return (
     <CommonLayout>
-      <Header selectedTab={"LIBRARY"} />
+      <Header selectedTab={"BLOG"} />
       <div className="relative pb-[100px] max-w-[768px] mx-auto bg-white pt-4 px-0 sm:mt-20 md:px-[8px] min-h-[100vh]">
         <UnderLineTitle title="Bài đăng mới nhất" />
         <List
@@ -95,7 +95,7 @@ const Blog = () => {
                     <BlogImageLink
                       item={item}
                       className="w-36 sm:w-52 md:w-60"
-                      pathname={`blog/${item.slug}`}
+                      pathname={`blog-truyen-full/${item.slug}`}
                       query={{ id: item.id }}
                     />
                   }
@@ -103,7 +103,7 @@ const Blog = () => {
                     <BlogTitleLink
                       item={item}
                       className="line-clamp-3 text-md sm:text-base font-[500] sm:font-semibold hover:text-blue-600 text-black"
-                      pathname={`blog/${item.slug}`}
+                      pathname={`blog-truyen-full/${item.slug}`}
                       query={{ id: item.id }}
                     />
                   }

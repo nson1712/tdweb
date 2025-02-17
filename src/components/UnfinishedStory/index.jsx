@@ -6,7 +6,6 @@ const UnfinishedStory = ({ items }) => {
       {items.map((item) => (
         <UnfinishedStoryItem
           key={item.id}
-          totalReadingStory={item.totalReadingStory}
           unfinishedStory={item.unfinishedStory}
         />
       ))}

@@ -14,7 +14,7 @@ const Author = () => {
             <div >
               <img src='/images/logo-toidoc.svg' className='mr-[24px]'
                 onClick={() => {
-                  Router.push('/')
+                  Router.push('/tim-kiem')
                 }}
                 alt='logo'
               />
