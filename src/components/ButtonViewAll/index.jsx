@@ -3,9 +3,9 @@ import Link from "next/link";
 const ButtonViewAll = ({ className, url }) => {
   return (
     <Link href={`${url}`}>
-      <div title={url} className={className}>
+      <a title={url} className={className}>
         Xem thêm
-      </div>
+      </a>
     </Link>
   );
 };

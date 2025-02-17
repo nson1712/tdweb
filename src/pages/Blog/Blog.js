@@ -95,7 +95,7 @@ const Blog = () => {
                     <BlogImageLink
                       item={item}
                       className="w-36 sm:w-52 md:w-60"
-                      pathname={`blog/${item.slug}`}
+                      pathname={`blog-truyen-full/${item.slug}`}
                       query={{ id: item.id }}
                     />
                   }
@@ -103,7 +103,7 @@ const Blog = () => {
                     <BlogTitleLink
                       item={item}
                       className="line-clamp-3 text-md sm:text-base font-[500] sm:font-semibold hover:text-blue-600 text-black"
-                      pathname={`blog/${item.slug}`}
+                      pathname={`blog-truyen-full/${item.slug}`}
                       query={{ id: item.id }}
                     />
                   }

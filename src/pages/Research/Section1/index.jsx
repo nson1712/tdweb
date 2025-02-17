@@ -7,7 +7,6 @@ const Section1 = ({ viewings, categories }) => {
       <UnfinishedStory
         items={[
           {
-            totalReadingStory: viewings ? viewings.totalElements : 0,
             unfinishedStory: {
               readingPercent: viewings?.data?.[0].readingPercent,
               title: viewings?.data?.[0].story.title,

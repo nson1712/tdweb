@@ -62,7 +62,7 @@ const StoryType = () => {
             <div className="w-[68px]" />
           </div>
 
-          <div className="px-[16px] pt-[64px] md:pt-0 sm:grid sm:grid-cols-2">
+          <div className="px-[16px] pt-[64px] md:pt-0 grid grid-cols-2 gap-x-2">
             {categories.map((item) => (
               <div
                 className="py-[16px] border-b-[1px] border-color cursor-pointer flex gap-x-2"
@@ -81,13 +81,13 @@ const StoryType = () => {
                 <div>
                   <Link href={`/the-loai/${item.code}`} passHref>
                     <a
-                      className="text-[16px] leading-[16px] font-semibold mb-[8px] main-text"
+                      className="text-xs sm:text-base leading-[16px] font-semibold mb-[8px] main-text"
                       title={`Truyện ${item.name}`}
                     >
                       {item.name}
                     </a>
                   </Link>
-                  <p className="text-[14px] mb-0 label-text">
+                  <p className="text-xs sm:text-[14px] mb-0 label-text">
                     {formatStringToNumber(item.totalStory)} truyện
                   </p>
                 </div>

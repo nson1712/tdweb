@@ -213,11 +213,16 @@ const Research = () => {
             </div>
           ) : (
             <>
+              <div className="block md:hidden">
+                <Section3 topTrending={topTrending} />
+              </div>
               <Section1 viewings={viewings} categories={categories} />
 
               <Section2 topNew={topNew} ratings={ratings} />
 
-              <Section3 topTrending={topTrending} />
+              <div className="hidden md:block">
+                <Section3 topTrending={topTrending} />
+              </div>
 
               <div className="block md:hidden bg-[#F5F8FF] px-2 py-4 rounded-xl mx-2">
                 <RatingList ratings={ratings} />
