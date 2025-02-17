@@ -36,13 +36,13 @@ const Header = ({ selectedTab }) => {
             <img
               src="/images/logo-toidoc.svg"
               className="mr-[24px] hidden md:block cursor-pointer"
-              alt="logo"
+              alt="Trang chủ truyện full Toidoc"
             />
           </a>
         </Link>
 
         <div className="flex items-center justify-between w-full md:w-auto">
-          <Link href="/de-cu-truyen-full" passHref>
+          {/*<Link href="/de-cu-truyen-full" passHref>
             <a
               className={classNames(
                 "menu-header justify-between mx-[2px] px-[20px] h-[40px] rounded-[30px] cursor-pointer",
@@ -67,7 +67,7 @@ const Header = ({ selectedTab }) => {
                 Toidoc
               </p>
             </a>
-          </Link>
+          </Link>*/}
 
           <Link href="/tim-kiem" passHref>
             <a
@@ -83,7 +83,7 @@ const Header = ({ selectedTab }) => {
                     : "/images/search-loupe.svg"
                 }
                 className="w-[24px] mr-[4px]"
-                alt="search"
+                alt="Khám phá danh sách truyện full"
               />
               <p
                 className={classNames(
@@ -96,7 +96,61 @@ const Header = ({ selectedTab }) => {
               </p>
             </a>
           </Link>
-          {/*<div
+          <Link href="/the-loai" passHref>
+            <a
+              className={classNames(
+                "menu-header mx-[2px] px-[20px] py-[8px] h-[45px] rounded-[30px] cursor-pointer",
+                selectedTab === "STORY_TYPE" && "bg-tab-active text-active"
+              )}
+            >
+              <img
+                src={
+                  selectedTab === "STORY_TYPE"
+                    ? "/images/story-type-active.svg"
+                    : "/images/story-type.svg"
+                }
+                className="w-[24px] mr-[4px]"
+                alt="Thể loại truyện full"
+              />
+              <p
+                className={classNames(
+                  "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
+                  selectedTab === "STORY_TYPE" && "text-active block"
+                  //   : "hidden md:block"
+                )}
+              >
+                Thể loại
+              </p>
+            </a>
+          </Link>
+          <Link href="/blog-truyen-full" passHref>
+            <a
+              className={classNames(
+                "menu-header mx-[2px] px-[20px] py-[8px] h-[45px] rounded-[30px] cursor-pointer",
+                selectedTab === "BLOG" && "bg-tab-active text-active"
+              )}
+            >
+              <img
+                src={
+                  selectedTab === "BLOG"
+                    ? "/images/blog-active.svg"
+                    : "/images/blog.svg"
+                }
+                className="w-[24px] mr-[4px]"
+                alt="Blog truyện"
+              />
+              <p
+                className={classNames(
+                  "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
+                  selectedTab === "BLOG" && "text-active block"
+                  //   : "hidden md:block"
+                )}
+              >
+                Blog truyện
+              </p>
+            </a>
+          </Link>
+         {/*<div
             className={classNames(
               "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
               selectedTab === "LIBRARY" && "bg-tab-active text-active"
@@ -125,7 +179,7 @@ const Header = ({ selectedTab }) => {
               Blog
             </p>
           </div>*/}
-          <div
+          {/*<div
             className={classNames(
               "menu-header mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
               selectedTab === "AUTHOR" && "bg-tab-active text-active"
@@ -151,7 +205,7 @@ const Header = ({ selectedTab }) => {
             >
               Đăng truyện
             </p>
-          </div>
+          </div>*/}
           {/*<div
             className={classNames(
               "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
@@ -218,7 +272,7 @@ const Header = ({ selectedTab }) => {
                     : "/images/user.svg"
                 }
                 className="w-[24px] mr-[4px] bd-radius-24"
-                alt="user"
+                alt="Tài khoản cá nhân"
               />
               <p
                 className={classNames(

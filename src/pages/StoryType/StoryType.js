@@ -43,7 +43,7 @@ const StoryType = () => {
   return (
     <CommonLayout>
       <div>
-        <Header />
+        <Header selectedTab={'STORY_TYPE'}/>
         <div className="max-w-[768px] mx-[auto] md:pt-[80px] md:bg-white pb-64">
           <div className="flex items-center justify-between fixed md:static top-0 left-0 right-0 bg-white">
             <a

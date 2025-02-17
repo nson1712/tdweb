@@ -63,11 +63,11 @@ const Footer = () => {
             <div><p>|</p></div>
             <div>
               <a
-                href="/the-loai"
+                href="https://tacgia.toidoc.vn"
                 title="Danh sách thể loại truyện full"
                 className="text-white text-underline text-md"
               >
-                Thể loại
+                Đăng truyện
               </a>
             </div>
             <div><p>|</p></div>

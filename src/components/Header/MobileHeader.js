@@ -4,6 +4,7 @@ import Router from 'next/router'
 import GlobalStore from '../../stores/GlobalStore'
 import ShortLogin from '../../pages/Login/ShortLogin'
 import ModalComponent from '../Modal/Modal'
+import Link from 'next/link'
 
 const MobileHeader = ({show}) => {
   const ref = useRef(null)
