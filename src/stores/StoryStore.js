@@ -338,7 +338,7 @@ class StoryStore {
     }
   };
 
-  getTopNew = async (page = 1, pageSize = 20) => {
+  getTopNew = async (page = 0, pageSize = 20) => {
     try {
       const result = await Api.get({
         url: "data/private/data/story/newest",
@@ -348,7 +348,7 @@ class StoryStore {
         },
       });
 
-      if (page === 1) {
+      if (page === 0) {
         runInAction(() => {
           this.topNew = result.data;
         });
