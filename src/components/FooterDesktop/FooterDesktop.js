@@ -6,7 +6,7 @@ const FooterDesktop = () => {
       <div>
         <img src='/images/logo-toidoc.svg' className='mr-[24px] hidden md:block cursor-pointer w-[50px] fl'
           onClick={() => {
-            Router.push('/')
+            Router.push('/tim-kiem')
           }}
           alt='logo'
         />

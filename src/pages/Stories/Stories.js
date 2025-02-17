@@ -209,6 +209,7 @@ const Stories = () => {
       }`;
     }
     if (route.query.collectionSlug) return collectionStories?.name;
+    if (route.query.hashtag) return `# ${route.query.hashtag}`;
     return (
       {
         trending: "Danh sách truyện trending",

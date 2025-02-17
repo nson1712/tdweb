@@ -446,7 +446,7 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
             </h1>
           </a>
           </Link>
-          <Link href='/' passHref>
+          <Link href='/tim-kiem' passHref>
           <a className='w-[68px] p-[10px] md:hidden ml-[5px]' title={`Trang chủ Toidoc`} >
             <img src='/images/main-home.png' className='w-[24px]' alt={`Trang chủ Toidoc`}/>
           </a>

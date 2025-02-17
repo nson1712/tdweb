@@ -53,7 +53,7 @@ const Profile = () => {
       removeToken();
       GlobalStore.profile = {};
       GlobalStore.isLoggedIn = false;
-      Router.push("/");
+      Router.push("/tim-kiem");
     } catch (e) {
       console.log("Error call logout: ", e);
     }

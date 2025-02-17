@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 // import { useAmp } from "next/amp";
-import HomepageComponent from "../src/pages/Homepage";
-// import ResearchComponent from '../src/pages/Research'
+// import HomepageComponent from "../src/pages/Homepage";
+import ResearchComponent from '../src/pages/Research'
 import HeaderServer from "../src/components/HeaderServer";
 // export const config = { amp: 'hybrid' }
 import GlobalStore from "../src/stores/GlobalStore";
@@ -36,7 +36,7 @@ const Homepage = () => {
   return (
     <>
       <HeaderServer snipet={addHomeJsonLd()} />
-      <HomepageComponent />
+      {/*<HomepageComponent />*/}
       {/* {isAmp ? (
         <a href='/sieu-cap-cung-chieu'><img src='/images/sieu-cap-cung-chieu.png'/></a>
       ) : (
@@ -44,7 +44,7 @@ const Homepage = () => {
         )
         } */}
 
-      {/* <ResearchComponent /> */}
+      <ResearchComponent />
     </>
   );
 };
