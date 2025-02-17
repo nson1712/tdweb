@@ -18,7 +18,6 @@ const Section5 = ({ topViews }) => {
           <HorizontalStory
             key={index}
             items={item}
-            handleViewDetail={() => handleViewDetail(item)}
             starVisible
             statusVisible
             tagVisible

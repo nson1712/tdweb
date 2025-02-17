@@ -12,6 +12,7 @@ import Link from "next/link";
 
 const HorizontalStoryItem = ({
   title,
+  slug,
   coverImage,
   rate,
   status,
@@ -65,10 +66,7 @@ const HorizontalStoryItem = ({
         ) : null}
       </div>
 
-      <Link
-        href={`/${getSlugfromSlugGenerate(slugGenerate(title))}`}
-        passHref
-      >
+      <Link href={`/${slug}`} passHref>
         <a
           title={title}
           className={clsx("py-2", {

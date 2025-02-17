@@ -5,7 +5,7 @@ import CategoryIcon from "../../../public/icons/CategoryIcon";
 const HotCategories = ({ data }) => {
   return (
     <div className="py-2 space-y-4">
-      <div className="text-lg font-bold pt-3 md:pl-6 flex gap-x-2">
+      <div className="text-lg font-bold flex gap-x-2">
         <CategoryIcon />
         Thể loại nổi bật
       </div>

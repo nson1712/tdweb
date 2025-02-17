@@ -4,14 +4,14 @@ import ButtonViewAll from "../../../components/ButtonViewAll";
 
 const Section3 = ({ topTrending }) => {
   return (
-    <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-20 sm:mt-0">
+    <div className="border-1 p-3 rounded-2xl space-y-4 mx-2">
       <Title />
       <HotStories data={topTrending?.data} />
       <div className="flex">
-      <ButtonViewAll
-        className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
-        url="/danh-sach-truyen/trending"
-      />
+        <ButtonViewAll
+          className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
+          url="/danh-sach-truyen/trending"
+        />
       </div>
     </div>
   );
