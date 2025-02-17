@@ -53,7 +53,7 @@ const PremiumPayment = ({
     const getPremiumPackage = async () => {
       try {
         const result = await Api.get({
-          url: "https://api.toidoc.vn/customer/subscription/plans",
+          url: "https://fsdfssf.truyenso1.xyz/customer/subscription/plans",
         });
         setPremiumPackages(
           result.data.PREMIUM.sort(function (a, b) {
@@ -95,7 +95,7 @@ const PremiumPayment = ({
         data.planCode = planCode;
 
         const result = await Api.post({
-          url: "https://api.toidoc.vn/customer/public/customer/subscription/qr",
+          url: "https://fsdfssf.truyenso1.xyz/customer/public/customer/subscription/qr",
           data,
         });
         setLoading(false);

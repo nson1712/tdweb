@@ -31,7 +31,7 @@ Stories.getInitialProps = async (ctx) => {
       const result = await Api.get({
         url:
           typeof window !== "undefined"
-            ? "https://api.toidoc.vn/data/private/data/categories/detail"
+            ? "https://fsdfssf.truyenso1.xyz/data/private/data/categories/detail"
             : "http://10.8.22.205:8082/private/data/categories/detail",
         params: {
           code: ctx.query.theloai,
@@ -47,7 +47,7 @@ Stories.getInitialProps = async (ctx) => {
       const result = await Api.get({
         url:
           typeof window !== "undefined"
-            ? "https://api.toidoc.vn/data/private/data/collection/detail"
+            ? "https://fsdfssf.truyenso1.xyz/data/private/data/collection/detail"
             : "http://10.8.22.205:8082/private/data/collection/detail",
         params: {
           slug: ctx.query.bosuutap,

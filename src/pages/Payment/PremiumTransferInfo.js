@@ -80,7 +80,7 @@ const PremiumTransferInfo = ({ type }) => {
           paymentLinkId: paymentId.current,
         };
         const result = await axios.post(
-          `https://api.toidoc.vn/customer/public/customer/deposit/qr/result`,
+          `https://fsdfssf.truyenso1.xyz/customer/public/customer/deposit/qr/result`,
           data
         );
         if (result?.data?.data.code === 200) {

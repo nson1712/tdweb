@@ -13,7 +13,7 @@ const Research = ({ canonical }) => {
           "@type": "SearchAction",
           "target": {
             "@type": "EntryPoint",
-            "urlTemplate": "https://api.toidoc.vn/data/private/data/story/search?keyword={search_term_string}&limit=20"
+            "urlTemplate": "https://fsdfssf.truyenso1.xyz/data/private/data/story/search?keyword={search_term_string}&limit=20"
           },
           "query-input": "required name=search_term_string"
         }

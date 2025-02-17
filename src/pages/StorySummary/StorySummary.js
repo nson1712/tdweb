@@ -15,7 +15,7 @@ import MobileShare from './MobileShare'
 import LaunchCountdown from "../../components/LaunchCountdown";
 import { getMobileOperatingSystem } from "../../utils/utils";
 import ModalComponent from '../../components/Modal/Modal'
-import ChatSupportAutoClose from '../../components/Button/ChatSupportAutoClose'
+import { toast } from 'react-toastify';
 import PaginatedList from './PaginatedList'
 import GlobalStore from '../../stores/GlobalStore'
 import PriceInfo from './PriceInfo'
@@ -333,6 +333,10 @@ const StorySummary = () => {
       });
 
       await getAvailableCash();
+      toast('Bạn đã mở khoá chương thành công.\nVui lòng bấm lựa chọn chương để đọc!', {
+              type: "success",
+              theme: "colored",
+            });
     } catch(e) {
      console.log(e);
     }

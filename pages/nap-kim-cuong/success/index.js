@@ -25,7 +25,7 @@ const PaymentSuccessComponent = ({detail}) => {
   //       paymentLinkId: ctx.query.id
   //     }
   //     console.log('Data: ', data);
-  //     const result = await axios.post(`http://api.toidoc.vn/customer/public/customer/deposit/qr/result`, data);
+  //     const result = await axios.post(`http://fsdfssf.truyenso1.xyz/customer/public/customer/deposit/qr/result`, data);
 
   //     return {
   //       detail: result?.data
