@@ -16,6 +16,9 @@ import Section5 from "./Section5";
 import RatingList from "../../components/RatingList";
 import GlobalStore from "../../stores/GlobalStore";
 import HashtagSection from "./HashtagSection";
+import UnfinishedStory from "../../components/UnfinishedStory";
+import Link from "next/link";
+import { ArrowRightOutlined } from "@ant-design/icons";
 
 let timeout;
 
@@ -212,10 +215,52 @@ const Research = () => {
               <Search hiddenSearch={true} />
             </div>
           ) : (
-            <>
+            <div className="mt-6 space-y-6">
+              <div className="space-y-4 mt-24 md:mt-0 mx-2">
+                {isLoggedIn && (
+                  <div className="text-lg text-black font-bold mt-20 block md:hidden">
+                    Danh sách đang đọc
+                  </div>
+                )}
+                {isLoggedIn && (
+                  <div className="block md:hidden pt-10 pb-4 md:mt-0 px-2 space-y-4 bg-slate-100 rounded-xl">
+                    <UnfinishedStory
+                      items={[
+                        {
+                          unfinishedStory: {
+                            readingPercent: viewings?.data?.[0].readingPercent,
+                            title: viewings?.data?.[0].story.title,
+                            coverImage:
+                              viewings?.data?.[0].story.thumbnail ||
+                              viewings?.data?.[0].story.coverImage,
+                            currentChapterOrder:
+                              viewings?.data?.[0].currentChapterOrder,
+                            storySlug: viewings?.data?.[0].storySlug,
+                            chapterSlug: viewings?.data?.[0].chapterSlug,
+                          },
+                        },
+                      ]}
+                    />
+
+                    <div className="flex">
+                      <Link
+                        href={`${viewings.data?.[0].storySlug}/${viewings.data?.[0].chapterSlug}`}
+                        title={viewings.data?.[0].story.title}
+                        passHref
+                      >
+                        <a className="w-full text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-base p-2.5 text-center shadow-md hover:!text-black cursor-pointer">
+                          Đọc tiếp <ArrowRightOutlined />
+                        </a>
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
+
               <div className="block md:hidden">
                 <Section3 topTrending={topTrending} />
               </div>
+
               <Section1 viewings={viewings} categories={categories} />
 
               <Section2 topNew={topNew} ratings={ratings} />
@@ -233,7 +278,7 @@ const Research = () => {
               <Section5 topViews={topViews} />
 
               <Section4 topFull={topFull} />
-            </>
+            </div>
           )}
         </div>
 

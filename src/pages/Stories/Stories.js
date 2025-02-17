@@ -8,8 +8,6 @@ import StoryStore from "../../stores/StoryStore";
 import ModalComponent from "../../components/Modal";
 import classNames from "classnames";
 import { convertObjectToSearchParams } from "../../utils/utils";
-import { hashtag } from "../../data/testData";
-import { toJS } from "mobx";
 import Link from "next/link";
 
 const SORTS = [

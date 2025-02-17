@@ -2,7 +2,7 @@ import UnfinishedStoryItem from "./UnfinishedStoryItem";
 
 const UnfinishedStory = ({ items }) => {
   return (
-    <div className="sm:order-2 sm:col-span-5 md:col-span-4">
+    <div>
       {items.map((item) => (
         <UnfinishedStoryItem
           key={item.id}

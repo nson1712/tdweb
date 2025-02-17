@@ -13,16 +13,16 @@ const HorizontalStory = ({
   mainCategoriesVisible,
   totalCategoriesVisible,
   goldenTicketVisible,
-  handleViewDetail,
 }) => {
   const convertedItems = Array.isArray(items) ? items : [items];
   return (
-    <div className="flex rounded-t-2xl gap-x-4" onClick={handleViewDetail}>
+    <div className="flex rounded-t-2xl gap-x-4">
       {convertedItems?.map((item, index) => (
         <HorizontalStoryItem
           key={index}
           id={item.id}
           title={item.title}
+          slug={item.slug}
           coverImage={item.thumbnail || item.coverImage}
           rate={item.rate}
           status={item.status}

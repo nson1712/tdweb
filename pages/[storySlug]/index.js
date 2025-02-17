@@ -9,7 +9,7 @@ const StorySummary = ({detail}) => {
       <HeaderServerSchema title={`✅ ${(detail?.status === 'ACTIVE' ? '[FULL] ' : '') + detail?.title} | Nền tảng cộng đồng đọc truyện online hấp dẫn`}
         description={detail?.metaDescription ? detail?.metaDescription.replace(/"/g,'') : detail?.metaDescription}
         keywords={detail?.metaKeywords}
-        image={detail.thumbnail || detail?.coverImage}
+        image={detail?.thumbnail || detail?.coverImage}
         canonical={`https://toidoc.vn/${detail?.slug}`}
         author={detail?.author?.name}
         rating={detail ? ((detail?.rate == null || detail?.rate === 0) ? 4.3 : detail?.rate) : 4.3}
