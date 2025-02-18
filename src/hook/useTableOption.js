@@ -1,9 +1,5 @@
 import { RightOutlined } from "@ant-design/icons";
-import {
-  calculateCreatedTime,
-  getSlugfromSlugGenerate,
-  slugGenerate,
-} from "../utils/utils";
+import { calculateCreatedTime } from "../utils/utils";
 import Link from "next/link";
 
 export const useTableOptions = () => {
@@ -13,13 +9,13 @@ export const useTableOptions = () => {
       dataIndex: "title",
       key: "title",
       width: "60%",
-      render: (item) => (
-        <Link href={`/${getSlugfromSlugGenerate(slugGenerate(item))}`} passHref>
+      render: (_, record) => (
+        <Link href={`/${record.slug}`} passHref>
           <a
-            title={item}
-            className="text-black font-bold line-clamp-1 cursor-pointer"
+            title={record.title}
+            className="text-black font-bold line-clamp-1 cursor-pointer hover:!text-blue-500"
           >
-            <RightOutlined /> {item}
+            <RightOutlined /> {record.title}
           </a>
         </Link>
       ),
