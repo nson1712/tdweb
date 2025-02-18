@@ -22,7 +22,8 @@ const OpenInAppInfo = ({handleSupport, chapterDetail, storyDetail, handleOpenCha
               </a>
             </div>
             <div className = 'split-line my-[15px]'/>
-            <div style={{display: 'inline-block', margin: '0'}}>
+            {chapterDetail?.price > 0 &&
+              <div style={{display: 'inline-block', margin: '0'}}>
               <p
                 className="white-text"
                 style={{display: 'inline', margin: '0'}}
@@ -37,7 +38,8 @@ const OpenInAppInfo = ({handleSupport, chapterDetail, storyDetail, handleOpenCha
                 }
                 style={{display: 'inline-block', verticalAlign: 'middle', marginLeft: '5px'}}
               />
-            </div>
+              </div>
+            }
             <div style={{'marginTop': '30px', 'display': 'flex', 'justifyContent': 'center'}}>
               <Button onClick={() => handleOpenChapter()} className='button-open-chapter'>Mở khoá chương</Button>
             </div>
