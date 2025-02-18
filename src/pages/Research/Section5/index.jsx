@@ -1,14 +1,9 @@
 import HorizontalStory from "../../../components/HorizontalStoryItem";
 import VerticalStory from "../../../components/VerticalStoryItem";
 import Title from "./title";
-import { useRouter } from "next/router";
 import ButtonViewAll from "../../../components/ButtonViewAll";
 
 const Section5 = ({ topViews }) => {
-  const router = useRouter();
-  const handleViewDetail = (item) => {
-    router.push(`/${item.slug}`);
-  };
 
   return (
     <div className="space-y-4 px-2">

@@ -4,7 +4,7 @@ import Header from "../../components/Header/Header";
 import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import { observer } from "mobx-react";
 import StoryStore from "../../stores/StoryStore";
-import { toJS } from "mobx";
+import Link from "next/link";
 
 let timeout;
 const Hashtags = () => {
@@ -82,13 +82,14 @@ const Hashtags = () => {
                 key={item.code}
               >
                 <div>
-                  <a
-                    className="text-[16px] leading-[16px] font-semibold mb-[8px] text-black max-w-[150px] line-clamp-1 text-ellipsis"
-                    href={`/hashtag/${item.name}`}
-                    title={`#${item.name}`}
-                  >
-                    #{item.name}
-                  </a>
+                  <Link href={`/hashtag/${item.name}`} passHref>
+                    <a
+                      className="text-[16px] leading-[16px] font-semibold mb-[8px] text-black max-w-[150px] line-clamp-1 text-ellipsis"
+                      title={`#${item.name}`}
+                    >
+                      #{item.name}
+                    </a>
+                  </Link>
                 </div>
               </div>
             ))}

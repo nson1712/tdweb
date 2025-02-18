@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import Router from 'next/router'
+import Link from 'next/link'
 
 const Chapters = ({
   setShowChapter,
@@ -30,21 +30,21 @@ const Chapters = ({
                 && story.chapters.map((chapter, i) => (
                   <div className='grid-item-chapter'>
                     {!chapter?.isFree ?
-                      <img src='/images/lock.png' style={{'width': '20px', 'float': 'left', 'marginRight': '5px'}}/>
+                      <img src='/images/lock.png' className='w-5 float-left mr-[5px]'/>
                       :
-                      <img src='/images/Done.png' style={{'width': '20px', 'float': 'left', 'marginRight': '5px'}}/>
+                      <img src='/images/Done.png' className='w-5 float-left mr-[5px]'/>
                     }
-                    <a className={classNames('block py-[4px] text-[16px] font-medium secondary-text title-truncate-style', currentChapter?.id === chapter?.id && 'primary-text')}
+                    <Link href={`/${story.slug}/${chapter.slug}`} passHref>
+                    <a className={classNames('block py-1 text-base font-medium secondary-text title-truncate-style', currentChapter?.id === chapter?.id && 'primary-text')}
                     onClick={() => {
-                      Router.replace(`/${story.slug}/${chapter.slug}`)
                       setShowChapter(false)
                     }}
                     key={chapter.id}
-                    href={`/${story.slug}/${chapter.slug}`}
                     title={`${story?.title} - ${chapter.title}`}
                     >
                       {i + 1}. {chapter.title}
                     </a>
+                    </Link>
                   </div>
                   
                 ))

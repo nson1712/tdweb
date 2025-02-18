@@ -4,6 +4,7 @@ import GooglePlayStoreIcon from "../../../public/icons/GooglePlayStoreIcon";
 import AppStoreIcon from "../../../public/icons/AppStoreIcon";
 import { getOS, handleStoreOpen } from "../../utils/utils";
 import dynamic from "next/dynamic";
+import Link from "next/link";
 
 const FacebookPagePlugin = dynamic(() => import("../FacebookPlugin"), {
   ssr: false,
@@ -53,7 +54,7 @@ const Footer = () => {
             </div>
           </div>
 
-            <FacebookPagePlugin />
+          <FacebookPagePlugin />
         </div>
       </div>
 
@@ -61,44 +62,49 @@ const Footer = () => {
         <div className="max-w-[1116px] md:flex justify-between mx-auto px-1 space-y-2">
           <div className="order-2 flex justify-center text-sm md:text-base font-medium text-gray-500 dark:text-gray-400 sm:mt-0 gap-x-2 sm:py-2">
             <div className="self-center">
-              <a
-                href="/tim-kiem"
-                title="Trang chủ"
-                className="text-white text-underline text-md"
-              >
-                Trang chủ
-              </a>
+              <Link href="/tim-kiem" passHref>
+                <a
+                  title="Trang chủ"
+                  className="text-white text-underline text-md"
+                >
+                  Trang chủ
+                </a>
+              </Link>
             </div>
             <div className="self-center">|</div>
             <div className="self-center">
-              <a
-                href="https://tacgia.toidoc.vn"
-                title="Danh sách thể loại truyện full"
-                className="text-white text-underline text-md"
-              >
-                Đăng truyện
-              </a>
+              <Link href="https://tacgia.toidoc.vn" passHref>
+                <a
+                  title="Danh sách thể loại truyện full"
+                  className="text-white text-underline text-md"
+                >
+                  Đăng truyện
+                </a>
+              </Link>
             </div>
             <div className="self-center">|</div>
             <div className="self-center">
-              <a
-                href="https://www.facebook.com/messages/t/185169981351799"
-                title="Liên hệ Toidoc"
-                target="_blank"
-                className="text-white text-underline text-md"
-              >
-                Liên hệ
-              </a>
+              <Link href="https://www.facebook.com/messages/t/185169981351799">
+                <a
+                  title="Liên hệ Toidoc"
+                  target="_blank"
+                  className="text-white text-underline text-md"
+                >
+                  Liên hệ
+                </a>
+              </Link>
             </div>
             <div className="self-center">|</div>
             <div className="self-center">
-              <a
-                href="https://docgia-guide.toidoc.vn/"
-                className="text-white text-underline text-md"
-                title="Câu hỏi thường gặp khi sử dụng Toidoc"
-              >
-                Câu hỏi thường gặp
-              </a>
+              <Link href="https://docgia-guide.toidoc.vn/">
+                <a
+                  title="Câu hỏi thường gặp khi sử dụng Toidoc"
+                  target="_blank"
+                  className="text-white text-underline text-md"
+                >
+                  Câu hỏi thường gặp
+                </a>
+              </Link>
             </div>
           </div>
 
