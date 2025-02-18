@@ -20,7 +20,7 @@ const UnfinishedStoryDetailItem = ({
         title={title}
       >
         <div className="flex gap-x-2.5">
-          <div className="w-[40px]">
+          <div className="w-[40px] self-center">
             {coverImage ? (
               <Image
                 loader={imageLoader}
