@@ -74,7 +74,7 @@ const BlogDetails = ({ data }) => {
     }
   }, [quotes]);
 
-  const updatedContent = appendNewLineAfterCloseHTag(data?.content || "");
+  const updatedContent = data?.content ? appendNewLineAfterCloseHTag(data?.content) : "";
 
   const contentArr = updatedContent.split("\n");
 

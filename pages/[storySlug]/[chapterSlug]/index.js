@@ -2,7 +2,6 @@ import React from "react";
 import StoryDetailComponent from "../../../src/pages/StoryDetail";
 import HeaderServerSchema from "../../../src/components/HeaderServerSchema";
 import axios from "axios";
-import { getAccessToken, getRefreshToken } from "../../../src/utils/storage";
 
 const StoryDetail = ({ detail, canonical }) => {
   return (

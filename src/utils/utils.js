@@ -229,16 +229,28 @@ export const cleanHtml = (value) => {
   return value.replace(/<[^>]+>/g, "");
 };
 
-export const appendNewLineAfterCloseHTag = (string) => {
-  return string
-    .replaceAll("</h1>", "</h1> \n")
-    .replaceAll("</h2>", "</h2> \n")
-    .replaceAll("</h3>", "</h3> \n")
-    .replaceAll("</h4>", "</h4> \n")
-    .replaceAll("</h5>", "</h5> \n")
-    .replaceAll("</h6>", "</h6> \n")
-    .replaceAll("</p>", "</p> \n")
-    .replaceAll("</figure>", "</figure> \n");
+export const appendNewLineAfterCloseHTag = (content) => {
+  if (typeof content.replaceAll === "function") {
+    return content
+      .replaceAll("</h1>", "</h1> \n")
+      .replaceAll("</h2>", "</h2> \n")
+      .replaceAll("</h3>", "</h3> \n")
+      .replaceAll("</h4>", "</h4> \n")
+      .replaceAll("</h5>", "</h5> \n")
+      .replaceAll("</h6>", "</h6> \n")
+      .replaceAll("</p>", "</p> \n")
+      .replaceAll("</figure>", "</figure> \n");
+  } else {
+    return content
+      .replace(/<\/h1>/g, "</h1> \n")
+      .replace(/<\/h2>/g, "</h2> \n")
+      .replace(/<\/h3>/g, "</h3> \n")
+      .replace(/<\/h4>/g, "</h4> \n")
+      .replace(/<\/h5>/g, "</h5> \n")
+      .replace(/<\/h6>/g, "</h6> \n")
+      .replace(/<\/p>/g, "</p> \n")
+      .replace(/<\/figure>/g, "</figure> \n");
+  }
 };
 
 export const isEmpty = (obj) => {
