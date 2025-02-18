@@ -216,14 +216,14 @@ const Research = () => {
             </div>
           ) : (
             <div className="mt-6 space-y-6">
-              <div className="space-y-4 mt-24 md:mt-0 mx-2">
+              <div className="space-y-2 mt-10 md:mt-0 mx-2">
                 {isLoggedIn && (
                   <div className="text-lg text-black font-bold mt-20 block md:hidden">
                     Danh sách đang đọc
                   </div>
                 )}
                 {isLoggedIn && (
-                  <div className="block md:hidden pt-10 pb-4 md:mt-0 px-2 space-y-4 bg-slate-100 rounded-xl">
+                  <div className="block md:hidden pt-3 pb-3 md:mt-0 px-2 space-y-4 bg-slate-100 rounded-xl">
                     <UnfinishedStory
                       items={[
                         {

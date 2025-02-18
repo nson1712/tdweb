@@ -68,29 +68,28 @@ const StoryType = () => {
                 className="py-[16px] border-b-[1px] border-color cursor-pointer flex gap-x-2"
                 key={item.code}
               >
-                {(item.thumbnail || item.image) && (
-                  <Image
-                    loader={imageLoader}
-                    src={item.thumbnail || item.image}
-                    alt={item.name}
-                    title={item.name}
-                    width={100}
-                    height={50}
-                  />
-                )}
-                <div>
-                  <Link href={`/the-loai/${item.code}`} passHref>
-                    <a
-                      className="text-xs sm:text-base leading-[16px] font-semibold mb-[8px] main-text"
-                      title={`Truyện ${item.name}`}
-                    >
-                      {item.name}
-                    </a>
-                  </Link>
-                  <p className="text-xs sm:text-[14px] mb-0 label-text">
-                    {formatStringToNumber(item.totalStory)} truyện
-                  </p>
-                </div>
+                <Link href={`/the-loai/${item.code}`} passHref>
+                  <a className="flex"
+                    title={`Truyện ${item.name}`}
+                  >
+                  {(item.thumbnail || item.image) && (
+                    <Image
+                      loader={imageLoader}
+                      src={item.thumbnail || item.image}
+                      alt={item.name}
+                      title={item.name}
+                      width={100}
+                      height={50}
+                    />
+                  )}
+                  <div className="ml-[10px]">
+                    <p className="text-xs sm:text-base leading-[16px] font-semibold mb-[8px] main-text">{item.name}</p>
+                    <p className="text-xs sm:text-[14px] mb-0 label-text">
+                      {formatStringToNumber(item.totalStory)} truyện
+                    </p>
+                  </div>
+                  </a>
+                </Link>
               </div>
             ))}
           </div>

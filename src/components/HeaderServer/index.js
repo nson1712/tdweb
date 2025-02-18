@@ -14,7 +14,7 @@ const HeadComponent = ({
     <>
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"></meta>
-        <meta charset='UTF-8' />
+        <meta charSet='UTF-8' />
         <title>{title || "Nền tảng đọc Truyện ngôn tình, Đam mỹ, Trọng sinh, Tiên hiệp, Kiếm hiệp"} </title>
         {canonical && <link rel="canonical" href={canonical}></link> }
         <meta name="title" content={title || "Nền tảng đọc Truyện ngôn tình, Đam mỹ, Trọng sinh, Tiên hiệp, Kiếm hiệp"}></meta>
