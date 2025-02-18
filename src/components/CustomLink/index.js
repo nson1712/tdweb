@@ -2,7 +2,6 @@ import Link from "next/link";
 
 const withCustomLink = (WrapComponent) => {
   return ({ item, pathname, query, ...props }) => (
-    console.log("PATH NAME: ", pathname),
     <Link
       href={{
         pathname: pathname,
