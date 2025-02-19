@@ -32,7 +32,7 @@ const Author = () => {
               <li><strong><i>Học hỏi kinh nghiệm:</i></strong> Hãy để cộng đồng người viết tại Toidoc có được sự ủng hộ, động viên, tư vấn… và có cơ hội nâng cao năng lực cạnh tranh. Thật tuyệt khi bạn có công việc hấp dẫn để làm, có đam mê để theo đuổi, và có người đồng hành để tụ tập sẻ chia.</li>
             </ul>
             <p><strong><i>Lời nhắn:</i></strong> Mặt khác, là một cộng đồng đọc đề cao góc nhỏ yên bình của mỗi thành viên, chúng tôi cũng có một số quy tắc ứng xử và yêu cầu về nội dung mà người viết nên tuân thủ để đảo bảo chất lượng tác phẩm, tôn trọng cá nhân các thành viên, xã hội cũng như các chủ thể khác, đề cao sự tích cực trong cộng đồng. Mong các bạn dành thời gian xem chi tiết tại đây để quá trình sản xuất nội dung được thuận lợi.</p>
-            <p>=> XEM CHI TIẾT ĐIỀU KHOẢN VÀ CHÍNH SÁCH CỦA TÁC GIẢ <a href='/author-policy.html'>TẠI ĐÂY</a></p>
+            <p>{'=> XEM CHI TIẾT ĐIỀU KHOẢN VÀ CHÍNH SÁCH CỦA TÁC GIẢ'}<a href='/author-policy.html'>TẠI ĐÂY</a></p>
           </div>
           <div className='ml-[20px] mr-[20px] max-w-[300px] mg-auto mb-[50px]'>
             <a className='w-[32px] h-[32px] flex items-center justify-center btnMain' href='https://tacgia.toidoc.vn'>Truy Cập Website Tác Giả/ Dịch Giả</a>
