@@ -20,7 +20,9 @@ import PaginatedList from "./PaginatedList";
 import GlobalStore from "../../stores/GlobalStore";
 import PriceInfo from "./PriceInfo";
 import ShortLogin from "../Login/ShortLogin";
-import { Spin } from "antd";
+import { Alert, Spin } from "antd";
+import Image from "next/image";
+import imageLoader from "../../loader/imageLoader";
 
 const TABS = [
   {
@@ -128,7 +130,7 @@ const StorySummary = () => {
     checkCustomerClickAff,
     recordClickAff,
     isOpenFull,
-    setIsOpenFull
+    setIsOpenFull,
   } = StoryStore;
   const [currentChapterDetail, setCurrentChapterDetail] = useState([]);
 
@@ -329,16 +331,6 @@ const StorySummary = () => {
     }
   };
 
-  const handleReadingNow = () => {
-    if (latestReadingChapter?.storySlug) {
-      Router.push(
-        `/${latestReadingChapter.storySlug}/${latestReadingChapter.chapterSlug}`
-      );
-    } else if (storyDetail?.chapters?.length > 0) {
-      Router.push(`/${storyDetail.slug}/${storyDetail?.chapters[0].slug}`);
-    }
-  };
-
   const handleOpenFullChapter = async () => {
     setLoading(true);
     try {
@@ -432,12 +424,12 @@ const StorySummary = () => {
               window.scrollTo({ top: 0, left: 0, behavior: "instant" });
             }}
           >
-            <img src="/images/arrow-left.svg" className="w-[24px]" />
+            <img src="/images/arrow-left.svg" className="w-6" />
           </a>
 
           <Link href={`/${storyDetail?.slug}`} passHref>
             <a title={`Truyện ${storyDetail?.title}`}>
-              <h1 className="text-[18px] leading-[20px] font-bold main-text mb-0 line-clamp-1">
+              <h1 className="text-lg leading-[20px] font-bold main-text mb-0 line-clamp-1">
                 {storyDetail?.title}
               </h1>
             </a>
@@ -452,18 +444,18 @@ const StorySummary = () => {
               setShowChapter(true);
             }}
           >
-            <img src="/images/checkmark.svg" className="w-[24px]" />
+            <img src="/images/checkmark.svg" className="w-6" />
           </a>
         </div>
 
         <MobileHeader show={scrollOffset <= 100} />
         <div
-          style={{ marginTop: "14px" }}
+          className="mt-[14px]"
           dangerouslySetInnerHTML={{
             __html: `<a id='link-video-header' href='https://toidoc.onelink.me/59bO/d42503wz'> <video autoplay loop muted playsinline><source src='https://media.truyenso1.xyz/ads/top-banner.mp4' type='video/mp4' rel='nofollow'/></video> </a>`,
           }}
         />
-        <div className="h-[200px] relative mb-[20px]">
+        <div className="h-52 relative mb-4 pb-7">
           <div className="bg-story-summary" />
           <img
             src={storyDetail?.thumbnail || storyDetail?.coverImage}
@@ -471,7 +463,7 @@ const StorySummary = () => {
             title={storyDetail?.title}
             className="w-full h-[200px] object-cover"
           />
-          <div className="absolute left-0 right-0 bottom-0 top-0 summary-banner z-[2] flex flex-col justify-between px-[20px] pt-[10px] pb-[30px]">
+          <div className="absolute left-0 right-0 bottom-0 top-0 summary-banner z-[2] flex flex-col justify-between px-5 pt-2.5 pb-[30px]">
             <div className="relative flex items-center justify-between">
               <a
                 className="relative z-[2]"
@@ -482,11 +474,11 @@ const StorySummary = () => {
               >
                 <img
                   src="/images/arrow-white.svg"
-                  className="w-[24px]"
+                  className="w-6"
                   alt="black"
                 />
               </a>
-              <p className="absolute top-0 right-0 left-0 bottom-0 text-[16px] font-bold text-white text-center mb-0 leading-[32px] px-[80px]">
+              <p className="absolute top-0 right-0 left-0 bottom-0 text-base font-bold text-white text-center mb-0 leading-[32px] px-20">
                 {/* Chi tiết */}
               </p>
               <div className="flex items-center relative z-[2]">
@@ -499,12 +491,12 @@ const StorySummary = () => {
                 >
                   <img
                     src={"/images/heart-none.png"}
-                    className="w-[24px]"
+                    className="w-6"
                     alt={`Lưu truyện ${storyDetail?.title}`}
                   />
                 </Button>
                 <a
-                  className="w-[32px] h-[32px] flex items-center justify-center bg-gray-3 ml-[8px] rounded-full"
+                  className="w-8 h-8 flex items-center justify-center bg-gray-3 ml-2 rounded-full"
                   onClick={() => {
                     if (navigator.share) {
                       navigator
@@ -527,76 +519,78 @@ const StorySummary = () => {
                 >
                   <img
                     src="/images/ic_share.svg"
-                    className="w-[24px]"
+                    className="w-6"
                     alt="favorite"
                   />
                 </a>
               </div>
             </div>
-            <div className="flex items-start">
-              <img
+            <div className="flex gap-x-4 items-start">
+              <div className="max-w-24 mt-2">
+                {/* <Image
+                className="rounded-2xl"
+                  loader={imageLoader}
+                  src={storyDetail?.thumbnail || storyDetail?.coverImage}
+                  alt={`Truyện ${storyDetail?.title}`}
+                  title={storyDetail?.title}
+                  width={80}
+                  height={120}
+                /> */}
+                <img
                 src={storyDetail?.thumbnail || storyDetail?.coverImage}
                 alt={`Truyện ${storyDetail?.title}`}
                 title={storyDetail?.title}
-                className="w-[65px] mr-[12px] rounded-[10px]"
+                className="w-28 h-36 rounded-[10px]"
               />
-              <div className="flex-1">
+              </div>
+              
+
+              <div className="flex flex-col justify-center self-center w-full">
                 <Link href={`${storyDetail?.slug}`} passHref>
                   <a title={`Truyện ${storyDetail?.title}`}>
-                    <h1 className="text-[16px] font-bold text-white mb-0">
+                    <h1 className="text-base font-bold text-white line-clamp-2">
                       {storyDetail?.title}
                     </h1>
                   </a>
                 </Link>
-                <h2 className="secondary-the-loai text-[14px] font-medium leading-[17px] mt-[4px] mb-0">
+                <h2 className="secondary-the-loai text-sm font-medium">
                   {storyDetail?.categories?.slice(0, 3).map((item, i) => (
                     <Link
                       href={`/the-loai/${item.code}`}
                       key={item.code}
                       passHref
                     >
-                      <a className="secondary-the-loai text-[14px] font-medium leading-[17px] mt-[4px] mb-0 mr-[6px] underline">
+                      <a className="secondary-the-loai text-sm font-medium mr-1.5 underline">
                         {item.name}
                         {i !== 2 && ","}
                       </a>
                     </Link>
                   ))}
                 </h2>
-                <div className="mt-[5px]">
-                  {storyDetail?.status === "ACTIVE" ? (
-                    <div>
-                      <img src="/images/Done.png" className="fl mr-[5px]" />{" "}
-                      <p className="st-status" style={{ margin: "0px" }}>
-                        Hoàn thành
-                      </p>
-                    </div>
-                  ) : (
-                    <div>
-                      <img src="/images/Loading.png" className="fl mr-[5px]" />{" "}
-                      <p className="st-status" style={{ margin: "0px" }}>
-                        Đang ra tiếp
-                      </p>
-                    </div>
-                  )}
+                <div className="flex rounded-xl bg-black/30 w-fit px-2.5 py-1 gap-x-1.5">
+                      <div className="self-center"><img src={storyDetail?.status === "ACTIVE" ? "/images/Done.png" : "/images/Loading.png"} /></div>
+                      <div className={`${storyDetail?.status === "ACTIVE" ? "text-green-500" : "text-[#5c95c6]"} text-sm self-center font-semibold`}>
+                        {storyDetail?.status === "ACTIVE" ? "Hoàn thành" : "Đang ra tiếp"}
+                      </div>
                 </div>
-                <div className="flex items-center pb-[16px] mt-[10px]">
+                <div className="flex items-center pb-4 mt-2.5">
                   <div className="flex items-center mr-[32px]">
-                    <div className="w-[32px] h-[32px] rounded-full flex items-center justify-center gray-bg mr-[8px]">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center gray-bg mr-2">
                       <img
                         src="/images/comments_rating.png"
-                        className="w-[24px]"
+                        className="w-6"
                         alt={`Lượt thích truyện ${storyDetail?.title}`}
                       />
                     </div>
                     <div>
-                      <p className="label-text text-[12px] font-medium leading-[16px] mb-0">
+                      <p className="label-text text-xs font-medium leading-4 mb-0">
                         Đánh giá
                       </p>
-                      <p className="white-text text-[14px] font-semibold leading-[16px] mb-0 flex items-center">
+                      <p className="white-text text-sm font-semibold leading-4 mb-0 flex items-center">
                         {formatStringToNumber(storyDetail?.rate)}
                         <img
                           src="/images/star.svg"
-                          className="w-[12px] ml-[4px]"
+                          className="w-3 ml-1"
                           alt={`Lượt đánh giá truyện ${storyDetail?.title}`}
                         />
                       </p>
@@ -608,18 +602,18 @@ const StorySummary = () => {
                       setShowChapter(true);
                     }}
                   >
-                    <div className="w-[32px] h-[32px] rounded-full flex items-center justify-center gray-bg mr-[8px]">
+                    <div className="w-8 h-8 rounded-full flex items-center justify-center gray-bg mr-2">
                       <img
                         src="/images/book-gray.svg"
-                        className="w-[24px]"
+                        className="w-6"
                         alt={`Danh sách chương truyện ${storyDetail?.title}`}
                       />
                     </div>
                     <div>
-                      <p className="label-text text-[12px] font-medium leading-[16px] mb-0">
+                      <p className="label-text text-xs font-medium leading-4 mb-0">
                         Chương
                       </p>
-                      <p className="white-text text-[14px] font-semibold leading-[16px] mb-0">
+                      <p className="white-text text-sm font-semibold leading-4 mb-0">
                         {formatStringToNumber(storyDetail?.totalChapter)}
                       </p>
                     </div>
@@ -631,19 +625,30 @@ const StorySummary = () => {
         </div>
 
         {latestReadingChapter && latestReadingChapter?.chapterSlug && (
-          <div className="box-lastest-reading-chapter">
-            <p>{`Bạn đang đọc tới: ${latestReadingChapter?.chapterTitle}. Bạn muốn đọc tiếp?`}</p>
-          </div>
+          // <div className="box-lastest-reading-chapter">
+          //   <p>{`Bạn đang đọc tới: ${latestReadingChapter?.chapterTitle}. Bạn muốn đọc tiếp?`}</p>
+          // </div>
+          <Alert
+            message={`Bạn đang đọc tới: ${latestReadingChapter?.chapterTitle}. Bạn muốn đọc tiếp?`}
+            type="warning"
+            className="mb-4 text-base"
+          />
         )}
         <div>
-          <a
-            className="btnMain btn-doc-ngay mt-[24px]"
-            onClick={() => handleReadingNow()}
+          <Link
+            href={
+              latestReadingChapter?.storySlug
+                ? `/${latestReadingChapter.storySlug}/${latestReadingChapter.chapterSlug}`
+                : storyDetail?.chapters?.length > 0
+                ? `/${storyDetail.slug}/${storyDetail?.chapters[0].slug}`
+                : "/"
+            }
+            passHref
           >
-            {latestReadingChapter && latestReadingChapter?.chapterSlug
-              ? "Đọc tiếp"
-              : "Đọc từ đầu"}
-          </a>
+            <a className="btnMain btn-doc-ngay mt-6">
+              {latestReadingChapter?.chapterSlug ? "Đọc tiếp" : "Đọc từ đầu"}
+            </a>
+          </Link>
         </div>
         {finalChargeDiamond > 0 && (
           <PriceInfo
@@ -654,11 +659,9 @@ const StorySummary = () => {
           />
         )}
 
-        <div className="p-[16px] pr-[5px]">
-          <p className="text-[18px] font-bold main-text text-underline">
-            Văn án
-          </p>
-          <div className="border-b-[1px] border-color pb-[16px]">
+        <div className="p-4 pr-[5px]">
+          <p className="text-lg font-bold main-text text-underline">Văn án</p>
+          <div className="border-b-[1px] border-color pb-4">
             <div style={{ marginBottom: "10px" }}>
               <ReadMore>{storyDetail?.shortDescription}</ReadMore>
               {/* Add comment facebook at the end each chapter */}
@@ -668,8 +671,8 @@ const StorySummary = () => {
 
           {storyDetail?.chapters?.length > 0 && (
             <>
-              <div className="border-b-[1px] border-color pb-[16px]">
-                <h2 className="text-[18px] font-bold main-text mt-[16px] text-underline">
+              <div className="border-b-[1px] border-color pb-4">
+                <h2 className="text-lg font-bold main-text mt-4 text-underline">
                   Chương mới nhất
                 </h2>
                 {storyDetail?.chapters
@@ -697,7 +700,7 @@ const StorySummary = () => {
                       >
                         <a
                           title={`${storyDetail?.title} - ${chapter.title}`}
-                          className="text-[16px] newest-chapter-text title-truncate-style"
+                          className="text-base newest-chapter-text title-truncate-style"
                         >
                           {chapter?.title}
                         </a>
@@ -706,7 +709,7 @@ const StorySummary = () => {
                   ))}
               </div>
 
-              <h2 className="text-[18px] font-bold main-text mt-[16px] text-underline">
+              <h2 className="text-lg font-bold main-text mt-4 text-underline">
                 Danh sách chương
               </h2>
               <PaginatedList items={storyDetail?.chapters} />

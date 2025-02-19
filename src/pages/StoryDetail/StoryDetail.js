@@ -1,65 +1,69 @@
-import React, { useEffect, useMemo, useState } from 'react'
-import Router, { useRouter } from 'next/router'
-import * as Api from '../../api/api';
-import CommonLayout from '../../layouts/CommonLayout/CommonLayout'
-import { observer } from 'mobx-react'
-import StoryStore from '../../stores/StoryStore'
-import classNames from 'classnames'
-import Chapters from './Chapters'
-import MobileShare from '../StorySummary/MobileShare'
-import Header from '../../components/Header/Header';
+import React, { useEffect, useMemo, useState } from "react";
+import Router, { useRouter } from "next/router";
+import * as Api from "../../api/api";
+import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
+import { observer } from "mobx-react";
+import StoryStore from "../../stores/StoryStore";
+import classNames from "classnames";
+import Chapters from "./Chapters";
+import MobileShare from "../StorySummary/MobileShare";
+import Header from "../../components/Header/Header";
 import LaunchCountdown from "../../components/LaunchCountdown";
-import { getMobileOperatingSystem, formatStringToNumber} from "../../utils/utils";
-import ModalComponent from '../../components/Modal/Modal'
-import ModalWithoutCloseButton from '../../components/Modal/ModalWithoutCloseButton';
-import ChatSupportAutoClose from '../../components/Button/ChatSupportAutoClose'
-import ShortLogin from '../Login/ShortLogin';
-import GlobalStore from '../../stores/GlobalStore'
-import Question from './Question';
-import OpenInAppInfo from './OpenInAppInfo'
-import OpenChapterInfo from './OpenChapterInfo'
-import ContentDisplay from './ContentDisplay';
-import Link from 'next/link';
-import { Spin } from 'antd';
+import {
+  getMobileOperatingSystem,
+  formatStringToNumber,
+} from "../../utils/utils";
+import ModalComponent from "../../components/Modal/Modal";
+import ModalWithoutCloseButton from "../../components/Modal/ModalWithoutCloseButton";
+import ChatSupportAutoClose from "../../components/Button/ChatSupportAutoClose";
+import ShortLogin from "../Login/ShortLogin";
+import GlobalStore from "../../stores/GlobalStore";
+import Question from "./Question";
+import OpenInAppInfo from "./OpenInAppInfo";
+import OpenChapterInfo from "./OpenChapterInfo";
+import ContentDisplay from "./ContentDisplay";
+import Link from "next/link";
+import { Spin } from "antd";
 
-const StoryDetail = ({chapterTitle, storyTitle}) => {
-  const [showBubble, setShowBubble] = useState('up');
-  const { 
-    loadingChapterDetail, 
-    getChapterDetail, 
-    storyDetail, 
-    getStoryDetail, 
-    saveLastStory, 
-    saveFavoriteCategories, 
-    saveViewStory, 
+const StoryDetail = ({ chapterTitle, storyTitle }) => {
+  const [showBubble, setShowBubble] = useState("up");
+  const {
+    loadingChapterDetail,
+    getChapterDetail,
+    storyDetail,
+    getStoryDetail,
+    saveLastStory,
+    saveFavoriteCategories,
+    saveViewStory,
     getStoryPrice,
     checkCustomerClickAff,
-    recordClickAff } = StoryStore
+    recordClickAff,
+  } = StoryStore;
 
-  const [showChapter, setShowChapter] = useState(false)
+  const [showChapter, setShowChapter] = useState(false);
 
-  const route = useRouter()
+  const route = useRouter();
 
-  const [chapterContents, setChapterContents] = useState([])
+  const [chapterContents, setChapterContents] = useState([]);
   const [currentChapter, setCurrentChapter] = useState({});
   const [currentChapterDetail, setCurrentChapterDetail] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [needOpenChapter, setNeedOpenChapter] = useState(false);
   const [allowOpenWeb, setAllowOpenWeb] = useState(false);
   const [isMobile, setIsMobile] = useState(true);
-  const [time, setTime] = useState(180)
-  const [fdfssfds, setFdfssfds] = useState('MlsHlea8IaH3qS8MjoXB1kMnlMImwCE7');
-  const [jkdjfk, setJkdjfk] = useState('HIwhXNiX7d1z7VxZ');
-  const [showModal, setShowModal] = useState(false)
+  const [time, setTime] = useState(180);
+  const [fdfssfds, setFdfssfds] = useState("MlsHlea8IaH3qS8MjoXB1kMnlMImwCE7");
+  const [jkdjfk, setJkdjfk] = useState("HIwhXNiX7d1z7VxZ");
+  const [showModal, setShowModal] = useState(false);
   const [showQuestion, setShowQuestion] = useState(false);
-  const [showModalApp, setShowModalApp] = useState(false)
+  const [showModalApp, setShowModalApp] = useState(false);
   const [isEnoughDiamond, setIsEnoughDiamond] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
   const [availableCash, setAvailableCash] = useState({});
-  const [showModalNotEnoughDiamond, setShowModalNotEnoughDiamond] = useState(false);
+  const [showModalNotEnoughDiamond, setShowModalNotEnoughDiamond] =
+    useState(false);
   const [fullPriceStory, setFullPriceStory] = useState({});
   const [question, setQuestion] = useState({});
-
 
   // const checkCustomerClickAffLocal = async() => {
   //   const isClickAff = await checkCustomerClickAff(localStorage.getItem('DEVICE_ID'))
@@ -86,7 +90,7 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
   //   // Disable right-click (context menu)
   //   const disableContextMenu = (event) => event.preventDefault();
   //   document.addEventListener('contextmenu', disableContextMenu);
-  
+
   //   // Disable copying (Ctrl+C, Cmd+C, etc.)
   //   const disableCopy = (event) => {
   //     event.clipboardData.setData('text/plain', 'Bạn đừng copy dữ liệu của chúng tôi nhé ☹️, tội lắm.');
@@ -94,7 +98,7 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
 
   //   };
   //   document.addEventListener('copy', disableCopy);
-  
+
   //   // Cleanup on unmount
   //   return () => {
   //     document.removeEventListener('contextmenu', disableContextMenu);
@@ -117,21 +121,25 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
 
   // useEffect(() => {
 
-    // if (route.query.storySlug && currentSlug) {
-    //   saveViewStory(route.query.storySlug)
-    // }
+  // if (route.query.storySlug && currentSlug) {
+  //   saveViewStory(route.query.storySlug)
+  // }
 
   // }, [route.query.chapterSlug, currentSlug])
 
-  const fetchData = async() => {
+  const fetchData = async () => {
     try {
       setIsLoading(true);
       setIsMobile(getMobileOperatingSystem());
       const isLoggedIn = await GlobalStore.checkIsLogin();
-      const result = await getChapterDetail(route.query.storySlug, route.query.chapterSlug, isLoggedIn)
+      const result = await getChapterDetail(
+        route.query.storySlug,
+        route.query.chapterSlug,
+        isLoggedIn
+      );
       // console.log('Chapter detail content: ', result);
       if (route.query.storySlug) {
-        await getStoryDetail(route.query.storySlug)
+        await getStoryDetail(route.query.storySlug);
       }
       if (result?.contents.length <= 0) {
         isLoggedIn = await GlobalStore.checkIsLogin();
@@ -139,28 +147,41 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
       let nextChapter = result?.next;
       let prevChapter = result?.previous;
       if (nextChapter) {
-        nextChapter = nextChapter.split('_')[1];
+        nextChapter = nextChapter.split("_")[1];
       }
       if (prevChapter) {
-        prevChapter = prevChapter.split('_')[1];
+        prevChapter = prevChapter.split("_")[1];
       }
       setCurrentChapterDetail(result);
       setCurrentChapter({
         ...result,
         next: nextChapter,
-        previous: prevChapter
+        previous: prevChapter,
       });
       setLoggedIn(isLoggedIn || result?.free);
       setNeedOpenChapter(!result?.free);
 
-      if (result?.order % 5 === 0 && result?.price > 0 && isLoggedIn && result?.contents?.length > 0) {
+      if (
+        result?.order % 5 === 0 &&
+        result?.price > 0 &&
+        isLoggedIn &&
+        result?.contents?.length > 0
+      ) {
         await getQuestion();
         setShowQuestion(true);
       }
-  
-      if ((result?.contentEnabled && result?.free) || (result?.contentEnabled && !GlobalStore.profile?.subscription)) {
+
+      if (
+        (result?.contentEnabled && result?.free) ||
+        (result?.contentEnabled && !GlobalStore.profile?.subscription)
+      ) {
         setAllowOpenWeb(true);
-      } else if (!result?.contentEnabled || (result?.contentEnabled && !result?.free && GlobalStore.profile?.subscription)) {
+      } else if (
+        !result?.contentEnabled ||
+        (result?.contentEnabled &&
+          !result?.free &&
+          GlobalStore.profile?.subscription)
+      ) {
         setAllowOpenWeb(false);
       }
       setChapterContents(result?.contents);
@@ -172,11 +193,9 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
         const priceStory = await getStoryPrice(route.query.storySlug);
         setFullPriceStory(priceStory);
       }
-    } catch (e) {
-
-    }
+    } catch (e) {}
     setIsLoading(false);
-  }
+  };
 
   const getAvailableCash = async () => {
     if (!GlobalStore.isLoggedIn) {
@@ -184,36 +203,36 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
     }
     try {
       const result = await Api.get({
-        url: '/customer/customer/availableCash',
+        url: "/customer/customer/availableCash",
         params: {
-          intendedUse: storyDetail?.contributorId ? 'UNLOCK_EXCLUSIVE_CHAPTER' : 'UNLOCK_NORMAL_CHAPTER'
-        }
+          intendedUse: storyDetail?.contributorId
+            ? "UNLOCK_EXCLUSIVE_CHAPTER"
+            : "UNLOCK_NORMAL_CHAPTER",
+        },
       });
       setAvailableCash(result?.data);
       if (currentChapterDetail?.price > result?.data?.balance) {
         setIsEnoughDiamond(false);
       }
     } catch (err) {
-      setAvailableCash({balance: 0});
+      setAvailableCash({ balance: 0 });
     }
-  }
+  };
 
-  const getQuestion = async() => {
+  const getQuestion = async () => {
     if (!GlobalStore.isLoggedIn) {
       return;
     }
     try {
       const result = await Api.get({
-        url: '/data/private/data/question'
+        url: "/data/private/data/question",
       });
       setQuestion(result?.data);
-    } catch (err) {
-    }
-  }
+    } catch (err) {}
+  };
 
   useEffect(() => {
     fetchData();
-    
   }, [route.query.chapterSlug, GlobalStore.isLoggedIn]);
 
   // const [currentChappter, chapterIndex] = useMemo(() => {
@@ -261,7 +280,7 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
   //           }
 
   //           return prev
-            
+
   //         })
   //         setCurrentChapterDetail(result);
   //         setShowBubble('up');
@@ -298,12 +317,11 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
   //   return () => clearInterval(interval);
   // },[]);
 
-  
   // useEffect(() => {
   //   if (chapters?.length > 0 && currentChapterDetail.length > 6) {
   //     (window.adsbygoogle = window.adsbygoogle || []).push({})
   //   }
-   
+
   // }, [chapters])
 
   // useEffect(() => {
@@ -322,261 +340,422 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
 
   // function getRandom(min, max) {
   //   const floatRandom = Math.random()
-  
+
   //   const difference = max - min
-  
+
   //   // random between 0 and the difference
   //   const random = Math.round(difference * floatRandom)
-  
+
   //   const randomWithinRange = random + min
-  
+
   //   return randomWithinRange
   // }
 
-  const handleOpenChapter = async() => {
+  const handleOpenChapter = async () => {
     if (currentChapterDetail?.price > availableCash?.balance) {
       setShowModalNotEnoughDiamond(true);
       return;
     }
     await Api.post({
-      url: '/data/private/data/chapter/open',
+      url: "/data/private/data/chapter/open",
       data: {
         storySlug: storyDetail.slug,
         numberChapter: 1,
         chapterSlug: route.query.chapterSlug,
-        isOpenFull: false
+        isOpenFull: false,
       },
     });
 
     fetchData();
     window.scrollTo({ top: 0, behavior: "smooth" });
-  }
-
-  const handleSupport = async() => {
-    window.open(`https://m.me/185169981351799?text=Mình đang đọc chương ${chapterTitle} bị khoá trên web. Truyện ${storyTitle}. Giờ mình phải làm sao?`, "_blank");
-  }
-
-  const handleSupportNotAllow = async() => {
-    window.open(`https://m.me/185169981351799?text=Mình đang đọc chương ${chapterTitle} ở trên web mà chương này chỉ được xem trên App. Truyện ${storyTitle}. Giờ mình phải làm sao?`, "_blank");
-  }
-
-  const handleShowChapterList = async() => {
-    setShowChapter(true);
-  }
-
-  const handleClick = (e, code) => {
-    setShowModalApp(false)
-    // saveCustomerClickBanner(code)
-    window.open(`https://toidoc.onelink.me/59bO/d42503wz`, '_blank', 'Toidoc')
   };
 
-  const handleCloseModal = async(code) => {
-    // recordClickAff(localStorage.getItem('DEVICE_ID'), 'STORY_DETAIL_CLOSE')
-    setShowModal(false)
-    // recordClickAff(localStorage.getItem('DEVICE_ID'), 'STORY_DETAIL_CLOSE')
-    // window.open(`https://s.shopee.vn/6KjCdy3HYx`, '_blank', 'Toidoc')
-  }
+  const handleSupport = async () => {
+    window.open(
+      `https://m.me/185169981351799?text=Mình đang đọc chương ${chapterTitle} bị khoá trên web. Truyện ${storyTitle}. Giờ mình phải làm sao?`,
+      "_blank"
+    );
+  };
 
-  const handleClickShopee = async() => {
+  const handleSupportNotAllow = async () => {
+    window.open(
+      `https://m.me/185169981351799?text=Mình đang đọc chương ${chapterTitle} ở trên web mà chương này chỉ được xem trên App. Truyện ${storyTitle}. Giờ mình phải làm sao?`,
+      "_blank"
+    );
+  };
+
+  const handleShowChapterList = async () => {
+    setShowChapter(true);
+  };
+
+  const handleClick = (e, code) => {
+    setShowModalApp(false);
+    // saveCustomerClickBanner(code)
+    window.open(`https://toidoc.onelink.me/59bO/d42503wz`, "_blank", "Toidoc");
+  };
+
+  const handleCloseModal = async (code) => {
+    // recordClickAff(localStorage.getItem('DEVICE_ID'), 'STORY_DETAIL_CLOSE')
+    setShowModal(false);
+    // recordClickAff(localStorage.getItem('DEVICE_ID'), 'STORY_DETAIL_CLOSE')
+    // window.open(`https://s.shopee.vn/6KjCdy3HYx`, '_blank', 'Toidoc')
+  };
+
+  const handleClickShopee = async () => {
     // recordClickAff(localStorage.getItem('DEVICE_ID'), 'STORY_DETAIL')
-    setShowModal(false)
-    window.open(`https://toidoc.onelink.me/59bO/d42503wz`, '_blank', 'Toidoc')
+    setShowModal(false);
+    window.open(`https://toidoc.onelink.me/59bO/d42503wz`, "_blank", "Toidoc");
     // recordClickAff(localStorage.getItem('DEVICE_ID'), 'STORY_DETAIL')
     // window.open(`https://s.shopee.vn/6KjCdy3HYx`, '_blank', 'Toidoc')
-  }
+  };
   return (
     <CommonLayout>
-      <div className='hidden md:block'>
+      <div className="hidden md:block">
         <Header />
       </div>
-      <div className={`bg-story flex items-start justify-center ${!isMobile && 'mt-[100px]'}`}>
-        <div className={`${isMobile && 'hidden'} md:block w-[200px] mt-[27px] mr-[18px]`}>
-          <p className='text-[14px] font-bold main-text mb-[16px]'>
-            Danh mục
-          </p>
+      <div
+        className={`bg-story flex items-start justify-center ${
+          !isMobile && "mt-[100px]"
+        }`}
+      >
+        <div
+          className={`${
+            isMobile && "hidden"
+          } md:block w-[200px] mt-[27px] mr-[18px]`}
+        >
+          <p className="text-[14px] font-bold main-text mb-[16px]">Danh mục</p>
           {storyDetail?.chapters?.map((chap, i) => (
-            <div className='grid-item-chapter' key={chap?.id}>
-              {!chap?.isFree ?
-                <img src='/images/lock.png' style={{'width': '20px', 'float': 'left', 'marginRight': '5px'}}/>
-                :
-                <img src='/images/Done.png' style={{'width': '20px', 'float': 'left', 'marginRight': '5px'}}/>
-              }
-              <a className={classNames('block py-[4px] text-[16px] font-medium secondary-text title-truncate-style', currentChapter?.id === chap?.id && 'primary-text')}
-              onClick={() => {
-                Router.replace(`/${storyDetail.slug}/${chap.slug}`)
-                setShowChapter(false)
-              }}
-              key={chap.id}
-              href={`/${storyDetail.slug}/${chap.slug}`}
-              title={`${storyDetail?.title} - ${chap.title}`}
+            <div className="grid-item-chapter" key={chap?.id}>
+              {!chap?.isFree ? (
+                <img
+                  src="/images/lock.png"
+                  style={{ width: "20px", float: "left", marginRight: "5px" }}
+                />
+              ) : (
+                <img
+                  src="/images/Done.png"
+                  style={{ width: "20px", float: "left", marginRight: "5px" }}
+                />
+              )}
+              <a
+                className={classNames(
+                  "block py-[4px] text-[16px] font-medium secondary-text title-truncate-style",
+                  currentChapter?.id === chap?.id && "primary-text"
+                )}
+                onClick={() => {
+                  Router.replace(`/${storyDetail.slug}/${chap.slug}`);
+                  setShowChapter(false);
+                }}
+                key={chap.id}
+                href={`/${storyDetail.slug}/${chap.slug}`}
+                title={`${storyDetail?.title} - ${chap.title}`}
               >
                 {i + 1}. {chap.title}
               </a>
             </div>
           ))}
         </div>
-        <div className='max-w-[768px] md:bg-white'>
-        {!isMobile && 
-          <div className={`align-center border-b-[1px] border-color px-[5px] py-[10px] bg-[#f0f0f0] text-black font-semibold font-sans ${isMobile && 'hidden'}`}>
-            <Link href='/tim-kiem' passHref>
-            <a className='text-blue-500 max-w-[30%]'>Trang khám phá</a>
-            </Link>
-            <img className='h-[20px] mx-[10px]' src='/images/arrowright.png'/>
-            <Link href={`/${storyDetail?.slug}`} passHref>
-            <a className='text-blue-500 max-w-[40%] line-clamp-1 text-ellipsis' title={storyDetail?.title}>{storyDetail?.title}</a>
-            </Link>
-            <img className='h-[20px] mx-[10px]' src='/images/arrowright.png'/>
-            <Link href={`/${storyDetail?.slug}/${route.query.chapterSlug}`} passHref>
-            <a className='text-blue-500 max-w-[30%] line-clamp-1 text-ellipsis' title={chapterTitle}>{chapterTitle}</a>
-            </Link>
-          </div>
-        }
-        {isMobile && <div className={`flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 bg-story`}>
-          <a className='p-[20px]' title={`Truyện ${storyDetail?.title}`}
-            onClick={() => {
-              Router.back()
-            }}
-          >
-            <img src='/images/arrow-left.svg' className='w-[35px]' alt={`Quay lại truyện ${storyDetail?.title}`}/>
-          </a>
+        <div className="max-w-[768px] md:bg-white">
+          {!isMobile && (
+            <div
+              className={`align-center border-b-[1px] border-color px-[5px] py-[10px] bg-[#f0f0f0] text-black font-semibold font-sans ${
+                isMobile && "hidden"
+              }`}
+            >
+              <Link href="/tim-kiem" passHref>
+                <a className="text-blue-500 max-w-[30%]">Trang khám phá</a>
+              </Link>
+              <img
+                className="h-[20px] mx-[10px]"
+                src="/images/arrowright.png"
+              />
+              <Link href={`/${storyDetail?.slug}`} passHref>
+                <a
+                  className="text-blue-500 max-w-[40%] line-clamp-1 text-ellipsis"
+                  title={storyDetail?.title}
+                >
+                  {storyDetail?.title}
+                </a>
+              </Link>
+              <img
+                className="h-[20px] mx-[10px]"
+                src="/images/arrowright.png"
+              />
+              <Link
+                href={`/${storyDetail?.slug}/${route.query.chapterSlug}`}
+                passHref
+              >
+                <a
+                  className="text-blue-500 max-w-[30%] line-clamp-1 text-ellipsis"
+                  title={chapterTitle}
+                >
+                  {chapterTitle}
+                </a>
+              </Link>
+            </div>
+          )}
+          {isMobile && (
+            <div
+              className={`flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 bg-story`}
+            >
+              <a
+                className="p-[20px]"
+                title={`Truyện ${storyDetail?.title}`}
+                onClick={() => {
+                  Router.back();
+                }}
+              >
+                <img
+                  src="/images/arrow-left.svg"
+                  className="w-[35px]"
+                  alt={`Quay lại truyện ${storyDetail?.title}`}
+                />
+              </a>
 
-          <Link href={`/${storyDetail?.slug}`} passHref>
-          <a title={`Truyện ${storyDetail?.title}`}>
-            <h1 className='text-[20px] leading-[24px] font-bold main-text mb-0 line-clamp-1'>
-              {storyDetail?.title}
-            </h1>
-          </a>
-          </Link>
-          <Link href='/tim-kiem' passHref>
-          <a className='w-[68px] p-[10px] md:hidden ml-[5px]' title={`Trang chủ Toidoc`} >
-            <img src='/images/main-home.png' className='w-[24px]' alt={`Trang chủ Toidoc`}/>
-          </a>
-          </Link>
-          <Link href={`/${storyDetail?.slug}`} passHref>
-          <a className='w-[68px] p-[10px] md:hidden' title={`Bìa truyện ${storyDetail?.title}`} >
-            <img src='/images/icon-book-open.png' className='w-[24px]' alt={`Danh sách chương truyện ${storyDetail?.title}`}/>
-          </a>
-          </Link>
-          <a className='w-[68px] p-[10px] md:hidden' title={`Danh sách chương truyện ${storyDetail?.title}`}
-            onClick={() => {
-              handleShowChapterList()
-            }}
-          >
-            <img src='/images/list.png' className='w-[24px]' alt={`Danh sách chương truyện ${storyDetail?.title}`}/>
-          </a>
-        </div>}
-        <div className='story-content px-[20px]'>
-          <div>
-            <Link href={`/${currentChapter?.storySlug}/${currentChapter?.chapterSlug}`} passHref>
-            <a title={`${storyDetail?.title} - ${chapterTitle}`}>
-              <h2 className='text-[20px] font-bold secondary-text mt-[16px] chapter-title'>{chapterTitle}</h2>
-            </a>
-            </Link>
-      
-            <div className='text-[20px] leading-[32px]  breakword'>
-              {allowOpenWeb ? 
-                <>
-                  {GlobalStore.copyData ? 
-                    <>
-                      <p className='alert-text'>Chúng tôi nghiêm cấm các hành vi sao chép và phát tán dữ liệu từ nền tảng mà chưa được phép.<br/>Hãy tải lại trang để đọc truyện nhé!</p>
-                    </>
-                    :
-                    <>
-                      {chapterContents?.map((item, i) => (
-                        <div key={`${item.order}-${i}`}>
-                          <ContentDisplay item={item} fdsfsjs={fdfssfds} dfjkdsfds={jkdjfk} order={i}/>
-                          {i === 6 && <a href='https://m.me/185169981351799?text=Mình quan tâm tới gói Premium. Hỗ trợ mình trên web với'><img src='https://media.truyenso1.xyz/ads/upgrade-premium.png' className='img-ads' alt='Toidoc premium'/></a>}
-                        </div>
-                      ))}
-                    </>
-                    }
-                  
-                  
-                  {!loggedIn ?
-                    <ShortLogin />
-                  : needOpenChapter ?
-                    <div>
-                      <OpenChapterInfo story={storyDetail} chapter={currentChapter} handleOpenChapter={handleOpenChapter} handleSupport={handleSupport} availableCash={availableCash}/>
-                    </div>
-                  : <></>
-                  }
-                </>
-              :
-                isLoading ? <><p>Đang tải dữ liệu .....</p></>
-              : 
-                <OpenInAppInfo handleSupport={handleSupportNotAllow} chapterDetail={currentChapterDetail} storyDetail={storyDetail} handleOpenChapter={handleOpenChapter}/>
-              }
-              
+              <Link href={`/${storyDetail?.slug}`} passHref>
+                <a title={`Truyện ${storyDetail?.title}`}>
+                  <h1 className="text-[20px] leading-[24px] font-bold main-text mb-0 line-clamp-1">
+                    {storyDetail?.title}
+                  </h1>
+                </a>
+              </Link>
+              <Link href="/tim-kiem" passHref>
+                <a
+                  className="w-[68px] p-[10px] md:hidden ml-[5px]"
+                  title={`Trang chủ Toidoc`}
+                >
+                  <img
+                    src="/images/main-home.png"
+                    className="w-[24px]"
+                    alt={`Trang chủ Toidoc`}
+                  />
+                </a>
+              </Link>
+              <Link href={`/${storyDetail?.slug}`} passHref>
+                <a
+                  className="w-[68px] p-[10px] md:hidden"
+                  title={`Bìa truyện ${storyDetail?.title}`}
+                >
+                  <img
+                    src="/images/icon-book-open.png"
+                    className="w-[24px]"
+                    alt={`Danh sách chương truyện ${storyDetail?.title}`}
+                  />
+                </a>
+              </Link>
+              <a
+                className="w-[68px] p-[10px] md:hidden"
+                title={`Danh sách chương truyện ${storyDetail?.title}`}
+                onClick={() => {
+                  handleShowChapterList();
+                }}
+              >
+                <img
+                  src="/images/list.png"
+                  className="w-[24px]"
+                  alt={`Danh sách chương truyện ${storyDetail?.title}`}
+                />
+              </a>
+            </div>
+          )}
+          <div className="story-content px-[20px]">
+            <div>
+              <Link
+                href={`/${currentChapter?.storySlug}/${currentChapter?.chapterSlug}`}
+                passHref
+              >
+                <a title={`${storyDetail?.title} - ${chapterTitle}`}>
+                  <h2 className="text-[20px] font-bold secondary-text mt-[16px] chapter-title">
+                    {chapterTitle}
+                  </h2>
+                </a>
+              </Link>
 
-              {currentChapter && 
-                <div className='navigation-buttons'>
-                  {currentChapter?.previous && <Link href={`/${storyDetail?.slug}/${currentChapter?.previous}`}><a className='back-button'>{'< Chương trước'}</a></Link>}
-                  {currentChapter?.next && <Link href={`/${storyDetail?.slug}/${currentChapter?.next}`}><a className='next-button'>{'Chương tiếp >'}</a></Link>}
-                </div>
-              }
+              <div className="text-[20px] leading-[32px]  breakword">
+                {allowOpenWeb ? (
+                  <>
+                    {GlobalStore.copyData ? (
+                      <>
+                        <p className="alert-text">
+                          Chúng tôi nghiêm cấm các hành vi sao chép và phát tán
+                          dữ liệu từ nền tảng mà chưa được phép.
+                          <br />
+                          Hãy tải lại trang để đọc truyện nhé!
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        {chapterContents?.map((item, i) => (
+                          <div key={`${item.order}-${i}`}>
+                            <ContentDisplay
+                              item={item}
+                              fdsfsjs={fdfssfds}
+                              dfjkdsfds={jkdjfk}
+                              order={i}
+                            />
+                            {i === 6 && (
+                              <a href="https://m.me/185169981351799?text=Mình quan tâm tới gói Premium. Hỗ trợ mình trên web với">
+                                <img
+                                  src="https://media.truyenso1.xyz/ads/upgrade-premium.png"
+                                  className="img-ads"
+                                  alt="Toidoc premium"
+                                />
+                              </a>
+                            )}
+                          </div>
+                        ))}
+                      </>
+                    )}
+
+                    {!loggedIn ? (
+                      <ShortLogin />
+                    ) : needOpenChapter ? (
+                      <div>
+                        <OpenChapterInfo
+                          story={storyDetail}
+                          chapter={currentChapter}
+                          handleOpenChapter={handleOpenChapter}
+                          handleSupport={handleSupport}
+                          availableCash={availableCash}
+                        />
+                      </div>
+                    ) : (
+                      <></>
+                    )}
+                  </>
+                ) : isLoading ? (
+                  <>
+                    <p>Đang tải dữ liệu .....</p>
+                  </>
+                ) : (
+                  <OpenInAppInfo
+                    handleSupport={handleSupportNotAllow}
+                    chapterDetail={currentChapterDetail}
+                    storyDetail={storyDetail}
+                    handleOpenChapter={handleOpenChapter}
+                  />
+                )}
+
+                {currentChapter && (
+                  <div className="navigation-buttons">
+                    {currentChapter?.previous && (
+                      <Link
+                        href={`/${storyDetail?.slug}/${currentChapter?.previous}`}
+                      >
+                        <a className="back-button">{"< Chương trước"}</a>
+                      </Link>
+                    )}
+                    {currentChapter?.next && (
+                      <Link
+                        href={`/${storyDetail?.slug}/${currentChapter?.next}`}
+                      >
+                        <a className="next-button">{"Chương tiếp >"}</a>
+                      </Link>
+                    )}
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
-      
-        </div>
-        { showChapter
-          && <Chapters setShowChapter={setShowChapter}
+        {showChapter && (
+          <Chapters
+            setShowChapter={setShowChapter}
             story={storyDetail}
             currentChapter={currentChapter}
           />
-        }
-        
-        {showModalApp && <ModalComponent
-          show={showModalApp}
-          handleClose={() => {
-            // window.open(`https://shope.ee/50BSb77Zxb`, '_blank', 'Toidoc')
-            setShowModalApp(false)
-          }}
-          isCountDown={false}
-        >
-          <a onClick={(e) => handleClick(e, 'big-banner')}>
-            {/*<img src={popupUrl} className='imgBanner'/>*/}
-            <img src='https://media.truyenso1.xyz/ads/update-app.png' className='imgBanner'/>
-          </a>
-        </ModalComponent>}
-        {showModal && <ModalComponent
-          show={showModal}
-          handleClose={(e) => handleCloseModal('aff')}
-          isCountDown={false}
-          countDownTime={5}
-        >
-          <a onClick={(e) => handleClickShopee()}>
-            <img src="https://media.truyenso1.xyz/ads/bxh-ve-vang-20-9.png" className='imgBanner' rel='nofollow'/>
-          </a>
-        </ModalComponent>}
-        {showModalNotEnoughDiamond && 
+        )}
+
+        {showModalApp && (
+          <ModalComponent
+            show={showModalApp}
+            handleClose={() => {
+              // window.open(`https://shope.ee/50BSb77Zxb`, '_blank', 'Toidoc')
+              setShowModalApp(false);
+            }}
+            isCountDown={false}
+          >
+            <a onClick={(e) => handleClick(e, "big-banner")}>
+              {/*<img src={popupUrl} className='imgBanner'/>*/}
+              <img
+                src="https://media.truyenso1.xyz/ads/update-app.png"
+                className="imgBanner"
+              />
+            </a>
+          </ModalComponent>
+        )}
+        {showModal && (
+          <ModalComponent
+            show={showModal}
+            handleClose={(e) => handleCloseModal("aff")}
+            isCountDown={false}
+            countDownTime={5}
+          >
+            <a onClick={(e) => handleClickShopee()}>
+              <img
+                src="https://media.truyenso1.xyz/ads/bxh-ve-vang-20-9.png"
+                className="imgBanner"
+                rel="nofollow"
+              />
+            </a>
+          </ModalComponent>
+        )}
+        {showModalNotEnoughDiamond && (
           <ModalComponent
             show={showModalNotEnoughDiamond}
             handleClose={(e) => setShowModalNotEnoughDiamond(false)}
-            styleBody='background-gradient-gray'>
-            <div className='h-[250px]'>
-              <p className='mt-[50px] px-[20px]' dangerouslySetInnerHTML={{ __html: `Hiện bạn có tổng <strong><span style='color:rgb(212, 39, 4); font-size: 20px'>${availableCash?.balance}</span></strong> kim cương, không đủ để mở chương này. Bạn hãy nạp thêm nhé` }} />
-              <p className='px-[20px]' dangerouslySetInnerHTML={{ __html: `Mở toàn bộ truyện này hết tổng <strong><span style='color:rgb(212, 39, 4); font-size: 20px'>${formatStringToNumber(fullPriceStory?.remained)}</span></strong> kim cương.`}} />
-              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
-                <Link href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}`} passHref><a className='button-deposit-diamond'>Nạp kim cương</a></Link>
+            styleBody="background-gradient-gray"
+          >
+            <div className="h-[250px]">
+              <p
+                className="mt-[50px] px-[20px]"
+                dangerouslySetInnerHTML={{
+                  __html: `Hiện bạn có tổng <strong><span style='color:rgb(212, 39, 4); font-size: 20px'>${availableCash?.balance}</span></strong> kim cương, không đủ để mở chương này. Bạn hãy nạp thêm nhé`,
+                }}
+              />
+              <p
+                className="px-[20px]"
+                dangerouslySetInnerHTML={{
+                  __html: `Mở toàn bộ truyện này hết tổng <strong><span style='color:rgb(212, 39, 4); font-size: 20px'>${formatStringToNumber(
+                    fullPriceStory?.remained
+                  )}</span></strong> kim cương.`,
+                }}
+              />
+              <div
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Link
+                  href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}`}
+                  passHref
+                >
+                  <a className="button-deposit-diamond">Nạp kim cương</a>
+                </Link>
               </div>
             </div>
           </ModalComponent>
-        }
-        {showQuestion &&
+        )}
+        {showQuestion && (
           <ModalWithoutCloseButton
             show={showQuestion}
             handleClose={(e) => setShowQuestion(false)}
-            styleBody='background-gradient-gray'>
-            <Question question={question} closeModal = {() => setShowQuestion(false)} />
+            styleBody="background-gradient-gray"
+          >
+            <Question
+              question={question}
+              closeModal={() => setShowQuestion(false)}
+            />
           </ModalWithoutCloseButton>
-        }
+        )}
       </div>
-    {/*<MobileShare showBubble={showBubble} setShowBubble={setShowBubble}/>*/}
-    {/*<ChatSupportAutoClose/>*/}
-    <Spin spinning={loadingChapterDetail} />
+      {/*<MobileShare showBubble={showBubble} setShowBubble={setShowBubble}/>*/}
+      {/*<ChatSupportAutoClose/>*/}
+      <Spin spinning={loadingChapterDetail} />
     </CommonLayout>
-  )
-}
+  );
+};
 
-export default observer(StoryDetail)
+export default observer(StoryDetail);
