@@ -8,23 +8,10 @@ const PriceInfo = ({discountValue, finalChargeValue, storyDetail, handleOpenFull
     <div className='align-center'>
       <div className='box-price-full-story'>
         <div className="box-price-full-story-border">
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column", // Xếp các phần tử theo cột
-              alignItems: "center", // Căn giữa theo chiều ngang
-              justifyContent: "center", // Căn giữa theo chiều dọc
-              textAlign: "center", // Căn giữa nội dung văn bản
-              height: "100%", // Đảm bảo phần tử bao phủ toàn bộ chiều cao
-            }}
+          <div className='flex flex-col items-center justify-between text-center h-full'
           >
             <p
-              className="white-text"
-              style={{
-                margin: "10px 20px 0px 20px",
-                fontWeight: "bold",
-                fontSize: '20px',
-              }}
+              className="white-text mt-2.5 mr-5 ml-5 font-bold text-xl"
             >
               <span className="fl mr-[5px]">
                 {`Ủng Hộ ${formatStringToNumber(finalChargeValue)}`}
@@ -62,7 +49,7 @@ const PriceInfo = ({discountValue, finalChargeValue, storyDetail, handleOpenFull
           >
             <Button
               onClick={() => handleOpenFullChapter()}
-              className="button-open-chapter-summary"
+              className="bg-gradient-to-r from-[#FFE279] to-[#DA9226] text-white py-2.5 px-5 text-base font-bold rounded-md animate-shimmer hover:-translate-y-2 transition delay-100"
             >
               Mở Tất Cả Chương
             </Button>

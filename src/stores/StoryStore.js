@@ -56,9 +56,17 @@ class StoryStore {
 
   isClickAff = false;
 
+  isOpenFull = false;
+
   constructor() {
     makeAutoObservable(this);
     this.getBookMark(1, 1000);
+  }
+
+  setIsOpenFull = (value) => {
+    runInAction(() => {
+      this.isOpenFull = value;
+    })
   }
 
   getcollections1 = async () => {

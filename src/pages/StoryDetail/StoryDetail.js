@@ -20,6 +20,7 @@ import OpenInAppInfo from './OpenInAppInfo'
 import OpenChapterInfo from './OpenChapterInfo'
 import ContentDisplay from './ContentDisplay';
 import Link from 'next/link';
+import { Spin } from 'antd';
 
 const StoryDetail = ({chapterTitle, storyTitle}) => {
   const [showBubble, setShowBubble] = useState('up');
@@ -416,17 +417,17 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
         </div>
         <div className='max-w-[768px] md:bg-white'>
         {!isMobile && 
-          <div className={`align-center border-b-[1px] border-color px-[5px] py-[10px] ${isMobile && 'hidden'}`} style={{backgroundColor: '#f0f0f0', color: '#5C95C6', fontWeight: '600', fontFamily: 'sans-serif'}}>
+          <div className={`align-center border-b-[1px] border-color px-[5px] py-[10px] bg-[#f0f0f0] text-black font-semibold font-sans ${isMobile && 'hidden'}`}>
             <Link href='/tim-kiem' passHref>
-            <a>Trang khám phá</a>
+            <a className='text-blue-500 max-w-[30%]'>Trang khám phá</a>
             </Link>
             <img className='h-[20px] mx-[10px]' src='/images/arrowright.png'/>
             <Link href={`/${storyDetail?.slug}`} passHref>
-            <a title={storyDetail?.title}>{storyDetail?.title}</a>
+            <a className='text-blue-500 max-w-[40%] line-clamp-1 text-ellipsis' title={storyDetail?.title}>{storyDetail?.title}</a>
             </Link>
             <img className='h-[20px] mx-[10px]' src='/images/arrowright.png'/>
             <Link href={`/${storyDetail?.slug}/${route.query.chapterSlug}`} passHref>
-            <a title={chapterTitle}>{chapterTitle}</a>
+            <a className='text-blue-500 max-w-[30%] line-clamp-1 text-ellipsis' title={chapterTitle}>{chapterTitle}</a>
             </Link>
           </div>
         }
@@ -573,6 +574,7 @@ const StoryDetail = ({chapterTitle, storyTitle}) => {
       </div>
     {/*<MobileShare showBubble={showBubble} setShowBubble={setShowBubble}/>*/}
     {/*<ChatSupportAutoClose/>*/}
+    <Spin spinning={loadingChapterDetail} />
     </CommonLayout>
   )
 }
