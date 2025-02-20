@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import Button from '../../components/Button';
-import Link from 'next/link';
+import React, { useState, useEffect } from "react";
+import Button from "../../components/Button";
+import Link from "next/link";
 
-const PaginatedList = ({items}) => {
+const PaginatedList = ({ items }) => {
   const [itemsPerPage, setItemsPerPage] = useState(50);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
- 
+
   useEffect(() => {
     // Calculate the start and end indices for the current page
     const startIndex = (currentPage - 1) * itemsPerPage;
@@ -19,7 +19,6 @@ const PaginatedList = ({items}) => {
     // Total number of pages
     setTotalPages(Math.ceil(items?.length / itemsPerPage));
   }, [items, currentPage]);
-
 
   // Handle page navigation
   const goToPage = (pageNumber) => {
@@ -37,11 +36,26 @@ const PaginatedList = ({items}) => {
       }
     } else {
       if (currentPage <= 3) {
-        pageNumbers.push(1, 2, 3, 4, '...', totalPages);
+        pageNumbers.push(1, 2, 3, 4, "...", totalPages);
       } else if (currentPage >= totalPages - 2) {
-        pageNumbers.push(1, '...', totalPages - 3, totalPages - 2, totalPages - 1, totalPages);
+        pageNumbers.push(
+          1,
+          "...",
+          totalPages - 3,
+          totalPages - 2,
+          totalPages - 1,
+          totalPages
+        );
       } else {
-        pageNumbers.push(1, '...', currentPage - 1, currentPage, currentPage + 1, '...', totalPages);
+        pageNumbers.push(
+          1,
+          "...",
+          currentPage - 1,
+          currentPage,
+          currentPage + 1,
+          "...",
+          totalPages
+        );
       }
     }
 
@@ -52,35 +66,48 @@ const PaginatedList = ({items}) => {
 
   return (
     <div>
-        <div className='grid-container-style'>
-            {currentItems?.map((item, index) => (
-            <div key={index} className='grid-item-style'>
-                {!item?.isFree ?
-                    <img src='/images/lock.png' style={{'width': '20px', 'float': 'left', 'marginRight': '5px'}}/>
-                    :
-                    <img src='/images/Done.png' style={{'width': '20px', 'float': 'left', 'marginRight': '5px'}}/>
-                }
-                <Link href={`/${item?.storySlug}/${item?.slug}`} passHref>
-                  <a className='title-truncate-style'>{item?.title}</a>
-                </Link>
-            </div>
-            ))}
-        </div>
-      
-      <div style={{ display: 'flex', gap: '5px', marginTop: '10px', justifyContent: 'center' }}>
+      <div className="grid-container-style">
+        {currentItems?.map((item, index) => (
+          <div key={index} className="grid-item-style">
+            {!item?.isFree ? (
+              <img
+                src="/images/lock.png"
+                className="w-5 float-left mr-[5px]"
+              />
+            ) : (
+              <img
+                src="/images/Done.png"
+                className="w-5 float-left mr-[5px]"
+              />
+            )}
+            <Link href={`/${item?.storySlug}/${item?.slug}`}>
+              <a
+                title={item?.title}
+                className="title-truncate-style"
+              >
+                {item?.title}
+              </a>
+            </Link>
+          </div>
+        ))}
+      </div>
+
+      <div
+        className="flex gap-[5px] mt-2.5 justify-center"
+      >
         {/* Previous Button */}
         <Button
-          className='button-page'
+          className="button-page"
           onClick={() => goToPage(currentPage - 1)}
           disabled={currentPage === 1}
         >
-          {'<<'}
+          {"<<"}
         </Button>
 
         {/* Page Numbers */}
         {pageNumbers.map((page, index) =>
-          page === '...' ? (
-            <span key={index} className='box-page'>
+          page === "..." ? (
+            <span key={index} className="box-page">
               ...
             </span>
           ) : (
@@ -88,7 +115,7 @@ const PaginatedList = ({items}) => {
               key={index}
               onClick={() => goToPage(page)}
               disabled={currentPage === page}
-              className='button-page'
+              className="button-page"
             >
               {page}
             </Button>
@@ -97,11 +124,11 @@ const PaginatedList = ({items}) => {
 
         {/* Next Button */}
         <Button
-          className='button-page'
+          className="button-page"
           onClick={() => goToPage(currentPage + 1)}
           disabled={currentPage === totalPages}
         >
-         {'>>'}
+          {">>"}
         </Button>
       </div>
     </div>

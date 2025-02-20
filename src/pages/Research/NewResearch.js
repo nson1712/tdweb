@@ -244,8 +244,8 @@ const Research = () => {
 
                     <div className="flex">
                       <Link
-                        href={`${viewings.data?.[0].storySlug}/${viewings.data?.[0].chapterSlug}`}
-                        title={viewings.data?.[0].story.title}
+                        href={`${viewings?.data?.[0].storySlug}/${viewings?.data?.[0].chapterSlug}`}
+                        title={viewings?.data?.[0].story.title}
                         passHref
                       >
                         <a className="w-full text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-bold rounded-lg text-base p-2.5 text-center shadow-md hover:!text-black cursor-pointer">
