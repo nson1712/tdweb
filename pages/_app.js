@@ -13,6 +13,7 @@ import '../public/styles/styles.scss'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import GlobalStore from '../src/stores/GlobalStore';
 import { redirectToBrowser, isCocCoc } from '../src/utils/utils';
+import FacebookSDK from "../src/components/FacebookSDK";
 
 
 export default function App({ Component, pageProps }) {
@@ -167,7 +168,8 @@ export default function App({ Component, pageProps }) {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Palatino%20Linotype:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" /> */}
       </Head>
-
+      
+      <FacebookSDK />
       <GoogleOAuthProvider clientId="195908018380-ehemlqtqp4b7kej9ah7hpglqtjict07r.apps.googleusercontent.com">
         <Component {...pageProps} />
       </GoogleOAuthProvider>

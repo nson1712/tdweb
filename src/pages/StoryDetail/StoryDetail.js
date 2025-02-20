@@ -370,19 +370,13 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleSupport = async () => {
-    window.open(
-      `https://m.me/185169981351799?text=Mình đang đọc chương ${chapterTitle} bị khoá trên web. Truyện ${storyTitle}. Giờ mình phải làm sao?`,
-      "_blank"
-    );
-  };
+  const handleSupport = async() => {
+    window.open(`https://m.me/185169981351799?text=${GlobalStore.profile?.referralCode ? 'Mã KH của mình là: ' + GlobalStore.profile?.referralCode + '. ' : ''}Mình đang đọc chương ${chapterTitle} bị khoá trên web. Truyện ${storyTitle}. Giờ mình phải làm sao?`, "_blank");
+  }
 
-  const handleSupportNotAllow = async () => {
-    window.open(
-      `https://m.me/185169981351799?text=Mình đang đọc chương ${chapterTitle} ở trên web mà chương này chỉ được xem trên App. Truyện ${storyTitle}. Giờ mình phải làm sao?`,
-      "_blank"
-    );
-  };
+  const handleSupportNotAllow = async() => {
+    window.open(`https://m.me/185169981351799?text=${GlobalStore.profile?.referralCode ? 'Mã KH của mình là: ' + GlobalStore.profile?.referralCode + '. ' : ''}Mình đang đọc chương ${chapterTitle} ở trên web mà chương này chỉ được xem trên App. Truyện ${storyTitle}. Giờ mình phải làm sao?`, "_blank");
+  }
 
   const handleShowChapterList = async () => {
     setShowChapter(true);

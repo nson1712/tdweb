@@ -408,18 +408,12 @@ const StorySummary = () => {
 
   return (
     <CommonLayout>
-      <Header />
-      <div className="max-w-[620px] mx-[auto] pt-[40px] bg-story">
-        <div
-          className={classNames(
-            "flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 z-[99] bg-white mobile-header",
-            scrollOffset > 100 && "mobile-header-show",
-            `${scrollDirection === "down" ? "hide" : "show-header"}`
-          )}
-        >
-          <a
-            className="p-[10px]"
-            title={`Truyện ${storyDetail?.title}`}
+      {/* <div className='hidden md:block'> */}
+        <Header />
+      {/* </div> */}
+      <div className='max-w-[620px] mx-[auto] pt-[40px] bg-story'>
+        {/*<div className={classNames('flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 top-0 z-[99] bg-white mobile-header', scrollOffset > 100 && 'mobile-header-show', `${scrollDirection === 'down' ? 'hide' : 'show-header'}`)}>
+          <a className='p-[10px]' title={`Truyện ${storyDetail?.title}`}
             onClick={() => {
               window.scrollTo({ top: 0, left: 0, behavior: "instant" });
             }}
@@ -446,7 +440,7 @@ const StorySummary = () => {
           >
             <img src="/images/checkmark.svg" className="w-6" />
           </a>
-        </div>
+        </div>*/}
 
         <MobileHeader show={scrollOffset <= 100} />
         <div
@@ -527,15 +521,6 @@ const StorySummary = () => {
             </div>
             <div className="flex gap-x-4 items-start">
               <div className="max-w-24 mt-2">
-                {/* <Image
-                className="rounded-2xl"
-                  loader={imageLoader}
-                  src={storyDetail?.thumbnail || storyDetail?.coverImage}
-                  alt={`Truyện ${storyDetail?.title}`}
-                  title={storyDetail?.title}
-                  width={80}
-                  height={120}
-                /> */}
                 <img
                 src={storyDetail?.thumbnail || storyDetail?.coverImage}
                 alt={`Truyện ${storyDetail?.title}`}
