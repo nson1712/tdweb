@@ -383,7 +383,7 @@ const StorySummary = () => {
         <Header />
       {/* </div> */}
       <div className='max-w-[620px] mx-[auto] pt-[40px] bg-story'>
-        <div className={classNames('flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 top-0 z-[99] bg-white mobile-header', scrollOffset > 100 && 'mobile-header-show', `${scrollDirection === 'down' ? 'hide' : 'show-header'}`)}>
+        {/*<div className={classNames('flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 top-0 z-[99] bg-white mobile-header', scrollOffset > 100 && 'mobile-header-show', `${scrollDirection === 'down' ? 'hide' : 'show-header'}`)}>
           <a className='p-[10px]' title={`Truyện ${storyDetail?.title}`}
             onClick={() => {
               window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
@@ -405,7 +405,7 @@ const StorySummary = () => {
           >
             <img src='/images/checkmark.svg' className='w-[24px]' />
           </a>
-        </div>
+        </div>*/}
 
         <MobileHeader show={scrollOffset <= 100} />
         <div style={{'marginTop': '14px'}} dangerouslySetInnerHTML={{__html: `<a id='link-video-header' href='https://toidoc.onelink.me/59bO/d42503wz'> <video autoplay loop muted playsinline><source src='https://media.truyenso1.xyz/ads/top-banner.mp4' type='video/mp4' rel='nofollow'/></video> </a>`}} />
@@ -457,7 +457,7 @@ const StorySummary = () => {
                 <a href={`${storyDetail?.slug}`} title={`Truyện ${storyDetail?.title}`}>
                   <h1 className='text-[16px] font-bold text-white mb-0'>{storyDetail?.title}</h1>
                 </a>
-                <h2 className='secondary-the-loai text-[14px] font-medium leading-[17px] mt-[4px] mb-0'>
+                <div className='secondary-the-loai text-[14px] font-medium leading-[17px] mt-[4px] mb-0'>
                   {storyDetail?.categories?.slice(0, 3).map((item, i) => (
                     <Link href={`/the-loai/${item.code}`} key={item.code} passHref>
                       <a className='secondary-the-loai text-[14px] font-medium leading-[17px] mt-[4px] mb-0 mr-[6px] underline'>
@@ -465,7 +465,7 @@ const StorySummary = () => {
                       </a>
                     </Link>
                   ))}
-                </h2>
+                </div>
                 <div className='mt-[5px]'>
                   {storyDetail?.status === 'ACTIVE' ? 
                   
@@ -539,9 +539,9 @@ const StorySummary = () => {
         }
         
         <div className='p-[16px] pr-[5px]'>
-          <p className='text-[18px] font-bold main-text text-underline'>
+          <h2 className='text-[18px] font-bold main-text text-underline'>
             Văn án
-          </p>
+          </h2>
           <div className='border-b-[1px] border-color pb-[16px]'>
             <div style={{ marginBottom: '10px' }}>
               <ReadMore>
@@ -565,9 +565,11 @@ const StorySummary = () => {
                       :
                       <img src='/images/lock.png' style={{'width': '20px', 'float': 'left', 'marginRight': '5px'}}/>
                     }
-                    <a href={`/${storyDetail?.slug}/${chapter.slug}`} title={`${storyDetail?.title} - ${chapter.title}`} className='text-[16px] newest-chapter-text title-truncate-style'>
-                      {chapter?.title}
-                    </a>
+                    <Link href={`/${storyDetail?.slug}/${chapter.slug}`} passHref>
+                      <a title={`${storyDetail?.title} - ${chapter.title}`} className='text-[16px] newest-chapter-text title-truncate-style'>
+                        {chapter?.title}
+                      </a>
+                    </Link>
                   </div>
                 )))}
               </div>

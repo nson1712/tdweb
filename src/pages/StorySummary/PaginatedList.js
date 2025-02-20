@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Button from '../../components/Button';
+import Link from 'next/link';
 
 const PaginatedList = ({items}) => {
   const [itemsPerPage, setItemsPerPage] = useState(50);
@@ -59,7 +60,9 @@ const PaginatedList = ({items}) => {
                     :
                     <img src='/images/Done.png' style={{'width': '20px', 'float': 'left', 'marginRight': '5px'}}/>
                 }
-                <a href={`/${item?.storySlug}/${item?.slug}`} className='title-truncate-style'>{item?.title}</a>
+                <Link href={`/${item?.storySlug}/${item?.slug}`} passHref>
+                  <a className='title-truncate-style'>{item?.title}</a>
+                </Link>
             </div>
             ))}
         </div>
