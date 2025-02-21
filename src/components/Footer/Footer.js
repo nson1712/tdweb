@@ -110,6 +110,9 @@ const Footer = () => {
 
           <div className="order-1 text-xs text-blue-400 self-center text-center">
             Copyright @ by Toidoc.vn All rights reserved
+            <div className="self-center flex">
+              <a href="//www.dmca.com/Protection/Status.aspx?ID=6f2ee0d7-917c-47f5-b84e-973bdcdf5f07" title="DMCA.com Protection Status" className="dmca-badge"> <img src ="https://images.dmca.com/Badges/dmca-badge-w150-2x1-02.png?ID=6f2ee0d7-917c-47f5-b84e-973bdcdf5f07"  alt="DMCA.com Protection Status" /></a>
+            </div>
           </div>
         </div>
       </div>

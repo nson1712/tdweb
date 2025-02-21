@@ -56,7 +56,6 @@ const Contact = () => {
             <p className='contact-subtitle'>- Email: <span className='contact-label'><a href="mailto:toidoc.io@gmail.com">toidoc.io@gmail.com</a></span></p>
             <p className='contact-subtitle'>- Chat Support: <span className='contact-label'><a href='https://m.me/185169981351799?text=Mình đang đọc truyện trên web. Hỗ trợ giúp mình với.' rel='nofollow'>https://m.me/185169981351799</a></span></p>
           </div>
-          <a href="//www.dmca.com/Protection/Status.aspx?ID=6f2ee0d7-917c-47f5-b84e-973bdcdf5f07" title="DMCA.com Protection Status" class="dmca-badge"> <img src ="https://images.dmca.com/Badges/dmca-badge-w150-2x1-02.png?ID=6f2ee0d7-917c-47f5-b84e-973bdcdf5f07"  alt="DMCA.com Protection Status" /></a>
         </div>
       </div>
     </CommonLayout>

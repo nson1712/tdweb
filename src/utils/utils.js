@@ -606,3 +606,7 @@ export const handleStoreOpen = (osType) => {
     window.open(url, "_blank", "Toidoc");
   }
 };
+
+export const getUrlImage = ({ src, width, quality }) => {
+  return `${src}?w=${width}&q=${quality || 75}`;
+};

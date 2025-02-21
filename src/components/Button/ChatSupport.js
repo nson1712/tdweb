@@ -11,7 +11,6 @@ const ChatSupport = ({showChat, setShowChat}) => {
     const updateScrollDirection = () => {
       const scrollY = window.pageYOffset;
       const direction = scrollY > lastScrollY ? "down" : "up";
-      console.log('scroll: ', direction);
       if (
         direction !== scrollDirection &&
         (scrollY - lastScrollY > 10 || scrollY - lastScrollY < -10)

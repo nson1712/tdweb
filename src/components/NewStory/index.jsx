@@ -17,6 +17,7 @@ const NewStory = ({ data }) => {
         dataSource={data}
         columns={newStoryColumns}
         rowClassName="hover:bg-gray-100 cursor-pointer"
+        rowKey="slug"
       />
 
       <div className="flex">

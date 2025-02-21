@@ -91,9 +91,6 @@ class WebDocument extends Document {
 
           {/* SDK facebook comment */}
           {/*<script async defer crossOrigin="anonymous" src="https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v19.0" nonce="WslyTdua"></script>*/}
-          <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js">
-            {" "}
-          </script>
           <Main />
           <NextScript />
           <script
@@ -108,6 +105,7 @@ class WebDocument extends Document {
           `,
             }}
           />
+          <script src="https://images.dmca.com/Badges/DMCABadgeHelper.min.js"/>
         </body>
       </Html>
     );
