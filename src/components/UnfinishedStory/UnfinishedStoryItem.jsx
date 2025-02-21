@@ -6,12 +6,12 @@ const UnfinishedStoryItem = ({ unfinishedStory }) => {
   return (
     <div className="flex flex-col gap-y-4">
       <UnfinishedStoryDetailItem
-        readingPercent={unfinishedStory.readingPercent}
-        title={unfinishedStory.title}
+        readingPercent={unfinishedStory?.readingPercent}
+        title={unfinishedStory?.title}
         coverImage={unfinishedStory?.coverImage}
-        currentChapterOrder={unfinishedStory.currentChapterOrder}
-        storySlug={unfinishedStory.storySlug}
-        chapterSlug={unfinishedStory.chapterSlug}
+        currentChapterOrder={unfinishedStory?.currentChapterOrder}
+        storySlug={unfinishedStory?.storySlug}
+        chapterSlug={unfinishedStory?.chapterSlug}
       />
     </div>
   );
