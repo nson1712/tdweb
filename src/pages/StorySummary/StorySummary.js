@@ -411,7 +411,7 @@ const StorySummary = () => {
       {/* <div className='hidden md:block'> */}
         <Header />
       {/* </div> */}
-      <div className='max-w-[620px] mx-[auto] pt-[40px] bg-story'>
+      <div className='max-w-[620px] mx-[auto] pt-10 md:pt-20 bg-story'>
         {/*<div className={classNames('flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 top-0 z-[99] bg-white mobile-header', scrollOffset > 100 && 'mobile-header-show', `${scrollDirection === 'down' ? 'hide' : 'show-header'}`)}>
           <a className='p-[10px]' title={`Truyện ${storyDetail?.title}`}
             onClick={() => {
@@ -788,11 +788,17 @@ const StorySummary = () => {
         {showLoginModal && (
           <ModalComponent
             show={showLoginModal}
-            handleClose={(e) => setShowLoginModal(false)}
+            handleClose={(e) => {
+              setShowLoginModal(false)
+              setLoading(false)
+            }}
           >
             <ShortLogin
               description="Đăng nhập 1 chạm để mở khoá tất cả các chương đang có của truyện này."
-              closeModal={() => setShowLoginModal(false)}
+              closeModal={() => {
+                setShowLoginModal(false)
+                setLoading(false)
+              }}
             />
           </ModalComponent>
         )}
