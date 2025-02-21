@@ -176,14 +176,16 @@ class StoryStore {
 
   getStoryPrice = async (storySlug) => {
     try {
-      const result = await Api.get({
-        url: "/data/private/data/story/price",
-        params: {
-          slug: storySlug,
-        },
-      });
+      if (storySlug !== '') {
+        const result = await Api.get({
+          url: "/data/private/data/story/price",
+          params: {
+            slug: storySlug,
+          },
+        });
 
-      return result.data;
+        return result.data;
+      }
     } catch (e) {
       console.log(e);
     }
