@@ -159,8 +159,6 @@ const Research = () => {
     // setShowModal(false)
   };
 
-  console.log("viewings?.data?.length: ", viewings?.data?.length)
-
   return (
     <CommonLayout active="HOME">
       <div>
