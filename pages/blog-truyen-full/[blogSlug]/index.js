@@ -41,7 +41,6 @@ const BlogDetailPage = ({detail}) => {
 };
 
 BlogDetailPage.getInitialProps = async (ctx) => {
-  console.log("CTX.QUERY: ", ctx.query)
   const getDetail = async () => {
     try {
       if (ctx.query.blogSlug) {
