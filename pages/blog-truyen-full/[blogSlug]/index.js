@@ -41,13 +41,14 @@ const BlogDetailPage = ({detail}) => {
 };
 
 BlogDetailPage.getInitialProps = async (ctx) => {
+  console.log("CTX.QUERY: ", ctx.query)
   const getDetail = async () => {
     try {
-      if (ctx.query.id) {
+      if (ctx.query.blogSlug) {
         const result = await axios.get(
         typeof window !== "undefined"
-            ? `https://fsdfssf.truyenso1.xyz/data/article/${ctx.query.id}`
-            : `http://10.8.22.205:8082/article/${ctx.query.id}`
+            ? `https://fsdfssf.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`
+            : `http://10.8.22.205:8082/article/detail/${ctx.query.blogSlug}`
         );
         return {
           detail: result.data.data,

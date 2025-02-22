@@ -18,12 +18,11 @@ const RelatedBlogItem = ({ item }) => {
         />
       </div>
 
-      <div>
+      <div className="space-y-1">
         <BlogTitleLink
           item={item}
-          className="text-xs sm:text-sm font-medium line-clamp-2 cursor-pointer hover:text-blue-600 transition duration-150"
+          className="text-black text-xs sm:text-sm font-medium line-clamp-2 cursor-pointer hover:text-blue-600 transition duration-150"
           pathname={item.slug}
-          query={{ id: item.id }}
         />
         <div className="text-xs flex items-center gap-1">
           <ClockCircleOutlined />
