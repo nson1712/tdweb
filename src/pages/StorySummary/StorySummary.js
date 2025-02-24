@@ -443,12 +443,12 @@ const StorySummary = () => {
         </div>*/}
 
         <MobileHeader show={scrollOffset <= 100} />
-        <div
+        {/*<div
           className="mt-[14px]"
           dangerouslySetInnerHTML={{
             __html: `<a id='link-video-header' href='https://toidoc.onelink.me/59bO/d42503wz'> <video autoplay loop muted playsinline><source src='https://media.truyenso1.xyz/ads/top-banner.mp4' type='video/mp4' rel='nofollow'/></video> </a>`,
           }}
-        />
+        />*/}
         <div className="h-52 relative mb-4 pb-7">
           <div className="bg-story-summary" />
           <img

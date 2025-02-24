@@ -587,7 +587,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                               dfjkdsfds={jkdjfk}
                               order={i}
                             />
-                            {i === 6 && (
+                            {/*i === 6 && (
                               <a href="https://m.me/185169981351799?text=Mình quan tâm tới gói Premium. Hỗ trợ mình trên web với">
                                 <img
                                   src="https://media.truyenso1.xyz/ads/upgrade-premium.png"
@@ -595,7 +595,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                                   alt="Toidoc premium"
                                 />
                               </a>
-                            )}
+                            )*/}
                           </div>
                         ))}
                       </>
