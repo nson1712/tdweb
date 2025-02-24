@@ -23,6 +23,7 @@ import ShortLogin from "../Login/ShortLogin";
 import { Alert, Spin } from "antd";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
+import { toJS } from "mobx";
 
 const TABS = [
   {
@@ -138,6 +139,8 @@ const StorySummary = () => {
   const [chapters, setChapters] = useState([]);
 
   const route = useRouter();
+
+  console.log("STORY DETAILS: ", toJS(storyDetail))
 
   // useEffect(() => {
   //   if (route.query.storySlug && chapters && chapters?.length > 0) {

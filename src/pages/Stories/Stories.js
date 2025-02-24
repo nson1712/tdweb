@@ -9,6 +9,8 @@ import ModalComponent from "../../components/Modal";
 import classNames from "classnames";
 import { convertObjectToSearchParams } from "../../utils/utils";
 import Link from "next/link";
+import { Pagination } from "antd";
+import { toJS } from "mobx";
 
 const SORTS = [
   {
@@ -94,6 +96,7 @@ const Stories = () => {
   });
 
   const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(20)
   const [last, setLast] = useState();
 
   const {
@@ -116,33 +119,35 @@ const Stories = () => {
     getStoriesByHashtag,
   } = StoryStore;
 
+  console.log("TOP TRENDING: ", toJS(topTrending))
+
   useEffect(() => {
     if (route.query.categorySlug) {
       getStoryByCategory(route.query.categorySlug, last, 20, filter);
     } else if (route.query.collectionSlug) {
-      getStoryByCollection(page, 20, route.query.collectionSlug);
+      getStoryByCollection(page, pageSize, route.query.collectionSlug);
     } else if (route.query.hashtag) {
-      getStoriesByHashtag(page, 20, route.query.hashtag);
+      getStoriesByHashtag(page, pageSize, route.query.hashtag);
     } else {
       switch (route.query.theloai) {
         case "trending":
-          getTopTrending(page, 20);
+          getTopTrending(page, pageSize);
           break;
         case "moi-nhat":
-          getTopNew(page, 20);
+          getTopNew(page, pageSize);
           break;
         case "truyen-full":
-          getTopFull(page, 20);
+          getTopFull(page, pageSize);
           break;
         case "xem-nhieu-nhat":
-          getTopViews(page, 20);
+          getTopViews(page, pageSize);
           break;
         case "hot":
-          getHotStories(page, 20);
+          getHotStories(page, pageSize);
           break;
       }
     }
-  }, [route.query, page, last]);
+  }, [route.query, page, pageSize, last]);
 
   const data = useMemo(() => {
     // return (
@@ -220,46 +225,54 @@ const Stories = () => {
     );
   }, [route.query, data, collectionStories]);
 
-  useEffect(() => {
-    const trackScrolling = () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(async () => {
-        const windowHeight =
-          "innerHeight" in window
-            ? window.innerHeight
-            : document.documentElement.offsetHeight;
-        const body = document.body;
-        const html = document.documentElement;
-        const docHeight = Math.max(
-          body.scrollHeight,
-          body.offsetHeight,
-          html.clientHeight,
-          html.scrollHeight,
-          html.offsetHeight
-        );
-        const windowBottom = windowHeight + window.pageYOffset;
-        const isBottom = windowBottom >= docHeight - 600;
+  // useEffect(() => {
+  //   const trackScrolling = () => {
+  //     clearTimeout(timeout);
+  //     timeout = setTimeout(async () => {
+  //       const windowHeight =
+  //         "innerHeight" in window
+  //           ? window.innerHeight
+  //           : document.documentElement.offsetHeight;
+  //       const body = document.body;
+  //       const html = document.documentElement;
+  //       const docHeight = Math.max(
+  //         body.scrollHeight,
+  //         body.offsetHeight,
+  //         html.clientHeight,
+  //         html.scrollHeight,
+  //         html.offsetHeight
+  //       );
+  //       const windowBottom = windowHeight + window.pageYOffset;
+  //       const isBottom = windowBottom >= docHeight - 600;
 
-        if (isBottom) {
-          handleLoadmore();
-        }
-      }, 0);
-    };
-    window.addEventListener("scroll", trackScrolling);
+  //       if (isBottom) {
+  //         handleLoadmore();
+  //       }
+  //     }, 0);
+  //   };
+  //   window.addEventListener("scroll", trackScrolling);
 
-    return () => {
-      window.removeEventListener("scroll", trackScrolling);
-    };
-  }, [data]);
+  //   return () => {
+  //     window.removeEventListener("scroll", trackScrolling);
+  //   };
+  // }, [data]);
 
-  const handleLoadmore = () => {
-    if (data && data?.totalElements > 0 && data?.totalPages > page) {
-      setPage(page + 1);
-    }
-    if (data && data.hasNext) {
-      setLast(data.last);
-    }
+  // const handleLoadmore = () => {
+  //   if (data && data?.totalElements > 0 && data?.totalPages > page) {
+  //     setPage(page + 1);
+  //   }
+  //   if (data && data.hasNext) {
+  //     setLast(data.last);
+  //   }
+  // };
+
+  const onShowSizeChange = (_, pageSize) => {
+    setPageSize(pageSize)
   };
+
+  const onPageChange = (page) => {
+    setPage(page)
+  }
 
   return (
     <CommonLayout>
@@ -267,7 +280,7 @@ const Stories = () => {
         <div className="hidden md:block">
           <Header />
         </div>
-        <div className="max-w-[768px] mx-[auto] md:pt-[80px] md:bg-white pt-[64px]">
+        <div className="max-w-[768px] mx-[auto] md:pt-[80px] md:bg-white py-16">
           <div className="flex items-center justify-between fixed md:static top-0 left-0 right-0 bg-white">
             <div className="flex items-center">
               <Link href="/tim-kiem" passHref>
@@ -353,6 +366,17 @@ const Stories = () => {
                 <StoryItem item={item} direction="row" fromSearch={true} />
               </div>
             ))}
+
+            <div className="w-full flex justify-end mt-4">
+            <Pagination
+              defaultCurrent={1}
+              defaultPageSize={20}
+              showSizeChanger
+              onShowSizeChange={onShowSizeChange}
+              onChange={onPageChange}
+              total={data?.totalElements - pageSize}
+            />
+            </div>
 
             {/* {
             data && (data.totalPages > page || data.hasNext)

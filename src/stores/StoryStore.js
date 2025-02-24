@@ -250,18 +250,22 @@ class StoryStore {
         },
       });
 
-      if (page === 1) {
-        runInAction(() => {
-          this.topTrending = result.data;
-        });
-      } else {
-        runInAction(() => {
-          this.topTrending = {
-            ...result.data,
-            data: [...this.topTrending.data, ...result.data.data],
-          };
-        });
-      }
+      runInAction(() => {
+        this.topTrending = result.data
+      })
+
+      // if (page === 1) {
+      //   runInAction(() => {
+      //     this.topTrending = result.data;
+      //   });
+      // } else {
+      //   runInAction(() => {
+      //     this.topTrending = {
+      //       ...result.data,
+      //       data: [...this.topTrending.data, ...result.data.data],
+      //     };
+      //   });
+      // }
     } catch (e) {
       console.log(e);
     }
@@ -305,18 +309,20 @@ class StoryStore {
         },
       });
 
-      if (page === 1) {
-        runInAction(() => {
-          this.topViews = result.data;
-        });
-      } else {
-        runInAction(() => {
-          this.topViews = {
-            ...result.data,
-            data: [...this.topViews.data, ...result.data.data],
-          };
-        });
-      }
+      runInAction(() => {
+        this.topViews = result.data;
+      });
+
+      // if (page === 1) {
+       
+      // } else {
+      //   runInAction(() => {
+      //     this.topViews = {
+      //       ...result.data,
+      //       data: [...this.topViews.data, ...result.data.data],
+      //     };
+      //   });
+      // }
     } catch (e) {
       console.log(e);
     }
@@ -331,18 +337,20 @@ class StoryStore {
           pageSize,
         },
       });
-      if (page === 1) {
-        runInAction(() => {
-          this.hotStories = result.data;
-        });
-      } else {
-        runInAction(() => {
-          this.hotStories = {
-            ...result.data,
-            data: [...this.hotStories.data, ...result.data.data],
-          };
-        });
-      }
+
+      runInAction(() => {
+        this.hotStories = result.data;
+      });
+      // if (page === 1) {
+        
+      // } else {
+      //   runInAction(() => {
+      //     this.hotStories = {
+      //       ...result.data,
+      //       data: [...this.hotStories.data, ...result.data.data],
+      //     };
+      //   });
+      // }
     } catch (e) {
       console.log(e);
     }
@@ -358,18 +366,20 @@ class StoryStore {
         },
       });
 
-      if (page === 0) {
-        runInAction(() => {
-          this.topNew = result.data;
-        });
-      } else {
-        runInAction(() => {
-          this.topNew = {
-            ...result.data,
-            data: [...this.topNew.data, ...result.data.data],
-          };
-        });
-      }
+      runInAction(() => {
+        this.topNew = result.data;
+      });
+
+      // if (page === 0) {
+       
+      // } else {
+      //   runInAction(() => {
+      //     this.topNew = {
+      //       ...result.data,
+      //       data: [...this.topNew.data, ...result.data.data],
+      //     };
+      //   });
+      // }
     } catch (e) {
       console.log(e);
     }
@@ -385,18 +395,20 @@ class StoryStore {
         },
       });
 
-      if (page === 1) {
-        runInAction(() => {
-          this.topFull = result.data;
-        });
-      } else {
-        runInAction(() => {
-          this.topFull = {
-            ...result.data,
-            data: [...this.topFull.data, ...result.data.data],
-          };
-        });
-      }
+      runInAction(() => {
+        this.topFull = result.data;
+      });
+
+      // if (page === 1) {
+        
+      // } else {
+      //   runInAction(() => {
+      //     this.topFull = {
+      //       ...result.data,
+      //       data: [...this.topFull.data, ...result.data.data],
+      //     };
+      //   });
+      // }
     } catch (e) {
       console.log(e);
     }
