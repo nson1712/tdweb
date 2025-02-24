@@ -41,6 +41,7 @@ const PriceInfo = ({discountValue, finalChargeValue, storyDetail, handleOpenFull
             </p>
           )}
           <div
+            id='open-all-chapter-btn'
             style={{
               marginTop: "20px",
               display: "flex",

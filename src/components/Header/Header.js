@@ -252,6 +252,7 @@ const Header = ({ selectedTab }) => {
 
           <Link href={GlobalStore.isLoggedIn ? "/tai-khoan" : "#"} passHref>
             <a
+              id="profile-btn"
               className={classNames(
                 "menu-header mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
                 selectedTab === "PROFILE" && "bg-tab-active text-active"

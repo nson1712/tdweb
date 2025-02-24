@@ -129,6 +129,7 @@ const Profile = () => {
                     : "Độc giả"}
                 </p>
                 <div
+                  id="logout-btn"
                   className="flex items-center mt-1 text-red-600 cursor-pointer"
                   onClick={handleLogout}
                 >

@@ -106,14 +106,14 @@ const ShortLogin = ({description, navigate='', closeModal, enableFB}) => {
         <h3 className='white-text' style={{'margin': 'auto', 'fontWeight': 'bold', 'marginBottom': '10px'}}>Bạn chưa đăng nhập !</h3>
         <p className='white-text text-left'>{description || 'Đăng nhập 1 chạm bằng các phương thức dưới đây để đọc nội dung này'}</p>
         <div style={{'margin': 'auto'}}>
-          <div className='align-center'>
+          <div id='google-login-btn' className='align-center'>
             <Button className='login-button login-google-bg'
               onClick={(e) => handleLoginGoogle(e)}>
               <img src='/images/google.png' style={{'float': 'left', 'marginRight': '10px', 'width': '25px'}}/>
               Đăng Nhập Bằng GOOGLE
             </Button>
           </div>
-          <div className='align-center mt-[10px]'>
+          <div id='facebook-login-btn' className='align-center mt-[10px]'>
             <Button className='login-button login-fb-bg'
               onClick={(e) => handleFacebookLogin(e)}>
               <img src='/images/facebook.png' style={{'float': 'left', 'marginRight': '10px', 'width': '15px', height: '25px'}}/>
