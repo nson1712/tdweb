@@ -22,7 +22,7 @@ import PriceInfo from "./PriceInfo";
 import ShortLogin from "../Login/ShortLogin";
 import { Alert, Spin } from "antd";
 import Image from "next/image";
-import imageLoader from "../../loader/imageLoader";
+import BlogStore from "../../stores/BlogStore";
 
 const TABS = [
   {
@@ -132,6 +132,10 @@ const StorySummary = () => {
     isOpenFull,
     setIsOpenFull,
   } = StoryStore;
+  const {
+    storyDetailArticle, 
+    getBlogStoryDetail
+  } = BlogStore;
   const [currentChapterDetail, setCurrentChapterDetail] = useState([]);
 
   const [currentTab, setCurrentTab] = useState("CONTENT");
@@ -240,6 +244,10 @@ const StorySummary = () => {
 
     getPriceInfo();
   }, [storyDetail?.id, isOpenFull]);
+
+  useEffect(() => {
+    getBlogStoryDetail(route.query.storySlug);
+  }, [route.query.storySlug]);
 
   // useEffect(() => {
   //   const trackScrolling = () => {
@@ -701,6 +709,12 @@ const StorySummary = () => {
             </>
           )}
         </div>
+        {storyDetailArticle && 
+          <div className='mt-[20px]'>
+            <h2 className='text-lg font-bold main-text text-underline'>[REVIEW Truyện] {storyDetail?.title} </h2>
+            <div dangerouslySetInnerHTML={{ __html: storyDetailArticle?.content }}/>
+          </div>
+        }
         {showChapter && (
           <Chapters
             setShowChapter={setShowChapter}

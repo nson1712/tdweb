@@ -1,30 +1,27 @@
-import { useEffect, useState } from "react";
+import { makeAutoObservable, runInAction } from "mobx";
 import * as Api from "../api/api";
-import { useRouter } from "next/router";
 
-export const useGetBlog = () => {
-  const router = useRouter();
-  const blogId = router.query.id
-  const [blog, setBlog] = useState(null);
+class BlogStore {
 
-  useEffect(() => {
-    if (!blogId) {
-      return;
-    }
-    const getBlogById = async () => {
-      try {
+  storyDetailArticle = {}
+
+  constructor() {
+    makeAutoObservable(this)
+  }
+
+  getBlogStoryDetail = async (storySlug) => {
+    try {
+      if (storySlug) {
         const result = await Api.get({
-          url: `https://fsdfssf.truyenso1.xyz/data/article/${blogId}`,
+          url: `/data/article/story/${storySlug}`,
         });
-        setBlog({
-          ...result.data,
-        });
-      } catch (e) {
-        console.log("errorrrrr: ", e);
+        this.storyDetailArticle = result.data;
       }
-    };
-    getBlogById();
-  }, [blogId]);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
-  return { blog };
-};
+}
+
+export default new BlogStore();

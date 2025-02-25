@@ -47,11 +47,14 @@ BlogDetailPage.getInitialProps = async (ctx) => {
   const getDetail = async () => {
     try {
       if (ctx.query.blogSlug) {
+      console.log('ctx.query.blogSlug: ', ctx.query.blogSlug);
         const result = await axios.get(
           typeof window !== "undefined"
             ? `https://fsdfssf.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`
             : `http://10.8.22.205:8082/article/detail/${ctx.query.blogSlug}`
+        // `https://fsdfssf.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`
         );
+        console.log('result.data: ', esult.data);
         return {
           detail: result.data.data,
         };
@@ -61,7 +64,7 @@ BlogDetailPage.getInitialProps = async (ctx) => {
         detail: {},
       };
     } catch (e) {
-      // console.log('server call error', e)
+      console.log('server call error', e)
       return {
         detail: {},
       };
