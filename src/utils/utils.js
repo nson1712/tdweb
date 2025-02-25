@@ -229,28 +229,40 @@ export const cleanHtml = (value) => {
   return value.replace(/<[^>]+>/g, "");
 };
 
-export const appendNewLineAfterCloseHTag = (content) => {
-  if (typeof content.replaceAll === "function") {
-    return content
-      .replaceAll("</h1>", "</h1> \n")
-      .replaceAll("</h2>", "</h2> \n")
-      .replaceAll("</h3>", "</h3> \n")
-      .replaceAll("</h4>", "</h4> \n")
-      .replaceAll("</h5>", "</h5> \n")
-      .replaceAll("</h6>", "</h6> \n")
-      .replaceAll("</p>", "</p> \n")
-      .replaceAll("</figure>", "</figure> \n");
-  } else {
-    return content
-      .replace(/<\/h1>/g, "</h1> \n")
-      .replace(/<\/h2>/g, "</h2> \n")
-      .replace(/<\/h3>/g, "</h3> \n")
-      .replace(/<\/h4>/g, "</h4> \n")
-      .replace(/<\/h5>/g, "</h5> \n")
-      .replace(/<\/h6>/g, "</h6> \n")
-      .replace(/<\/p>/g, "</p> \n")
-      .replace(/<\/figure>/g, "</figure> \n");
-  }
+export const appendNewLineAfterBlockLevelTags = (content) => {
+  const blockTags = [
+    "h1",
+    "h2",
+    "h3",
+    "h4",
+    "h5",
+    "h6",
+    "p",
+    "div",
+    "section",
+    "article",
+    "aside",
+    "header",
+    "footer",
+    "nav",
+    "ul",
+    "ol",
+    "li",
+    "table",
+    "thead",
+    "tbody",
+    "tfoot",
+    "tr",
+    "td",
+    "th",
+    "pre",
+    "blockquote",
+    "figure",
+  ];
+
+  const regex = new RegExp(`</(${blockTags.join("|")})>`, "g");
+
+  return content.replace(regex, (match) => `${match} \n`);
 };
 
 export const isEmpty = (obj) => {
@@ -365,21 +377,24 @@ export const isInAppBrowser = () => {
   return isFacebookApp || isInstagramApp || isLinkedInApp;
 };
 
-export const isCocCoc = async() => {
+export const isCocCoc = async () => {
   const styles = document.querySelectorAll("style");
   for (let i = 0; i < styles.length; i++) {
     if (styles[i].classList.contains("coc-coc-fonts")) {
       return true;
     }
   }
-  
+
   if (navigator.userAgentData) {
-    const brands = await navigator.userAgentData.getHighEntropyValues(["brands"]);
-    return brands.brands.some((brand) => brand.brand.toLowerCase().includes("coc coc"));
+    const brands = await navigator.userAgentData.getHighEntropyValues([
+      "brands",
+    ]);
+    return brands.brands.some((brand) =>
+      brand.brand.toLowerCase().includes("coc coc")
+    );
   }
   return false;
-}
-
+};
 
 export const redirectToBrowser = () => {
   if (isInAppBrowser()) {
@@ -467,27 +482,26 @@ export const redirectToBrowser = () => {
         setTimeout(() => {
           window.location.href = chromeUrl;
         }, 100);
-      } catch (e) {
-        
-      }
+      } catch (e) {}
 
       try {
         setTimeout(() => {
           window.location.href = safari2;
         }, 100);
-      } catch (e) {
-        
-      }
+      } catch (e) {}
 
       setTimeout(() => {
-        toast('Vui lòng ấn vào nút 3 chấm hoặc mũi tên góc dưới màn hình rồi chọn mở bằng safari\nđể có trải nghiệm tốt hơn', {
-          type: "error",
-          theme: "colored",
-          autoClose: 60000,
-          closeOnClick: false,
-        })
+        toast(
+          "Vui lòng ấn vào nút 3 chấm hoặc mũi tên góc dưới màn hình rồi chọn mở bằng safari\nđể có trải nghiệm tốt hơn",
+          {
+            type: "error",
+            theme: "colored",
+            autoClose: 60000,
+            closeOnClick: false,
+          }
+        );
       }, 1000);
-      
+
       // setTimeout(() => {
       //   const fullPath = window.location.pathname + window.location.search; // Lấy toàn bộ đường dẫn
       //   const encodedPath = encodeURIComponent(fullPath); // Mã hóa URL tránh lỗi ký tự đặc biệt
@@ -495,7 +509,6 @@ export const redirectToBrowser = () => {
       //   window.location.href = `x-web-search://?"${fullPath}"`;
       //   // const newWindow = window.open(redirectURL, "_blank");
       // }, 100);
-      
 
       // setTimeout(() => {
       //   toast('window.location.replace', {
@@ -504,7 +517,7 @@ export const redirectToBrowser = () => {
       //   })
       //   window.location.replace(url);
       // }, 500);
-      
+
       // toast('Vui lòng ấn vào nút 3 chấm bên trên rồi chọn mở bằng trình duyệt\nđể có trải nghiệm mượt mà', {
       //   type: "error",
       //   theme: "colored",
@@ -609,4 +622,15 @@ export const handleStoreOpen = (osType) => {
 
 export const getUrlImage = ({ src, width, quality }) => {
   return `${src}?w=${width}&q=${quality || 75}`;
+};
+
+export const getLastChild = (node) => {
+  if (node && node.props && node.props.children) {
+    if (Array.isArray(node.props.children)) {
+      return getLastChild(node.props.children[node.props.children.length - 1]);
+    } else {
+      return getLastChild(node.props.children);
+    }
+  }
+  return node;
 };
