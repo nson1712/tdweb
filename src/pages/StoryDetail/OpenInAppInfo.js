@@ -40,9 +40,9 @@ const OpenInAppInfo = ({handleSupport, chapterDetail, storyDetail, handleOpenCha
               />
               </div>
             }
-            <div id='open-chapter-btn' style={{'marginTop': '30px', 'display': 'flex', 'justifyContent': 'center'}}>
+            <a id='open-chapter-btn' style={{'marginTop': '30px', 'display': 'flex', 'justifyContent': 'center'}}>
               <Button onClick={() => handleOpenChapter()} className='button-open-chapter'>Mở khoá chương</Button>
-            </div>
+            </a>
             
           </>
           
