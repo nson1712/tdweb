@@ -23,7 +23,19 @@ import OpenInAppInfo from "./OpenInAppInfo";
 import OpenChapterInfo from "./OpenChapterInfo";
 import ContentDisplay from "./ContentDisplay";
 import Link from "next/link";
-import { Spin } from "antd";
+import { Button, Modal, Spin, Table } from "antd";
+import {
+  ArrowLeftOutlined,
+  ArrowRightOutlined,
+  LeftOutlined,
+  MenuOutlined,
+  RightOutlined,
+} from "@ant-design/icons";
+import { toJS } from "mobx";
+import {
+  useStoryChapterTableOptions,
+  useTableOptions,
+} from "../../hook/useTableOption";
 
 const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [showBubble, setShowBubble] = useState("up");
@@ -64,6 +76,11 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     useState(false);
   const [fullPriceStory, setFullPriceStory] = useState({});
   const [question, setQuestion] = useState({});
+  const [openChapterList, setOpenChapterList] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  console.log("CHAPTERS: ", toJS(storyDetail?.chapters));
+  const { storyChapterColumns } = useStoryChapterTableOptions();
 
   // const checkCustomerClickAffLocal = async() => {
   //   const isClickAff = await checkCustomerClickAff(localStorage.getItem('DEVICE_ID'))
@@ -370,13 +387,27 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleSupport = async() => {
-    window.open(`https://m.me/185169981351799?text=${GlobalStore.profile?.referralCode ? 'Mã KH của mình là: ' + GlobalStore.profile?.referralCode + '. ' : ''}Mình đang đọc chương ${chapterTitle} bị khoá trên web. Truyện ${storyTitle}. Giờ mình phải làm sao?`, "_blank");
-  }
+  const handleSupport = async () => {
+    window.open(
+      `https://m.me/185169981351799?text=${
+        GlobalStore.profile?.referralCode
+          ? "Mã KH của mình là: " + GlobalStore.profile?.referralCode + ". "
+          : ""
+      }Mình đang đọc chương ${chapterTitle} bị khoá trên web. Truyện ${storyTitle}. Giờ mình phải làm sao?`,
+      "_blank"
+    );
+  };
 
-  const handleSupportNotAllow = async() => {
-    window.open(`https://m.me/185169981351799?text=${GlobalStore.profile?.referralCode ? 'Mã KH của mình là: ' + GlobalStore.profile?.referralCode + '. ' : ''}Mình đang đọc chương ${chapterTitle} ở trên web mà chương này chỉ được xem trên App. Truyện ${storyTitle}. Giờ mình phải làm sao?`, "_blank");
-  }
+  const handleSupportNotAllow = async () => {
+    window.open(
+      `https://m.me/185169981351799?text=${
+        GlobalStore.profile?.referralCode
+          ? "Mã KH của mình là: " + GlobalStore.profile?.referralCode + ". "
+          : ""
+      }Mình đang đọc chương ${chapterTitle} ở trên web mà chương này chỉ được xem trên App. Truyện ${storyTitle}. Giờ mình phải làm sao?`,
+      "_blank"
+    );
+  };
 
   const handleShowChapterList = async () => {
     setShowChapter(true);
@@ -402,17 +433,28 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     // recordClickAff(localStorage.getItem('DEVICE_ID'), 'STORY_DETAIL')
     // window.open(`https://s.shopee.vn/6KjCdy3HYx`, '_blank', 'Toidoc')
   };
+
+  const handleOpenChapterListModal = () => {
+    setOpenChapterList(!openChapterList);
+  };
+
+  const showchapterModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <CommonLayout>
-      <div className="hidden md:block">
-        <Header />
-      </div>
+      <Header />
       <div
         className={`bg-story flex items-start justify-center ${
           !isMobile && "mt-[100px]"
         }`}
       >
-        <div
+        {/* <div
           className={`${
             isMobile && "hidden"
           } md:block w-[200px] mt-[27px] mr-[18px]`}
@@ -448,111 +490,126 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
               </a>
             </div>
           ))}
-        </div>
+        </div> */}
+
         <div className="max-w-[768px] md:bg-white">
-          {!isMobile && (
-            <div
-              className={`align-center border-b-[1px] border-color px-[5px] py-[10px] bg-[#f0f0f0] text-black font-semibold font-sans ${
-                isMobile && "hidden"
-              }`}
-            >
-              <Link href="/tim-kiem" passHref>
-                <a className="text-blue-500 max-w-[30%]">Trang khám phá</a>
-              </Link>
-              <img
-                className="h-[20px] mx-[10px]"
-                src="/images/arrowright.png"
-              />
-              <Link href={`/${storyDetail?.slug}`} passHref>
-                <a
-                  className="text-blue-500 max-w-[40%] line-clamp-1 text-ellipsis"
-                  title={storyDetail?.title}
-                >
-                  {storyDetail?.title}
-                </a>
-              </Link>
-              <img
-                className="h-[20px] mx-[10px]"
-                src="/images/arrowright.png"
-              />
-              <Link
-                href={`/${storyDetail?.slug}/${route.query.chapterSlug}`}
-                passHref
+          <div className="hidden md:flex border-b-[1px] border-color px-[5px] py-[10px] bg-[#f0f0f0] text-black font-semibold font-sans">
+            <Link href="/tim-kiem" passHref>
+              <a className="text-blue-500 max-w-[30%]">Trang khám phá</a>
+            </Link>
+            <img className="h-[20px] mx-[10px]" src="/images/arrowright.png" />
+            <Link href={`/${storyDetail?.slug}`} passHref>
+              <a
+                className="text-blue-500 max-w-[40%] line-clamp-1 text-ellipsis"
+                title={storyDetail?.title}
               >
-                <a
-                  className="text-blue-500 max-w-[30%] line-clamp-1 text-ellipsis"
-                  title={chapterTitle}
-                >
-                  {chapterTitle}
-                </a>
-              </Link>
-            </div>
-          )}
-          {isMobile && (
-            <div
-              className={`flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 bg-story`}
+                {storyDetail?.title}
+              </a>
+            </Link>
+            <img className="h-[20px] mx-[10px]" src="/images/arrowright.png" />
+            <Link
+              href={`/${storyDetail?.slug}/${route.query.chapterSlug}`}
+              passHref
             >
               <a
-                className="p-[20px]"
-                title={`Truyện ${storyDetail?.title}`}
-                onClick={() => {
-                  Router.back();
-                }}
+                className="text-blue-500 max-w-[30%] line-clamp-1 text-ellipsis"
+                title={chapterTitle}
+              >
+                {chapterTitle}
+              </a>
+            </Link>
+          </div>
+
+          <div className="flex sm:hidden items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 bg-story">
+            <a
+              className="p-[20px]"
+              title={`Truyện ${storyDetail?.title}`}
+              onClick={() => {
+                Router.back();
+              }}
+            >
+              <img
+                src="/images/arrow-left.svg"
+                className="w-[35px]"
+                alt={`Quay lại truyện ${storyDetail?.title}`}
+              />
+            </a>
+
+            <Link href={`/${storyDetail?.slug}`} passHref>
+              <a title={`Truyện ${storyDetail?.title}`}>
+                <h1 className="text-[20px] leading-[24px] font-bold main-text mb-0 line-clamp-1">
+                  {storyDetail?.title}
+                </h1>
+              </a>
+            </Link>
+            <Link href="/tim-kiem" passHref>
+              <a
+                className="w-[68px] p-[10px] md:hidden ml-[5px]"
+                title={`Trang chủ Toidoc`}
               >
                 <img
-                  src="/images/arrow-left.svg"
-                  className="w-[35px]"
-                  alt={`Quay lại truyện ${storyDetail?.title}`}
+                  src="/images/main-home.png"
+                  className="w-[24px]"
+                  alt={`Trang chủ Toidoc`}
                 />
               </a>
-
-              <Link href={`/${storyDetail?.slug}`} passHref>
-                <a title={`Truyện ${storyDetail?.title}`}>
-                  <h1 className="text-[20px] leading-[24px] font-bold main-text mb-0 line-clamp-1">
-                    {storyDetail?.title}
-                  </h1>
-                </a>
-              </Link>
-              <Link href="/tim-kiem" passHref>
-                <a
-                  className="w-[68px] p-[10px] md:hidden ml-[5px]"
-                  title={`Trang chủ Toidoc`}
-                >
-                  <img
-                    src="/images/main-home.png"
-                    className="w-[24px]"
-                    alt={`Trang chủ Toidoc`}
-                  />
-                </a>
-              </Link>
-              <Link href={`/${storyDetail?.slug}`} passHref>
-                <a
-                  className="w-[68px] p-[10px] md:hidden"
-                  title={`Bìa truyện ${storyDetail?.title}`}
-                >
-                  <img
-                    src="/images/icon-book-open.png"
-                    className="w-[24px]"
-                    alt={`Danh sách chương truyện ${storyDetail?.title}`}
-                  />
-                </a>
-              </Link>
+            </Link>
+            <Link href={`/${storyDetail?.slug}`} passHref>
               <a
                 className="w-[68px] p-[10px] md:hidden"
-                title={`Danh sách chương truyện ${storyDetail?.title}`}
-                onClick={() => {
-                  handleShowChapterList();
-                }}
+                title={`Bìa truyện ${storyDetail?.title}`}
               >
                 <img
-                  src="/images/list.png"
+                  src="/images/icon-book-open.png"
                   className="w-[24px]"
                   alt={`Danh sách chương truyện ${storyDetail?.title}`}
                 />
               </a>
+            </Link>
+            <a
+              className="w-[68px] p-[10px] md:hidden"
+              title={`Danh sách chương truyện ${storyDetail?.title}`}
+              onClick={() => {
+                handleShowChapterList();
+              }}
+            >
+              <img
+                src="/images/list.png"
+                className="w-[24px]"
+                alt={`Danh sách chương truyện ${storyDetail?.title}`}
+              />
+            </a>
+          </div>
+
+          <div className="w-full flex justify-between pt-20 sm:pt-6 px-2">
+            <Link
+              href={`/${storyDetail?.slug}/${currentChapter?.previous}`}
+              // title={viewings?.data?.[0]?.story?.title}
+              passHref
+            >
+              <a className="h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm text-center shadow-md hover:!text-black cursor-pointer">
+                <LeftOutlined /> Chương trước
+              </a>
+            </Link>
+
+            <div
+              className="border border-slate-300 h-fit py-2 px-2.5 bg-slate-100 rounded-md shadow-md cursor-pointer"
+              onClick={showchapterModal}
+            >
+              <MenuOutlined />
             </div>
-          )}
-          <div className="story-content px-[20px]">
+
+            <Link
+              href={`/${storyDetail?.slug}/${currentChapter?.next}`}
+              // title={viewings?.data?.[0]?.story?.title}
+              passHref
+            >
+              <a className="h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm text-center shadow-md hover:!text-black cursor-pointer">
+                Chương Tiếp <RightOutlined />
+              </a>
+            </Link>
+          </div>
+          <div className="story-content px-3 pt-4">
             <div>
               <Link
                 href={`/${currentChapter?.storySlug}/${currentChapter?.chapterSlug}`}
@@ -747,6 +804,49 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       </div>
       {/*<MobileShare showBubble={showBubble} setShowBubble={setShowBubble}/>*/}
       {/*<ChatSupportAutoClose/>*/}
+
+      <Modal
+        title={
+          <div>
+            Danh sách chương
+            <div className="flex w-full justify-between">
+              <div>Sắp xếp</div>
+              <div className="flex gap-x-2">
+              <a className="h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm text-center shadow-md hover:!text-black cursor-pointer">
+                Mới nhất
+              </a>
+              <a className="h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm text-center shadow-md hover:!text-black cursor-pointer">
+                Cũ nhất
+              </a>
+              </div>
+            </div>
+          </div>
+        }
+        cancelText="Đóng"
+        open={isModalOpen}
+        onCancel={handleCancel}
+        footer={(_, { CancelBtn }) => (
+          <>
+            <CancelBtn />
+          </>
+        )}
+      >
+        <div className="max-h-[500px] overflow-y-auto p-2">
+          <Table
+            pagination={false}
+            size="small"
+            showHeader={false}
+            bordered
+            dataSource={storyDetail?.chapters}
+            columns={storyChapterColumns}
+            rowClassName="hover:bg-gray-100 cursor-pointer"
+            rowKey="slug"
+            onRow={() => ({
+              onClick: () => handleCancel(),
+            })}
+          />
+        </div>
+      </Modal>
       <Spin spinning={loadingChapterDetail} />
     </CommonLayout>
   );
