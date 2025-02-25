@@ -56,9 +56,9 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
           <span className=''><a href='https://docgia-guide.toidoc.vn/ve-vang' style={{'color': '#03effd', 'textDecoration': 'underline'}}>Tại đây</a>!</span>
           </p>
         </div>}
-        <div style={{'marginTop': '30px', 'display': 'flex', 'justifyContent': 'center'}}>
+        <a id={chapter?.price <= availableCash?.balance ? 'open-chapter-btn' : 'deposit-diamond-btn'} style={{'marginTop': '30px', 'display': 'flex', 'justifyContent': 'center'}}>
           <Button onClick={() => handleOpenChapter()} className='button-open-chapter'>{chapter?.price <= availableCash?.balance ? 'Mở khoá chương' : 'Nạp kim cương'}</Button>
-        </div>
+        </a>
         <div style={{'marginTop': '30px', 'display': 'flex', 'justifyContent': 'center'}}>
          
           <Button onClick={() => handleSupport()} className='button-support-chapter' style={{'padding': '10px 20px'}}>

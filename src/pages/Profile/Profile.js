@@ -128,14 +128,14 @@ const Profile = () => {
                     ? "Dịch giả"
                     : "Độc giả"}
                 </p>
-                <div
+                <a
                   id="logout-btn"
                   className="flex items-center mt-1 text-red-600 cursor-pointer"
                   onClick={handleLogout}
                 >
                   <span>Đăng xuất</span>
                   <img src="/images/logout.png" className="w-7 ml-2" />
-                </div>
+                </a>
               </div>
             </div>
           </div>
