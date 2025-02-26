@@ -25,10 +25,8 @@ import ContentDisplay from "./ContentDisplay";
 import Link from "next/link";
 import { Modal, Spin, Table } from "antd";
 import { LeftOutlined, MenuOutlined, RightOutlined } from "@ant-design/icons";
-import { toJS } from "mobx";
 import {
   useStoryChapterTableOptions,
-  useTableOptions,
 } from "../../hook/useTableOption";
 
 const StoryDetail = ({ chapterTitle, storyTitle }) => {
@@ -74,7 +72,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState("oldest");
 
-  console.log("CHAPTERS: ", toJS(storyDetail?.chapters));
   const { storyChapterColumns } = useStoryChapterTableOptions();
 
   // const checkCustomerClickAffLocal = async() => {

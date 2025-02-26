@@ -1,4 +1,3 @@
-import { toJS } from "mobx";
 import CommentCard from "../CommentCardItem";
 import HorizontalStory from "../HorizontalStoryItem";
 import RatingIcon from "../../../public/icons/RatingIcon";

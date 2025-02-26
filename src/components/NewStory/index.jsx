@@ -5,9 +5,7 @@ import ButtonViewAll from "../ButtonViewAll";
 
 const NewStory = ({ data }) => {
   const { newStoryColumns } = useTableOptions();
-
-  console.log("NEW STORY: ", data)
-
+  
   return (
     <>
       <Title />
