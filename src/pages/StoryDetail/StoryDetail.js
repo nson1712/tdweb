@@ -23,14 +23,8 @@ import OpenInAppInfo from "./OpenInAppInfo";
 import OpenChapterInfo from "./OpenChapterInfo";
 import ContentDisplay from "./ContentDisplay";
 import Link from "next/link";
-import { Button, Modal, Spin, Table } from "antd";
-import {
-  ArrowLeftOutlined,
-  ArrowRightOutlined,
-  LeftOutlined,
-  MenuOutlined,
-  RightOutlined,
-} from "@ant-design/icons";
+import { Modal, Spin, Table } from "antd";
+import { LeftOutlined, MenuOutlined, RightOutlined } from "@ant-design/icons";
 import { toJS } from "mobx";
 import {
   useStoryChapterTableOptions,
@@ -78,6 +72,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [question, setQuestion] = useState({});
   const [openChapterList, setOpenChapterList] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filter, setFilter] = useState("oldest");
 
   console.log("CHAPTERS: ", toJS(storyDetail?.chapters));
   const { storyChapterColumns } = useStoryChapterTableOptions();
@@ -446,6 +441,10 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     setIsModalOpen(false);
   };
 
+  const handleFilterChange = (filter) => {
+    setFilter(filter);
+  };
+
   return (
     <CommonLayout>
       <Header />
@@ -492,7 +491,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           ))}
         </div> */}
 
-        <div className="max-w-[768px] md:bg-white">
+        <div className="max-w-[768px] md:bg-white pb-10">
           <div className="hidden md:flex border-b-[1px] border-color px-[5px] py-[10px] bg-[#f0f0f0] text-black font-semibold font-sans">
             <Link href="/tim-kiem" passHref>
               <a className="text-blue-500 max-w-[30%]">Trang khám phá</a>
@@ -581,19 +580,22 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             </a>
           </div>
 
-          <div className="w-full flex justify-between pt-20 sm:pt-6 px-2">
+          <div className="flex justify-between pt-20 sm:pt-6 px-2">
             <Link
               href={`/${storyDetail?.slug}/${currentChapter?.previous}`}
-              // title={viewings?.data?.[0]?.story?.title}
               passHref
             >
-              <a className="h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm text-center shadow-md hover:!text-black cursor-pointer">
+              <a
+                className={`${
+                  currentChapter?.previous ? "block" : "invisible"
+                } h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-sm text-center shadow-md hover:!text-black cursor-pointer`}
+              >
                 <LeftOutlined /> Chương trước
               </a>
             </Link>
 
             <div
-              className="border border-slate-300 h-fit py-2 px-2.5 bg-slate-100 rounded-md shadow-md cursor-pointer"
+              className="flex border border-slate-300 h-fit py-2 px-2.5 bg-slate-100 rounded-md shadow-md cursor-pointer"
               onClick={showchapterModal}
             >
               <MenuOutlined />
@@ -601,14 +603,18 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
             <Link
               href={`/${storyDetail?.slug}/${currentChapter?.next}`}
-              // title={viewings?.data?.[0]?.story?.title}
               passHref
             >
-              <a className="h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm text-center shadow-md hover:!text-black cursor-pointer">
+              <a
+                className={`${
+                  currentChapter?.next ? "block" : "invisible"
+                } h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-sm text-center shadow-md hover:!text-black cursor-pointer`}
+              >
                 Chương Tiếp <RightOutlined />
               </a>
             </Link>
           </div>
+
           <div className="story-content px-3 pt-4">
             <div>
               <Link
@@ -687,24 +693,40 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                   />
                 )}
 
-                {currentChapter && (
-                  <div className="navigation-buttons">
-                    {currentChapter?.previous && (
-                      <Link
-                        href={`/${storyDetail?.slug}/${currentChapter?.previous}`}
-                      >
-                        <a className="back-button">{"< Chương trước"}</a>
-                      </Link>
-                    )}
-                    {currentChapter?.next && (
-                      <Link
-                        href={`/${storyDetail?.slug}/${currentChapter?.next}`}
-                      >
-                        <a className="next-button">{"Chương tiếp >"}</a>
-                      </Link>
-                    )}
+                <div className="flex justify-between pt-20 sm:pt-6 px-2">
+                  <Link
+                    href={`/${storyDetail?.slug}/${currentChapter?.previous}`}
+                    passHref
+                  >
+                    <a
+                      className={`${
+                        currentChapter?.previous ? "block" : "invisible"
+                      } h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-sm text-center shadow-md hover:!text-black cursor-pointer`}
+                    >
+                      <LeftOutlined /> Chương trước
+                    </a>
+                  </Link>
+
+                  <div
+                    className="flex border border-slate-300 h-fit py-2 px-2.5 bg-slate-100 rounded-md shadow-md cursor-pointer"
+                    onClick={showchapterModal}
+                  >
+                    <MenuOutlined />
                   </div>
-                )}
+
+                  <Link
+                    href={`/${storyDetail?.slug}/${currentChapter?.next}`}
+                    passHref
+                  >
+                    <a
+                      className={`${
+                        currentChapter?.next ? "block" : "invisible"
+                      } h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-sm text-center shadow-md hover:!text-black cursor-pointer`}
+                    >
+                      Chương Tiếp <RightOutlined />
+                    </a>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
@@ -808,16 +830,30 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       <Modal
         title={
           <div>
-            Danh sách chương
+            <div className="text-lg">Danh sách chương</div>
             <div className="flex w-full justify-between">
-              <div>Sắp xếp</div>
+              <div className="text-sm self-center">Sắp xếp</div>
               <div className="flex gap-x-2">
-              <a className="h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm text-center shadow-md hover:!text-black cursor-pointer">
-                Mới nhất
-              </a>
-              <a className="h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm text-center shadow-md hover:!text-black cursor-pointer">
-                Cũ nhất
-              </a>
+                <a
+                  className={`h-fit p-2 text-black font-medium rounded-md text-sm text-center shadow-md cursor-pointer focus:shadow-none ${
+                    filter === "oldest"
+                      ? "bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700"
+                      : "bg-slate-100"
+                  }`}
+                  onClick={() => handleFilterChange("oldest")}
+                >
+                  Cũ nhất
+                </a>
+                <a
+                  className={`h-fit p-2 text-black font-medium rounded-md text-sm text-center shadow-md cursor-pointer ${
+                    filter === "newest"
+                      ? "bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700"
+                      : "bg-slate-100"
+                  }`}
+                  onClick={() => handleFilterChange("newest")}
+                >
+                  Mới nhất
+                </a>
               </div>
             </div>
           </div>
@@ -837,7 +873,11 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             size="small"
             showHeader={false}
             bordered
-            dataSource={storyDetail?.chapters}
+            dataSource={
+              filter === "oldest"
+                ? storyDetail?.chapters
+                : [...(storyDetail?.chapters || [])].reverse()
+            }
             columns={storyChapterColumns}
             rowClassName="hover:bg-gray-100 cursor-pointer"
             rowKey="slug"
