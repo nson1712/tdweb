@@ -101,10 +101,11 @@ const BlogDetails = ({ data }) => {
     const lastChild = getLastChild(doc);
 
     const levelMap = {
-      h3: 1,
-      h4: 2,
-      h5: 3,
-      h6: 4,
+      h2: 1,
+      h3: 2,
+      h4: 3,
+      h5: 4,
+      h6: 5,
     };
     const level = levelMap[tagName] || null;
     return {
@@ -113,7 +114,6 @@ const BlogDetails = ({ data }) => {
       level: level,
     };
   });
-
 
   const handleScrollTo = (headingId) => {
     const element = document.getElementById(headingId);

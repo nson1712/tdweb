@@ -15,7 +15,9 @@ class BlogStore {
         const result = await Api.get({
           url: `/data/article/story/${storySlug}`,
         });
-        this.storyDetailArticle = result.data;
+        runInAction(() => {
+          this.storyDetailArticle = result.data;
+        })
       }
     } catch (e) {
       console.log(e);

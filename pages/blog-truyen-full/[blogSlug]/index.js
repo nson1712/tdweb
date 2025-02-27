@@ -54,7 +54,6 @@ BlogDetailPage.getInitialProps = async (ctx) => {
             : `http://10.8.22.205:8082/article/detail/${ctx.query.blogSlug}`
         // `https://fsdfssf.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`
         );
-        console.log('result.data: ', esult.data);
         return {
           detail: result.data.data,
         };
