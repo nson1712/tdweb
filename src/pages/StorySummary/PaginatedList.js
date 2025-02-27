@@ -45,7 +45,14 @@ const PaginatedList = ({ items }) => {
 
       <div className="flex gap-[5px] mt-2.5 justify-center">
         <Pagination
-          showSizeChanger={true}
+          showSizeChanger
+          showQuickJumper
+          locale={{
+            items_per_page: "/ trang",
+            jump_to: "Đi tới",
+            page: "trang",
+            prev_page: "trang trước"
+          }}
           total={items?.length}
           defaultCurrent={1}
           defaultPageSize={itemsPerPage}

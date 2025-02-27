@@ -670,7 +670,7 @@ const StorySummary = ({storyDetail}) => {
           />
         )}
 
-        <div className="p-4 pr-[5px]">
+        <div className="py-4">
           <p className="text-lg font-bold main-text text-underline">Văn án</p>
           <div className="border-b-[1px] border-color pb-4">
             <div style={{ marginBottom: "10px" }}>
