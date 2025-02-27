@@ -4,8 +4,19 @@ import Link from "next/link";
 
 const CategoryItem = ({ thumbnail, name, code }) => {
   return (
-    <Link href={`/the-loai/${code}`} passHref>
-      <a title={`Thể loại truyện full ${name}`} className="text-black text-xs sm:text-sm cursor-pointer hover:translate-y-[-5%] transition delay-75">
+    <Link
+      href={{
+        pathname: `/the-loai/${code}`,
+        query: {
+          name: name,
+        },
+      }}
+      passHref
+    >
+      <a
+        title={`Thể loại truyện full ${name}`}
+        className="text-black text-xs sm:text-sm cursor-pointer hover:translate-y-[-5%] transition delay-75"
+      >
         {thumbnail ? (
           <Image
             loader={imageLoader}

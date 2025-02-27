@@ -52,6 +52,8 @@ class StoryStore {
 
   hashtags = {};
 
+  stories = {};
+
   loadingChapterDetail = false;
 
   isClickAff = false;
@@ -66,8 +68,43 @@ class StoryStore {
   setIsOpenFull = (value) => {
     runInAction(() => {
       this.isOpenFull = value;
-    })
-  }
+    });
+  };
+
+  getStories = async (
+    categoryCode,
+    page = 1,
+    size = 20,
+    keyword,
+    sortBy = "totalView",
+    sortDirection = "DESC",
+    chapterMin,
+    chapterMax,
+    status
+  ) => {
+    try {
+      const result = await Api.get({
+        url: "data/private/data/story",
+        params: {
+          categoryCode,
+          page,
+          size,
+          keyword,
+          sortBy,
+          sortDirection,
+          chapterMin,
+          chapterMax,
+          status,
+        },
+      });
+
+      runInAction(() => {
+        this.stories = result.data;
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   getcollections1 = async () => {
     try {
@@ -176,7 +213,7 @@ class StoryStore {
 
   getStoryPrice = async (storySlug) => {
     try {
-      if (storySlug !== '') {
+      if (storySlug !== "") {
         const result = await Api.get({
           url: "/data/private/data/story/price",
           params: {
@@ -250,18 +287,9 @@ class StoryStore {
         },
       });
 
-      if (page === 1) {
-        runInAction(() => {
-          this.topTrending = result.data;
-        });
-      } else {
-        runInAction(() => {
-          this.topTrending = {
-            ...result.data,
-            data: [...this.topTrending.data, ...result.data.data],
-          };
-        });
-      }
+      runInAction(() => {
+        this.topTrending = result.data;
+      });
     } catch (e) {
       console.log(e);
     }
@@ -305,18 +333,9 @@ class StoryStore {
         },
       });
 
-      if (page === 1) {
-        runInAction(() => {
-          this.topViews = result.data;
-        });
-      } else {
-        runInAction(() => {
-          this.topViews = {
-            ...result.data,
-            data: [...this.topViews.data, ...result.data.data],
-          };
-        });
-      }
+      runInAction(() => {
+        this.topViews = result.data;
+      });
     } catch (e) {
       console.log(e);
     }
@@ -331,18 +350,10 @@ class StoryStore {
           pageSize,
         },
       });
-      if (page === 1) {
-        runInAction(() => {
-          this.hotStories = result.data;
-        });
-      } else {
-        runInAction(() => {
-          this.hotStories = {
-            ...result.data,
-            data: [...this.hotStories.data, ...result.data.data],
-          };
-        });
-      }
+
+      runInAction(() => {
+        this.hotStories = result.data;
+      });
     } catch (e) {
       console.log(e);
     }
@@ -358,18 +369,9 @@ class StoryStore {
         },
       });
 
-      if (page === 0) {
-        runInAction(() => {
-          this.topNew = result.data;
-        });
-      } else {
-        runInAction(() => {
-          this.topNew = {
-            ...result.data,
-            data: [...this.topNew.data, ...result.data.data],
-          };
-        });
-      }
+      runInAction(() => {
+        this.topNew = result.data;
+      });
     } catch (e) {
       console.log(e);
     }
@@ -385,18 +387,9 @@ class StoryStore {
         },
       });
 
-      if (page === 1) {
-        runInAction(() => {
-          this.topFull = result.data;
-        });
-      } else {
-        runInAction(() => {
-          this.topFull = {
-            ...result.data,
-            data: [...this.topFull.data, ...result.data.data],
-          };
-        });
-      }
+      runInAction(() => {
+        this.topFull = result.data;
+      });
     } catch (e) {
       console.log(e);
     }

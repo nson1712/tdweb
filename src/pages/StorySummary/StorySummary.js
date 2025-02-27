@@ -22,6 +22,8 @@ import PriceInfo from "./PriceInfo";
 import ShortLogin from "../Login/ShortLogin";
 import { Alert, Spin } from "antd";
 import Image from "next/image";
+import imageLoader from "../../loader/imageLoader";
+import { toJS } from "mobx";
 import BlogStore from "../../stores/BlogStore";
 
 const TABS = [
@@ -139,6 +141,7 @@ const StorySummary = ({storyDetail}) => {
   const [chapters, setChapters] = useState([]);
 
   const route = useRouter();
+
 
   // useEffect(() => {
   //   if (route.query.storySlug && chapters && chapters?.length > 0) {
@@ -667,7 +670,7 @@ const StorySummary = ({storyDetail}) => {
           />
         )}
 
-        <div className="p-4 pr-[5px]">
+        <div className="py-4">
           <p className="text-lg font-bold main-text text-underline">Văn án</p>
           <div className="border-b-[1px] border-color pb-4">
             <div style={{ marginBottom: "10px" }}>

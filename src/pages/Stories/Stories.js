@@ -9,6 +9,8 @@ import ModalComponent from "../../components/Modal";
 import classNames from "classnames";
 import { convertObjectToSearchParams } from "../../utils/utils";
 import Link from "next/link";
+import { Pagination } from "antd";
+import { toJS } from "mobx";
 
 const SORTS = [
   {
@@ -93,7 +95,8 @@ const Stories = () => {
     status: undefined,
   });
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
+  const [pageSize, setPageSize] = useState(20)
   const [last, setLast] = useState();
 
   const {
@@ -114,53 +117,44 @@ const Stories = () => {
     collectionStories,
     storiesByHashtag,
     getStoriesByHashtag,
+    stories,
+    getStories
   } = StoryStore;
+
+  console.log("ROUTE.QUERY: ", route.query)
 
   useEffect(() => {
     if (route.query.categorySlug) {
-      getStoryByCategory(route.query.categorySlug, last, 20, filter);
+      getStories(route.query.categorySlug, page, pageSize);
     } else if (route.query.collectionSlug) {
-      getStoryByCollection(page, 20, route.query.collectionSlug);
+      getStoryByCollection(page, pageSize, route.query.collectionSlug);
     } else if (route.query.hashtag) {
-      getStoriesByHashtag(page, 20, route.query.hashtag);
+      getStoriesByHashtag(page, pageSize, route.query.hashtag);
     } else {
       switch (route.query.theloai) {
         case "trending":
-          getTopTrending(page, 20);
+          getTopTrending(page, pageSize);
           break;
         case "moi-nhat":
-          getTopNew(page, 20);
+          getTopNew(page, pageSize);
           break;
         case "truyen-full":
-          getTopFull(page, 20);
+          getTopFull(page, pageSize);
           break;
         case "xem-nhieu-nhat":
-          getTopViews(page, 20);
+          getTopViews(page, pageSize);
           break;
         case "hot":
-          getHotStories(page, 20);
+          getHotStories(page, pageSize);
           break;
       }
     }
-  }, [route.query, page, last]);
+  }, [route.query, page, pageSize, last]);
+
 
   const data = useMemo(() => {
-    // return (
-    //   storyByCategory[route.query.categorySlug] ||
-    //   storiesByHashtag ||
-    //   collectionStories ||
-    //   {
-    //     trending: topTrending,
-    //     "moi-nhat": topNew,
-    //     "truyen-full": topFull,
-    //     "xem-nhieu-nhat": topViews,
-    //     hot: hotStories,
-    //     // hashtag: storiesByHashtag,
-    //   }[route.query.theloai] ||
-    //   []
-    // );
     if (route.query.categorySlug) {
-      return storyByCategory[route.query.categorySlug];
+      return stories
     }
     if (route.query.hashtag) {
       return storiesByHashtag;
@@ -188,6 +182,7 @@ const Stories = () => {
     return [];
   }, [
     route.query,
+    stories,
     topTrending,
     topViews,
     hotStories,
@@ -199,12 +194,8 @@ const Stories = () => {
   ]);
 
   const title = useMemo(() => {
-    if (route.query.categorySlug && data?.data?.length) {
-      return `Danh sách truyện ${
-        data?.data[0].categories?.find(
-          (item) => item.code === route.query.categorySlug
-        )?.name
-      }`;
+    if (route.query.categorySlug) {
+      return `Danh sách truyện ${route.query.name}`;
     }
     if (route.query.collectionSlug) return collectionStories?.name;
     if (route.query.hashtag) return `# ${route.query.hashtag}`;
@@ -220,46 +211,54 @@ const Stories = () => {
     );
   }, [route.query, data, collectionStories]);
 
-  useEffect(() => {
-    const trackScrolling = () => {
-      clearTimeout(timeout);
-      timeout = setTimeout(async () => {
-        const windowHeight =
-          "innerHeight" in window
-            ? window.innerHeight
-            : document.documentElement.offsetHeight;
-        const body = document.body;
-        const html = document.documentElement;
-        const docHeight = Math.max(
-          body.scrollHeight,
-          body.offsetHeight,
-          html.clientHeight,
-          html.scrollHeight,
-          html.offsetHeight
-        );
-        const windowBottom = windowHeight + window.pageYOffset;
-        const isBottom = windowBottom >= docHeight - 600;
+  // useEffect(() => {
+  //   const trackScrolling = () => {
+  //     clearTimeout(timeout);
+  //     timeout = setTimeout(async () => {
+  //       const windowHeight =
+  //         "innerHeight" in window
+  //           ? window.innerHeight
+  //           : document.documentElement.offsetHeight;
+  //       const body = document.body;
+  //       const html = document.documentElement;
+  //       const docHeight = Math.max(
+  //         body.scrollHeight,
+  //         body.offsetHeight,
+  //         html.clientHeight,
+  //         html.scrollHeight,
+  //         html.offsetHeight
+  //       );
+  //       const windowBottom = windowHeight + window.pageYOffset;
+  //       const isBottom = windowBottom >= docHeight - 600;
 
-        if (isBottom) {
-          handleLoadmore();
-        }
-      }, 0);
-    };
-    window.addEventListener("scroll", trackScrolling);
+  //       if (isBottom) {
+  //         handleLoadmore();
+  //       }
+  //     }, 0);
+  //   };
+  //   window.addEventListener("scroll", trackScrolling);
 
-    return () => {
-      window.removeEventListener("scroll", trackScrolling);
-    };
-  }, [data]);
+  //   return () => {
+  //     window.removeEventListener("scroll", trackScrolling);
+  //   };
+  // }, [data]);
 
-  const handleLoadmore = () => {
-    if (data && data?.totalElements > 0 && data?.totalPages > page) {
-      setPage(page + 1);
-    }
-    if (data && data.hasNext) {
-      setLast(data.last);
-    }
+  // const handleLoadmore = () => {
+  //   if (data && data?.totalElements > 0 && data?.totalPages > page) {
+  //     setPage(page + 1);
+  //   }
+  //   if (data && data.hasNext) {
+  //     setLast(data.last);
+  //   }
+  // };
+
+  const onShowSizeChange = (_, pageSize) => {
+    setPageSize(pageSize)
   };
+
+  const onPageChange = (page) => {
+    setPage(page - 1)
+  }
 
   return (
     <CommonLayout>
@@ -267,7 +266,8 @@ const Stories = () => {
         <div className="hidden md:block">
           <Header />
         </div>
-        <div className="max-w-[768px] mx-[auto] md:pt-[80px] md:bg-white pt-[64px]">
+
+        <div className="max-w-[768px] mx-[auto] md:pt-[80px] md:bg-white py-16">
           <div className="flex items-center justify-between fixed md:static top-0 left-0 right-0 bg-white">
             <div className="flex items-center">
               <Link href="/tim-kiem" passHref>
@@ -353,6 +353,23 @@ const Stories = () => {
                 <StoryItem item={item} direction="row" fromSearch={true} />
               </div>
             ))}
+
+            <div className="w-full flex justify-end mt-4">
+            <Pagination
+              defaultCurrent={1}
+              defaultPageSize={20}
+              showSizeChanger
+              showQuickJumper
+              onShowSizeChange={onShowSizeChange}
+              onChange={onPageChange}
+              locale={{
+                jump_to: "Đi tới",
+                page: "Trang",
+                items_per_page: "/ Trang",
+              }}
+              total={data?.totalElements}
+            />
+            </div>
 
             {/* {
             data && (data.totalPages > page || data.hasNext)

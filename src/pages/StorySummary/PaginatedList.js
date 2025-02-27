@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
-import Button from "../../components/Button";
 import Link from "next/link";
+import { Pagination } from "antd";
 
 const PaginatedList = ({ items }) => {
   const [itemsPerPage, setItemsPerPage] = useState(50);
   const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(0);
   const [currentItems, setCurrentItems] = useState([]);
 
   useEffect(() => {
@@ -15,54 +14,7 @@ const PaginatedList = ({ items }) => {
 
     // Get items for the current page
     setCurrentItems(items?.slice(startIndex, endIndex));
-
-    // Total number of pages
-    setTotalPages(Math.ceil(items?.length / itemsPerPage));
-  }, [items, currentPage]);
-
-  // Handle page navigation
-  const goToPage = (pageNumber) => {
-    if (pageNumber >= 1 && pageNumber <= totalPages) {
-      setCurrentPage(pageNumber);
-    }
-  };
-  const getPageNumbers = () => {
-    const pageNumbers = [];
-    const maxPagesToShow = 5;
-
-    if (totalPages <= maxPagesToShow) {
-      for (let i = 1; i <= totalPages; i++) {
-        pageNumbers.push(i);
-      }
-    } else {
-      if (currentPage <= 3) {
-        pageNumbers.push(1, 2, 3, 4, "...", totalPages);
-      } else if (currentPage >= totalPages - 2) {
-        pageNumbers.push(
-          1,
-          "...",
-          totalPages - 3,
-          totalPages - 2,
-          totalPages - 1,
-          totalPages
-        );
-      } else {
-        pageNumbers.push(
-          1,
-          "...",
-          currentPage - 1,
-          currentPage,
-          currentPage + 1,
-          "...",
-          totalPages
-        );
-      }
-    }
-
-    return pageNumbers;
-  };
-
-  const pageNumbers = getPageNumbers();
+  }, [items, currentPage, itemsPerPage]);
 
   return (
     <div>
@@ -83,10 +35,7 @@ const PaginatedList = ({ items }) => {
               />
             )}
             <Link href={`/${item?.storySlug}/${item?.slug}`}>
-              <a
-                title={item?.title}
-                className="title-truncate-style"
-              >
+              <a title={item?.title} className="title-truncate-style">
                 {item?.title}
               </a>
             </Link>
@@ -94,44 +43,22 @@ const PaginatedList = ({ items }) => {
         ))}
       </div>
 
-      <div
-        className="flex gap-[5px] mt-2.5 justify-center"
-      >
-        {/* Previous Button */}
-        <Button
-          className="button-page"
-          onClick={() => goToPage(currentPage - 1)}
-          disabled={currentPage === 1}
-        >
-          {"<<"}
-        </Button>
-
-        {/* Page Numbers */}
-        {pageNumbers.map((page, index) =>
-          page === "..." ? (
-            <span key={index} className="box-page">
-              ...
-            </span>
-          ) : (
-            <Button
-              key={index}
-              onClick={() => goToPage(page)}
-              disabled={currentPage === page}
-              className="button-page"
-            >
-              {page}
-            </Button>
-          )
-        )}
-
-        {/* Next Button */}
-        <Button
-          className="button-page"
-          onClick={() => goToPage(currentPage + 1)}
-          disabled={currentPage === totalPages}
-        >
-          {">>"}
-        </Button>
+      <div className="flex gap-[5px] mt-2.5 justify-center">
+        <Pagination
+          showSizeChanger
+          showQuickJumper
+          locale={{
+            items_per_page: "/ trang",
+            jump_to: "Đi tới",
+            page: "trang",
+            prev_page: "trang trước"
+          }}
+          total={items?.length}
+          defaultCurrent={1}
+          defaultPageSize={itemsPerPage}
+          onChange={(page) => setCurrentPage(page)}
+          onShowSizeChange={(_, pageSize) => setItemsPerPage(pageSize)}
+        />
       </div>
     </div>
   );
