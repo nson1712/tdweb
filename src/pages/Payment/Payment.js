@@ -358,7 +358,7 @@ const Payment = ({
             }
             allowfullscreen
           />
-          <FooterDesktop />
+          {/*<FooterDesktop />*/}
         </div>
       </div>
       <ChatSupport showChat={showChat} setShowChat={setShowChat} />
