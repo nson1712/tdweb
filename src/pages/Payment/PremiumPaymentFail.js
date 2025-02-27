@@ -28,7 +28,7 @@ const PremiumPaymentFail = () => {
               Router.push("/premium");
             }}
           >
-            Mua gói Premium khác
+          Gói Premium khác
           </Button>
           <Button
             className="btnSecond-Second max-w-[300px] mx-auto"
@@ -40,7 +40,7 @@ const PremiumPaymentFail = () => {
           >
             Liên hệ Toidoc
           </Button>
-          <FooterDesktop />
+          {/*<FooterDesktop />*/}
         </div>
       </div>
     </CommonLayout>

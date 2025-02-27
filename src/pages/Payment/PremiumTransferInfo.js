@@ -163,7 +163,7 @@ const PremiumTransferInfo = ({ type }) => {
                   Router.push("/premium");
                 }}
               >
-                Mua gói Premium khác
+                Đăng ký gói Premium khác
               </Button>
               <Button
                 className="btnSecond-Second max-w-[300px] mx-auto"
@@ -189,12 +189,12 @@ const PremiumTransferInfo = ({ type }) => {
                   )}</strong> nữa`,
                 }}
               />
-              <div className="px-[20px] space-y-4">
+              <div className="px-[20px] space-y-4 mb-[30px]">
                 <p className="text-[14px] font-bold mb-[0px]">
                   Hãy ấn nút Copy thông tin chuyển khoản bên dưới
                 </p>
                 <Alert
-                  message="Lưu ý: chỉ khi copy đúng các thông tin, thì tài khoản mới nhận được gói Premium"
+                  message="Lưu ý: chỉ khi copy đúng các thông tin, thì tài khoản mới đăng ký được gói Premium"
                   showIcon
                   type="warning"
                 />
@@ -202,15 +202,13 @@ const PremiumTransferInfo = ({ type }) => {
                   <div>
                     <div className="m-2 flex">
                       <div className="mr-3 flex justify-center">
-                        <div className="w-16">
-                          <img className="self-center" src='/images/ocb.png' />
-                        </div>
+                        <img loading="lazy" width="50" height="30" decoding="async" data-nimg="1" className="rounded-full m-auto self-center" style={{'color':'transparent',  'background-color': '#fff', 'padding': '5px'}} src="https://img.bankhub.dev/OCB.png"/>
                       </div>
                       <div>
-                        <p className="text-sm text-[#fff]">
+                        <p className="text-lg text-[#fff]">
                           Ngân hàng thụ hưởng
                         </p>
-                        <p className="font-bold text-sm text-[#fff]">
+                        <p className="font-bold text-sm text-[#00e60e]">
                           Ngân hàng thương mại cổ phần Phương Đông
                         </p>
                       </div>
@@ -219,8 +217,8 @@ const PremiumTransferInfo = ({ type }) => {
                   <div>
                     <div className="grid grid-cols-7 m-2">
                       <div className="col-span-5 text-left">
-                        <p className="text-sm text-[#fff]">1. Chủ tài khoản:</p>
-                        <p className="font-bold text-sm text-[#fff]">
+                        <p className="text-lg text-[#fff]">1. Chủ tài khoản:</p>
+                        <p className="font-bold text-sm text-[#00e60e]">
                           {accountName}
                         </p>
                       </div>
@@ -229,10 +227,10 @@ const PremiumTransferInfo = ({ type }) => {
                   <div>
                     <div className="grid grid-cols-7 m-2">
                       <div className="col-span-5 text-left">
-                        <p className="text-sm text-[#fff]">
-                          2. Số tài khoản (nhớ copy cả mã CAS):
+                        <p className="text-lg text-[#fff]">
+                          2. Ấn sao chép lấy số tài khoản <span className='text-[#feb313] text-sm'><strong><i>(Nhớ copy cả mã CAS)</i></strong></span>:
                         </p>
-                        <p className="font-bold text-sm text-[#fff]">
+                        <p className="font-bold text-sm text-[#00e60e]">
                           {accountNumber}
                         </p>
                       </div>
@@ -249,8 +247,8 @@ const PremiumTransferInfo = ({ type }) => {
                   <div>
                     <div className="grid grid-cols-7 m-2">
                       <div className="col-span-5 text-left">
-                        <p className="text-sm text-[#fff]">3. Số tiền:</p>
-                        <p className="font-bold text-[#fff] text-sm">
+                        <p className="text-lg text-[#fff]">3. Số tiền:</p>
+                        <p className="font-bold text-[#00e60e] text-sm">
                           {formatStringToNumber(amount)}VNĐ
                         </p>
                       </div>
@@ -268,9 +266,9 @@ const PremiumTransferInfo = ({ type }) => {
                     <div className="grid grid-cols-8 m-2">
                       <div className="col-span-6 text-left">
                         <p className="text-sm text-[#fff]">
-                          4. Nội dung chuyển khoản:
+                          4. Ấn sao chép để copy nội dung: <span className='text-[#feb313]'><strong><i>(Không copy chính xác, TK sẽ không đăng ký Premium được)</i></strong></span>
                         </p>
-                        <p className="text-[#fff] font-bold text-sm">
+                        <p className="text-[#00e60e] font-bold text-sm">
                           {description}
                         </p>
                       </div>
@@ -329,12 +327,13 @@ const PremiumTransferInfo = ({ type }) => {
                     );
                   }}
                 >
+                  <img src='/images/warning.png' className='mr-[5px] w-[20px]'/>
                   Báo lỗi không đky được Premium
                 </Button>
               </div>
             </>
           )}
-          <FooterDesktop />
+          {/*<FooterDesktop />*/}
         </div>
       </div>
     </CommonLayout>

@@ -148,7 +148,7 @@ const Payment = ({
         <div className="relative max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] flex flex-col justify-center text-second-color">
           <HeaderPayment />
           <p className="text-[20px] font-bold main-text text-center">
-            Web Nạp KC Tự Động Chính Thức của Toidoc
+            Web Nạp ♦️ chính thức duy nhất của Toidoc
           </p>
 
             <div className="flex justify-center">
@@ -284,7 +284,7 @@ const Payment = ({
               )}
 
               <Button
-                className="btnMain btnSecond"
+                className="btnMain btnSecondDeposit"
                 type="submit"
                 loading={loading}
               >
@@ -304,13 +304,14 @@ const Payment = ({
                 }}
                 loading={loading}
               >
+                <img src='/images/warning.png' className='mr-[5px] w-[20px]'/>
                 Báo lỗi không nạp được
               </Button>
               <div className="split-line-dark my-[20px] mx-[20px]"></div>
               <div style={{ display: "flex", alignItems: "center" }}>
                 <img
-                  src="/images/iconInfo.png"
-                  style={{ width: "30px", height: "30px", marginRight: "10px" }}
+                  src="/images/warning.png"
+                  className='mr-[10px] w-[32px]'
                 />
                 <p style={{ color: "rgb(204 46 73)", margin: 0 }}>
                   <i>
