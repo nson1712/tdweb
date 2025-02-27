@@ -95,7 +95,7 @@ const Stories = () => {
     status: undefined,
   });
 
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(20)
   const [last, setLast] = useState();
 
@@ -117,13 +117,15 @@ const Stories = () => {
     collectionStories,
     storiesByHashtag,
     getStoriesByHashtag,
+    stories,
+    getStories
   } = StoryStore;
 
-  console.log("TOP TRENDING: ", toJS(topTrending))
+  console.log("ROUTE.QUERY: ", route.query)
 
   useEffect(() => {
     if (route.query.categorySlug) {
-      getStoryByCategory(route.query.categorySlug, last, 20, filter);
+      getStories(route.query.categorySlug, page, pageSize);
     } else if (route.query.collectionSlug) {
       getStoryByCollection(page, pageSize, route.query.collectionSlug);
     } else if (route.query.hashtag) {
@@ -149,23 +151,10 @@ const Stories = () => {
     }
   }, [route.query, page, pageSize, last]);
 
+
   const data = useMemo(() => {
-    // return (
-    //   storyByCategory[route.query.categorySlug] ||
-    //   storiesByHashtag ||
-    //   collectionStories ||
-    //   {
-    //     trending: topTrending,
-    //     "moi-nhat": topNew,
-    //     "truyen-full": topFull,
-    //     "xem-nhieu-nhat": topViews,
-    //     hot: hotStories,
-    //     // hashtag: storiesByHashtag,
-    //   }[route.query.theloai] ||
-    //   []
-    // );
     if (route.query.categorySlug) {
-      return storyByCategory[route.query.categorySlug];
+      return stories
     }
     if (route.query.hashtag) {
       return storiesByHashtag;
@@ -193,6 +182,7 @@ const Stories = () => {
     return [];
   }, [
     route.query,
+    stories,
     topTrending,
     topViews,
     hotStories,
@@ -204,12 +194,8 @@ const Stories = () => {
   ]);
 
   const title = useMemo(() => {
-    if (route.query.categorySlug && data?.data?.length) {
-      return `Danh sách truyện ${
-        data?.data[0].categories?.find(
-          (item) => item.code === route.query.categorySlug
-        )?.name
-      }`;
+    if (route.query.categorySlug) {
+      return `Danh sách truyện ${route.query.name}`;
     }
     if (route.query.collectionSlug) return collectionStories?.name;
     if (route.query.hashtag) return `# ${route.query.hashtag}`;
@@ -271,7 +257,7 @@ const Stories = () => {
   };
 
   const onPageChange = (page) => {
-    setPage(page)
+    setPage(page - 1)
   }
 
   return (
@@ -280,6 +266,7 @@ const Stories = () => {
         <div className="hidden md:block">
           <Header />
         </div>
+
         <div className="max-w-[768px] mx-[auto] md:pt-[80px] md:bg-white py-16">
           <div className="flex items-center justify-between fixed md:static top-0 left-0 right-0 bg-white">
             <div className="flex items-center">
@@ -374,7 +361,7 @@ const Stories = () => {
               showSizeChanger
               onShowSizeChange={onShowSizeChange}
               onChange={onPageChange}
-              total={data?.totalElements - pageSize}
+              total={data?.totalElements}
             />
             </div>
 

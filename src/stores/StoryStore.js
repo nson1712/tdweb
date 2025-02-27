@@ -52,6 +52,8 @@ class StoryStore {
 
   hashtags = {};
 
+  stories = {};
+
   loadingChapterDetail = false;
 
   isClickAff = false;
@@ -66,8 +68,43 @@ class StoryStore {
   setIsOpenFull = (value) => {
     runInAction(() => {
       this.isOpenFull = value;
-    })
-  }
+    });
+  };
+
+  getStories = async (
+    categoryCode,
+    page = 1,
+    size = 20,
+    keyword,
+    sortBy = "totalView",
+    sortDirection = "DESC",
+    chapterMin,
+    chapterMax,
+    status
+  ) => {
+    try {
+      const result = await Api.get({
+        url: "data/private/data/story",
+        params: {
+          categoryCode,
+          page,
+          size,
+          keyword,
+          sortBy,
+          sortDirection,
+          chapterMin,
+          chapterMax,
+          status,
+        },
+      });
+
+      runInAction(() => {
+        this.stories = result.data;
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   getcollections1 = async () => {
     try {
@@ -176,7 +213,7 @@ class StoryStore {
 
   getStoryPrice = async (storySlug) => {
     try {
-      if (storySlug !== '') {
+      if (storySlug !== "") {
         const result = await Api.get({
           url: "/data/private/data/story/price",
           params: {
@@ -251,21 +288,8 @@ class StoryStore {
       });
 
       runInAction(() => {
-        this.topTrending = result.data
-      })
-
-      // if (page === 1) {
-      //   runInAction(() => {
-      //     this.topTrending = result.data;
-      //   });
-      // } else {
-      //   runInAction(() => {
-      //     this.topTrending = {
-      //       ...result.data,
-      //       data: [...this.topTrending.data, ...result.data.data],
-      //     };
-      //   });
-      // }
+        this.topTrending = result.data;
+      });
     } catch (e) {
       console.log(e);
     }
@@ -312,17 +336,6 @@ class StoryStore {
       runInAction(() => {
         this.topViews = result.data;
       });
-
-      // if (page === 1) {
-       
-      // } else {
-      //   runInAction(() => {
-      //     this.topViews = {
-      //       ...result.data,
-      //       data: [...this.topViews.data, ...result.data.data],
-      //     };
-      //   });
-      // }
     } catch (e) {
       console.log(e);
     }
@@ -341,16 +354,6 @@ class StoryStore {
       runInAction(() => {
         this.hotStories = result.data;
       });
-      // if (page === 1) {
-        
-      // } else {
-      //   runInAction(() => {
-      //     this.hotStories = {
-      //       ...result.data,
-      //       data: [...this.hotStories.data, ...result.data.data],
-      //     };
-      //   });
-      // }
     } catch (e) {
       console.log(e);
     }
@@ -369,17 +372,6 @@ class StoryStore {
       runInAction(() => {
         this.topNew = result.data;
       });
-
-      // if (page === 0) {
-       
-      // } else {
-      //   runInAction(() => {
-      //     this.topNew = {
-      //       ...result.data,
-      //       data: [...this.topNew.data, ...result.data.data],
-      //     };
-      //   });
-      // }
     } catch (e) {
       console.log(e);
     }
@@ -398,17 +390,6 @@ class StoryStore {
       runInAction(() => {
         this.topFull = result.data;
       });
-
-      // if (page === 1) {
-        
-      // } else {
-      //   runInAction(() => {
-      //     this.topFull = {
-      //       ...result.data,
-      //       data: [...this.topFull.data, ...result.data.data],
-      //     };
-      //   });
-      // }
     } catch (e) {
       console.log(e);
     }

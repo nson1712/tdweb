@@ -140,7 +140,6 @@ const StorySummary = () => {
 
   const route = useRouter();
 
-  console.log("STORY DETAILS: ", toJS(storyDetail))
 
   // useEffect(() => {
   //   if (route.query.storySlug && chapters && chapters?.length > 0) {
