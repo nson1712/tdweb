@@ -4,13 +4,13 @@ import ArticleTitle from "../../../src/components/ArticleTitle";
 import Image from "next/image";
 import imageLoader from "../../../src/loader/imageLoader";
 import axios from "axios";
-import HeaderServerSchema from "../../../src/components/HeaderServerSchema";
+import HeaderServer from "../../../src/components/HeaderServer";
 
-const BlogDetailPage = ({detail}) => {
-
+const BlogDetailPage = ({ detail }) => {
   return (
     <>
-      <HeaderServerSchema title={`${detail?.title}`}
+      <HeaderServer
+        title={`🔥${detail?.title}`}
         canonical={`https://toidoc.vn/blog-truyen-full/${detail?.slug}`}
         slug={detail?.slug}
       />
@@ -23,7 +23,7 @@ const BlogDetailPage = ({detail}) => {
                 height={920}
                 width={1780}
                 src={detail?.coverImage || "/default.jpg"}
-                alt="blog image"
+                alt={detail?.slug}
                 priority
               />
             ) : null}
@@ -31,7 +31,10 @@ const BlogDetailPage = ({detail}) => {
           </div>
           <div className="block sm:hidden text-lg text-white -mt-32 mb-2 relative font-semibold px-1.5">
             <CategoriesTag title="blog" />
-            <ArticleTitle title={detail?.title} />
+            <ArticleTitle
+              className="text-xl line-clamp-2"
+              title={detail?.title}
+            />
           </div>
           <BlogDetails data={detail} />
         </div>
@@ -45,9 +48,10 @@ BlogDetailPage.getInitialProps = async (ctx) => {
     try {
       if (ctx.query.blogSlug) {
         const result = await axios.get(
-        typeof window !== "undefined"
+          typeof window !== "undefined"
             ? `https://fsdfssf.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`
             : `http://10.8.22.205:8082/article/detail/${ctx.query.blogSlug}`
+        // `https://fsdfssf.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`
         );
         return {
           detail: result.data.data,
@@ -58,7 +62,7 @@ BlogDetailPage.getInitialProps = async (ctx) => {
         detail: {},
       };
     } catch (e) {
-      // console.log('server call error', e)
+      console.log('server call error', e)
       return {
         detail: {},
       };

@@ -40,7 +40,7 @@ const PriceInfo = ({discountValue, finalChargeValue, storyDetail, handleOpenFull
               </i>
             </p>
           )}
-          <div
+          <a
             id='open-all-chapter-btn'
             style={{
               marginTop: "20px",
@@ -55,7 +55,7 @@ const PriceInfo = ({discountValue, finalChargeValue, storyDetail, handleOpenFull
               Mở Tất Cả Chương
             </Button>
             
-          </div>
+          </a>
           {storyDetail?.status === 'PENDING' && <p className='white-text mt-[10px]'><i>(Chú ý: Chỉ mở toàn bộ chương nhà đăng đã phát hành)</i></p>}
         </div>
       </div>

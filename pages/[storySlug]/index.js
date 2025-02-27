@@ -2,11 +2,12 @@ import React from 'react'
 import StorySummaryComponent from '../../src/pages/StorySummary'
 import HeaderServerSchema from '../../src/components/HeaderServerSchema'
 import axios from 'axios'
+import { countWords } from '../../src/utils/utils'
 
 const StorySummary = ({detail}) => {
   return (
     <>
-      <HeaderServerSchema title={`✅ ${(detail?.status === 'ACTIVE' ? '[FULL] ' : '') + detail?.title} | Nền tảng cộng đồng đọc truyện online hấp dẫn`}
+      <HeaderServerSchema title={`✅ ${(detail?.status === 'ACTIVE' ? '[FULL] ' : '') + detail?.title}${countWords(detail?.title) <= 70 ? '| Nền tảng cộng đồng đọc truyện online hấp dẫn' : ''}`}
         description={detail?.metaDescription ? detail?.metaDescription.replace(/"/g,'') : detail?.metaDescription}
         keywords={detail?.metaKeywords}
         image={detail?.thumbnail || detail?.coverImage}
@@ -16,7 +17,7 @@ const StorySummary = ({detail}) => {
         slug={detail?.slug}
         totalView={detail ? ((detail?.totalView === 0 || detail?.totalView === null) ? 10 : detail?.totalView) : 10}
       />
-      <StorySummaryComponent />
+      <StorySummaryComponent storyDetail={detail}/>
     </>
   )
 }

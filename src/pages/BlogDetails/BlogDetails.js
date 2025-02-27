@@ -6,7 +6,8 @@ import Menu from "./Menu";
 import parse from "html-react-parser";
 import PinMenu from "../../components/PinMenu/PinMenu";
 import {
-  appendNewLineAfterCloseHTag,
+  appendNewLineAfterBlockLevelTags,
+  getLastChild,
   getSlugfromSlugGenerate,
   slugGenerate,
 } from "../../utils/utils";
@@ -74,7 +75,9 @@ const BlogDetails = ({ data }) => {
     }
   }, [quotes]);
 
-  const updatedContent = data?.content ? appendNewLineAfterCloseHTag(data?.content) : "";
+  const updatedContent = data?.content
+    ? appendNewLineAfterBlockLevelTags(data?.content)
+    : "";
 
   const contentArr = updatedContent.split("\n");
 
@@ -91,24 +94,23 @@ const BlogDetails = ({ data }) => {
     return headingList;
   };
 
+
   const headingList = getHeadingList(contentArr).map((htmlString) => {
     const doc = parse(htmlString);
     const tagName = doc.type;
+    const lastChild = getLastChild(doc);
 
     const levelMap = {
-      h3: 1,
-      h4: 2,
-      h5: 3,
-      h6: 4,
+      h2: 1,
+      h3: 2,
+      h4: 3,
+      h5: 4,
+      h6: 5,
     };
     const level = levelMap[tagName] || null;
     return {
-      label: doc.props.children || doc.props.children.props.children,
-      id: getSlugfromSlugGenerate(
-        slugGenerate(
-          doc.props.children || doc.props.children.props.children || ""
-        )
-      ),
+      label: lastChild,
+      id: getSlugfromSlugGenerate(slugGenerate(lastChild || "")),
       level: level,
     };
   });
@@ -138,7 +140,7 @@ const BlogDetails = ({ data }) => {
           <PinMenu headingList={headingList} scrollIntoView={handleScrollTo} />
 
           <ArticleTitle
-            className="hidden sm:text-[30px] sm:block font-semibold"
+            className="hidden text-xs sm:text-3xl sm:block font-semibold"
             title={data?.title}
           />
 

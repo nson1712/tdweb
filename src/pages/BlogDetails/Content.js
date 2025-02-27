@@ -6,19 +6,29 @@ import {
   slugGenerate,
 } from "../../utils/utils";
 
+const wrapFigcaption = (html) => {
+  return html.replace(
+    /(<figcaption[^>]*>)([\s\S]*?)(<\/figcaption>)/gi,
+    (_, openTag, content, closeTag) =>
+      `<div class="flex justify-center bg-slate-100">${openTag}${content}${closeTag}</div>`
+  );
+};
+
 const Content = ({ content }) =>
-  content?.map((item, index) => (
-    <div
-      key={index}
-      {...(item.match(/<\/h[1-6]>/i) && {
-        id: getSlugfromSlugGenerate(slugGenerate(cleanHtml(item))),
-      })}
-      className={
-        item.includes("</figure>") ? "mb-1 flex justify-center" : undefined
-      }
-    >
-      {parse(item)}
-    </div>
-  )) ?? null;
+  content?.map((item, index) => {
+    const processedContent = wrapFigcaption(item);
+
+    return (
+      <div
+        key={index}
+        {...(/<\/h[1-6]>/i.test(item) && {
+          id: getSlugfromSlugGenerate(slugGenerate(cleanHtml(item))),
+        })}
+        className={/<\/figure>/i.test(item) ? "mb-1 flex justify-center" : undefined}
+      >
+        {parse(processedContent)}
+      </div>
+    );
+  }) ?? null;
 
 export default Content;

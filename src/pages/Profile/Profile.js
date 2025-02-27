@@ -11,6 +11,7 @@ import StoryItem from "../../components/StoryItem/StoryItem";
 import { formatStringToNumber } from "../../utils/utils";
 import CopyButton from "../../components/CopyButton/CopyButton";
 import Link from "next/link";
+import Button3D from "../../components/3DButton";
 
 const Profile = () => {
   const {
@@ -128,14 +129,14 @@ const Profile = () => {
                     ? "Dịch giả"
                     : "Độc giả"}
                 </p>
-                <div
+                <a
                   id="logout-btn"
                   className="flex items-center mt-1 text-red-600 cursor-pointer"
                   onClick={handleLogout}
                 >
                   <span>Đăng xuất</span>
                   <img src="/images/logout.png" className="w-7 ml-2" />
-                </div>
+                </a>
               </div>
             </div>
           </div>
@@ -146,13 +147,7 @@ const Profile = () => {
             <Link
               href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}`}
             >
-              <a id="nap-kim-cuong" class="relative border-0 bg-transparent p-0 mt-4 cursor-pointer outline-none focus:outline-none select-none touch-manipulation transition-filter duration-250 group">
-                <span class="absolute top-0 left-0 w-full h-full rounded-xl bg-black/25 will-change-transform translate-y-[2px] transition-transform duration-600 ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-[4px] group-active:translate-y-[1px]"></span>
-                <span class="absolute top-0 left-0 w-full h-full rounded-xl bg-gradient-to-l from-[hsl(340deg_100%_16%)] via-[hsl(340deg_100%_32%)] to-[hsl(340deg_100%_16%)]"></span>
-                <span class="block relative px-[27px] py-[12px] rounded-xl text-white bg-[hsl(345deg_100%_47%)] will-change-transform translate-y-[-4px] transition-transform duration-600 ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-[-6px] group-active:translate-y-[-2px] text-[1.1rem]">
-                  Nạp kim cương
-                </span>
-              </a>
+              <Button3D id="nap-kim-cuong" name="Nạp kim cương" />
             </Link>
           </div>
           <div className="flex my-4 justify-center border-b">

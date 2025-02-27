@@ -163,7 +163,7 @@ const Research = () => {
     <CommonLayout active="HOME">
       <div>
         <Header selectedTab={"RESEARCH"} />
-        <div className="max-w-[1116px] mx-auto bg-white md:pt-[88px] px-0 md:px-2 space-y-10 pb-20 pt-10">
+        <div className="max-w-[1116px] mx-auto bg-white md:pt-[88px] px-0 md:px-2 space-y-10 pb-20">
           <div className="pt-2 mt-0 fixed top-0 left-0 right-0 bg-white md:hidden z-[9] flex justify-center">
             <div className="pb-2 border-b-[1px] border-color flex gap-x-2">
               <div className="relative float-left">
@@ -211,11 +211,11 @@ const Research = () => {
           </div>
 
           {text ? (
-            <div className="mb-5 pt-5 md:pt-0">
+            <div className="mb-5 md:pt-0">
               <Search hiddenSearch={true} />
             </div>
           ) : (
-            <div className=" space-y-6">
+            <div className="space-y-6">
               <div className="space-y-2 mx-2">
                 {(isLoggedIn && viewings?.data?.length > 0)  && (
                   <div className="text-lg text-black font-bold block md:hidden">

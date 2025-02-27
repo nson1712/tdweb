@@ -16,14 +16,14 @@ const HeadSchemaComponent = ({
       return {
         __html: `{
         "@context": "https://schema.org/",
-        "@type": "Product",
+        "@type": "Book",
         "name": "${title}",
         "image": "${image}",
         "description": "${description}",
         "keywords": "${keywords}",
         "url": "${`https://toidoc.vn/` + slug}",
-        "brand": {
-          "@type": "Brand",
+        "publisher": {
+          "@type": "Organization",
           "name": "Toidoc"
         },
         "author": {
@@ -61,7 +61,7 @@ const HeadSchemaComponent = ({
             name="keywords"
             content={
               keywords ||
-              "Truyện ngônn tình, ngôn tình, truyện ngược, truyện sủng, truyện tiên hiệp, truyện kiếm hiệp, truyện đam mỹ, truyện huyền huyễn, truyện trọng sinh, truyện trinh thám, truyện full miễn phí, truyện full, truyện hay, đọc truyện chữ, truyện chữ, truyện dịch, truyện online, truyện ngắn"
+              "Truyện ngôn tình, ngôn tình, truyện ngược, truyện sủng, truyện tiên hiệp, truyện kiếm hiệp, truyện đam mỹ, truyện huyền huyễn, truyện trọng sinh, truyện trinh thám, truyện full miễn phí, truyện full, truyện hay, đọc truyện chữ, truyện chữ, truyện dịch, truyện online, truyện ngắn"
             }
           />
           <meta property="og:site_name" content="toidoc.vn"></meta>

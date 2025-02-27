@@ -22,9 +22,17 @@ const PaginatedList = ({ items }) => {
         {currentItems?.map((item, index) => (
           <div key={index} className="grid-item-style">
             {!item?.isFree ? (
-              <img src="/images/lock.png" className="w-5 float-left mr-[5px]" />
+              <img
+                src="/images/lock.png"
+                className="w-5 float-left mr-[5px]"
+                width="20" height="20"
+              />
             ) : (
-              <img src="/images/Done.png" className="w-5 float-left mr-[5px]" />
+              <img
+                src="/images/Done.png"
+                className="w-5 float-left mr-[5px]"
+                width="20" height="20"
+              />
             )}
             <Link href={`/${item?.storySlug}/${item?.slug}`}>
               <a title={item?.title} className="title-truncate-style">
