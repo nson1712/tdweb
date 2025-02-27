@@ -16,6 +16,7 @@ import ChatSupport from "../../components/Button/ChatSupport";
 import ModalComponent from "../../components/Modal/Modal";
 import HeaderPayment from "./HeaderPayment";
 import GlobalStore from "../../stores/GlobalStore";
+import Button3D from "../../components/3DButton";
 
 const Payment = ({
   values,
@@ -150,16 +151,9 @@ const Payment = ({
             Web Nạp KC Tự Động Chính Thức của Toidoc
           </p>
 
-          <iframe
-            className="self-center w-full aspect-video mb-4"
-            title="Hướng dẫn nạp kim cương"
-            src={
-              referralCode
-                ? "https://www.youtube.com/embed/-m4Lwj7_GOA?playlist=-m4Lwj7_GOA&loop=1&autoplay=1&mute=1"
-                : "https://www.youtube.com/embed/BDyN143ZQ6Q?playlist=BDyN143ZQ6Q&loop=1&autoplay=1&mute=1"
-            }
-            allowfullscreen
-          />
+            <div className="flex justify-center">
+            <Button3D name="Hướng dẫn nạp" href="#deposit-guide-video" />
+            </div>
 
           <div className="pl-[20px] pr-[20px] mb-[20px]">
             {referralCode === "" && (
@@ -353,6 +347,17 @@ const Payment = ({
               </div>
             </Form>
           </div>
+          <iframe
+            id="deposit-guide-video"
+            className="self-center w-full aspect-video mb-4"
+            title="Hướng dẫn nạp kim cương"
+            src={
+              referralCode
+                ? "https://www.youtube.com/embed/-m4Lwj7_GOA?playlist=-m4Lwj7_GOA&loop=1&mute=1"
+                : "https://www.youtube.com/embed/BDyN143ZQ6Q?playlist=BDyN143ZQ6Q&loop=1&mute=1"
+            }
+            allowfullscreen
+          />
           <FooterDesktop />
         </div>
       </div>
