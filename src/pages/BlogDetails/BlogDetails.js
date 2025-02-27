@@ -142,6 +142,7 @@ const BlogDetails = ({ data }) => {
           <ArticleTitle
             className="hidden text-xs sm:text-3xl sm:block font-semibold"
             title={data?.title}
+            isH1={true}
           />
 
           <CreateAndUpdateTimeZone

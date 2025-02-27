@@ -37,7 +37,7 @@ const StoryStatus = ({ status, lightBg }) => {
           height={14}
           className="max-w-[14px] max-h-[14px] rounded-full self-center"
           src={currentStatus?.icon}
-          alt={currentStatus?.label ?? "story status"}
+          alt={currentStatus?.label ?? "Trạng thái truyện"}
         />
       ) : null}
 

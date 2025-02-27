@@ -56,7 +56,7 @@ const StoryType = () => {
             </a>
 
             <h1 className="text-[16px] leading-[20px] font-bold main-text mb-0">
-              Thể loại
+              Danh Sách Thể Loại Truyện
             </h1>
 
             <div className="w-[68px]" />
@@ -70,14 +70,14 @@ const StoryType = () => {
               >
                 <Link href={`/the-loai/${item.code}`} passHref>
                   <a className="flex"
-                    title={`Truyện ${item.name}`}
+                    title={`Thể loại ${item.name}`}
                   >
                   {(item.thumbnail || item.image) && (
                     <Image
                       loader={imageLoader}
                       src={item.thumbnail || item.image}
-                      alt={item.name}
-                      title={item.name}
+                      alt={`Thể loại ${item.name}`}
+                      title={`Thể loại ${item.name}`}
                       width={100}
                       height={50}
                     />

@@ -24,7 +24,7 @@ const CategoryItem = ({ thumbnail, name, code }) => {
             width={130}
             height={60}
             src={thumbnail}
-            alt={name}
+            alt={`Thể loại ${name}`}
           />
         ) : null}
         <div className="font-semibold self-center">{name}</div>
