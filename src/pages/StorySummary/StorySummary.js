@@ -98,7 +98,7 @@ function useScrollDirection() {
   return scrollDirection;
 }
 
-const StorySummary = () => {
+const StorySummary = ({storyDetail}) => {
   const scrollDirection = useScrollDirection();
   const [showBubble, setShowBubble] = useState("up");
   const [scrollOffset, setScrollOffset] = useState(0);
@@ -115,8 +115,8 @@ const StorySummary = () => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const {
-    storyDetail,
-    getStoryDetail,
+    // storyDetail,
+    // getStoryDetail,
     saveBookMark,
     bookmarkIds,
     unBookMark,
@@ -197,7 +197,7 @@ const StorySummary = () => {
   useEffect(() => {
     const fetchData = async () => {
       if (route.query.storySlug) {
-        await getStoryDetail(route.query.storySlug);
+        // await getStoryDetail(route.query.storySlug);
         const isLoggedIn = await GlobalStore.checkIsLogin();
         if (isLoggedIn) {
           await getReadingLatestChapter(route.query.storySlug);
@@ -680,11 +680,13 @@ const StorySummary = () => {
                         <img
                           src="/images/Done.png"
                           className="w-5 float-left mr-[5px]"
+                          width="20" height="20"
                         />
                       ) : (
                         <img
                           src="/images/lock.png"
                           className="w-5 float-left mr-[5px]"
+                          width="20" height="20"
                         />
                       )}
                       <Link

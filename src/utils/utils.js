@@ -634,3 +634,8 @@ export const getLastChild = (node) => {
   }
   return node;
 };
+
+export const countWords = (text) => {
+  if (!text || typeof text !== "string") return 0;
+  return (text.match(/\b\w+\b/g) || []).length;
+}

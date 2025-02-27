@@ -4,13 +4,13 @@ import ArticleTitle from "../../../src/components/ArticleTitle";
 import Image from "next/image";
 import imageLoader from "../../../src/loader/imageLoader";
 import axios from "axios";
-import HeaderServerSchema from "../../../src/components/HeaderServerSchema";
+import HeaderServer from "../../../src/components/HeaderServer";
 
 const BlogDetailPage = ({ detail }) => {
   return (
     <>
-      <HeaderServerSchema
-        title={`${detail?.title}`}
+      <HeaderServer
+        title={`🔥${detail?.title}`}
         canonical={`https://toidoc.vn/blog-truyen-full/${detail?.slug}`}
         slug={detail?.slug}
       />
@@ -23,7 +23,7 @@ const BlogDetailPage = ({ detail }) => {
                 height={920}
                 width={1780}
                 src={detail?.coverImage || "/default.jpg"}
-                alt="blog image"
+                alt={detail?.slug}
                 priority
               />
             ) : null}
@@ -47,14 +47,12 @@ BlogDetailPage.getInitialProps = async (ctx) => {
   const getDetail = async () => {
     try {
       if (ctx.query.blogSlug) {
-      console.log('ctx.query.blogSlug: ', ctx.query.blogSlug);
         const result = await axios.get(
           typeof window !== "undefined"
             ? `https://fsdfssf.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`
             : `http://10.8.22.205:8082/article/detail/${ctx.query.blogSlug}`
         // `https://fsdfssf.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`
         );
-        console.log('result.data: ', esult.data);
         return {
           detail: result.data.data,
         };
