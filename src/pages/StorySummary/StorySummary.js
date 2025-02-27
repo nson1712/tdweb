@@ -132,10 +132,7 @@ const StorySummary = ({storyDetail}) => {
     isOpenFull,
     setIsOpenFull,
   } = StoryStore;
-  const {
-    storyDetailArticle, 
-    getBlogStoryDetail
-  } = BlogStore;
+  const { storyDetailArticle, getBlogStoryDetail } = BlogStore;
   const [currentChapterDetail, setCurrentChapterDetail] = useState([]);
 
   const [currentTab, setCurrentTab] = useState("CONTENT");
@@ -414,12 +411,18 @@ const StorySummary = ({storyDetail}) => {
 
   // }, [chapters])
 
+  const modifiedContent = storyDetailArticle?.content
+    ?.replace(/<(h[1-6])([^>]*)>/g, '<$1$2 class="text-lg">')
+    .replace(
+      /<figure([^>]*)>(.*?)<\/figure>/g,
+      '<div class="flex justify-center"><figure$1>$2</figure></div>'
+    );
   return (
     <CommonLayout>
       {/* <div className='hidden md:block'> */}
-        <Header />
+      <Header />
       {/* </div> */}
-      <div className='max-w-[620px] mx-[auto] pt-10 md:pt-20 bg-story'>
+      <div className="max-w-[620px] mx-[auto] pt-10 md:pt-20 bg-story">
         {/*<div className={classNames('flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 top-0 z-[99] bg-white mobile-header', scrollOffset > 100 && 'mobile-header-show', `${scrollDirection === 'down' ? 'hide' : 'show-header'}`)}>
           <a className='p-[10px]' title={`Truyện ${storyDetail?.title}`}
             onClick={() => {
@@ -530,13 +533,12 @@ const StorySummary = ({storyDetail}) => {
             <div className="flex gap-x-4 items-start">
               <div className="max-w-24 mt-2">
                 <img
-                src={storyDetail?.thumbnail || storyDetail?.coverImage}
-                alt={`Truyện ${storyDetail?.title}`}
-                title={storyDetail?.title}
-                className="w-28 h-36 rounded-[10px]"
-              />
+                  src={storyDetail?.thumbnail || storyDetail?.coverImage}
+                  alt={`Truyện ${storyDetail?.title}`}
+                  title={storyDetail?.title}
+                  className="w-28 h-36 rounded-[10px]"
+                />
               </div>
-              
 
               <div className="flex flex-col justify-center self-center w-full">
                 <Link href={`${storyDetail?.slug}`} passHref>
@@ -561,10 +563,26 @@ const StorySummary = ({storyDetail}) => {
                   ))}
                 </h2>
                 <div className="flex rounded-xl bg-black/30 w-fit px-2.5 py-1 gap-x-1.5">
-                      <div className="self-center"><img src={storyDetail?.status === "ACTIVE" ? "/images/Done.png" : "/images/Loading.png"} /></div>
-                      <div className={`${storyDetail?.status === "ACTIVE" ? "text-green-500" : "text-[#5c95c6]"} text-sm self-center font-semibold`}>
-                        {storyDetail?.status === "ACTIVE" ? "Hoàn thành" : "Đang ra tiếp"}
-                      </div>
+                  <div className="self-center">
+                    <img
+                      src={
+                        storyDetail?.status === "ACTIVE"
+                          ? "/images/Done.png"
+                          : "/images/Loading.png"
+                      }
+                    />
+                  </div>
+                  <div
+                    className={`${
+                      storyDetail?.status === "ACTIVE"
+                        ? "text-green-500"
+                        : "text-[#5c95c6]"
+                    } text-sm self-center font-semibold`}
+                  >
+                    {storyDetail?.status === "ACTIVE"
+                      ? "Hoàn thành"
+                      : "Đang ra tiếp"}
+                  </div>
                 </div>
                 <div className="flex items-center pb-4 mt-2.5">
                   <div className="flex items-center mr-[32px]">
@@ -618,9 +636,6 @@ const StorySummary = ({storyDetail}) => {
         </div>
 
         {latestReadingChapter && latestReadingChapter?.chapterSlug && (
-          // <div className="box-lastest-reading-chapter">
-          //   <p>{`Bạn đang đọc tới: ${latestReadingChapter?.chapterTitle}. Bạn muốn đọc tiếp?`}</p>
-          // </div>
           <Alert
             message={`Bạn đang đọc tới: ${latestReadingChapter?.chapterTitle}. Bạn muốn đọc tiếp?`}
             type="warning"
@@ -711,12 +726,16 @@ const StorySummary = ({storyDetail}) => {
             </>
           )}
         </div>
-        {storyDetailArticle && 
-          <div className='mt-[20px]'>
-            <h2 className='text-lg font-bold main-text text-underline'>[REVIEW Truyện] {storyDetail?.title} </h2>
-            <div dangerouslySetInnerHTML={{ __html: storyDetailArticle?.content }}/>
+
+        {modifiedContent && (
+          <div className="mt-[20px]">
+            <h2 className="text-lg font-bold main-text text-underline">
+              [REVIEW Truyện] {storyDetail?.title}{" "}
+            </h2>
+            <div dangerouslySetInnerHTML={{ __html: modifiedContent }} />
           </div>
-        }
+        )}
+
         {showChapter && (
           <Chapters
             setShowChapter={setShowChapter}
@@ -789,7 +808,10 @@ const StorySummary = ({storyDetail}) => {
                   href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}`}
                   passHref
                 >
-                  <a id="nap-kim-cuong" class="relative border-0 bg-transparent p-0 mt-4 cursor-pointer outline-none focus:outline-none select-none touch-manipulation transition-filter duration-250 group">
+                  <a
+                    id="nap-kim-cuong"
+                    class="relative border-0 bg-transparent p-0 mt-4 cursor-pointer outline-none focus:outline-none select-none touch-manipulation transition-filter duration-250 group"
+                  >
                     <span class="absolute top-0 left-0 w-full h-full rounded-xl bg-black/25 will-change-transform translate-y-[2px] transition-transform duration-600 ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-[4px] group-active:translate-y-[1px]"></span>
                     <span class="absolute top-0 left-0 w-full h-full rounded-xl bg-gradient-to-l from-[hsl(340deg_100%_16%)] via-[hsl(340deg_100%_32%)] to-[hsl(340deg_100%_16%)]"></span>
                     <span class="block relative px-[27px] py-[12px] rounded-xl text-white bg-[hsl(345deg_100%_47%)] will-change-transform translate-y-[-4px] transition-transform duration-600 ease-[cubic-bezier(0.3,0.7,0.4,1)] group-hover:translate-y-[-6px] group-active:translate-y-[-2px] text-[1.1rem]">
@@ -805,15 +827,15 @@ const StorySummary = ({storyDetail}) => {
           <ModalComponent
             show={showLoginModal}
             handleClose={(e) => {
-              setShowLoginModal(false)
-              setLoading(false)
+              setShowLoginModal(false);
+              setLoading(false);
             }}
           >
             <ShortLogin
               description="Đăng nhập 1 chạm để mở khoá tất cả các chương đang có của truyện này."
               closeModal={() => {
-                setShowLoginModal(false)
-                setLoading(false)
+                setShowLoginModal(false);
+                setLoading(false);
               }}
             />
           </ModalComponent>
