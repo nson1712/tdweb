@@ -28,17 +28,16 @@ Stories.getInitialProps = async (ctx) => {
     if (ctx.query.categorySlug) {
       const result = await Api.get({
         url:
-          // typeof window !== "undefined"
-          //   ? "https://fsdfssf.truyenso1.xyz/data/private/data/categories/detail"
-          //   : "http://10.8.22.205:8082/private/data/categories/detail",
-          "https://fsdfssf.truyenso1.xyz/data/private/data/categories/detail",
+          typeof window !== "undefined"
+            ? "https://fsdfssf.truyenso1.xyz/data/private/data/categories/detail"
+            : "http://10.8.22.205:8082/private/data/categories/detail",
+          // "https://fsdfssf.truyenso1.xyz/data/private/data/categories/detail",
         params: {
           code: ctx.query.categorySlug,
         },
         isServer: true,
         hideError: true,
       });
-      console.log('result: ', result);
       detail = result.data;
     }
 

@@ -95,7 +95,7 @@ const TransferInfo = () => {
         }
       }
     } catch (e) {
-      Router.push("/nap-kim-cuong/failed");
+      // Router.push("/nap-kim-cuong/failed");
     }
   };
 

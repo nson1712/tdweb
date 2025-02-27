@@ -90,7 +90,7 @@ const PremiumTransferInfo = ({ type }) => {
         }
       }
     } catch (e) {
-      Router.push("/premium/failed");
+      // Router.push("/premium/failed");
     }
   };
 
