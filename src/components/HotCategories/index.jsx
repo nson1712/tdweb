@@ -11,7 +11,7 @@ const HotCategories = ({ data }) => {
       </div>
 
       <div className="grid grid-cols-3 gap-x-4 gap-y-2 rounded-2xl justify-center md:hidden">
-        {data.slice(0, 9).map((item, index) => (
+        {data?.slice(0, 9).map((item, index) => (
           <CategoryItem
             key={index}
             name={item.name}
@@ -22,7 +22,7 @@ const HotCategories = ({ data }) => {
       </div>
 
       <div className="hidden md:grid md:grid-cols-5 gap-x-4 gap-y-2 rounded-2xl justify-center">
-        {data.slice(0, 15).map((item, index) => (
+        {data?.slice(0, 15).map((item, index) => (
           <CategoryItem
             key={index}
             name={item.name}

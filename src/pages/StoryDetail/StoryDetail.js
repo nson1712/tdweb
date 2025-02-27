@@ -25,9 +25,12 @@ import ContentDisplay from "./ContentDisplay";
 import Link from "next/link";
 import { Modal, Spin, Table } from "antd";
 import { LeftOutlined, MenuOutlined, RightOutlined } from "@ant-design/icons";
-import {
-  useStoryChapterTableOptions,
-} from "../../hook/useTableOption";
+import { useStoryChapterTableOptions } from "../../hook/useTableOption";
+import HotStories from "../../components/HotStories";
+import ButtonViewAll from "../../components/ButtonViewAll";
+import withIconTitle from "../../components/CustomIconTitle";
+import TrendingIcon from "../../../public/icons/TrendingIcon";
+import NewIcon from "../../../public/icons/NewIcon";
 
 const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [showBubble, setShowBubble] = useState("up");
@@ -42,6 +45,10 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     getStoryPrice,
     checkCustomerClickAff,
     recordClickAff,
+    topNew,
+    getTopNew,
+    topTrending,
+    getTopTrending,
   } = StoryStore;
 
   const [showChapter, setShowChapter] = useState(false);
@@ -244,6 +251,11 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     fetchData();
   }, [route.query.chapterSlug, GlobalStore.isLoggedIn]);
 
+  useEffect(() => {
+    getTopNew();
+    getTopTrending();
+  }, []);
+
   // const [currentChappter, chapterIndex] = useMemo(() => {
 
   //   let index = 0
@@ -442,6 +454,9 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     setFilter(filter);
   };
 
+  const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện mới nổi")
+  const TopNewTitle = withIconTitle(NewIcon, "Truyện mới ra lò")
+
   return (
     <CommonLayout>
       <Header />
@@ -612,7 +627,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             </Link>
           </div>
 
-          <div className="story-content px-3 pt-4">
+          <div className="px-3 py-4">
             <div>
               <Link
                 href={`/${currentChapter?.storySlug}/${currentChapter?.chapterSlug}`}
@@ -690,7 +705,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                   />
                 )}
 
-                <div className="flex justify-between pt-20 sm:pt-6 px-2">
+                <div className="flex justify-between pt-4 sm:pt-6 px-2">
                   <Link
                     href={`/${storyDetail?.slug}/${currentChapter?.previous}`}
                     passHref
@@ -727,7 +742,30 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
               </div>
             </div>
           </div>
+
+          <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-4">
+            <TopTrendingTitle />
+            <HotStories className="grid grid-cols-4 justify-center md:grid-cols-6 md:grid-rows-2 gap-x-4 gap-y-6" data={topTrending?.data?.slice(0,12)}/>
+            <div className="flex">
+              <ButtonViewAll
+                className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
+                url="/danh-sach-truyen/trending"
+              />
+            </div>
+          </div>
+
+          <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 sm:mt-4">
+            <TopNewTitle />
+            <HotStories className="grid grid-cols-4 justify-center md:grid-cols-6 md:grid-rows-2 gap-x-4 gap-y-6" data={topNew?.data?.slice(0,12)}/>
+            <div className="flex">
+              <ButtonViewAll
+                className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
+                url="/danh-sach-truyen/moi-nhat"
+              />
+            </div>
+          </div>
         </div>
+
         {showChapter && (
           <Chapters
             setShowChapter={setShowChapter}

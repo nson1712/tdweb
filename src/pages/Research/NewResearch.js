@@ -257,7 +257,7 @@ const Research = () => {
                 )}
               </div>
 
-              <div className="block md:hidden ">
+              <div className="block md:hidden">
                 <Section3 topTrending={topTrending} />
               </div>
 

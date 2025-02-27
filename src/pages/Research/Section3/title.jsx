@@ -1,4 +1,3 @@
-import CommunityIcon from "../../../../public/icons/CommunityIcon";
 import TrendingIcon from "../../../../public/icons/TrendingIcon";
 
 const Title = () => {
