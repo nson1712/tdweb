@@ -44,15 +44,16 @@ const PinMenu = ({ headingList, scrollIntoView }) => {
 
         return (
           <li key={item.id} className="cursor-pointer">
-            <div
-              className="hover:text-blue-600 mt-2 max-w-xs sm:max-w-none pl-3.5"
+            <a
+              title={item.id}
+              className="hover:!text-blue-600 mt-2 max-w-xs flex sm:max-w-none pl-3.5"
               onClick={() => {
                 scrollIntoView(item.id)
                 setActiveKey([])
               }}
             >
               {currentIndex}. {item.label}
-            </div>
+            </a>
 
             {item.children.length > 0 &&
               renderNestedList(item.children, currentIndex)}
@@ -71,7 +72,7 @@ const PinMenu = ({ headingList, scrollIntoView }) => {
       );
       const scrollTop = window.scrollY;
 
-      if (headings[0]?.offsetTop <= scrollTop - 200) {
+      if (headings[0]?.offsetTop <= scrollTop - 300) {
         setIvisible(true);
       } else {
         setIvisible(false);

@@ -34,13 +34,14 @@ const Menu = ({ headingList, scrollIntoView }) => {
           : `${index + 1}`;
 
         return (
-          <li key={item.id} className="cursor-pointer">
-            <div
-              className="hover:text-blue-600 mt-2"
+          <li key={item.id} className="cursor-pointer mt-2">
+            <a
+              title={item.id}
+              className="hover:!text-blue-600 mt-2"
               onClick={() => scrollIntoView(item.id)}
             >
               {currentIndex}. {item.label}
-            </div>
+            </a>
 
             {item.children.length > 0 &&
               renderNestedList(item.children, currentIndex)}

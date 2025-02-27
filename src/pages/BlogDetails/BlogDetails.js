@@ -118,7 +118,7 @@ const BlogDetails = ({ data }) => {
   const handleScrollTo = (headingId) => {
     const element = document.getElementById(headingId);
     if (element) {
-      const yOffSet = -100;
+      const yOffSet = -150;
       const yPosition =
         element.getBoundingClientRect().top + window.scrollY + yOffSet;
       window.scrollTo({
