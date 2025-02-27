@@ -359,8 +359,14 @@ const Stories = () => {
               defaultCurrent={1}
               defaultPageSize={20}
               showSizeChanger
+              showQuickJumper
               onShowSizeChange={onShowSizeChange}
               onChange={onPageChange}
+              locale={{
+                jump_to: "Đi tới",
+                page: "Trang",
+                items_per_page: "/ Trang",
+              }}
               total={data?.totalElements}
             />
             </div>
