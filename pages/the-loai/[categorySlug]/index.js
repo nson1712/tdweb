@@ -12,12 +12,12 @@ const Stories = ({ detail, canonical }) => {
         }
         description={
           detail?.metaDescription ||
-          "Danh sách các truyện thuộc một thể loại mà bạn đang trọn như ngôn tình, kiếm hiệp, tiên hiệp, đam mỹ, sủng, ngược, huyền huyễn. Bạn có thể tự tạo bộ lọc riêng của bạn."
+          `Danh sách truyện thuộc thể loại ${detail?.name} liên tục được cập nhật mới. Các bộ truyện HOT, truyện Hoàn với trải nghiệm đọc mượt mà, sẽ mang đến cho bạn những phút giây thư giãn tuyệt vời. Bạn có thể tự tạo bộ lọc riêng của bạn.`
         }
-        keywords={detail?.metaKeywords}
+        keywords={detail?.metaKeywords || `${detail?.name}, truyện ${detail?.name}, list truyện ${detail?.name}, danh sách truyện ${detail?.name}, tuyển tập truyện ${detail?.name}, truyện ${detail?.name} full, truyện ${detail?.name} hoàn, truyện ${detail?.name} hay`}
         canonical={canonical}
       />
-      <StoriesComponent />
+      <StoriesComponent detail={detail}/>
     </>
   );
 };
@@ -28,15 +28,17 @@ Stories.getInitialProps = async (ctx) => {
     if (ctx.query.categorySlug) {
       const result = await Api.get({
         url:
-          typeof window !== "undefined"
-            ? "https://fsdfssf.truyenso1.xyz/data/private/data/categories/detail"
-            : "http://10.8.22.205:8082/private/data/categories/detail",
+          // typeof window !== "undefined"
+          //   ? "https://fsdfssf.truyenso1.xyz/data/private/data/categories/detail"
+          //   : "http://10.8.22.205:8082/private/data/categories/detail",
+          "https://fsdfssf.truyenso1.xyz/data/private/data/categories/detail",
         params: {
           code: ctx.query.categorySlug,
         },
         isServer: true,
         hideError: true,
       });
+      console.log('result: ', result);
       detail = result.data;
     }
 

@@ -79,7 +79,7 @@ const CHAPTERS = [
 
 let timeout;
 
-const Stories = () => {
+const Stories = ({detail}) => {
   const route = useRouter();
   const [filter, setFilter] = useState({
     sort: "hot",
@@ -195,7 +195,7 @@ const Stories = () => {
 
   const title = useMemo(() => {
     if (route.query.categorySlug) {
-      return `Danh sách truyện ${route.query.name}`;
+      return `Danh sách truyện ${detail?.name}`;
     }
     if (route.query.collectionSlug) return collectionStories?.name;
     if (route.query.hashtag) return `# ${route.query.hashtag}`;
