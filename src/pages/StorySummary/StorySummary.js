@@ -23,8 +23,12 @@ import ShortLogin from "../Login/ShortLogin";
 import { Alert, Spin } from "antd";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
-import { toJS } from "mobx";
 import BlogStore from "../../stores/BlogStore";
+import withIconTitle from "../../components/CustomIconTitle";
+import TrendingIcon from "../../../public/icons/TrendingIcon";
+import NewIcon from "../../../public/icons/NewIcon";
+import HotStories from "../../components/HotStories";
+import ButtonViewAll from "../../components/ButtonViewAll";
 
 const TABS = [
   {
@@ -133,6 +137,10 @@ const StorySummary = ({storyDetail}) => {
     recordClickAff,
     isOpenFull,
     setIsOpenFull,
+    topTrending,
+    getTopTrending,
+    topNew,
+    getTopNew
   } = StoryStore;
   const { storyDetailArticle, getBlogStoryDetail } = BlogStore;
   const [currentChapterDetail, setCurrentChapterDetail] = useState([]);
@@ -247,6 +255,8 @@ const StorySummary = ({storyDetail}) => {
 
   useEffect(() => {
     getBlogStoryDetail(route.query.storySlug);
+    getTopTrending();
+    getTopNew();
   }, [route.query.storySlug]);
 
   // useEffect(() => {
@@ -420,6 +430,10 @@ const StorySummary = ({storyDetail}) => {
       /<figure([^>]*)>(.*?)<\/figure>/g,
       '<div class="flex justify-center"><figure$1>$2</figure></div>'
     );
+
+  const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện mới nổi")
+  const TopNewTitle = withIconTitle(NewIcon, "Truyện mới ra lò")
+
   return (
     <CommonLayout>
       {/* <div className='hidden md:block'> */}
@@ -682,7 +696,7 @@ const StorySummary = ({storyDetail}) => {
 
           {storyDetail?.chapters?.length > 0 && (
             <>
-              <div className="border-b-[1px] border-color pb-4">
+              <div className="border-b-[1px] border-color pb-4 px-2">
                 <h2 className="text-lg font-bold main-text mt-4 text-underline">
                   Chương mới nhất
                 </h2>
@@ -722,13 +736,35 @@ const StorySummary = ({storyDetail}) => {
                   ))}
               </div>
 
-              <h2 className="text-lg font-bold main-text mt-4 text-underline">
+              <h2 className="text-lg font-bold main-text mt-4 text-underline px-2">
                 Danh sách chương
               </h2>
               <PaginatedList items={storyDetail?.chapters} />
             </>
           )}
         </div>
+
+        <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-4">
+            <TopTrendingTitle />
+            <HotStories className="grid grid-cols-4 justify-center md:grid-cols-6 md:grid-rows-2 gap-x-4 gap-y-6" data={topTrending?.data?.slice(0,12)}/>
+            <div className="flex">
+              <ButtonViewAll
+                className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
+                url="/danh-sach-truyen/trending"
+              />
+            </div>
+          </div>
+
+          <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 my-4">
+            <TopNewTitle />
+            <HotStories className="grid grid-cols-4 justify-center md:grid-cols-6 md:grid-rows-2 gap-x-4 gap-y-6" data={topNew?.data?.slice(0,12)}/>
+            <div className="flex">
+              <ButtonViewAll
+                className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
+                url="/danh-sach-truyen/moi-nhat"
+              />
+            </div>
+          </div>
 
         {modifiedContent && (
           <div className="mt-[20px]">

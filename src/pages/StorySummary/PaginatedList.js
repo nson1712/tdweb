@@ -18,7 +18,7 @@ const PaginatedList = ({ items }) => {
 
   return (
     <div>
-      <div className="grid-container-style">
+      <div className="grid-container-style px-2">
         {currentItems?.map((item, index) => (
           <div key={index} className="grid-item-style">
             {!item?.isFree ? (
@@ -43,7 +43,7 @@ const PaginatedList = ({ items }) => {
         ))}
       </div>
 
-      <div className="flex gap-[5px] mt-2.5 justify-center">
+      <div className="flex mt-2.5 justify-center">
         <Pagination
           showSizeChanger
           showQuickJumper

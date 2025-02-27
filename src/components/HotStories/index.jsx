@@ -1,9 +1,9 @@
 import VerticalStoryItem from "../VerticalStoryItem/VerticalStoryItem";
 
-const HotStories = ({ data }) => {
+const HotStories = ({ data, className }) => {
   return (
-    <div className="grid grid-cols-4 justify-center md:grid-cols-8 md:grid-rows-2 gap-x-4 gap-y-6">
-      {data?.slice(0, 16).map((item, index) => (
+    <div className={className}>
+      {data?.map((item, index) => (
         <VerticalStoryItem
           key={index}
           title={item.title}
