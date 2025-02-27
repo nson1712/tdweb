@@ -9,6 +9,7 @@ import FooterDesktop from "../../components/FooterDesktop";
 import { QRCode } from "react-qrcode-logo";
 import { formatStringToNumber } from "../../utils/utils";
 import Button from "../../components/Button/Button";
+import { CopyOutlined } from "@ant-design/icons";
 
 const TransferInfo = () => {
   const [accountName, setAccountName] = useState("");
@@ -121,11 +122,11 @@ const TransferInfo = () => {
     navigator.clipboard.writeText(text).then(
       () => {
         if (code === "accountNumber") {
-          setCopiedAccountMessage("Đã copy");
+          setCopiedAccountMessage("Đã copy! ");
         } else if (code === "amount") {
-          setCopiedAmountMessage("Đã copy");
+          setCopiedAmountMessage("Đã copy! ");
         } else if (code === "description") {
-          setCopiedDescriptionMessage("Đã copy");
+          setCopiedDescriptionMessage("Đã copy! ");
         }
       },
       () => {
@@ -208,11 +209,28 @@ const TransferInfo = () => {
                   <div>
                     <div className="m-2 flex">
                       <div className="mr-3 flex justify-center">
-                        <img loading="lazy" width="50" height="30" decoding="async" data-nimg="1" className="rounded-full m-auto self-center" style={{'color':'transparent',  'background-color': '#fff', 'padding': '5px'}} src="https://img.bankhub.dev/OCB.png"/>
+                        <img
+                          loading="lazy"
+                          width="50"
+                          height="30"
+                          decoding="async"
+                          data-nimg="1"
+                          className="rounded-full m-auto self-center"
+                          style={{
+                            color: "transparent",
+                            "background-color": "#fff",
+                            padding: "5px",
+                          }}
+                          src="https://img.bankhub.dev/OCB.png"
+                        />
                       </div>
                       <div>
-                        <p className="text-sm text-[#fff]">Ngân hàng thụ hưởng</p>
-                        <p className="font-bold text-sm text-[#fff]">Ngân hàng Phương Đông OCB</p>
+                        <p className="text-sm text-[#fff]">
+                          Ngân hàng thụ hưởng
+                        </p>
+                        <p className="font-bold text-sm text-[#fff]">
+                          Ngân hàng Phương Đông OCB
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -238,10 +256,11 @@ const TransferInfo = () => {
                       </div>
                       <div className="col-span-2 text-right flex items-center justify-end">
                         <button
-                          className="text-xs text-[#fff] bg-[#7f968b] py-1 px-2 rounded-md font-bold self-center"
+                          className="h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-xs sm:text-sm text-center shadow-2xl hover:!text-black cursor-pointer"
                           onClick={() => copyToClipboard("accountNumber")}
                         >
-                          {copiedAccountMessage || "Sao chép"}
+                          {copiedAccountMessage || "Sao chép "}
+                          <CopyOutlined />
                         </button>
                       </div>
                     </div>
@@ -256,10 +275,10 @@ const TransferInfo = () => {
                       </div>
                       <div className="col-span-2 text-right flex items-center justify-end">
                         <button
-                          className="text-xs text-[#fff] bg-[#7f968b] py-1 px-2 rounded-md font-bold self-center"
+                          className="h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-xs sm:text-sm text-center shadow-2xl hover:!text-black cursor-pointer"
                           onClick={() => copyToClipboard("amount")}
                         >
-                          {copiedAmountMessage || "Sao chép"}
+                          {copiedAmountMessage || "Sao chép "} <CopyOutlined />
                         </button>
                       </div>
                     </div>
@@ -276,10 +295,10 @@ const TransferInfo = () => {
                       </div>
                       <div className="col-span-2 text-right flex items-center justify-end">
                         <button
-                          className="text-xs text-[#fff] bg-[#7f968b] py-1 px-2 rounded-md font-bold self-center"
+                          className="h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-xs sm:text-sm text-center shadow-2xl hover:!text-black cursor-pointer"
                           onClick={() => copyToClipboard("description")}
                         >
-                          {copiedDescriptionMessage || "Sao chép"}
+                          {copiedDescriptionMessage || "Sao chép "} <CopyOutlined />
                         </button>
                       </div>
                     </div>
