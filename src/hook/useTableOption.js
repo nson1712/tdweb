@@ -1,6 +1,7 @@
 import { RightOutlined } from "@ant-design/icons";
 import { calculateCreatedTime } from "../utils/utils";
 import Link from "next/link";
+import { useState } from "react";
 
 export const useTableOptions = () => {
   const newStoryColumns = [
@@ -47,5 +48,29 @@ export const useTableOptions = () => {
 
   return {
     newStoryColumns,
+  };
+};
+
+export const useStoryChapterTableOptions = () => {
+  const storyChapterColumns = [
+    {
+      title: "Tên truyện",
+      dataIndex: "title",
+      key: "title",
+      render: (_, record) => (
+        <Link href={`/${record.storySlug}/${record.slug}`} passHref>
+          <a
+            title={record.title}
+            className="text-black font-bold line-clamp-1 cursor-pointer hover:!text-blue-500"
+          >
+            <img src={record?.isFree ? "/images/Done.png" : "/images/lock.png"} class="w-5 float-left mr-[5px]" /> {record.title}
+          </a>
+        </Link>
+      ),
+    },
+  ];
+
+  return {
+    storyChapterColumns,
   };
 };
