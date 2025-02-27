@@ -195,7 +195,7 @@ const TransferInfo = () => {
                   )}</strong> nữa`,
                 }}
               />
-              <div className="pl-[20px] pr-[20px] mb-[20px]">
+              <div className="pl-[20px] pr-[20px] mb-[30px]">
                 <p className="text-[14px] font-bold mb-[0px]">
                   Hãy ấn nút Copy thông tin chuyển khoản bên dưới
                 </p>
@@ -329,12 +329,13 @@ const TransferInfo = () => {
                     );
                   }}
                 >
+                  <img src='/images/warning.png' className='mr-[5px] w-[20px]'/>
                   Báo lỗi không nạp được
                 </Button>
               </div>
             </>
           )}
-          <FooterDesktop />
+          {/*<FooterDesktop />*/}
         </div>
       </div>
     </CommonLayout>

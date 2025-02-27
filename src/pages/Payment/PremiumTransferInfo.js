@@ -189,7 +189,7 @@ const PremiumTransferInfo = ({ type }) => {
                   )}</strong> nữa`,
                 }}
               />
-              <div className="px-[20px] space-y-4">
+              <div className="px-[20px] space-y-4 mb-[30px]">
                 <p className="text-[14px] font-bold mb-[0px]">
                   Hãy ấn nút Copy thông tin chuyển khoản bên dưới
                 </p>
@@ -327,12 +327,13 @@ const PremiumTransferInfo = ({ type }) => {
                     );
                   }}
                 >
+                  <img src='/images/warning.png' className='mr-[5px] w-[20px]'/>
                   Báo lỗi không đky được Premium
                 </Button>
               </div>
             </>
           )}
-          <FooterDesktop />
+          {/*<FooterDesktop />*/}
         </div>
       </div>
     </CommonLayout>

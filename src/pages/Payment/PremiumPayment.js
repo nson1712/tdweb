@@ -246,7 +246,7 @@ const PremiumPayment = ({
               </Button>
             </Form>
           </div>
-          <FooterDesktop />
+          {/*<FooterDesktop />*/}
         </div>
       </div>
       <ChatSupport showChat={showChat} setShowChat={setShowChat} />

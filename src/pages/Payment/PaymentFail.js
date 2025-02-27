@@ -40,7 +40,7 @@ const PaymentFail = () => {
           >
             Liên hệ Toidoc
           </Button>
-          <FooterDesktop />
+          {/*<FooterDesktop />*/}
         </div>
       </div>
     </CommonLayout>
