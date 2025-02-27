@@ -2042,6 +2042,34 @@ ul>li {
 
 }
 
+.btnSecondDeposit {
+  background: #f0003c;
+  border-radius: 12px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 16px;
+  color: #ffffff;
+  width: 100%;
+  outline: 0 !important;
+  padding: 0 28px;
+  border: 2px solid #CF998D;
+  margin-top: 20px;
+  
+  &:hover {
+    background: #fc4f4f;
+    color: #ffffff !important;
+  }
+
+  @media (max-width: 767px) {
+    padding: 0 12px;
+  }
+
+}
+
 .btnSecond-Second {
   border-radius: 12px;
   height: 40px;

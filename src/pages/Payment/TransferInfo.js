@@ -9,6 +9,7 @@ import FooterDesktop from "../../components/FooterDesktop";
 import { QRCode } from "react-qrcode-logo";
 import { formatStringToNumber } from "../../utils/utils";
 import Button from "../../components/Button/Button";
+import { Alert } from "antd";
 
 const TransferInfo = () => {
   const [accountName, setAccountName] = useState("");
@@ -198,12 +199,11 @@ const TransferInfo = () => {
                 <p className="text-[14px] font-bold mb-[0px]">
                   Hãy ấn nút Copy thông tin chuyển khoản bên dưới
                 </p>
-                <p className="text-[14px] text-red">
-                  <i>
-                    (Lưu ý chỉ copy đúng các thông tin, thì kim cương mới tự
-                    động về tài khoản của bạn)
-                  </i>
-                </p>
+                <Alert
+                  message="Lưu ý: chỉ khi copy đúng các thông tin, thì kim cương mới tự động về tài khoản của bạn."
+                  showIcon
+                  type="warning"
+                />
                 <div className="text-xs box-transfer-info">
                   <div>
                     <div className="m-2 flex">
@@ -211,16 +211,16 @@ const TransferInfo = () => {
                         <img loading="lazy" width="50" height="30" decoding="async" data-nimg="1" className="rounded-full m-auto self-center" style={{'color':'transparent',  'background-color': '#fff', 'padding': '5px'}} src="https://img.bankhub.dev/OCB.png"/>
                       </div>
                       <div>
-                        <p className="text-sm text-[#fff]">Ngân hàng thụ hưởng</p>
-                        <p className="font-bold text-sm text-[#fff]">Ngân hàng Phương Đông OCB</p>
+                        <p className="text-lg text-[#fff]">Ngân hàng thụ hưởng</p>
+                        <p className="font-bold text-sm text-[#00e60e]">Ngân hàng Phương Đông OCB</p>
                       </div>
                     </div>
                   </div>
                   <div>
                     <div className="grid grid-cols-7 m-2">
                       <div className="col-span-5 text-left">
-                        <p className="text-sm text-[#fff]">1. Chủ tài khoản:</p>
-                        <p className="font-bold text-sm text-[#fff]">
+                        <p className="text-lg text-[#fff]">1. Chủ tài khoản:</p>
+                        <p className="font-bold text-sm text-[#00e60e]">
                           {accountName}
                         </p>
                       </div>
@@ -229,10 +229,10 @@ const TransferInfo = () => {
                   <div>
                     <div className="grid grid-cols-7 m-2">
                       <div className="col-span-5 text-left">
-                        <p className="text-sm text-[#fff]">
-                          2. Số tài khoản (nhớ copy cả mã CAS):
+                        <p className="text-lg text-[#fff]">
+                          2. Ấn sao chép lấy số tài khoản <span className='text-[#feb313] text-sm'><strong><i>(Nhớ copy cả mã CAS)</i></strong></span>:
                         </p>
-                        <p className="font-bold text-sm text-[#fff]">
+                        <p className="font-bold text-sm text-[#00e60e]">
                           {accountNumber}
                         </p>
                       </div>
@@ -249,8 +249,8 @@ const TransferInfo = () => {
                   <div>
                     <div className="grid grid-cols-7 m-2">
                       <div className="col-span-5 text-left">
-                        <p className="text-sm text-[#fff]">3. Số tiền:</p>
-                        <p className="font-bold text-[#fff] text-sm">
+                        <p className="text-lg text-[#fff]">3. Số tiền:</p>
+                        <p className="font-bold text-[#00e60e] text-sm">
                           {formatStringToNumber(amount)}VNĐ
                         </p>
                       </div>
@@ -267,10 +267,10 @@ const TransferInfo = () => {
                   <div>
                     <div className="grid grid-cols-8 m-2">
                       <div className="col-span-6 text-left">
-                        <p className="text-sm text-[#fff]">
-                          4. Nội dung chuyển khoản:
+                        <p className="text-lg text-[#fff]">
+                        4. Ấn sao chép lấy nội dung: <span className='text-[#feb313] text-sm'><strong><i>(Không copy chính xác, kim cương sẽ không về TK)</i></strong></span>
                         </p>
-                        <p className="text-[#fff] font-bold text-sm">
+                        <p className="text-[#00e60e] font-bold text-sm">
                           {description}
                         </p>
                       </div>
@@ -308,20 +308,13 @@ const TransferInfo = () => {
                         logoPaddingStyle={"circle"}
                         enableCORS={true}
                       />
-                      <div className="vertical-center">
-                        <button
-                          type="button"
+                      <div className="flex justify-center">
+                        <Button
+                          className="bg-[#04b17c] rounded-md px-3 py-1.5 text-white font-semibold shadow-md"
                           onClick={() => handleDownload()}
-                          style={{
-                            backgroundColor: "#04b17c",
-                            borderRadius: "5px",
-                            padding: "5px 10px",
-                            color: "#fff",
-                            marginTop: "20px",
-                          }}
                         >
-                          Tải mã QR Code
-                        </button>
+                          Tải mã QR
+                        </Button>
                       </div>
                     </div>
                   </>
