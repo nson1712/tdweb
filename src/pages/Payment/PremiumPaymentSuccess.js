@@ -21,7 +21,7 @@ const PremiumPaymentSuccess = ({}) => {
             style={{ position: "absolute", marginTop: "50px" }}
           >
             <p className="text-[20px] font-bold main-text text-center">
-              Bạn đã mua Premium thành công!
+              Bạn đã đăng ký Premium thành công!
             </p>
             <img src={"/images/check.png"} className="w-[85px] mx-auto" />
           </div>
@@ -44,7 +44,7 @@ const PremiumPaymentSuccess = ({}) => {
                 Router.push("/premium");
               }}
             >
-              Mua thêm gói Premium
+              Đăng ký thêm gói Premium
             </button>
           </div>
 

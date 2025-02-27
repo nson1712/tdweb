@@ -5,7 +5,7 @@ import PremiumPaymentFail from "../../../src/pages/Payment/PremiumPaymentFail";
 const PremiumPaymentFailComponent = () => {
   return (
     <>
-      <HeaderServer title={"Toidoc - Mua Premium tự động thất bại"} />
+      <HeaderServer title={"Toidoc - Đăng ký Premium tự động thất bại"} />
       <PremiumPaymentFail />
     </>
   );

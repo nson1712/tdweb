@@ -136,7 +136,7 @@ const PremiumPayment = ({
         <div className="relative max-w-[768px] mx-auto bg-white md:pt-[88px] flex flex-col justify-center text-second-color">
           <HeaderPayment />
           <p className="text-[20px] font-bold main-text text-center p-2">
-            Web Mua Premium Tự Động Chính Thức của Toidoc
+            Web Đăng Ký Premium Chính Thức của Toidoc
           </p>
           <div className="pl-[20px] pr-[20px] mb-[20px]">
             <div className="max-w-[450px] w-full mx-auto alert alert--secondary admonition_LlT9 pl-[20px] pr-[20px]">
@@ -212,7 +212,7 @@ const PremiumPayment = ({
                 closable
                 showIcon
                 type="warning"
-                message="Nếu như bạn đã đăng ký gói trên chợ, vui lòng hủy gói trên chợ trước khi mua!"
+                message="Nếu như bạn đã đăng ký gói trên chợ, vui lòng hủy gói trên chợ trước khi đăng ký tại đây!"
                 className="mb-3"
               />
 

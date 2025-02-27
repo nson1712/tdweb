@@ -148,7 +148,7 @@ const Payment = ({
         <div className="relative max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] flex flex-col justify-center text-second-color">
           <HeaderPayment />
           <p className="text-[20px] font-bold main-text text-center">
-            Web Nạp KC Tự Động Chính Thức của Toidoc
+            Web Nạp ♦️ chính thức duy nhất của Toidoc
           </p>
 
             <div className="flex justify-center">

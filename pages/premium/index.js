@@ -7,7 +7,7 @@ const Payment = () => {
   return (
     <GoogleReCaptchaProvider reCaptchaKey="6LemlQIqAAAAAN3GiXSgwfSljLMiGgRAINr1ALev">
       <>
-        <HeaderServer title={"Toidoc - Mua Premium tự động"} />
+        <HeaderServer title={"Toidoc - Đăng ký Premium tự động"} />
         <PremiumPayment />
       </>
     </GoogleReCaptchaProvider>

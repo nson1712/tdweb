@@ -5,7 +5,7 @@ import PremiumPaymentSuccess from "../../../src/pages/Payment/PremiumPaymentSucc
 const PremiumPaymentSuccessComponent = () => {
   return (
     <>
-      <HeaderServer title={"Toidoc - Mua Premium tự động thành công"} />
+      <HeaderServer title={"Toidoc - Đăng ký Premium tự động thành công"} />
       <PremiumPaymentSuccess />
     </>
   );

@@ -5,7 +5,7 @@ import PremiumTransferInfo from "../../../src/pages/Payment/PremiumTransferInfo"
 const PremiumTransferInfoComponent = () => {
   return (
     <>
-      <HeaderServer title={"Toidoc - Mua Premium tự động thành công"} />
+      <HeaderServer title={"Toidoc - Đăng ký Premium tự động thành công"} />
       <PremiumTransferInfo />
     </>
   );

@@ -163,7 +163,7 @@ const PremiumTransferInfo = ({ type }) => {
                   Router.push("/premium");
                 }}
               >
-                Mua gói Premium khác
+                Đăng ký gói Premium khác
               </Button>
               <Button
                 className="btnSecond-Second max-w-[300px] mx-auto"
