@@ -14,7 +14,11 @@ const TagComponent = ({
   return (
     <div className="flex flex-wrap gap-1">
       {mainCategoriesVisible && (
-        <MainCategories mainCategories={mainCategories} />
+        <>
+          {mainCategories?.map((item, index) => (
+            <MainCategories key={index} item={item} />
+          ))}
+        </>
       )}
       {categoriesVisible && (
         <>

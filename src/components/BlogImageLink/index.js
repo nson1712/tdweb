@@ -2,7 +2,7 @@ import Image from "next/image";
 import withCustomLink from "../CustomLink";
 import imageLoader from "../../loader/imageLoader";
 
-const BlogImageLink = ({ item, className }) => (
+const BlogImageLink = ({ item, className, pathname }) => (
   <div className={className}>
     {item?.coverImage ? (
       <Image
@@ -11,7 +11,7 @@ const BlogImageLink = ({ item, className }) => (
         height={720}
         className="rounded-lg"
         src={item.coverImage || ""}
-        alt={item?.alt || "Blog image"}
+        alt={item?.slug}
       />
     ) : null}
   </div>

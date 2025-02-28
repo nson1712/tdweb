@@ -1,9 +1,9 @@
 import Link from "next/link";
 
-const ButtonViewAll = ({ className, url }) => {
+const ButtonViewAll = ({ className, url, title }) => {
   return (
     <Link href={`${url}`}>
-      <a title={url} className={className}>
+      <a title={title} className={className}>
         Xem thêm
       </a>
     </Link>

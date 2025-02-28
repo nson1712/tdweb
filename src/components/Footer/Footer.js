@@ -64,7 +64,7 @@ const Footer = () => {
             <div className="self-center">
               <Link href="/tim-kiem" passHref>
                 <a
-                  title="Trang chủ"
+                  title="Trang chủ website Toidoc"
                   className="text-white text-underline text-md"
                 >
                   Trang chủ
@@ -75,8 +75,9 @@ const Footer = () => {
             <div className="self-center">
               <Link href="https://tacgia.toidoc.vn" passHref>
                 <a
-                  title="Danh sách thể loại truyện full"
+                  title="Website hỗ trợ tác giả chính thức của Toidoc"
                   className="text-white text-underline text-md"
+                  target="_blank"
                 >
                   Đăng truyện
                 </a>

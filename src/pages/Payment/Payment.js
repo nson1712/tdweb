@@ -11,7 +11,6 @@ import Button from "../../components/Button/Button";
 import Field from "../../components/Form/Field";
 import RedDiamondIcon from "./RedDiamondIcon";
 import { formatStringToNumber } from "../../utils/utils";
-import FooterDesktop from "../../components/FooterDesktop";
 import ChatSupport from "../../components/Button/ChatSupport";
 import ModalComponent from "../../components/Modal/Modal";
 import HeaderPayment from "./HeaderPayment";
@@ -288,7 +287,7 @@ const Payment = ({
                 type="submit"
                 loading={loading}
               >
-                Hiển thị STK, Mã QR chuyển khoản
+                Ủng Hộ Kim Cương 👆
               </Button>
               <p className="mt-[8px]">
                 ✅ Kim cương sẽ vào tài khoản ngay sau khi thanh toán thành công
@@ -315,12 +314,11 @@ const Payment = ({
                 />
                 <p style={{ color: "rgb(204 46 73)", margin: 0 }}>
                   <i>
-                    Trường hợp bạn ở nước ngoài không tiện chuyển khoản, vui
-                    lòng tải{" "}
-                    <a href="https://toidoc.onelink.me/59bO/d42503wz">
-                      App Toidoc
-                    </a>{" "}
-                    thực hiện purchase in app nhé.
+                    Trường hợp bạn ở nước ngoài không tiện chuyển khoản, vui lòng
+                    <a href={`https://m.me/185169981351799?text=${referralCode ? 'Mã KH của mình là: ' + referralCode + '. ' : ''}Mình ở nước ngoài cần nạp kim cương. Hỗ trợ giúp mình với.`} target="_blank" className="px-1">
+                      Liên Hệ Toidoc
+                    </a>
+                    để được hỗ trợ.
                   </i>
                 </p>
               </div>

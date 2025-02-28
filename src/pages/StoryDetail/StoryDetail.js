@@ -454,8 +454,8 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     setFilter(filter);
   };
 
-  const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện mới nổi")
-  const TopNewTitle = withIconTitle(NewIcon, "Truyện mới ra lò")
+  const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện đang HOT")
+  const TopNewTitle = withIconTitle(NewIcon, "Truyện mới")
 
   return (
     <CommonLayout>
@@ -750,6 +750,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
               <ButtonViewAll
                 className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
                 url="/danh-sach-truyen/trending"
+                title="Xem thêm danh sách truyện HOT"
               />
             </div>
           </div>
@@ -761,6 +762,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
               <ButtonViewAll
                 className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
                 url="/danh-sach-truyen/moi-nhat"
+                title="Xem thêm danh sách truyện mới ra"
               />
             </div>
           </div>

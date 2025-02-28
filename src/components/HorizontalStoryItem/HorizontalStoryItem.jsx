@@ -76,7 +76,7 @@ const HorizontalStoryItem = ({
             "self-center": type === "primary",
           })}
         >
-          <div
+          <p
             className={clsx("", {
               "font-[500] text-[16px] text-black leading-normal w-full line-clamp-2":
                 type !== "secondary" && type !== "primary",
@@ -87,7 +87,7 @@ const HorizontalStoryItem = ({
             })}
           >
             {title}
-          </div>
+          </p>
 
           <div className="whitespace-normal gap-x-1 max-h-fit space-y-2">
             {tagVisible && (

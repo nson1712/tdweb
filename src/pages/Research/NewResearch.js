@@ -163,6 +163,7 @@ const Research = () => {
     <CommonLayout active="HOME">
       <div>
         <Header selectedTab={"RESEARCH"} />
+        <h1 style={{display: 'none'}}>Nền tảng đọc truyện full số #1 cập nhật nhanh nhất</h1>
         <div className="max-w-[1116px] mx-auto bg-white md:pt-[88px] px-0 md:px-2 space-y-10 pb-20">
           <div className="pt-2 mt-0 fixed top-0 left-0 right-0 bg-white md:hidden z-[9] flex justify-center">
             <div className="pb-2 border-b-[1px] border-color flex gap-x-2">

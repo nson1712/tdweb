@@ -1,7 +1,7 @@
 import withCustomLink from "../CustomLink";
 
 const BlogTitleLink = ({ item, className }) => (
-  <div className={className}>{item.title}</div>
+  <p className={className}>{item.title}</p>
 );
 
 export default withCustomLink(BlogTitleLink);

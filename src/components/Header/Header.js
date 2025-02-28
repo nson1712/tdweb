@@ -250,7 +250,7 @@ const Header = ({ selectedTab }) => {
             </p>
           </div> */}
 
-          <Link href={GlobalStore.isLoggedIn ? "/tai-khoan" : "#"} passHref>
+          <Link href={GlobalStore.isLoggedIn ? "/tai-khoan" : "/dang-nhap"} passHref>
             <a
               id="profile-btn"
               className={classNames(

@@ -21,9 +21,9 @@ const VerticalStoryItem = ({ title, slug, coverImage }) => {
           />
         ) : null}
 
-        <div className="max-w-full max-h-auto text-black text-sm text-center font-[500] leading-normal overflow-hidden text-ellipsis line-clamp-2 align-top">
+        <p className="max-w-full max-h-auto text-black text-sm text-center font-[500] leading-normal overflow-hidden text-ellipsis line-clamp-2 align-top">
           {title}
-        </div>
+        </p>
       </a>
     </Link>
   );

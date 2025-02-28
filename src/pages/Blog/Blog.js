@@ -81,7 +81,7 @@ const Blog = () => {
     <CommonLayout>
       <Header selectedTab={"BLOG"} />
       <div className="relative pb-[100px] max-w-[768px] mx-auto bg-white pt-4 px-0 sm:mt-20 md:px-[8px] min-h-[100vh]">
-        <UnderLineTitle title="Bài đăng mới nhất" />
+        <UnderLineTitle title="Review Đánh Giá Truyện Hay Nhất" isH1={true} />
         <List
           className="px-2"
           loading={initLoading}

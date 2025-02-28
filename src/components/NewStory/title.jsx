@@ -5,7 +5,7 @@ const Title = () => {
     <div className="w-full flex justify-between">
       <div className="flex gap-x-2">
         <NewIcon />
-        <div className="text-lg font-bold">Truyện mới ra lò</div>
+        <h2 className="text-lg font-bold">Truyện mới ra lò</h2>
       </div>
     </div>
   );

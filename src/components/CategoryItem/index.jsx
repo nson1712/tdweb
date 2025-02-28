@@ -7,15 +7,12 @@ const CategoryItem = ({ thumbnail, name, code }) => {
     <Link
       href={{
         pathname: `/the-loai/${code}`,
-        query: {
-          name: name,
-        },
       }}
       passHref
     >
       <a
         title={`Thể loại truyện full ${name}`}
-        className="text-black text-xs sm:text-sm cursor-pointer hover:translate-y-[-5%] transition delay-75"
+        className="cursor-pointer hover:translate-y-[-5%] transition delay-75"
       >
         {thumbnail ? (
           <Image
@@ -27,7 +24,7 @@ const CategoryItem = ({ thumbnail, name, code }) => {
             alt={`Thể loại ${name}`}
           />
         ) : null}
-        <div className="font-semibold self-center">{name}</div>
+        <h3 className="text-black text-xs sm:text-sm font-semibold self-center">{name}</h3>
       </a>
     </Link>
   );
