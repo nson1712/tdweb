@@ -547,9 +547,9 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             </a>
 
             <Link href={`/${storyDetail?.slug}`} passHref>
-              <a title={`Truyện ${storyDetail?.title}`}>
+              <a title={`Truyện ${storyDetail?.title} ${chapterTitle}`}>
                 <h1 className="text-[20px] leading-[24px] font-bold main-text mb-0 line-clamp-1">
-                  {storyDetail?.title}
+                  {storyDetail?.title} {chapterTitle} 
                 </h1>
               </a>
             </Link>
@@ -630,7 +630,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           <div className="px-3 py-4">
             <div>
               <Link
-                href={`/${currentChapter?.storySlug}/${currentChapter?.chapterSlug}`}
+                href={`/${storyDetail?.slug}/${route.query.chapterSlug}`}
                 passHref
               >
                 <a title={`${storyDetail?.title} - ${chapterTitle}`}>

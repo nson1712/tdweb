@@ -3,17 +3,17 @@ import StoryDetailComponent from "../../../src/pages/StoryDetail";
 import HeaderServerSchema from "../../../src/components/HeaderServerSchema";
 import axios from "axios";
 
-const StoryDetail = ({ detail, canonical }) => {
+const StoryDetail = ({ detail, canonical, titleSlug }) => {
   return (
     <>
       <HeaderServerSchema
-        title={`✅ ${detail.seoTitle} | Truyện ${detail.storyTitle} mới nhất tại Toidoc`}
+        title={detail ? `✅ Truyện ${detail.storyTitle} ${detail.seoTitle}` : `✅${titleSlug}| Nền tảng đọc truyện full cập nhật mới nhất `}
         description={
           detail.metaDescription
             ? detail.metaDescription.replace(/"/g, "")
-            : detail.metaDescription
+            : `${detail.seoTitle} của truyện ${detail.storyTitle}. ${detail.shortDes ? detail.shortDes : 'Click vào để xem nội dung chi tiết đầy đủ!'}}`
         }
-        keywords={detail.metaKeywords}
+        keywords={detail.metaKeywords || `${detail.storyTitle}, ${detail.storyTitle} truyện full, đọc truyện ${detail.storyTitle}, ${detail.storyTitle} ${detail.seoTitle}`}
         image={detail?.thumbnail || detail.coverImage}
         canonical={canonical}
         author={detail?.authorName}
@@ -67,16 +67,26 @@ StoryDetail.getInitialProps = async (ctx) => {
         return {
           detail: result.data?.data,
           canonical: canonical,
+          titleSlug: ctx.query.storySlug,
         };
       }
 
+      
       return {
-        detail: {},
+        detail: {titleSlug: ctx.query.storySlug,},
       };
     } catch (e) {
       console.log("Error get chapter detail: ", e);
+      const canonical =
+          "https://toidoc.vn/" +
+          ctx.query.storySlug +
+          "/" +
+          ctx.query.chapterSlug;
       return {
-        detail: {},
+        detail: {
+          canonical: canonical,
+          titleSlug: ctx.query.storySlug,
+        },
       };
     }
   };

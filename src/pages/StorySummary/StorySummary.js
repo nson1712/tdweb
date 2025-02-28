@@ -713,12 +713,14 @@ const StorySummary = ({storyDetail}) => {
                           src="/images/Done.png"
                           className="w-5 float-left mr-[5px]"
                           width="20" height="20"
+                          alt="Chương mở Free"
                         />
                       ) : (
                         <img
                           src="/images/lock.png"
                           className="w-5 float-left mr-[5px]"
                           width="20" height="20"
+                          alt="Chương bị khoá"
                         />
                       )}
                       <Link

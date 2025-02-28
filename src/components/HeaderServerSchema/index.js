@@ -47,9 +47,9 @@ const HeadSchemaComponent = ({
   return (
     <>
       <Head>
-          <title>{title || "Nền tảng đọc Truyện ngôn tình, Đam mỹ, Trọng sinh, Tiên hiệp, Kiếm hiệp"} </title>
+          <title>{title || "Nền tảng đọc Truyện Full Online Cập Nhật Mới Nhất"} </title>
           {canonical && <link rel="canonical" href={canonical}></link> }
-          <meta name="title" content={title || "Nền tảng đọc Truyện ngôn tình, Đam mỹ, Trọng sinh, Tiên hiệp, Kiếm hiệp"}></meta>
+          <meta name="title" content={title || "Nền tảng đọc Truyện Full Online Cập Nhật Mới Nhất"}></meta>
           <meta
             name="description"
             content={
@@ -66,7 +66,7 @@ const HeadSchemaComponent = ({
           />
           <meta property="og:site_name" content="toidoc.vn"></meta>
           <meta property="og:url" content={canonical}></meta>
-          <meta property="og:title" content={title || "Nền tảng đọc Truyện ngôn tình, Đam mỹ, Trọng sinh, Tiên hiệp, Kiếm hiệp"} />
+          <meta property="og:title" content={title || "Nền tảng đọc Truyện Full Online Cập Nhật Mới Nhất"} />
           <meta
             property="og:description"
             content={
@@ -94,7 +94,7 @@ const HeadSchemaComponent = ({
               "Toidoc là nền tảng cộng đồng đọc truyện, trao đổi và đăng các thể loại truyện như truyện ngôn tình, truyện đam mỹ, kiếm hiệp, tiên hiệp, trọng sinh, trinh thám."
             }
           />
-          <meta name="twitter:title" content={title || "Nền tảng đọc Truyện ngôn tình, Đam mỹ, Trọng sinh, Tiên hiệp, Kiếm hiệp"} />
+          <meta name="twitter:title" content={title || "Nền tảng đọc Truyện Full Online Cập Nhật Mới Nhất"} />
           <meta
             name="twitter:image:src"
             content={image || "/images/cover-doc-gia-min.png"}

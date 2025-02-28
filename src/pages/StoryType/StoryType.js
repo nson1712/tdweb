@@ -83,7 +83,7 @@ const StoryType = () => {
                     />
                   )}
                   <div className="ml-[10px]">
-                    <h2 className="text-xs sm:text-base leading-[16px] font-semibold mb-[8px] main-text">{item.name}</h2>
+                    <h2 className="text-xs sm:text-base leading-[16px] font-semibold mb-[8px] main-text">{`Truyện ${item.name}`}</h2>
                     <p className="text-xs sm:text-[14px] mb-0 label-text">
                       {formatStringToNumber(item.totalStory)} truyện
                     </p>
