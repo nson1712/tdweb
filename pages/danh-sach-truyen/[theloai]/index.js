@@ -7,8 +7,8 @@ const Stories = ({detail, canonical}) => {
   return (
     <>
       <HeaderServer title={detail?.title || "Bộ sưu tập truyện hấp dẫn được tổng hợp từ Toidoc"} 
-        description = {detail?.metaDescription || "Danh sách các truyện thuộc một thể loại mà bạn đang trọn như ngôn tình, kiếm hiệp, tiên hiệp, đam mỹ, sủng, ngược, huyền huyễn. Bạn có thể tự tạo bộ lọc riêng của bạn."}
-        keywords={detail?.metaKeywords}
+        description = {detail?.description || "Danh sách các truyện thuộc một thể loại mà bạn đang trọn như ngôn tình, kiếm hiệp, tiên hiệp, đam mỹ, sủng, ngược, huyền huyễn. Bạn có thể tự tạo bộ lọc riêng của bạn."}
+        keywords={detail?.keywords}
         canonical={canonical}
       />
       <StoriesComponent />

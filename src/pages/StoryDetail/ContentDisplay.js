@@ -13,11 +13,11 @@ export default function ContentDisplay({ item, fdsfsjs, dfjkdsfds, order}) {
   }, [item?.content, order]);
 
   if (!item?.isCanvas) {
-    return <p  className='font-content' dangerouslySetInnerHTML={{__html: item?.content}} />;
+    return <p className='font-content' dangerouslySetInnerHTML={{__html: item?.content}} key={order}/>;
   }
 
   return (
-    <div style={{width: '100%', maxWidth: '728px', margin: 'auto'}}>
+    <div style={{width: '100%', maxWidth: '728px', margin: 'auto'}} key={order}>
         <canvas id={`canvas-${order}`} style={{width: '100%', height: 'auto'}}/>
     </div>
   );

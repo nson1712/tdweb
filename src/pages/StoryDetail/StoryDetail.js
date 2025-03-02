@@ -655,23 +655,12 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                     ) : (
                       <>
                         {chapterContents?.map((item, i) => (
-                          <div key={`${item.order}-${i}`}>
-                            <ContentDisplay
+                          <ContentDisplay
                               item={item}
                               fdsfsjs={fdfssfds}
                               dfjkdsfds={jkdjfk}
                               order={i}
                             />
-                            {/*i === 6 && (
-                              <a href="https://m.me/185169981351799?text=Mình quan tâm tới gói Premium. Hỗ trợ mình trên web với">
-                                <img
-                                  src="https://media.truyenso1.xyz/ads/upgrade-premium.png"
-                                  className="img-ads"
-                                  alt="Toidoc premium"
-                                />
-                              </a>
-                            )*/}
-                          </div>
                         ))}
                       </>
                     )}
