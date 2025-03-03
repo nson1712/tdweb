@@ -9,6 +9,7 @@ const HotStories = ({ data, className }) => {
           title={item.title}
           slug={item.slug}
           coverImage={item.thumbnail || item.coverImage}
+          status={item.status}
         />
       ))}
     </div>

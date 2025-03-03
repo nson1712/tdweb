@@ -78,7 +78,7 @@ const CHAPTERS = [
 
 let timeout;
 
-const Stories = ({detail}) => {
+const Stories = ({ detail }) => {
   const route = useRouter();
   const [filter, setFilter] = useState({
     sort: "hot",
@@ -93,9 +93,14 @@ const Stories = ({detail}) => {
     chapters: undefined,
     status: undefined,
   });
+  const [page, setPage] = useState(
+    route.query.theloai === "truyen-full" ||
+      route.query.theloai === "xem-nhieu-nhat"
+      ? 1
+      : 0
+  );
 
-  const [page, setPage] = useState(0);
-  const [pageSize, setPageSize] = useState(20)
+  const [pageSize, setPageSize] = useState(20);
   const [last, setLast] = useState();
 
   const {
@@ -117,10 +122,8 @@ const Stories = ({detail}) => {
     storiesByHashtag,
     getStoriesByHashtag,
     stories,
-    getStories
+    getStories,
   } = StoryStore;
-
-  console.log("ROUTE.QUERY: ", route.query)
 
   useEffect(() => {
     if (route.query.categorySlug) {
@@ -150,10 +153,9 @@ const Stories = ({detail}) => {
     }
   }, [route.query, page, pageSize, last]);
 
-
   const data = useMemo(() => {
     if (route.query.categorySlug) {
-      return stories
+      return stories;
     }
     if (route.query.hashtag) {
       return storiesByHashtag;
@@ -252,12 +254,17 @@ const Stories = ({detail}) => {
   // };
 
   const onShowSizeChange = (_, pageSize) => {
-    setPageSize(pageSize)
+    setPageSize(pageSize);
   };
 
   const onPageChange = (page) => {
-    setPage(page - 1)
-  }
+    setPage(
+      route.query.theloai === "truyen-full" ||
+        route.query.theloai === "xem-nhieu-nhat"
+        ? page
+        : page - 1
+    );
+  };
 
   return (
     <CommonLayout>
@@ -354,20 +361,20 @@ const Stories = ({detail}) => {
             ))}
 
             <div className="w-full flex justify-end mt-4">
-            <Pagination
-              defaultCurrent={1}
-              defaultPageSize={20}
-              showSizeChanger
-              showQuickJumper
-              onShowSizeChange={onShowSizeChange}
-              onChange={onPageChange}
-              locale={{
-                jump_to: "Đi tới",
-                page: "Trang",
-                items_per_page: "/ Trang",
-              }}
-              total={data?.totalElements}
-            />
+              <Pagination
+                defaultCurrent={1}
+                defaultPageSize={20}
+                showSizeChanger
+                showQuickJumper
+                onShowSizeChange={onShowSizeChange}
+                onChange={onPageChange}
+                locale={{
+                  jump_to: "Đi tới",
+                  page: "Trang",
+                  items_per_page: "/ Trang",
+                }}
+                total={data?.totalElements}
+              />
             </div>
 
             {/* {

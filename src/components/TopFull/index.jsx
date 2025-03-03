@@ -10,6 +10,7 @@ const TopFull = ({ data }) => {
           title={item.title}
           slug={item.slug}
           coverImage={item.thumbnail || item.coverImage}
+          status={item.status}
         />
       ))}
     </div>
