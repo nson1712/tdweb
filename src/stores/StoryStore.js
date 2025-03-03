@@ -502,6 +502,7 @@ class StoryStore {
       runInAction(() => {
         runInAction(() => {
           this.storyDetail = result.data;
+          console.log('this.storyDetail: ', this.storyDetail);
         });
       });
     } catch (e) {

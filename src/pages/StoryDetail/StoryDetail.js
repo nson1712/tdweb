@@ -4,7 +4,7 @@ import * as Api from "../../api/api";
 import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import { observer } from "mobx-react";
 import StoryStore from "../../stores/StoryStore";
-import classNames from "classnames";
+import { toast } from 'react-toastify';
 import Chapters from "./Chapters";
 import MobileShare from "../StorySummary/MobileShare";
 import Header from "../../components/Header/Header";
@@ -81,68 +81,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
   const { storyChapterColumns } = useStoryChapterTableOptions();
 
-  // const checkCustomerClickAffLocal = async() => {
-  //   const isClickAff = await checkCustomerClickAff(localStorage.getItem('DEVICE_ID'))
-  //   if (!isClickAff) {
-  //     setShowModal(true)
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   window.scrollTo(0, 0);
-  // }, [])
-
-  // useEffect(() => {
-  //   // setShowModal(true)
-  //   // checkCustomerClickAffLocal()
-  //   console.log('route.query.storySlug: ', route.query.storySlug);
-  //   console.log('route.query.chapterSlug: ', route.query.chapterSlug);
-  //   if (route.query.storySlug) {
-  //     getStoryDetail(route.query.storySlug)
-  //   }
-  // }, [route.query.storySlug])
-
-  // useEffect(() => {
-  //   // Disable right-click (context menu)
-  //   const disableContextMenu = (event) => event.preventDefault();
-  //   document.addEventListener('contextmenu', disableContextMenu);
-
-  //   // Disable copying (Ctrl+C, Cmd+C, etc.)
-  //   const disableCopy = (event) => {
-  //     event.clipboardData.setData('text/plain', 'Bạn đừng copy dữ liệu của chúng tôi nhé ☹️, tội lắm.');
-  //     event.preventDefault();
-
-  //   };
-  //   document.addEventListener('copy', disableCopy);
-
-  //   // Cleanup on unmount
-  //   return () => {
-  //     document.removeEventListener('contextmenu', disableContextMenu);
-  //     document.removeEventListener('copy', disableCopy);
-  //   };
-  // }, []);
-
-  // useEffect(() => {
-  //   if (storyDetail?.id) {
-  //     const selectedCategory = localStorage.getItem('SELECTED_CATEGORIES')
-
-  //     if (!selectedCategory) {
-  //       const categories = storyDetail.categories?.map((item) => item.code)
-  //       saveFavoriteCategories(categories)
-  //       localStorage.setItem('SELECTED_CATEGORIES', categories?.join(','))
-  //     }
-  //   }
-
-  // }, [storyDetail?.id])
-
-  // useEffect(() => {
-
-  // if (route.query.storySlug && currentSlug) {
-  //   saveViewStory(route.query.storySlug)
-  // }
-
-  // }, [route.query.chapterSlug, currentSlug])
-
   const fetchData = async () => {
     try {
       setIsLoading(true);
@@ -153,13 +91,14 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         route.query.chapterSlug,
         isLoggedIn
       );
-      // console.log('Chapter detail content: ', result);
+      
       if (route.query.storySlug) {
         await getStoryDetail(route.query.storySlug);
       }
-      if (result?.contents.length <= 0) {
-        isLoggedIn = await GlobalStore.checkIsLogin();
-      }
+      // if (result?.contents.length <= 0) {
+      //   isLoggedIn = await GlobalStore.checkIsLogin();
+      // }
+
       let nextChapter = result?.next;
       let prevChapter = result?.previous;
       if (nextChapter) {
@@ -174,8 +113,13 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         next: nextChapter,
         previous: prevChapter,
       });
-      setLoggedIn(isLoggedIn || result?.free);
+      console.log('isLoggedIn: ', isLoggedIn);
+      console.log('result?.order: ', result?.order);
+      console.log('(result?.totalChapter > 20 && result?.order < 10): ', (result?.totalChapter > 20 && result?.order < 10));
+      console.log('(result?.totalChapter > 50 && result?.order < 26): ', ((result?.order < 5 || (result?.totalChapter > 20 && result?.order < 10) || (result?.totalChapter > 50 && result?.order < 26)) && result?.free));
+      setLoggedIn(isLoggedIn || ((result?.order < 5 || (result?.totalChapter > 20 && result?.order < 10) || (result?.totalChapter > 50 && result?.order < 26)) && result?.free));
       setNeedOpenChapter(!result?.free);
+      console.log('setLoggedIn: ', loggedIn);
 
       if (
         result?.order % 5 === 0 &&
@@ -386,7 +330,10 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         isOpenFull: false,
       },
     });
-
+    toast('Bạn đã mở chương thành công!', {
+        type: "success",
+        theme: "colored",
+    });
     fetchData();
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -652,20 +599,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                           Hãy tải lại trang để đọc truyện nhé!
                         </p>
                       </>
-                    ) : (
-                      <>
-                        {chapterContents?.map((item, i) => (
-                          <ContentDisplay
-                              item={item}
-                              fdsfsjs={fdfssfds}
-                              dfjkdsfds={jkdjfk}
-                              order={i}
-                            />
-                        ))}
-                      </>
-                    )}
-
-                    {!loggedIn ? (
+                    ) : !loggedIn ? (
                       <ShortLogin />
                     ) : needOpenChapter ? (
                       <div>
@@ -678,7 +612,16 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                         />
                       </div>
                     ) : (
-                      <></>
+                      <>
+                        {chapterContents?.map((item, i) => (
+                          <ContentDisplay
+                              item={item}
+                              fdsfsjs={fdfssfds}
+                              dfjkdsfds={jkdjfk}
+                              order={i}
+                            />
+                        ))}
+                      </>
                     )}
                   </>
                 ) : isLoading ? (

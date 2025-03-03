@@ -109,7 +109,7 @@ const ShortLogin = ({description, navigate='', closeModal, enableFB}) => {
           <a id='google-login-btn' className='align-center'>
             <Button className='login-button login-google-bg'
               onClick={(e) => handleLoginGoogle(e)}>
-              <img src='/images/google.png' style={{'float': 'left', 'marginRight': '10px', 'width': '25px'}}/>
+              <img src='/images/google.png' style={{'float': 'left', 'marginRight': '10px', 'width': '25px', height: '25px'}}/>
               Đăng Nhập Bằng GOOGLE
             </Button>
           </a>
