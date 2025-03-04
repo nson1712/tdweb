@@ -4,7 +4,7 @@ import Title from "./title";
 
 const HashtagSection = ({ hashtags }) => {
   return (
-    <div className="px-2 space-y-4">
+    <div className="px-3 space-y-4">
       <Title />
       <div className="hidden md:block px-2">
         <div className="flex flex-wrap gap-4 justify-center">

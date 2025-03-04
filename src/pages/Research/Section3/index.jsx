@@ -4,7 +4,7 @@ import ButtonViewAll from "../../../components/ButtonViewAll";
 
 const Section3 = ({ topTrending }) => {
   return (
-    <div className="border-1 p-3 rounded-2xl space-y-4 mx-2">
+    <div className="border-1 p-3 rounded-2xl space-y-6 mx-2">
       <Title />
       <HotStories className="grid grid-cols-4 justify-center md:grid-cols-8 md:grid-rows-2 gap-x-4 gap-y-6" data={topTrending?.data?.slice(0,16)} />
       <div className="flex">

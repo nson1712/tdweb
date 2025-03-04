@@ -685,8 +685,8 @@ const StorySummary = ({storyDetail}) => {
         )}
 
         <div className="py-4">
-          <p className="text-lg font-bold main-text text-underline">Văn án</p>
-          <div className="border-b-[1px] border-color pb-4">
+          <p className="text-lg font-bold main-text text-underline px-2">Văn án</p>
+          <div className="border-b-[1px] border-color pb-4 px-2">
             <div style={{ marginBottom: "10px" }}>
               <ReadMore>{storyDetail?.shortDescription}</ReadMore>
               {/* Add comment facebook at the end each chapter */}
