@@ -20,10 +20,10 @@ const Footer = () => {
               <Logo />
               <div className="space-y-2 self-center">
                 <div className="text-md">
-                  Toidoc là nền tảng #1 dành cho phái nữ với nhiều đánh giá chất
+                  Toidoc là nền tảng đọc truyện Full #1 dành cho phái nữ với nhiều đánh giá chất
                   lượng từ độc giả. Độc giả có thể lựa chọn đa dạng các thể loại
-                  truyện full, truyện hot, truyện đề cử khác nhau như #điền văn,
-                  #ngôn tình hiện đại, #đam mỹ, #sủng, #ngược, #zhihu, .... Web
+                  truyện full, truyện hot, truyện đề cử khác nhau như <a href='/the-loai/dien-van'>#điền văn</a>,
+                  <a href='/the-loai/ngon-tinh'>#ngôn tình hiện đại</a>, <a href='/the-loai/dam-my'>#đam mỹ</a>, <a href='/the-loai/sung'>#sủng</a>, <a href='/the-loai/nguoc'>#ngược</a>, <a href='/the-loai/doan-van'>#zhihu</a>, .... Web
                   truyện luôn cập nhật những bộ truyện mới nhất một cách nhanh
                   nhất.
                 </div>
@@ -54,7 +54,7 @@ const Footer = () => {
             </div>
           </div>
 
-          <FacebookPagePlugin />
+          {/*<FacebookPagePlugin />*/}
         </div>
       </div>
 

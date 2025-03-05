@@ -96,6 +96,7 @@ class StoryStore {
           chapterMax,
           status,
         },
+        hideError: true
       });
 
       runInAction(() => {
@@ -110,6 +111,7 @@ class StoryStore {
     try {
       const result = await Api.get({
         url: "data/private/data/collections?page=1&pageSize=10",
+        hideError: true
       });
 
       runInAction(() => {
@@ -122,6 +124,7 @@ class StoryStore {
     try {
       const result = await Api.get({
         url: "data/private/data/collections?page=2&pageSize=10",
+        hideError: true
       });
 
       runInAction(() => {
@@ -134,6 +137,7 @@ class StoryStore {
     try {
       const result = await Api.get({
         url: "data/private/data/story/search/recent",
+        hideError: true
       });
 
       runInAction(() => {
@@ -149,6 +153,7 @@ class StoryStore {
         data: {
           storySlug,
         },
+        hideError: true
       });
 
       runInAction(() => {
@@ -219,6 +224,7 @@ class StoryStore {
           params: {
             slug: storySlug,
           },
+          hideError: true
         });
 
         return result.data;
@@ -235,6 +241,7 @@ class StoryStore {
         params: {
           storySlug,
         },
+        hideError: true
       });
 
       runInAction(() => {
@@ -255,6 +262,7 @@ class StoryStore {
           pageSize,
           slug,
         },
+        hideError: true
       });
 
       if (page === 1) {
@@ -285,6 +293,7 @@ class StoryStore {
           page,
           pageSize,
         },
+        hideError: true
       });
 
       runInAction(() => {
@@ -303,6 +312,7 @@ class StoryStore {
           page,
           pageSize,
         },
+        hideError: true
       });
 
       if (page === 1) {
@@ -331,6 +341,7 @@ class StoryStore {
           pageSize,
           key: "view",
         },
+        hideError: true
       });
 
       runInAction(() => {
@@ -349,6 +360,7 @@ class StoryStore {
           page,
           pageSize,
         },
+        hideError: true
       });
 
       runInAction(() => {
@@ -367,6 +379,7 @@ class StoryStore {
           page,
           pageSize,
         },
+        hideError: true
       });
 
       runInAction(() => {
@@ -385,6 +398,7 @@ class StoryStore {
           page,
           pageSize,
         },
+        hideError: true
       });
 
       runInAction(() => {
@@ -399,6 +413,7 @@ class StoryStore {
     try {
       const result = await Api.get({
         url: "data/private/data/categories",
+        hideError: true
       });
 
       runInAction(() => {
@@ -413,6 +428,7 @@ class StoryStore {
     try {
       const result = await Api.get({
         url: "/customer/public/customer/categories",
+        hideError: true
       });
 
       runInAction(() => {
@@ -453,6 +469,7 @@ class StoryStore {
           limit,
           ...params,
         },
+        hideError: true
       });
 
       if (last === undefined) {
@@ -502,7 +519,6 @@ class StoryStore {
       runInAction(() => {
         runInAction(() => {
           this.storyDetail = result.data;
-          console.log('this.storyDetail: ', this.storyDetail);
         });
       });
     } catch (e) {
@@ -537,6 +553,7 @@ class StoryStore {
             chapterSlug: chapterSlug,
           },
         },
+        hideError: true
       });
     } catch (e) {
       console.log(e);
@@ -768,6 +785,7 @@ class StoryStore {
           page,
           size,
         },
+        hideError: true
       });
 
       runInAction(() => {
@@ -786,6 +804,7 @@ class StoryStore {
           page,
           size,
         },
+        hideError: true
       });
 
       if (page === 1) {
@@ -814,6 +833,7 @@ class StoryStore {
           page,
           size,
         },
+        hideError: true
       });
 
       if (page === 1) {

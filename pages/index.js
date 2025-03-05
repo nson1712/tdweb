@@ -20,6 +20,7 @@ const Homepage = () => {
       __html: `{
         "@context": "https://schema.org",
         "@type": "WebSite",
+        "name": "Nền tảng đọc truyện Full #1 dành cho phái đẹp!",
         "url": "https://toidoc.vn/",
         "potentialAction": {
           "@type": "SearchAction",

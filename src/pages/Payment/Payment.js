@@ -23,6 +23,8 @@ const Payment = ({
   handleTouched,
   submitForm,
   referralCode,
+  storySlug,
+  chapterSlug,
 }) => {
   const [loading, setLoading] = useState(false);
   const [cash, setCash] = useState(0);
@@ -128,7 +130,7 @@ const Payment = ({
               result?.data.qrCode
             }&expiredAt=${timePlusTenMinutes.toISOString()}&order=${
               result?.data.orderCode
-            }&paymentId=${result?.data.paymentLinkId}`
+            }&paymentId=${result?.data.paymentLinkId}&story=${storySlug}&chapter=${chapterSlug}`
           );
           // window.open(result?.data.checkoutLink, "_self")
         }

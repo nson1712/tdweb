@@ -9,6 +9,84 @@ export const zeroPad = (num, places) => String(num).padStart(places, "0");
 const secret_key = "MlsHlea8IaH3qS8MjoXB1kMnlMImwCE7";
 const secret_iv = "HIwhXNiX7d1z7VxZ";
 const ecnryption_method = "aes-256-cbc";
+const mapPackages = {
+  15000: {
+    label: "15,500",
+    deposit: "18,000VNĐ",
+    value: 18000,
+    qrUrl: "/images/qr-15k-son.jpg"
+  },
+  50000: {
+    label: "50,000",
+    deposit: "50,000VNĐ",
+    value: 50000,
+    qrUrl: "/images/qr-50k-son.jpg"
+  },
+  100000: {
+    label: "105,000",
+    deposit: "100,000VNĐ",
+    value: 100000,
+    qrUrl: "/images/qr-100k-son.jpg"
+  },
+  200000: {
+    label: "210,000",
+    deposit: "200,000VNĐ",
+    value: 200000,
+    qrUrl: "/images/qr-200k-son.jpg"
+  },
+  300000: {
+    label: "315,000",
+    deposit: "300,000VNĐ",
+    value: 300000,
+    qrUrl: "/images/qr-300k-son.jpg"
+  },
+  500000: {
+    label: "530,000",
+    deposit: "500,000VNĐ",
+    value: 500000,
+    qrUrl: "/images/qr-500k-son.jpg"
+  },
+  1000000: {
+    label: "1,060,000",
+    deposit: "1,000,000VNĐ",
+    value: 1000000,
+    qrUrl: "/images/qr-1000k-son.jpg"
+  },
+};
+
+export const packages = [
+  {
+    label: "15,500",
+    deposit: "18,000VNĐ",
+    value: 18000,
+  },
+  {
+    label: "50,000",
+    deposit: "50,000VNĐ",
+    value: 50000,
+  },
+  {
+    label: "105,000",
+    deposit: "100,000VNĐ",
+    value: 100000,
+  },
+  {
+    label: "315,000",
+    deposit: "300,000VNĐ",
+    value: 300000,
+  },
+  {
+    label: "530,000",
+    deposit: "500,000VNĐ",
+    value: 500000,
+  },
+  {
+    label: "1,060,000",
+    deposit: "1,000,000VNĐ",
+    value: 1000000,
+  },
+];
+
 export const getMobileOperatingSystem = () => {
   const userAgent = navigator.userAgent || navigator.vendor || window.opera;
   return Boolean(
@@ -638,4 +716,28 @@ export const getLastChild = (node) => {
 export const countWords = (text) => {
   if (!text || typeof text !== "string") return 0;
   return (text.match(/\b\w+\b/g) || []).length;
+}
+
+export const getDepositPackage = async(value) => {
+  if (value <= 15000) {
+    return mapPackages["15000"];
+  }
+  if (value < 50000) {
+    return mapPackages["50000"];
+  }
+  if (value < 105000) {
+    return mapPackages["100000"];
+  }
+  if (value < 210000) {
+    return mapPackages["200000"];
+  }
+  if (value < 315000) {
+    return mapPackages["300000"];
+  }
+  if (value < 530000) {
+    return mapPackages["500000"];
+  }
+  if (value < 1060000) {
+    return mapPackages["1000000"];
+  }
 }

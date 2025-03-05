@@ -51,7 +51,7 @@ const MobileHeader = ({show}) => {
     <div className={classNames('flex items-center justify-between md:hidden px-[20px] py-[10px] border-b-[1px] border-color border-t-[1px] fixed top-0 right-0 left-0 z-[99] background-white mobile-header', show && 'mobile-header-show')}>
       <div className={classNames('flex items-center')}
         onClick={() => {
-          Router.push('/de-cu-truyen-full')
+          Router.push('/tim-kiem')
         }}
         >
           <img src={'/images/star-home-active.svg'} className='w-[18px] mr-[13px]' alt='home'/>

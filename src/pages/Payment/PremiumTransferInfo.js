@@ -10,6 +10,7 @@ import { QRCode } from "react-qrcode-logo";
 import { formatStringToNumber } from "../../utils/utils";
 import Button from "../../components/Button/Button";
 import { Alert } from "antd";
+import { toast } from "react-toastify";
 
 const PremiumTransferInfo = ({ type }) => {
   const [accountName, setAccountName] = useState("");
@@ -83,6 +84,7 @@ const PremiumTransferInfo = ({ type }) => {
           `https://fsdfssf.truyenso1.xyz/customer/public/customer/deposit/qr/result`,
           data
         );
+        console.log('result QR Premium: ', result);
         if (result?.data?.data.code === 200) {
           Router.push("/premium/success");
         } else if (result?.data?.data.code !== 201) {

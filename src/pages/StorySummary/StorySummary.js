@@ -212,11 +212,7 @@ const StorySummary = ({storyDetail}) => {
           await getAvailableCash();
           const storyPrice = await getStoryPrice(route.query.storySlug);
           setDiscountValue(storyPrice?.discounted);
-          if (storyPrice?.remained > 0) {
-            setFinalChargeDiamond(storyPrice?.remained);
-          } else {
-            setFinalChargeDiamond(storyPrice?.totalCharge);
-          }
+          setFinalChargeDiamond(storyPrice?.remained);
         } else if (storyDetail) {
           setDiscountValue(storyDetail?.discountDiamond);
           if (storyDetail?.comboDiamond > 0) {
@@ -228,18 +224,14 @@ const StorySummary = ({storyDetail}) => {
       }
     };
     fetchData();
-  }, [route.query.storySlug, isOpenFull]);
+  }, [route.query.storySlug]);
 
   useEffect(() => {
     const getPriceInfo = async () => {
       if (GlobalStore.isLoggedIn) {
         const storyPrice = await getStoryPrice(route.query.storySlug);
         setDiscountValue(storyPrice?.net);
-        if (storyPrice?.remained > 0) {
-          setFinalChargeDiamond(storyPrice?.remained);
-        } else {
-          setFinalChargeDiamond(storyPrice?.totalCharge);
-        }
+        setFinalChargeDiamond(storyPrice?.remained);
       } else {
         setDiscountValue(storyDetail?.discountDiamond);
         if (storyDetail?.comboDiamond > 0) {
@@ -333,6 +325,7 @@ const StorySummary = ({storyDetail}) => {
             ? "UNLOCK_EXCLUSIVE_CHAPTER"
             : "UNLOCK_NORMAL_CHAPTER",
         },
+        hideError: true
       });
       setAvailableCash(result?.data);
     } catch (err) {
@@ -848,7 +841,7 @@ const StorySummary = ({storyDetail}) => {
                 }}
               >
                 <Link
-                  href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}`}
+                  href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}&story=${storyDetail?.slug}`}
                   passHref
                 >
                   <a

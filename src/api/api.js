@@ -2,6 +2,7 @@ import axios from "axios";
 import Router from "next/router";
 import { removeToken, getItem, getRefreshToken, getAccessToken, setAccessToken, setRefreshToken } from "../utils/storage";
 import GlobalStore from "../stores/GlobalStore";
+import { toast } from "react-toastify";
 
 const instance = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -34,10 +35,10 @@ const handleError = async (error, hideError) => {
   }
   if (!hideErrorNoti && errorMessage) {
     // show error message here
-    // toast(errorMessage, {
-    //   type: "error",
-    //   theme: "colored",
-    // })
+    toast(errorMessage, {
+      type: "error",
+      theme: "colored",
+    })
   }
 
   return Promise.reject(error.response, errorMessage);

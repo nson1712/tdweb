@@ -11,6 +11,7 @@ import { formatStringToNumber } from "../../utils/utils";
 import Button from "../../components/Button/Button";
 import { Alert } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
+import { toast } from "react-toastify";
 
 const TransferInfo = () => {
   const [accountName, setAccountName] = useState("");
@@ -28,6 +29,8 @@ const TransferInfo = () => {
   const counter = useRef(0);
   const orderCode = useRef("");
   const paymentId = useRef("");
+  const storySlug = useRef("");
+  const chapterSlug = useRef("");
 
   useEffect(() => {
     const dateTimeStr = router.query.expiredAt;
@@ -49,6 +52,8 @@ const TransferInfo = () => {
     setQrCode(router.query.qrCode || "");
     orderCode.current = router.query.order || "";
     paymentId.current = router.query.paymentId || "";
+    storySlug.current = router.query.story || "";
+    chapterSlug.current = router.query.chapter || "";
   }, [
     router.query.accountName,
     router.query.accountNumber,
@@ -87,12 +92,25 @@ const TransferInfo = () => {
           paymentLinkId: paymentId.current,
         };
         const result = await axios.post(
-          `https://fsdfssf.truyenso1.xyz/customer/public/customer/deposit/qr/result`,
-          data
+          `https://uatapi.truyenso1.xyz/customer/public/customer/deposit/qr/result`,
+          data,
         );
-        if (result?.data?.data.code === 200) {
-          Router.push("/nap-kim-cuong/success");
-        } else if (result?.data?.data.code !== 201) {
+        console.log('result QR Deposit: ', result);
+        if (result?.data?.data?.code === 200) {
+          if (storySlug.current !== '') {
+            toast(`Nạp kim cương thành công!`, {
+              type: "success",
+              theme: "colored",
+            });
+            if (chapterSlug.current !== '') {
+              Router.push(`/${storySlug.current}/${chapterSlug.current}`);
+            } else {
+              Router.push(`/${storySlug.current}`);
+            }
+          } else {
+            Router.push("/nap-kim-cuong/success");
+          }
+        } else if (result?.data?.data?.code !== 201) {
           Router.push("/nap-kim-cuong/failed");
         }
       }
@@ -225,7 +243,7 @@ const TransferInfo = () => {
                         />
                       </div>
                       <div>
-                        <p className="text-lg text-[#fff]">Ngân hàng thụ hưởng</p>
+                        <p className="lh-1 text-lg text-[#fff] mb-[5px]">Ngân hàng thụ hưởng</p>
                         <p className="font-bold text-sm text-[#00e60e]">Ngân hàng Phương Đông OCB</p>
                       </div>
                     </div>
@@ -233,7 +251,7 @@ const TransferInfo = () => {
                   <div>
                     <div className="grid grid-cols-7 m-2">
                       <div className="col-span-5 text-left">
-                        <p className="text-lg text-[#fff]">1. Chủ tài khoản:</p>
+                        <p className="lh-1 text-lg text-[#fff] mb-[5px]">1. Chủ tài khoản:</p>
                         <p className="font-bold text-sm text-[#00e60e]">
                           {accountName}
                         </p>
@@ -243,7 +261,7 @@ const TransferInfo = () => {
                   <div>
                     <div className="grid grid-cols-7 m-2">
                       <div className="col-span-5 text-left">
-                        <p className="text-lg text-[#fff]">
+                        <p className="lh-1 text-lg text-[#fff] mb-[5px]">
                           2. Ấn sao chép lấy số tài khoản <span className='text-[#feb313] text-sm'><strong><i>(Nhớ copy cả mã CAS)</i></strong></span>:
                         </p>
                         <p className="font-bold text-sm text-[#00e60e]">
@@ -264,7 +282,7 @@ const TransferInfo = () => {
                   <div>
                     <div className="grid grid-cols-7 m-2">
                       <div className="col-span-5 text-left">
-                        <p className="text-lg text-[#fff]">3. Số tiền:</p>
+                        <p className="lh-1 text-lg text-[#fff] mb-[5px]">3. Số tiền:</p>
                         <p className="font-bold text-[#00e60e] text-sm">
                           {formatStringToNumber(amount)}VNĐ
                         </p>
@@ -282,7 +300,7 @@ const TransferInfo = () => {
                   <div>
                     <div className="grid grid-cols-8 m-2">
                       <div className="col-span-6 text-left">
-                        <p className="text-lg text-[#fff]">
+                        <p className="lh-1 text-lg text-[#fff] mb-[5px]">
                         4. Ấn sao chép lấy nội dung: <span className='text-[#feb313] text-sm'><strong><i>(Không copy chính xác, kim cương sẽ không về TK)</i></strong></span>
                         </p>
                         <p className="text-[#00e60e] font-bold text-sm">

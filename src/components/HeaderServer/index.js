@@ -59,10 +59,10 @@ const HeadComponent = ({
           name="twitter:description"
           content={
             description ||
-            "Toidoc là nền tảng cộng đồng đọc truyện, trao đổi và đăng các thể loại truyện như truyện ngôn tình, truyện đam mỹ, kiếm hiệp, tiên hiệp, trọng sinh, trinh thám."
+            "Toidoc là nền tảng đọc truyện full, đánh giá và đăng các thể loại truyện như truyện ngôn tình, truyện đam mỹ, kiếm hiệp, tiên hiệp, trọng sinh, trinh thám."
           }
         />
-        <meta name="twitter:title" content={title || "Nền tảng đọc Truyện ngôn tình, Đam mỹ, Trọng sinh, Tiên hiệp, Kiếm hiệp"} />
+        <meta name="twitter:title" content={title || "Nền tảng đọc truyện full Ngôn tình, Đam mỹ, Trọng sinh, Tiên hiệp, Kiếm hiệp"} />
         <meta
           name="twitter:image:src"
           content={image || "/images/cover-doc-gia-min.png"}

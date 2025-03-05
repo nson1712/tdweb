@@ -1687,6 +1687,14 @@ a {
   line-height: 140%;
 }
 
+.font-roboto {
+  font-family: 'Roboto Condensed',Tahoma,sans-serif;
+}
+
+.lh-15 {
+  line-height: 1.5;
+}
+
 .mobile-header {
   transition: all 0.3s;
   transform: translateY(-100px);
@@ -1703,6 +1711,30 @@ a {
 .text{
   display: inline;
   width: 100%;
+}
+
+input[type="checkbox"] {
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid white;
+  border-radius: 4px;
+  background-color: white;
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+}
+
+/* Hiển thị dấu tích khi checkbox được checked */
+input[type="checkbox"]:checked::after {
+  content: "✔";
+  font-size: 18px;
+  color: #00c772;
+  font-weight: bold;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
   
 .read-or-hide{

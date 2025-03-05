@@ -16,6 +16,7 @@ import {
 import ModalComponent from "../../components/Modal/Modal";
 import ModalWithoutCloseButton from "../../components/Modal/ModalWithoutCloseButton";
 import ChatSupportAutoClose from "../../components/Button/ChatSupportAutoClose";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 import ShortLogin from "../Login/ShortLogin";
 import GlobalStore from "../../stores/GlobalStore";
 import Question from "./Question";
@@ -78,6 +79,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [openChapterList, setOpenChapterList] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState("oldest");
+  const [showDepositSuccessWarning, setShowDepositSuccessWarning] = useState(false);
 
   const { storyChapterColumns } = useStoryChapterTableOptions();
 
@@ -113,13 +115,10 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         next: nextChapter,
         previous: prevChapter,
       });
-      console.log('isLoggedIn: ', isLoggedIn);
-      console.log('result?.order: ', result?.order);
-      console.log('(result?.totalChapter > 20 && result?.order < 10): ', (result?.totalChapter > 20 && result?.order < 10));
-      console.log('(result?.totalChapter > 50 && result?.order < 26): ', ((result?.order < 5 || (result?.totalChapter > 20 && result?.order < 10) || (result?.totalChapter > 50 && result?.order < 26)) && result?.free));
-      setLoggedIn(isLoggedIn || ((result?.order < 5 || (result?.totalChapter > 20 && result?.order < 10) || (result?.totalChapter > 50 && result?.order < 26)) && result?.free));
+      
+      //setLoggedIn(isLoggedIn || ((result?.order < 5 || (result?.totalChapter > 20 && result?.order < 10) || (result?.totalChapter > 50 && result?.order < 26)) && result?.free));
+      setLoggedIn(isLoggedIn || result?.free);
       setNeedOpenChapter(!result?.free);
-      console.log('setLoggedIn: ', loggedIn);
 
       if (
         result?.order % 5 === 0 &&
@@ -338,6 +337,24 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
+  const handlePaymentDepositAuto = async(isOpenFull) => {
+    try {
+      if (isOpenFull) {
+        await Api.post({
+          url: "/data/private/data/chapter/open",
+          data: {
+            storySlug: storyDetail.slug,
+            isOpenFull: true,
+          },
+        });
+      }
+      await fetchData();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch(e) {
+    }
+    
+  }
+
   const handleSupport = async () => {
     window.open(
       `https://m.me/185169981351799?text=${
@@ -356,6 +373,18 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           ? "Mã KH của mình là: " + GlobalStore.profile?.referralCode + ". "
           : ""
       }Mình đang đọc chương ${chapterTitle} ở trên web mà chương này chỉ được xem trên App. Truyện ${storyTitle}. Giờ mình phải làm sao?`,
+      "_blank"
+    );
+  };
+
+  const handleOKWarningDepositSuccess = async () => {
+    setShowDepositSuccessWarning(false);
+    window.open(
+      `https://m.me/185169981351799?text=${
+        GlobalStore.profile?.referralCode
+          ? "Mã KH của mình là: " + GlobalStore.profile?.referralCode + ". "
+          : ""
+      }Mình vừa chuyển khoản thành công qua web, nạp kim cương giúp mình với.`,
       "_blank"
     );
   };
@@ -603,13 +632,18 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                       <ShortLogin />
                     ) : needOpenChapter ? (
                       <div>
-                        <OpenChapterInfo
-                          story={storyDetail}
-                          chapter={currentChapter}
-                          handleOpenChapter={handleOpenChapter}
-                          handleSupport={handleSupport}
-                          availableCash={availableCash}
-                        />
+                        <GoogleReCaptchaProvider reCaptchaKey="6LemlQIqAAAAAN3GiXSgwfSljLMiGgRAINr1ALev">
+                          <OpenChapterInfo
+                            story={storyDetail}
+                            chapter={currentChapter}
+                            handleOpenChapter={handleOpenChapter}
+                            handleSupport={handleSupport}
+                            availableCash={availableCash}
+                            fullPriceStory={fullPriceStory}
+                            setShowWarningDepositSuccess={() => setShowDepositSuccessWarning(true) }
+                            handlePaymentDepositAuto={handlePaymentDepositAuto}
+                          />
+                        </GoogleReCaptchaProvider>
                       </div>
                     ) : (
                       <>
@@ -793,6 +827,25 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           </ModalWithoutCloseButton>
         )}
       </div>
+      {showDepositSuccessWarning && (
+        <ModalComponent
+          show={showDepositSuccessWarning}
+          handleClose={(e) => setShowDepositSuccessWarning(false)}
+          styleBody="background-gradient-gray"
+        >
+          <div className="px-[20px] pb-[20px] pt-[10px]">
+            <div className='flex justify-center pb-[15px]'>
+              <img src='/images/info-icon.png' className='w-[20px] h-[20px] mr-[5px]'/>
+              <p><strong>Lưu ý</strong></p>
+            </div>
+            <div className='px-[10px]'>
+              <p>Bạn nhớ gửi kèm theo ảnh chuyển khoản thành công để Admin phê duyệt nhé!</p>
+              <p>Sau khi Admin nạp kim cương, bạn chỉ cần mở khoá chương là đọc được tiếp.</p>
+              <a className='btnMain' onClick={() => handleOKWarningDepositSuccess()}>OK</a>
+            </div>
+          </div>
+        </ModalComponent>
+      )}
       {/*<MobileShare showBubble={showBubble} setShowBubble={setShowBubble}/>*/}
       {/*<ChatSupportAutoClose/>*/}
 

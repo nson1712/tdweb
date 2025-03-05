@@ -23,7 +23,7 @@ const Research = ({ canonical }) => {
   return (
     <>
       <HeaderServer description = "Khám phá các bộ truyện full được cập nhật liên tục và được nhiều độc giả đánh giá cao. Các thể loại truyện bao gồm như ngôn tình hiện đại, sủng, ngược, tiên hiệp, điền văn, đoản văn, zhihu, đam mỹ."
-                    title = "🌟[Đề Cử] Khám phá Truyện Full Độc Đáo | Nền tảng cộng cồng đọc truyện Online Toidoc"
+                    title = "🌟[Đề Cử] Khám phá Truyện Full Độc Đáo | Webtruyen"
                     canonical={canonical}
                     snipet={addKhamphaJsonLd()}
       />
