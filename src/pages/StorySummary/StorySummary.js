@@ -233,7 +233,7 @@ const StorySummary = ({storyDetail}) => {
   useEffect(() => {
     const getPriceInfo = async () => {
       if (GlobalStore.isLoggedIn) {
-        const storyPrice = await getStoryPrice();
+        const storyPrice = await getStoryPrice(route.query.storySlug);
         setDiscountValue(storyPrice?.net);
         if (storyPrice?.remained > 0) {
           setFinalChargeDiamond(storyPrice?.remained);
