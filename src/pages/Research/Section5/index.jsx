@@ -6,9 +6,9 @@ import ButtonViewAll from "../../../components/ButtonViewAll";
 const Section5 = ({ topViews }) => {
 
   return (
-    <div className="space-y-4 px-2">
+    <div className="space-y-8 px-3">
       <Title />
-      <div className="space-y-4 md:space-y-0 md:grid md:grid-cols-3 gap-3">
+      <div className="space-y-8 md:space-y-0 md:grid md:grid-cols-3 gap-3">
         {topViews.data?.slice(0, 3).map((item, index) => (
           <HorizontalStory
             key={index}

@@ -1,14 +1,18 @@
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
 import Link from "next/link";
+import MarkedLabel from "../MarkedLabel";
 
-const VerticalStoryItem = ({ title, slug, coverImage }) => {
+const VerticalStoryItem = ({ title, slug, coverImage, status }) => {
   return (
     <Link href={`/${slug}`} passHref>
       <a
         title={`Truyện full ${title}`}
-        className="max-w-fit flex flex-col gap-y-2 cursor-pointer hover:translate-y-[-5%] transition delay-75"
+        className="max-w-fit flex flex-col gap-y-2 cursor-pointer hover:translate-y-[-5%] transition delay-75 relative z-5"
       >
+        {status === "ACTIVE" && (
+          <MarkedLabel />
+        )}
         {coverImage ? (
           <Image
             loader={imageLoader}
@@ -21,9 +25,9 @@ const VerticalStoryItem = ({ title, slug, coverImage }) => {
           />
         ) : null}
 
-        <p className="max-w-full max-h-auto text-black text-sm text-center font-[500] leading-normal overflow-hidden text-ellipsis line-clamp-2 align-top">
-          {title}
-        </p>
+        <div className="w-full flex justify-center items-center bg-black/60 absolute bottom-0 max-w-full h-[40%] text-white text-xs text-center font-[500] leading-normal overflow-hidden">
+          <div className="line-clamp-3 px-1">{title}</div>
+        </div>
       </a>
     </Link>
   );

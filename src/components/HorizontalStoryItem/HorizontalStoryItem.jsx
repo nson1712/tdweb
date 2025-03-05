@@ -9,6 +9,7 @@ import GoldenTicket from "../GoldenTicket";
 import imageLoader from "../../loader/imageLoader";
 import { getSlugfromSlugGenerate, slugGenerate } from "../../utils/utils";
 import Link from "next/link";
+import MarkedLabel from "../MarkedLabel";
 
 const HorizontalStoryItem = ({
   title,
@@ -45,12 +46,13 @@ const HorizontalStoryItem = ({
       })}
     >
       <div
-        className={clsx("self-center flex", {
-          "max-w-[120px]": type !== "secondary" && type !== "primary",
+        className={clsx("relative self-center", {
+          "max-w-[120px] flex h-full": type !== "secondary" && type !== "primary",
           "max-w-[40px] max-h-[60px] relative": type === "secondary",
           "max-w-[66px] max-h-[100px] relative": type === "primary",
         })}
       >
+        {status === "ACTIVE" && type!=="secondary" && type !== "primary" && <MarkedLabel />}
         {coverImage ? (
           <Image
             loader={imageLoader}

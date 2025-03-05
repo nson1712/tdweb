@@ -11,6 +11,7 @@ const VerticalStory = ({ items }) => {
           title={item.title}
           coverImage={item.thumbnail || item.coverImage}
           slug={item.slug}
+          status={item.status}
         />
       ))}
     </div>

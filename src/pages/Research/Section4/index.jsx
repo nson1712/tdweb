@@ -4,7 +4,7 @@ import ButtonViewAll from "../../../components/ButtonViewAll";
 
 const Section4 = ({ topFull }) => {
   return (
-    <div className="px-2 space-y-4">
+    <div className="px-3 space-y-8">
       <Title />
       <TopFull data={topFull?.data} />
       <div className="flex">
