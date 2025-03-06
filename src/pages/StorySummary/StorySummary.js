@@ -104,7 +104,7 @@ function useScrollDirection() {
   return scrollDirection;
 }
 
-const StorySummary = ({storyDetail}) => {
+const StorySummary = ({storyDetail, articleDetail}) => {
   const scrollDirection = useScrollDirection();
   const [showBubble, setShowBubble] = useState("up");
   const [scrollOffset, setScrollOffset] = useState(0);
@@ -142,7 +142,7 @@ const StorySummary = ({storyDetail}) => {
     topNew,
     getTopNew
   } = StoryStore;
-  const { storyDetailArticle, getBlogStoryDetail } = BlogStore;
+  // const { storyDetailArticle, getBlogStoryDetail } = BlogStore;
   const [currentChapterDetail, setCurrentChapterDetail] = useState([]);
 
   const [currentTab, setCurrentTab] = useState("CONTENT");
@@ -231,7 +231,7 @@ const StorySummary = ({storyDetail}) => {
   }, [storyDetail?.id, isOpenFull]);
 
   useEffect(() => {
-    getBlogStoryDetail(route.query.storySlug);
+    // getBlogStoryDetail(route.query.storySlug);
     getTopTrending(0, 10);
     getTopNew(0, 10);
   }, [route.query.storySlug]);
@@ -417,12 +417,12 @@ const StorySummary = ({storyDetail}) => {
 
   // }, [chapters])
 
-  const modifiedContent = storyDetailArticle?.content
+  const modifiedContent = articleDetail ? articleDetail?.content
     ?.replace(/<(h[1-6])([^>]*)>/g, '<$1$2 class="text-lg">')
     .replace(
       /<figure([^>]*)>(.*?)<\/figure>/g,
       '<div class="flex justify-center"><figure$1>$2</figure></div>'
-    );
+    ) : '';
 
   const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥")
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥")
@@ -678,7 +678,7 @@ const StorySummary = ({storyDetail}) => {
         )}
 
         <div className="py-4">
-          <p className="text-lg font-bold main-text text-underline px-2">Văn án</p>
+          <p className="text-lg font-bold main-text text-underline px-2">Giới thiệu truyện</p>
           <div className="border-b-[1px] border-color pb-4 px-2">
             <div style={{ marginBottom: "10px" }}>
               <ReadMore>{storyDetail?.shortDescription}</ReadMore>
@@ -691,7 +691,7 @@ const StorySummary = ({storyDetail}) => {
             <>
               <div className="border-b-[1px] border-color pb-4 px-2">
                 <h2 className="text-lg font-bold main-text mt-4 text-underline">
-                  Chương mới nhất
+                  Chương ra mới nhất
                 </h2>
                 {storyDetail?.chapters
                   ?.slice(-5)
@@ -766,7 +766,7 @@ const StorySummary = ({storyDetail}) => {
         {modifiedContent && (
           <div className="mt-[20px]">
             <h2 className="text-lg font-bold main-text text-underline">
-              [REVIEW Truyện] {storyDetail?.title}{" "}
+              [REVIEW Truyện] {storyDetail?.title}
             </h2>
             <div dangerouslySetInnerHTML={{ __html: modifiedContent }} />
           </div>
