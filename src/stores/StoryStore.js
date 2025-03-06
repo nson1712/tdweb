@@ -285,7 +285,7 @@ class StoryStore {
     }
   };
 
-  getTopTrending = async (page = 1, pageSize = 20) => {
+  getTopTrending = async (page = 0, pageSize = 20) => {
     try {
       const result = await Api.get({
         url: "data/private/data/story/trending",
@@ -506,7 +506,7 @@ class StoryStore {
 
   getStoryDetail = async (slug) => {
     try {
-      if (slug !== this.storyDetail.slug) {
+      if (slug !== this.storyDetail?.slug) {
         this.storyDetail = {};
       }
       const result = await Api.get({
@@ -517,10 +517,10 @@ class StoryStore {
       });
 
       runInAction(() => {
-        runInAction(() => {
-          this.storyDetail = result.data;
-        });
+        this.storyDetail = result.data;
       });
+
+      return this.storyDetail;
     } catch (e) {
       console.log(e);
     }

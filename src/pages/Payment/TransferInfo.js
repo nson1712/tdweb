@@ -92,7 +92,7 @@ const TransferInfo = () => {
           paymentLinkId: paymentId.current,
         };
         const result = await axios.post(
-          `https://uatapi.truyenso1.xyz/customer/public/customer/deposit/qr/result`,
+          `https://fsdfssf.truyenso1.xyz/customer/public/customer/deposit/qr/result`,
           data,
         );
         console.log('result QR Deposit: ', result);

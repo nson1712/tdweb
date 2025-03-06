@@ -130,7 +130,7 @@ const Payment = ({
               result?.data.qrCode
             }&expiredAt=${timePlusTenMinutes.toISOString()}&order=${
               result?.data.orderCode
-            }&paymentId=${result?.data.paymentLinkId}&story=${storySlug}&chapter=${chapterSlug}`
+            }&paymentId=${result?.data.paymentLinkId}&story=${storySlug}` + (chapterSlug ? `&chapter=${chapterSlug}` : '')
           );
           // window.open(result?.data.checkoutLink, "_self")
         }

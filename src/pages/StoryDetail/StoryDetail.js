@@ -70,7 +70,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [showQuestion, setShowQuestion] = useState(false);
   const [showModalApp, setShowModalApp] = useState(false);
   const [isEnoughDiamond, setIsEnoughDiamond] = useState(true);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [availableCash, setAvailableCash] = useState({});
   const [showModalNotEnoughDiamond, setShowModalNotEnoughDiamond] =
     useState(false);
@@ -95,7 +95,12 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       );
       
       if (route.query.storySlug) {
-        await getStoryDetail(route.query.storySlug);
+        const detailStory = await getStoryDetail(route.query.storySlug);
+        if (isLoggedIn && !result?.free) {
+          await getAvailableCash(detailStory);
+          const priceStory = await getStoryPrice(route.query.storySlug);
+          setFullPriceStory(priceStory);
+        }
       }
       // if (result?.contents.length <= 0) {
       //   isLoggedIn = await GlobalStore.checkIsLogin();
@@ -114,6 +119,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         ...result,
         next: nextChapter,
         previous: prevChapter,
+        slug: route.query.chapterSlug
       });
       
       //setLoggedIn(isLoggedIn || ((result?.order < 5 || (result?.totalChapter > 20 && result?.order < 10) || (result?.totalChapter > 50 && result?.order < 26)) && result?.free));
@@ -147,27 +153,27 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       if (isLoggedIn && result?.free && result?.contentEnabled) {
         saveLastStory(route.query.storySlug, route.query.chapterSlug);
       }
-      if (isLoggedIn && !result?.free) {
-        await getAvailableCash();
-        const priceStory = await getStoryPrice(route.query.storySlug);
-        setFullPriceStory(priceStory);
-      }
-    } catch (e) {}
-    setIsLoading(false);
+      setIsLoading(false);
+    } catch (e) {
+      setIsLoading(false);
+    }
   };
 
-  const getAvailableCash = async () => {
+  const getAvailableCash = async (detailStory) => {
+    //  console.log('Start get available cash');
     if (!GlobalStore.isLoggedIn) {
       return;
     }
     try {
+      // console.log('storyDetail: ', detailStory);
       const result = await Api.get({
         url: "/customer/customer/availableCash",
         params: {
-          intendedUse: storyDetail?.contributorId
+          intendedUse: detailStory?.contributorId
             ? "UNLOCK_EXCLUSIVE_CHAPTER"
             : "UNLOCK_NORMAL_CHAPTER",
         },
+        hideError: true
       });
       setAvailableCash(result?.data);
       if (currentChapterDetail?.price > result?.data?.balance) {
@@ -185,18 +191,21 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     try {
       const result = await Api.get({
         url: "/data/private/data/question",
+        hideError: true
       });
       setQuestion(result?.data);
     } catch (err) {}
   };
 
   useEffect(() => {
-    fetchData();
-  }, [route.query.chapterSlug, GlobalStore.isLoggedIn]);
+    if (!isLoading) {
+      fetchData();
+    }
+  }, [route.query.storySlug, route.query.chapterSlug, GlobalStore.isLoggedIn]);
 
   useEffect(() => {
-    getTopNew();
-    getTopTrending();
+    getTopNew(0, 10);
+    getTopTrending(0, 10);
   }, []);
 
   // const [currentChappter, chapterIndex] = useMemo(() => {
@@ -316,30 +325,34 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   // }
 
   const handleOpenChapter = async () => {
-    if (currentChapterDetail?.price > availableCash?.balance) {
-      setShowModalNotEnoughDiamond(true);
-      return;
-    }
-    await Api.post({
-      url: "/data/private/data/chapter/open",
-      data: {
-        storySlug: storyDetail.slug,
-        numberChapter: 1,
-        chapterSlug: route.query.chapterSlug,
-        isOpenFull: false,
-      },
-    });
-    toast('Bạn đã mở chương thành công!', {
-        type: "success",
-        theme: "colored",
-    });
-    fetchData();
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    try {
+      if (currentChapterDetail?.price > availableCash?.balance) {
+        setShowModalNotEnoughDiamond(true);
+        return;
+      }
+      await Api.post({
+        url: "/data/private/data/chapter/open",
+        data: {
+          storySlug: storyDetail.slug,
+          numberChapter: 1,
+          chapterSlug: route.query.chapterSlug,
+          isOpenFull: false,
+        },
+      });
+      toast('Bạn đã mở chương thành công!', {
+          type: "success",
+          theme: "colored",
+      });
+      fetchData();
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch(e) {}
   };
 
   const handlePaymentDepositAuto = async(isOpenFull) => {
     try {
+      // console.log('isOpenFull 2: ', isOpenFull);
       if (isOpenFull) {
+        // console.log('isOpenFull 3: ', isOpenFull);
         await Api.post({
           url: "/data/private/data/chapter/open",
           data: {
@@ -430,8 +443,8 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     setFilter(filter);
   };
 
-  const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện đang HOT")
-  const TopNewTitle = withIconTitle(NewIcon, "Truyện mới")
+  const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥")
+  const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥")
 
   return (
     <CommonLayout>
@@ -711,7 +724,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-4">
             <TopTrendingTitle />
-            <HotStories className="grid grid-cols-4 justify-center md:grid-cols-6 md:grid-rows-2 gap-x-4 gap-y-6" data={topTrending?.data?.slice(0,12)}/>
+            <HotStories className="grid grid-cols-5 justify-center md:grid-cols-5 md:grid-rows-2 gap-x-4 gap-y-6" data={topTrending?.data}/>
             <div className="flex">
               <ButtonViewAll
                 className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
@@ -723,7 +736,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 sm:mt-4">
             <TopNewTitle />
-            <HotStories className="grid grid-cols-4 justify-center md:grid-cols-6 md:grid-rows-2 gap-x-4 gap-y-6" data={topNew?.data?.slice(0,12)}/>
+            <HotStories className="grid grid-cols-5 justify-center md:grid-cols-5 md:grid-rows-2 gap-x-4 gap-y-6" data={topNew?.data}/>
             <div className="flex">
               <ButtonViewAll
                 className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"

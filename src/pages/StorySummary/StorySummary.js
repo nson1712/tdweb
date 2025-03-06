@@ -227,30 +227,30 @@ const StorySummary = ({storyDetail}) => {
   }, [route.query.storySlug]);
 
   useEffect(() => {
-    const getPriceInfo = async () => {
-      if (GlobalStore.isLoggedIn) {
-        const storyPrice = await getStoryPrice(route.query.storySlug);
-        setDiscountValue(storyPrice?.net);
-        setFinalChargeDiamond(storyPrice?.remained);
-      } else {
-        setDiscountValue(storyDetail?.discountDiamond);
-        if (storyDetail?.comboDiamond > 0) {
-          setFinalChargeDiamond(storyDetail?.comboDiamond);
-        } else {
-          setFinalChargeDiamond(storyDetail?.totalDiamond);
-        }
-      }
-    };
-
     getPriceInfo();
   }, [storyDetail?.id, isOpenFull]);
 
   useEffect(() => {
     getBlogStoryDetail(route.query.storySlug);
-    getTopTrending();
-    getTopNew();
+    getTopTrending(0, 10);
+    getTopNew(0, 10);
   }, [route.query.storySlug]);
 
+
+  const getPriceInfo = async () => {
+    if (GlobalStore.isLoggedIn) {
+      const storyPrice = await getStoryPrice(route.query.storySlug);
+      setDiscountValue(storyPrice?.net);
+      setFinalChargeDiamond(storyPrice?.remained);
+    } else {
+      setDiscountValue(storyDetail?.discountDiamond);
+      if (storyDetail?.comboDiamond > 0) {
+        setFinalChargeDiamond(storyDetail?.comboDiamond);
+      } else {
+        setFinalChargeDiamond(storyDetail?.totalDiamond);
+      }
+    }
+  };
   // useEffect(() => {
   //   const trackScrolling = () => {
   //     clearTimeout(timeout)
@@ -362,7 +362,7 @@ const StorySummary = ({storyDetail}) => {
         },
       });
       setIsOpenFull(true);
-      await getStoryPrice(route.query.storySlug);
+      await getPriceInfo();
       await getAvailableCash();
       setLoading(false);
       toast(
@@ -424,8 +424,8 @@ const StorySummary = ({storyDetail}) => {
       '<div class="flex justify-center"><figure$1>$2</figure></div>'
     );
 
-  const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện đang HOT")
-  const TopNewTitle = withIconTitle(NewIcon, "Truyện mới")
+  const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥")
+  const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥")
 
   return (
     <CommonLayout>
@@ -546,7 +546,7 @@ const StorySummary = ({storyDetail}) => {
                   src={storyDetail?.thumbnail || storyDetail?.coverImage}
                   alt={`Truyện ${storyDetail?.title}`}
                   title={storyDetail?.title}
-                  className="w-28 h-36 rounded-[10px]"
+                  className="w-28 h-30 rounded-[10px]"
                 />
               </div>
 
@@ -741,7 +741,7 @@ const StorySummary = ({storyDetail}) => {
 
         <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-4">
             <TopTrendingTitle />
-            <HotStories className="grid grid-cols-4 justify-center md:grid-cols-6 md:grid-rows-2 gap-x-4 gap-y-6" data={topTrending?.data?.slice(0,12)}/>
+            <HotStories className="grid grid-cols-5 justify-center md:grid-cols-5 md:grid-rows-2 gap-x-4 gap-y-6" data={topTrending?.data}/>
             <div className="flex">
               <ButtonViewAll
                 className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
@@ -753,7 +753,7 @@ const StorySummary = ({storyDetail}) => {
 
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 my-4">
             <TopNewTitle />
-            <HotStories className="grid grid-cols-4 justify-center md:grid-cols-6 md:grid-rows-2 gap-x-4 gap-y-6" data={topNew?.data?.slice(0,12)}/>
+            <HotStories className="grid grid-cols-5 justify-center md:grid-cols-5 md:grid-rows-2 gap-x-4 gap-y-6" data={topNew?.data}/>
             <div className="flex">
               <ButtonViewAll
                 className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
@@ -841,7 +841,7 @@ const StorySummary = ({storyDetail}) => {
                 }}
               >
                 <Link
-                  href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}&story=${storyDetail?.slug}`}
+                  href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}&story=${storyDetail?.slug}&chapter=`}
                   passHref
                 >
                   <a

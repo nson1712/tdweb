@@ -5,7 +5,7 @@ const MarkedLabel = ({ type, itemDirection }) => {
         Hoàn
       </div>
       <div
-        class="absolute -left-5 top-7 w-5 h-5 bg-green-600 z-6
+        className="absolute -left-5 top-7 w-5 h-5 bg-green-600 z-6
              [clip-path:polygon(100%_100%,150%_-50%,50%_55%)]"
       ></div>
     </>

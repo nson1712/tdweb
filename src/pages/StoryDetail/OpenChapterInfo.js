@@ -12,6 +12,7 @@ import { toast } from 'react-toastify';
 
 const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, availableCash, fullPriceStory, setShowWarningDepositSuccess, handlePaymentDepositAuto}) => {
   
+  const { executeRecaptcha } = useGoogleReCaptcha();
   const [accountName, setAccountName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [amount, setAmount] = useState(0);
@@ -20,23 +21,22 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
   const [qrUrl, setQrUrl] = useState('');
   const [orderCode, setOrderCode] = useState('');
   const [paymentLinkId, setPaymentLinkId] = useState('');
-  const { executeRecaptcha } = useGoogleReCaptcha();
   const [copiedAccountMessage, setCopiedAccountMessage] = useState("");
   const [copiedAmountMessage, setCopiedAmountMessage] = useState("");
   const [copiedDescriptionMessage, setCopiedDescriptionMessage] = useState("");
   const [timeLeft, setTimeLeft] = useState(0);
   const [isFetchData, setIsFetchData] = useState(false);
-  const [isOpenFull, setIsOpenFull] = useState(true);
   const [isExpiredQR, setIsExpiredQR] = useState(false);
   
   const counter = useRef(0);
   const qrRef = useRef(null);
+  const isOpenFull = useRef(true);
 
   useEffect(() => {
       if (chapter?.price > availableCash?.balance && !isFetchData) {
         handleRequestPayment();
       }
-  }, [chapter, fullPriceStory]);
+  }, [chapter, availableCash, fullPriceStory, executeRecaptcha]);
 
   useEffect(() => {
     // Chạy mỗi giây
@@ -63,7 +63,8 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
 
   const handleRequestPayment = async () => {
     try {
-      setIsFetchData(true);
+      if (!isFetchData) {
+        setIsFetchData(true);
       const packageDeposit = await getDepositPackage(fullPriceStory?.remained);
       console.log("packageDeposit: ", packageDeposit);
       setAmount(packageDeposit.value);
@@ -74,19 +75,20 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
       //   setLoading(true);
       //   console.log("Start submit form");
         if (!executeRecaptcha) {
-          console.log("Execute recaptcha not yet available");
+          // console.log("Execute recaptcha not yet available");
+          setIsFetchData(false);
           return;
         }
-        console.log("Start get token");
+        // console.log("Start get token");
         const token = await executeRecaptcha("onSubmit");
         let data = {};
         data.token = token;
         data.amount = packageDeposit.value;
-        console.log('packageDeposit.value: ', packageDeposit.value);
+        // console.log('packageDeposit.value: ', packageDeposit.value);
         
         const timestamp = Date.now();
         data.requestId = GlobalStore.profile?.referralCode + "_" + timestamp;
-        console.log("referralCode: ", GlobalStore.profile?.referralCode);
+        // console.log("referralCode: ", GlobalStore.profile?.referralCode);
         data.customerCode = GlobalStore.profile?.referralCode;
 
         const result = await Api.post({
@@ -99,10 +101,10 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
         if ("00" !== result?.data.code) {
           // alert(result?.data.message);
         } else {
-          console.log('Result create QR: ', result);
+          // console.log('Result create QR: ', result);
           const now = new Date();
           // Add 10 minutes to the current time
-          const timePlusTenMinutes = Math.floor((new Date(now.getTime() + 0.5 * 60000) - now)/1000); // 10 minutes = 10 * 60 * 1000 milliseconds
+          const timePlusTenMinutes = Math.floor((new Date(now.getTime() + 2 * 60000) - now)/1000); // 10 minutes = 10 * 60 * 1000 milliseconds
 
           setAccountName(result?.data.accountName);
           setAccountNumber(result?.data.accountNumber);
@@ -114,6 +116,7 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
           setTimeLeft(timePlusTenMinutes);
           counter.current = timePlusTenMinutes;
         }
+      }
     } catch (e) {
       console.log(e)
     }
@@ -132,14 +135,15 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
           data,
           hideError: true
         });
-        console.log('result QR: ', result);
+        // console.log('result QR: ', result);
         if (result?.data?.code === 200) {
           setTimeLeft(0);
-          toast(`Nạp kim cương thành công!${isOpenFull ? '\nHệ thống đang mở chương cho bạn....' : ''}`, {
+          toast(`Nạp kim cương thành công!${isOpenFull.current ? '\nHệ thống đang mở chương cho bạn....' : ''}`, {
             type: "success",
             theme: "colored",
           });
-          await handlePaymentDepositAuto(isOpenFull);
+          // console.log('isOpenFull 1: ', isOpenFull.current);
+          await handlePaymentDepositAuto(isOpenFull.current);
         }
       }
     } catch (e) {
@@ -155,7 +159,8 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
   };
 
   const handleCheckboxChange = (event) => {
-    setIsOpenFull(event.target.checked);
+    isOpenFull.current = event.target.checked;
+    // console.log('isOpenFull 0: ', isOpenFull.current);
   };
 
   const copyToClipboard = (code) => {
@@ -203,7 +208,10 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
 
   return (
     <>
-      {chapter?.price <= availableCash?.balance ?
+      {isFetchData ? 
+        <p>Vui lòng chờ giây lát, hệ thống đang tải dữ liệu .... </p>
+      : 
+      chapter?.price <= availableCash?.balance ?
         <div className='box-login'>
           <p className='white-text' style={{'margin': '10px 20px', 'fontWeight': 'bold'}}>
             <span className='fl mr-[5px]'>Chương này nhà đăng đặt khoá.</span>
@@ -321,7 +329,7 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
                   <p
                     className="text-[16px] text-center text-[#02f094] lh-15"
                     dangerouslySetInnerHTML={{
-                      __html: `Mã QR chỉ có hiệu lực trong<br/><strong class="white-text">${formatTime(
+                      __html: `<strong class="text-yellow">GÓI NẠP ${formatStringToNumber(amount)} VNĐ.</strong> Mã QR chỉ có hiệu lực trong<br/><strong class="white-text">${formatTime(
                         timeLeft
                       )}</strong>`,
                     }}
@@ -329,7 +337,7 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
                   <label className="flex items-center space-x-2 mb-[10px] ml-[5px]">
                     <input
                       type="checkbox"
-                      checked={isOpenFull}
+                      checked={isOpenFull.current}
                       onChange={handleCheckboxChange}
                       className="w-4 h-4"
                     />
@@ -488,7 +496,7 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
           
           
           <div className='flex justify-center'>
-            <a href={`/nap-kim-cuong${GlobalStore.profile?.referralCode ? '?ref=' + GlobalStore.profile?.referralCode + '&story=' + story?.slug + '&chapter=' + chapter?.slug: ''}`} className="text-underline white-text">
+            <a href={`/nap-kim-cuong${GlobalStore.profile?.referralCode ? ('?ref=' + GlobalStore.profile?.referralCode + '&story=' + story?.slug + '&chapter=' + chapter?.slug) : ''}`} className="text-underline white-text">
               Xem thêm gói khác
             </a>
           </div>

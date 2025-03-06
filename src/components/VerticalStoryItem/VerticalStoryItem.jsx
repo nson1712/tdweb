@@ -26,7 +26,7 @@ const VerticalStoryItem = ({ title, slug, coverImage, status }) => {
         ) : null}
 
         <div className="w-full flex justify-center items-center bg-black/60 absolute bottom-0 max-w-full h-[40%] text-white text-xs text-center font-[500] leading-normal overflow-hidden">
-          <div className="line-clamp-3 px-1">{title}</div>
+          <div className="line-clamp-3 px-1 py-1">{title}</div>
         </div>
       </a>
     </Link>
