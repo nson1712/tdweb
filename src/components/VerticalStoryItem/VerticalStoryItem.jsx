@@ -16,8 +16,8 @@ const VerticalStoryItem = ({ title, slug, coverImage, status }) => {
         {coverImage ? (
           <Image
             loader={imageLoader}
-            className="max-w-[115px] max-h-[165px] rounded-tl-[25px] rounded-bl-[5px] rounded-e-[5px] "
-            width={115}
+            className="max-w-[120px] max-h-[165px] rounded-tl-[25px] rounded-bl-[5px] rounded-e-[5px] "
+            width={120}
             height={165}
             src={coverImage}
             alt={title}
@@ -25,8 +25,8 @@ const VerticalStoryItem = ({ title, slug, coverImage, status }) => {
           />
         ) : null}
 
-        <div className="w-full flex justify-center items-center bg-black/60 absolute bottom-0 max-w-full h-[40%] text-white text-xs text-center font-[500] leading-normal overflow-hidden">
-          <div className="line-clamp-3 px-1 py-1">{title}</div>
+        <div className="w-full flex justify-center items-center bg-black/60 absolute bottom-0 max-w-full h-[45%] sm:h-[40%] overflow-hidden">
+          <h3 className="line-clamp-3 px-[1px] m-0 story-item-title text-white text-center sm:text-xs">{title}</h3>
         </div>
       </a>
     </Link>

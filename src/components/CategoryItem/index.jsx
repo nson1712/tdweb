@@ -22,6 +22,7 @@ const CategoryItem = ({ thumbnail, name, code }) => {
             height={60}
             src={thumbnail}
             alt={`Thể loại ${name}`}
+            priority
           />
         ) : null}
         <h3 className="text-black text-xs sm:text-sm font-semibold self-center">{name}</h3>
