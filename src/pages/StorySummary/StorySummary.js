@@ -232,8 +232,8 @@ const StorySummary = ({storyDetail, articleDetail}) => {
 
   useEffect(() => {
     // getBlogStoryDetail(route.query.storySlug);
-    getTopTrending(0, 10);
-    getTopNew(0, 10);
+    getTopTrending(0, 16);
+    getTopNew(0, 16);
   }, [route.query.storySlug]);
 
 
@@ -470,7 +470,7 @@ const StorySummary = ({storyDetail, articleDetail}) => {
             __html: `<a id='link-video-header' href='https://toidoc.onelink.me/59bO/d42503wz'> <video autoplay loop muted playsinline><source src='https://media.truyenso1.xyz/ads/top-banner.mp4' type='video/mp4' rel='nofollow'/></video> </a>`,
           }}
         />*/}
-        <div className="h-52 relative mb-4 pb-7">
+        <div className="h-fit relative mb-4 pb-7 pt-4">
           <div className="bg-story-summary" />
           <img
             src={storyDetail?.thumbnail || storyDetail?.coverImage}
@@ -478,7 +478,7 @@ const StorySummary = ({storyDetail, articleDetail}) => {
             title={storyDetail?.title}
             className="w-full h-[200px] object-cover"
           />
-          <div className="absolute left-0 right-0 bottom-0 top-0 summary-banner z-[2] flex flex-col justify-between px-5 pt-2.5 pb-[30px]">
+          <div className="absolute left-0 right-0 bottom-0 top-0 summary-banner z-[2] flex flex-col justify-between px-5 pt-6 pb-9">
             <div className="relative flex items-center justify-between">
               <a
                 className="relative z-[2]"
@@ -550,22 +550,22 @@ const StorySummary = ({storyDetail, articleDetail}) => {
                 />
               </div>
 
-              <div className="flex flex-col justify-center self-center w-full">
+              <div className="flex flex-col justify-center self-center w-full space-y-1.5">
                 <Link href={`${storyDetail?.slug}`} passHref>
                   <a title={`Truyện ${storyDetail?.title}`}>
-                    <h1 className="text-base font-bold text-white line-clamp-2">
+                    <h1 className="text-sm sm:text-base font-bold text-white line-clamp-2">
                       {storyDetail?.title}
                     </h1>
                   </a>
                 </Link>
-                <h2 className="secondary-the-loai text-sm font-medium">
+                <h2 className="secondary-the-loai text-xs sm:text-sm font-medium">
                   {storyDetail?.categories?.slice(0, 3).map((item, i) => (
                     <Link
                       href={`/the-loai/${item.code}`}
                       key={item.code}
                       passHref
                     >
-                      <a className="secondary-the-loai text-sm font-medium mr-1.5 underline">
+                      <a className="secondary-the-loai text-xs sm:text-sm font-medium mr-1.5 underline">
                         {item.name}
                         {i !== 2 && ","}
                       </a>
@@ -587,34 +587,34 @@ const StorySummary = ({storyDetail, articleDetail}) => {
                       storyDetail?.status === "ACTIVE"
                         ? "text-green-500"
                         : "text-[#5c95c6]"
-                    } text-sm self-center font-semibold`}
+                    } text-xs sm:text-sm self-center font-semibold`}
                   >
                     {storyDetail?.status === "ACTIVE"
                       ? "Hoàn thành"
                       : "Đang ra tiếp"}
                   </div>
                 </div>
-                <div className="flex items-center pb-4 mt-2.5">
-                  <div className="flex items-center mr-[32px]">
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center gray-bg mr-2">
+                <div className="flex gap-x-4 items-center">
+                  <div className="flex items-center">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center gray-bg mr-2">
                       <img
                         src="/images/comments_rating.png"
-                        className="w-6"
+                        className="w-4 sm:w-6"
                         alt={`Lượt thích truyện ${storyDetail?.title}`}
                       />
                     </div>
                     <div>
-                      <p className="label-text text-xs font-medium leading-4 mb-0">
+                      <div className="label-text text-xs font-medium leading-4 mb-0">
                         Đánh giá
-                      </p>
-                      <p className="white-text text-sm font-semibold leading-4 mb-0 flex items-center">
+                      </div>
+                      <div className="white-text text-sm font-semibold leading-4 mb-0 flex items-center">
                         {formatStringToNumber(storyDetail?.rate)}
                         <img
                           src="/images/star.svg"
                           className="w-3 ml-1"
                           alt={`Lượt đánh giá truyện ${storyDetail?.title}`}
                         />
-                      </p>
+                      </div>
                     </div>
                   </div>
                   <div
@@ -623,10 +623,10 @@ const StorySummary = ({storyDetail, articleDetail}) => {
                       setShowChapter(true);
                     }}
                   >
-                    <div className="w-8 h-8 rounded-full flex items-center justify-center gray-bg mr-2">
+                    <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full flex items-center justify-center gray-bg mr-2">
                       <img
                         src="/images/book-gray.svg"
-                        className="w-6"
+                        className="w-4 sm:w-6"
                         alt={`Danh sách chương truyện ${storyDetail?.title}`}
                       />
                     </div>
@@ -690,7 +690,7 @@ const StorySummary = ({storyDetail, articleDetail}) => {
           {storyDetail?.chapters?.length > 0 && (
             <>
               <div className="border-b-[1px] border-color pb-4 px-2">
-                <h2 className="text-lg font-bold main-text mt-4 text-underline">
+                <h2 className="text-lg font-bold main-text mt-4 text-underline mb-4">
                   Chương ra mới nhất
                 </h2>
                 {storyDetail?.chapters
@@ -741,7 +741,7 @@ const StorySummary = ({storyDetail, articleDetail}) => {
 
         <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-4">
             <TopTrendingTitle />
-            <HotStories className="grid grid-cols-5 justify-center md:grid-cols-5 md:grid-rows-2 gap-x-4 gap-y-6" data={topTrending?.data}/>
+            <HotStories className="grid grid-cols-4 justify-center gap-x-3 gap-y-5" data={topTrending?.data}/>
             <div className="flex">
               <ButtonViewAll
                 className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
@@ -753,7 +753,7 @@ const StorySummary = ({storyDetail, articleDetail}) => {
 
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 my-4">
             <TopNewTitle />
-            <HotStories className="grid grid-cols-5 justify-center md:grid-cols-5 md:grid-rows-2 gap-x-4 gap-y-6" data={topNew?.data}/>
+            <HotStories className="grid grid-cols-4 justify-center gap-x-2 gap-y-5" data={topNew?.data}/>
             <div className="flex">
               <ButtonViewAll
                 className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
