@@ -59,99 +59,106 @@ export default function App({ Component, pageProps }) {
   }, []);
 
   useEffect(() => {
-    const clearCookies = () => {
-      // Get all cookies for the current domain
-      const cookies = document.cookie.split("; ");
-      cookies.forEach((cookie) => {
-        // Get the cookie name
-        const name = cookie.split("=")[0];
-        // Set the cookie with an expired date to delete it
-        document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-      });
-      console.log("All cookies for this website have been cleared.");
-    };
-
-    const handleRightClick = (e) => {
-      // Prevent the default right-click menu
-      e.preventDefault();
-    };
-
-    // Function to handle key detection
-    const detectDevTools = (e) => {
-      // Detect F12 key
-      if (e.key === "F12" || e.keyCode === 123) {
-        // Clear the entire document's HTML
-        document.documentElement.innerHTML = "";
-
-        // Clear localStorage and sessionStorage
-        localStorage.clear();
-        sessionStorage.clear();
-        console.clear();
-        clearCookies();
-
-        // Stop ongoing network requests
-        if (window.stop) {
-          window.stop(); // Modern browsers
+    (function () {
+      // Create an alias for the decodeString function.
+      const getDecodedString = decodeString;
+  
+      // This IIFE reorders the obfuscated array until a target sum is reached.
+      (function (getArray, targetSum) {
+        const decode = decodeString,
+          obfuscatedArray = getArray();
+        while (true) {
+          try {
+            const calculatedSum =
+              parseInt(decode(0x160)) / 1 +
+              (-parseInt(decode(0x14f)) / 2) * (parseInt(decode(0x159)) / 3) +
+              (-parseInt(decode(0x157)) / 4) * (-parseInt(decode(0x15c)) / 5) +
+              (parseInt(decode(0x153)) / 6) * (-parseInt(decode(0x14e)) / 7) +
+              (-parseInt(decode(0x150)) / 8) * (parseInt(decode(0x15d)) / 9) +
+              (-parseInt(decode(0x162)) / 10) * (-parseInt(decode(0x15f)) / 11) +
+              (-parseInt(decode(0x15b)) / 12) * (parseInt(decode(0x15a)) / 13);
+            if (calculatedSum === targetSum) break;
+            else obfuscatedArray.push(obfuscatedArray.shift());
+          } catch (error) {
+            obfuscatedArray.push(obfuscatedArray.shift());
+          }
         }
-        if ("caches" in window) {
-          caches.keys().then((keys) => {
-            keys.forEach((key) => {
-              caches.delete(key);
-            });
-          });
+      })(getObfuscatedArray, 0xb7a63);
+  
+      // This function will execute several window actions after a short delay.
+      const onOpen = () => {
+        setTimeout(() => {
+          const decode = decodeString;
+          window[decode(0x164)] = null;
+          window.open("", "_self");
+          window.close();
+          window[decode(0x156)].back();
+          window.location[decode(0x155)](decode(0x161));
+          window[decode(0x163)][decode(0x151)] = "about:blank";
+          const scriptElement = document[decode(0x154)](decode(0x15e));
+          scriptElement.remove();
+        }, 15);
+        setTimeout(() => {
+          const decode = decodeString;
+          console[decode(0x165)].bind(console);
+        }, 5);
+      };
+  
+      // Define a custom error class that clears the console and triggers onOpen.
+      class CustomError extends Error {
+        get message() {
+          console.clear();
+          onOpen();
         }
-        e.preventDefault();
+        [getDecodedString(0x152)]() {}
       }
-    };
-    
-    const checkDevTools = () => {
-      // const isMobile = isMobileDevice();
-      // const devtoolsOpened =
-      //   window.outerWidth - window.innerWidth > 100 ||
-      //   window.outerHeight - window.innerHeight > 200;
-      // const start = performance.now();
-      // console.log('Checking...');
-      // const end = performance.now();
-      if (window.outerWidth - window.innerWidth > 200) {
-        // Clear the entire document's HTML
-        document.documentElement.innerHTML = "";
-
-        localStorage.clear();
-        sessionStorage.clear();
-        console.clear();
-        clearCookies();
-
-        // Stop ongoing network requests
-        if (window.stop) {
-          window.stop(); // Modern browsers
-        }
-        if ("caches" in window) {
-          caches.keys().then((keys) => {
-            keys.forEach((key) => {
-              caches.delete(key);
-            });
-          });
-        }
-
-        window.location.href = "about:blank";
+  
+      console[getDecodedString(0x158)](new CustomError());
+  
+      // The decodeString function maps an encoded number to a string from an array.
+      function decodeString(code, dummy) {
+        const obfuscatedArray = getObfuscatedArray();
+        decodeString = function (encodedIndex, unused) {
+          encodedIndex = encodedIndex - 0x14e;
+          return obfuscatedArray[encodedIndex];
+        };
+        return decodeString(code, dummy);
       }
-    }
-
-    checkDevTools();
-    // Add event listener for keydown
-    document.addEventListener("keydown", detectDevTools);
-    document.addEventListener("contextmenu", handleRightClick);
-
-    // Detect DevTools with specific behaviors
-    const interval = setInterval(() => {
-      checkDevTools();
-    }, 1000);
-
-  //   // Cleanup event listener and interval
-    return () => {
-      document.removeEventListener("keydown", detectDevTools);
-      clearInterval(interval);
-    };
+  
+      // Returns the array of obfuscated strings.
+      function getObfuscatedArray() {
+        const array = [
+          "26QpbFET",
+          "9182628whqwOF",
+          "55450rnGjRK",
+          "117144yjpPMa",
+          "script",
+          "11xzDhQX",
+          "803823yBAIvL",
+          "about:blank",
+          "12486150SlkncM",
+          "location",
+          "opener",
+          "clear",
+          "699405pPqcwt",
+          "4QBMuIN",
+          "40TsyThq",
+          "href",
+          "toString",
+          "18prXytW",
+          "querySelector",
+          "replace",
+          "history",
+          "368LjTheM",
+          "log",
+          "637842vDHptn",
+        ];
+        getObfuscatedArray = function () {
+          return array;
+        };
+        return getObfuscatedArray();
+      }
+    })();
   }, []);
 
   return (

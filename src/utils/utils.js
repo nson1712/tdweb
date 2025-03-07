@@ -743,5 +743,5 @@ export const getDepositPackage = async(value) => {
 }
 
 export const urlCheck = (string) => {
-  return string.split("/").includes("media.truyenso1.xyz")
+  return string?.split("/")?.includes("media.truyenso1.xyz")
 }
