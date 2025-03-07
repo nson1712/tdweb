@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import classNames from "classnames";
-import { formatStringToNumber } from "../../utils/utils";
+import { formatStringToNumber, urlCheck } from "../../utils/utils";
 import Router from "next/router";
 import Link from "next/link";
 
@@ -60,7 +60,7 @@ const StoryItem = ({
         >
           <a title={`Truyện ${item.title}`}>
             <img
-              src={item.thumbnail || item.coverImage}
+              src={urlCheck(item.thumbnail) ? item.thumbnail : item.coverImage}
               alt={`Truyện ${item.title}`}
               title={`Truyện ${item.title}`}
               className={classNames(
