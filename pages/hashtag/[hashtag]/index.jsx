@@ -29,8 +29,9 @@ StoriesByHashTag.getInitialProps = async (ctx) => {
           typeof window !== "undefined"
             ? "https://fsdfssf.truyenso1.xyz/data/private/data/story/search-by-hashtag"
             : "http://10.8.22.205:8082/private/data/story/search-by-hashtag",
+          // "https://fsdfssf.truyenso1.xyz/data/private/data/story/search-by-hashtag",
         params: {
-          code: ctx.query.hashtag,
+          hashtag: ctx.query.hashtag,
         },
         isServer: true,
         hideError: true,

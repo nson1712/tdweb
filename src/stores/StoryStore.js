@@ -777,7 +777,7 @@ class StoryStore {
     }
   };
 
-  getRatings = async (page = 1, size = 20) => {
+  getRatings = async (page = 0, size = 20) => {
     try {
       const result = await Api.get({
         url: "data/web/rating/v2/list",
@@ -824,7 +824,7 @@ class StoryStore {
     }
   };
 
-  getStoriesByHashtag = async (page = 1, size = 20, hashtag) => {
+  getStoriesByHashtag = async (page = 0, size = 20, hashtag) => {
     try {
       const result = await Api.get({
         url: "data/private/data/story/search-by-hashtag",
@@ -836,7 +836,7 @@ class StoryStore {
         hideError: true
       });
 
-      if (page === 1) {
+      if (page === 0) {
         runInAction(() => {
           this.storiesByHashtag = result?.data;
         });

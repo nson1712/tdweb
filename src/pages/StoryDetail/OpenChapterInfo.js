@@ -104,7 +104,7 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
           // console.log('Result create QR: ', result);
           const now = new Date();
           // Add 10 minutes to the current time
-          const timePlusTenMinutes = Math.floor((new Date(now.getTime() + 2 * 60000) - now)/1000); // 10 minutes = 10 * 60 * 1000 milliseconds
+          const timePlusTenMinutes = Math.floor((new Date(now.getTime() + 10 * 60000) - now)/1000); // 10 minutes = 10 * 60 * 1000 milliseconds
 
           setAccountName(result?.data.accountName);
           setAccountNumber(result?.data.accountNumber);
