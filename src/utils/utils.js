@@ -741,3 +741,7 @@ export const getDepositPackage = async(value) => {
     return mapPackages["1000000"];
   }
 }
+
+export const urlCheck = (string) => {
+  return string.split("/").includes("media.truyenso1.xyz")
+}
