@@ -427,8 +427,12 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     // window.open(`https://s.shopee.vn/6KjCdy3HYx`, '_blank', 'Toidoc')
   };
 
-  const handleOpenChapterListModal = () => {
-    setOpenChapterList(!openChapterList);
+  const handleSupportOpenChapter = () => {
+    window.open(
+      `https://m.me/185169981351799?text=Mình bị khoá ở chương: ${chapterTitle} -- Truyện: ${storyTitle}. Hỗ trợ mình nạp kim cương. Mã KH: ${GlobalStore.profile?.referralCode}`,
+      "_blank",
+      "Toidoc"
+    );
   };
 
   const showchapterModal = () => {
@@ -655,6 +659,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                             fullPriceStory={fullPriceStory}
                             setShowWarningDepositSuccess={() => setShowDepositSuccessWarning(true) }
                             handlePaymentDepositAuto={handlePaymentDepositAuto}
+                            handleSupportOpenChapter={handleSupportOpenChapter}
                           />
                         </GoogleReCaptchaProvider>
                       </div>

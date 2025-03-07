@@ -10,7 +10,7 @@ import { QRCode } from "react-qrcode-logo";
 import imageLoader from '../../loader/imageLoader';
 import { toast } from 'react-toastify';
 
-const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, availableCash, fullPriceStory, setShowWarningDepositSuccess, handlePaymentDepositAuto}) => {
+const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, availableCash, fullPriceStory, setShowWarningDepositSuccess, handlePaymentDepositAuto, handleSupportOpenChapter}) => {
   
   const { executeRecaptcha } = useGoogleReCaptcha();
   const [accountName, setAccountName] = useState('');
@@ -499,6 +499,12 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
             <a href={`/nap-kim-cuong${GlobalStore.profile?.referralCode ? ('?ref=' + GlobalStore.profile?.referralCode + '&story=' + story?.slug + '&chapter=' + chapter?.slug) : ''}`} className="text-underline white-text">
               Xem thêm gói khác
             </a>
+            <Button
+              className="btnSecond-Second"
+              onClick={() => handleSupportOpenChapter()}>
+              <img src='/images/warning.png' className='mr-[5px] w-[20px]'/>
+              Báo lỗi không nạp được
+            </Button>
           </div>
         </div>
       }
