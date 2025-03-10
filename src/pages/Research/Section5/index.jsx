@@ -24,7 +24,7 @@ const Section5 = ({ topViews }) => {
           />
         ))}
       </div>
-      <div className="grid grid-cols-4 md:grid-cols-8 gap-x-4 gap-y-6">
+      <div className="grid grid-cols-4 md:grid-cols-8 gap-x-2 gap-y-6">
         {topViews.data?.slice(3, 19).map((item, index) => (
           <VerticalStory items={item} key={index} />
         ))}

@@ -124,7 +124,6 @@ export default function App({ Component, pageProps }) {
         };
         return decodeString(code, dummy);
       }
-  
       // Returns the array of obfuscated strings.
       function getObfuscatedArray() {
         const array = [

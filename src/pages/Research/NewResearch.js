@@ -218,13 +218,8 @@ const Research = () => {
           ) : (
             <div className="space-y-6">
               <div className="space-y-2 mx-2">
-                {(isLoggedIn && viewings?.data?.length > 0)  && (
-                  <div className="text-lg text-black font-bold block md:hidden">
-                    Danh sách đang đọc
-                  </div>
-                )}
                 {(isLoggedIn && viewings?.data?.length > 0) && (
-                  <div className="block md:hidden pt-3 pb-3 md:mt-0 px-2 space-y-4 bg-slate-100 rounded-xl">
+                  <div className="block md:hidden pt-1 pb-1 md:mt-0 px-2 space-y-2 bg-slate-100 rounded-xl">
                     <UnfinishedStory
                       items={[
                         {

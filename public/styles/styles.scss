@@ -231,6 +231,17 @@ body {
   color: #F05555;
 }
 
+.text-border {
+  font-size: 18px;
+  font-weight: bold;
+  color: #FF6969;
+  text-shadow: 
+      -1px -1px 0 #B32332,  
+       1px -1px 0 #B32332,
+      -1px  1px 0 #B32332,
+       1px  1px 0 #B32332;
+}
+
 .text-yellow {
   color: #FFB42B;
 }
@@ -2525,4 +2536,9 @@ ul>li {
 
 .polygon-top {
   top: 1.05rem;
+}
+
+.support-btn {
+  background: linear-gradient(3.41deg, #7a7676 -32.39%, #f6f6f6 114.18%);
+  color: #086889;
 }

@@ -429,7 +429,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
   const handleSupportOpenChapter = () => {
     window.open(
-      `https://m.me/185169981351799?text=Mình bị khoá ở chương: ${chapterTitle} -- Truyện: ${storyTitle}. Hỗ trợ mình nạp kim cương. Mã KH: ${GlobalStore.profile?.referralCode}`,
+      `https://m.me/185169981351799?text=Mình bị khoá chương ở: ${chapterTitle} -- Truyện: ${storyTitle}. Hỗ trợ mình nạp kim cương. Mã KH: ${GlobalStore.profile?.referralCode}`,
       "_blank",
       "Toidoc"
     );
@@ -729,7 +729,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-4">
             <TopTrendingTitle />
-            <HotStories className="grid grid-cols-4 justify-center gap-x-3 gap-y-5" data={topTrending?.data}/>
+            <HotStories className="grid grid-cols-4 justify-center gap-x-2 gap-y-5" data={topTrending?.data}/>
             <div className="flex">
               <ButtonViewAll
                 className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
@@ -741,7 +741,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 sm:mt-4">
             <TopNewTitle />
-            <HotStories className="grid grid-cols-4 justify-center gap-x-3 gap-y-5" data={topNew?.data}/>
+            <HotStories className="grid grid-cols-4 justify-center gap-x-2 gap-y-5" data={topNew?.data}/>
             <div className="flex">
               <ButtonViewAll
                 className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"

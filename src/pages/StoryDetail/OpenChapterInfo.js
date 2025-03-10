@@ -203,7 +203,7 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
   const formatTime = (timeInSeconds) => {
     const minutes = Math.floor(timeInSeconds / 60);
     const seconds = Math.floor(timeInSeconds % 60);
-    return `${minutes} phút:${seconds < 10 ? `0${seconds}` : seconds} giây`;
+    return `${minutes} phút : ${seconds < 10 ? `0${seconds}` : seconds} giây`;
   };
 
   return (
@@ -213,11 +213,17 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
       : 
       chapter?.price <= availableCash?.balance ?
         <div className='box-login'>
-          <p className='white-text' style={{'margin': '10px 20px', 'fontWeight': 'bold'}}>
-            <span className='fl mr-[5px]'>Chương này nhà đăng đặt khoá.</span>
-            <span className='fl mr-[5px]'>Hãy ủng hộ</span>
-            <span className='fl mr-[5px]'>{formatStringToNumber(chapter?.price)}</span>
-            <span className='fl  mr-[5px]'><img src={story?.contributorId ? '/images/red-diamond.png' : '/images/blue-diamond.png'} style={{'width': '25px'}}/></span>
+          <p className='white-text text-[16px] text-center m-0'>(Nhà đăng đã đặt khoá)</p>
+          <p className="white-text font-bold" style={{ margin: "10px 20px" }}>
+            Chương này đang chờ bạn khám phá! Ủng hộ{" "}
+            {formatStringToNumber(chapter?.price)}{" "}
+            <span className="inline-flex items-center">
+              <img
+                src={story?.contributorId ? "/images/red-diamond.png" : "/images/blue-diamond.png"}
+                style={{ width: "20px" }}
+                alt="diamond"
+              />
+            </span>{" "}
             để đọc tiếp!
           </p>
           <div style={{'margin': '30px 10px', 'borderTop': '1px solid #fff'}}></div>
@@ -274,12 +280,20 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
         </div>
         :
         <div className='box-login'>
-          <p className='white-text my-[10px] mx-[20px] font-roboto'>
-            <span className='fl mr-[5px]'>Chương này nhà đăng đặt khoá.</span>
-            <span className='fl mr-[5px]'>Hãy ủng hộ</span>
-            <span className='fl mr-[5px] text-[#02f094]'><strong>{formatStringToNumber(fullPriceStory?.remained)}</strong></span>
-            <span className='fl  mr-[5px]'><img src={story?.contributorId ? '/images/red-diamond.png' : '/images/blue-diamond.png'} style={{'width': '25px'}}/></span>
-            {story?.status === 'ACTIVE' ? 'để đọc Full truyện.\nVui lòng quét mã QR bên dưới để chuyển khoản ngay!' : 'để đọc các chương khoá hiện tại. Vui lòng nạp theo gói với mã QR bên dưới'}
+          <p className='white-text text-[16px] text-center m-0'>(Nhà đăng đã đặt khoá)</p>
+          <p className="white-text my-[10px] mx-[20px] font-roboto m-0">
+            Chương này đang chờ bạn khám phá! Chỉ{" "}
+            <strong className="text-[#02f094]">{formatStringToNumber(fullPriceStory?.remained)}</strong>{" "}
+            <span className="inline-flex items-center">
+              <img
+                src={story?.contributorId ? "/images/red-diamond.png" : "/images/blue-diamond.png"}
+                style={{ width: "20px" }}
+                alt="diamond"
+              />
+            </span>{" "}
+            {story?.status === "ACTIVE"
+              ? "để đọc Full truyện. Nhanh tay quét mã QR ngay chuyển khoản."
+              : "để đọc các chương khoá hiện tại. Vui lòng nạp theo gói với mã QR bên dưới."}
           </p>
           {story?.status === 'PENDING' && <p className='white-text my-[10px] mx-[20px] text-sm'><i><strong>Lưu ý:</strong> Truyện này chưa ra full chương. Các chương ra mới tiếp theo 👉 bạn cần thêm kim cương</i></p>}
 
@@ -329,7 +343,7 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
                   <p
                     className="text-[16px] text-center text-[#02f094] lh-15"
                     dangerouslySetInnerHTML={{
-                      __html: `<strong class="text-yellow">GÓI NẠP ${formatStringToNumber(amount)} VNĐ.</strong> Mã QR chỉ có hiệu lực trong<br/><strong class="white-text">${formatTime(
+                      __html: `<strong class="text-yellow">GÓI NẠP ${formatStringToNumber(amount)} VNĐ.</strong> Ưu đãi chỉ còn<br/><strong class="white-text text-border">${formatTime(
                         timeLeft
                       )}</strong>`,
                     }}
@@ -341,7 +355,7 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
                       onChange={handleCheckboxChange}
                       className="w-4 h-4"
                     />
-                    <span className="white-text text-[16px]">Mở full tất cả các chương</span>
+                    <span className="white-text text-[16px]">Tự động mở tất cả các chương</span>
                   </label>
                   <div>
                     <QRCode
@@ -494,13 +508,14 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
           </div>
           <div style={{'margin': '30px 10px', 'borderTop': '0.5px solid #b9b9b9'}}></div>
           
-          
-          <div className='flex justify-center'>
-            <a href={`/nap-kim-cuong${GlobalStore.profile?.referralCode ? ('?ref=' + GlobalStore.profile?.referralCode + '&story=' + story?.slug + '&chapter=' + chapter?.slug) : ''}`} className="text-underline white-text">
-              Xem thêm gói khác
-            </a>
+          <div>
+            <div className='flex justify-center'>
+              <a href={`/nap-kim-cuong${GlobalStore.profile?.referralCode ? ('?ref=' + GlobalStore.profile?.referralCode + '&story=' + story?.slug + '&chapter=' + chapter?.slug) : ''}`} className="text-underline white-text">
+                Xem thêm gói khác
+              </a>
+            </div>
             <Button
-              className="btnSecond-Second"
+              className="btnSecond-Second support-btn"
               onClick={() => handleSupportOpenChapter()}>
               <img src='/images/warning.png' className='mr-[5px] w-[20px]'/>
               Báo lỗi không nạp được

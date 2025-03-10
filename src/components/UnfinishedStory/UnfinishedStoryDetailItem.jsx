@@ -16,7 +16,7 @@ const UnfinishedStoryDetailItem = ({
   return (
     <Link href={`/${storySlug}/${chapterSlug}`} passHref>
       <a
-        className="w-full rounded-3xl bg-gradient-to-r from-[#727D7F] to-[#474747] px-3 py-2 cursor-pointer hover:translate-y-[-5%] transition delay-75"
+        className="w-full rounded-3xl bg-gradient-to-r from-[#727D7F] to-[#474747] px-3 py-1 cursor-pointer hover:translate-y-[-5%] transition delay-75"
         title={title}
       >
         <div className="flex gap-x-2.5">
