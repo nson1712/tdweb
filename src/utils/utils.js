@@ -304,7 +304,7 @@ export const getSlugfromSlugGenerate = (value) => {
 };
 
 export const cleanHtml = (value) => {
-  return value.replace(/<[^>]+>/g, "");
+  return value.replace(/<[^>]+>/g, "").replaceAll("&nbsp;", " ");
 };
 
 export const appendNewLineAfterBlockLevelTags = (content) => {
