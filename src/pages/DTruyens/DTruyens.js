@@ -58,7 +58,7 @@ const CHAPTERS = [{
 
 let timeout;
 
-const Stories = () => {
+const Stories = ({pageType}) => {
   const route = useRouter()
 
   const [page, setPage] = useState(1)
@@ -139,7 +139,7 @@ const Stories = () => {
             </a>
             
 
-            <h1 className='text-[16px] leading-[20px] font-bold main-text mb-0'>{'Danh sách truyện dtruyen|webtruyen, điền văn'}</h1>
+            <h1 className='text-[16px] leading-[20px] font-bold main-text mb-0'>{`Danh sách truyện ${pageType} HOT HIT`}</h1>
           </div>
           
 

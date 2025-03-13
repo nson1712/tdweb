@@ -112,28 +112,57 @@ const Payment = ({
         const result = await Api.post({
           url: "/customer/public/customer/deposit/qr",
           data,
+          hideError: true,
         });
-        setLoading(false);
-        if ("00" !== result?.data.code) {
-          alert(result?.data.message);
+        if (result) {
+          setLoading(false);
+          if ("00" !== result?.data.code) {
+            alert(result?.data.message);
+          } else {
+            const now = new Date();
+            // Add 10 minutes to the current time
+            const timePlusTenMinutes = new Date(now.getTime() + 10 * 60000); // 10 minutes = 10 * 60 * 1000 milliseconds
+
+            Router.push(
+              `/nap-kim-cuong/thong-tin-chuyen-khoan?accountName=${
+                result?.data.accountName
+              }&accountNumber=${result?.data.accountNumber}&amount=${
+                result?.data.amount
+              }&description=${result?.data.contentTransfer}&qrCode=${
+                result?.data.qrCode
+              }&expiredAt=${timePlusTenMinutes.toISOString()}&order=${
+                result?.data.orderCode
+              }&referralCode=${
+                referralCode || data.customerCode
+              }&paymentId=${result?.data.paymentLinkId}&story=${storySlug || ''}` + (chapterSlug ? `&chapter=${chapterSlug}` : '')
+            );
+            // window.open(result?.data.checkoutLink, "_self")
+          }
         } else {
           const now = new Date();
-          // Add 10 minutes to the current time
-          const timePlusTenMinutes = new Date(now.getTime() + 10 * 60000); // 10 minutes = 10 * 60 * 1000 milliseconds
-
+            // Add 10 minutes to the current time
+            const timePlusTenMinutes = new Date(now.getTime() + 10 * 60000); // 10 minutes = 10 * 60 * 1000 milliseconds
           Router.push(
             `/nap-kim-cuong/thong-tin-chuyen-khoan?accountName=${
-              result?.data.accountName
-            }&accountNumber=${result?.data.accountNumber}&amount=${
-              result?.data.amount
-            }&description=${result?.data.contentTransfer}&qrCode=${
-              result?.data.qrCode
-            }&expiredAt=${timePlusTenMinutes.toISOString()}&order=${
-              result?.data.orderCode
-            }&paymentId=${result?.data.paymentLinkId}&story=${storySlug}` + (chapterSlug ? `&chapter=${chapterSlug}` : '')
+              'PHAM NGOC SON'
+            }&accountNumber=${
+              'CAS0913431088'
+            }&amount=${
+              cash
+            }&description=${
+              'Ung ho kc'
+            }&qrCode=${
+              ''
+            }&expiredAt=${
+              timePlusTenMinutes.toISOString()
+            }&order=${
+              ''
+            }&referralCode=${
+              referralCode || data.customerCode
+            }&paymentId=${''}&story=${storySlug || ''}` + (chapterSlug ? `&chapter=${chapterSlug}` : '')
           );
-          // window.open(result?.data.checkoutLink, "_self")
         }
+        
       }
     } catch (e) {
       setLoading(false);

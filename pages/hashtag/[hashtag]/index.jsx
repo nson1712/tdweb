@@ -3,16 +3,16 @@ import StoriesComponent from "../../../src/pages/Stories";
 import HeaderServer from "../../../src/components/HeaderServer";
 import * as Api from "../../../src/api/api";
 
-const StoriesByHashTag = ({ detail, canonical }) => {
+const StoriesByHashTag = ({ detail, canonical, hashtagName }) => {
   return (
     <>
       <HeaderServer
-        title={detail?.seoTitle || "Hashtag hấp dẫn được tổng hợp từ Toidoc"}
+        title={detail?.seoTitle || `Truyện ${hashtagName} hấp dẫn được tổng hợp từ Toidoc`}
         description={
           detail?.metaDescription ||
-          "Danh sách các truyện thuộc một hashtag mà bạn đang chọn như #NgônTình, #KiếmHiệp, #TiênHiệp, #Đammỹ, #Sủng, #Ngược, #Huyềnhuyễn. Bạn có thể tự tạo bộ lọc riêng của bạn."
+          `Danh sách các truyện thuộc thể loại truyện ${hashtagName} được nhiều độc giả đón đọc. Truyện full được cập nhật liên tục, bạn có thể đọc trên các nền tảng khác nhau.`
         }
-        keywords={detail?.metaKeywords}
+        keywords={detail?.metaKeywords || `thể loại truyện ${hashtagName}, danh sách truyện ${hashtagName}, tìm truyện ${hashtagName}, truyện full ${hashtagName}, đọc truyện ${hashtagName}, truyện hay ${hashtagName}`}
         canonical={canonical}
       />
       <StoriesComponent />
@@ -47,6 +47,7 @@ StoriesByHashTag.getInitialProps = async (ctx) => {
     return {
       detail,
       canonical,
+      hashtagName: ctx.query.hashtag
     };
   } catch (e) {
     console.log("getStoriesByHashtag error", e);

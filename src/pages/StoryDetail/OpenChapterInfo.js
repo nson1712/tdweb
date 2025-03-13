@@ -16,6 +16,7 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
   const [accountName, setAccountName] = useState('');
   const [accountNumber, setAccountNumber] = useState('');
   const [amount, setAmount] = useState(0);
+  const [diamondAmount, setDiamondAmount] = useState(0);
   const [contentTransfer, setContentTransfer] = useState('');
   const [qrCode, setQrCode] = useState('');
   const [qrUrl, setQrUrl] = useState('');
@@ -65,10 +66,14 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
     try {
       if (!isFetchData) {
         setIsFetchData(true);
-      const packageDeposit = await getDepositPackage(fullPriceStory?.remained);
-      console.log("packageDeposit: ", packageDeposit);
-      setAmount(packageDeposit.value);
-      setQrUrl(packageDeposit.qrUrl);
+        const packageDeposit = await getDepositPackage(fullPriceStory?.remained);
+        console.log("packageDeposit: ", packageDeposit);
+        setAmount(packageDeposit.value);
+        setQrUrl(packageDeposit.qrUrl);
+        setDiamondAmount(packageDeposit.diamondValue);
+        if (fullPriceStory?.remained > diamondAmount) {
+          isOpenFull.ref = false;
+        }
       // if (cash === 0) {
       //   setShowWarningPackage(true);
       // } else {
@@ -213,20 +218,16 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
       : 
       chapter?.price <= availableCash?.balance ?
         <div className='box-login'>
-          <p className='white-text text-[16px] text-center m-0'>(Nhà đăng đã đặt khoá)</p>
-          <p className="white-text font-bold" style={{ margin: "10px 20px" }}>
-            Chương này đang chờ bạn khám phá! Ủng hộ{" "}
-            {formatStringToNumber(chapter?.price)}{" "}
+          <p className='white-text text-[16px] text-center m-0'>Nhà đăng đã đặt khoá chương này ⮕ Ủng hộ 
+          {" "}<strong className="text-[#02f094]">{formatStringToNumber(chapter?.price)}</strong>{" "}
             <span className="inline-flex items-center">
               <img
                 src={story?.contributorId ? "/images/red-diamond.png" : "/images/blue-diamond.png"}
                 style={{ width: "20px" }}
                 alt="diamond"
               />
-            </span>{" "}
-            để đọc tiếp!
-          </p>
-          <div style={{'margin': '30px 10px', 'borderTop': '1px solid #fff'}}></div>
+            </span>{" "} để đọc chương này không giới hạn số lần.</p>
+          <div style={{'margin': '20px 0px 20px 0px', 'borderTop': '0.5px solid #b9b9b9'}}/>
           {!story?.contributorId && 
             <>
               <div className='diamond-info'>
@@ -258,16 +259,11 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
             <img src='/images/icon-check.png' style={{'width': '20px', 'marginRight': '5px'}}/>
             <p style={{'margin': '0px', 'fontSize': '14px', 'color': '#fff'}}>Nếu truyện chưa hoàn, thì bạn cần ủng hộ thêm kim cương cho chương mới.</p>
           </div>
-          {story?.contributorId && <div className='diamond-info'>
+          {GlobalStore.isLoggedIn && <div className='diamond-info'>
             <img src='/images/icon-check.png' style={{'width': '20px', 'marginRight': '5px'}}/>
-            <p style={{'margin': '0px', 'fontSize': '14px', 'color': '#fff'}}>
-            <span className='fl mr-[5px]'>Bạn có thể kiếm kim cương</span>
-            <span className='fl mr-[5px]'>{chapter?.price}</span>
-            <span className='fl  mr-[5px]'><img src='/images/red-diamond.png' style={{'width': '15px', 'marginTop': '9px'}}/></span>
-            <span className=''>từ bình chọn truyện trên App. Tham khảo </span>
-            <span className=''><a href='https://docgia-guide.toidoc.vn/ve-vang' style={{'color': '#03effd', 'textDecoration': 'underline'}}>Tại đây</a>!</span>
-            </p>
+            <p style={{'margin': '0px', 'fontSize': '14px', 'color': '#fff'}}>Kiểm tra số Kim Cương hiện có tại mục <a href='/tai-khoan' className='text-[#FFB42B] text-underline'>Tài Khoản</a></p>
           </div>}
+          
           <a id={chapter?.price <= availableCash?.balance ? 'open-chapter-btn' : 'deposit-diamond-btn'} style={{'marginTop': '30px', 'display': 'flex', 'justifyContent': 'center'}}>
             <Button onClick={() => handleOpenChapter()} className='button-open-chapter'>{chapter?.price <= availableCash?.balance ? 'Mở khoá chương' : 'Nạp kim cương'}</Button>
           </a>
@@ -280,23 +276,16 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
         </div>
         :
         <div className='box-login'>
-          <p className='white-text text-[16px] text-center m-0'>(Nhà đăng đã đặt khoá)</p>
-          <p className="white-text my-[10px] mx-[20px] font-roboto m-0">
-            Chương này đang chờ bạn khám phá! Chỉ{" "}
-            <strong className="text-[#02f094]">{formatStringToNumber(fullPriceStory?.remained)}</strong>{" "}
-            <span className="inline-flex items-center">
-              <img
-                src={story?.contributorId ? "/images/red-diamond.png" : "/images/blue-diamond.png"}
-                style={{ width: "20px" }}
-                alt="diamond"
-              />
-            </span>{" "}
-            {story?.status === "ACTIVE"
-              ? "để đọc Full truyện. Nhanh tay quét mã QR ngay chuyển khoản."
-              : "để đọc các chương khoá hiện tại. Vui lòng nạp theo gói với mã QR bên dưới."}
-          </p>
-          {story?.status === 'PENDING' && <p className='white-text my-[10px] mx-[20px] text-sm'><i><strong>Lưu ý:</strong> Truyện này chưa ra full chương. Các chương ra mới tiếp theo 👉 bạn cần thêm kim cương</i></p>}
-
+          <p className='white-text text-[16px] text-center m-0'>Nhà đăng đã đặt khoá chương này ⮕ Ủng hộ 
+          {" "}<strong className="text-[#02f094]">{formatStringToNumber(chapter?.price)}</strong>{" "}
+                  <span className="inline-flex items-center">
+                    <img
+                      src={story?.contributorId ? "/images/red-diamond.png" : "/images/blue-diamond.png"}
+                      style={{ width: "20px" }}
+                      alt="diamond"
+                    />
+                  </span>{" "} để đọc chương này không giới hạn số lần.</p>
+          
           <div className="text-xs box-transfer-info pt-[10px] px-[10px] pb-[20px]">
             {qrCode === '' ?
               <>
@@ -340,23 +329,33 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
               :
               <>
                 <div>
+                  <p class="text-yellow text-[16px] text-center lh-15">
+                    <strong>NẠP {formatStringToNumber(amount)} VNĐ ⮕ Nhận {formatStringToNumber(diamondAmount)}</strong>{" "}
+                    <span className="inline-flex items-center">
+                      <img
+                        src={story?.contributorId ? "/images/red-diamond.png" : "/images/blue-diamond.png"}
+                        style={{ width: "20px" }}
+                        alt="diamond"
+                      />
+                    </span>
+                  </p>
                   <p
                     className="text-[16px] text-center text-[#02f094] lh-15"
                     dangerouslySetInnerHTML={{
-                      __html: `<strong class="text-yellow">GÓI NẠP ${formatStringToNumber(amount)} VNĐ.</strong> Ưu đãi chỉ còn<br/><strong class="white-text text-border">${formatTime(
-                        timeLeft
-                      )}</strong>`,
+                      __html: `Mã QR có hiệu lực trong <strong class="white-text text-border">${formatTime(timeLeft)}</strong>`,
                     }}
                   />
-                  <label className="flex items-center space-x-2 mb-[10px] ml-[5px]">
-                    <input
-                      type="checkbox"
-                      checked={isOpenFull.current}
-                      onChange={handleCheckboxChange}
-                      className="w-4 h-4"
-                    />
-                    <span className="white-text text-[16px]">Tự động mở tất cả các chương</span>
-                  </label>
+                  {fullPriceStory?.remained <= diamondAmount &&
+                    <label className="flex items-center space-x-2 mb-[10px] ml-[5px]">
+                      <input
+                        type="checkbox"
+                        checked={isOpenFull.current}
+                        onChange={handleCheckboxChange}
+                        className="w-4 h-4"
+                      />
+                      <span className="white-text text-[16px]">Tự động mở tất cả các chương</span>
+                    </label>
+                  }
                   <div>
                     <QRCode
                       ref={qrRef}
@@ -498,6 +497,19 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
                     </div>
                   </div>
                 </div>
+
+                <div style={{'margin': '20px 0px 20px 0px', 'borderTop': '0.5px solid #b9b9b9'}}/>
+                <p className="white-text my-[10px] mx-[20px] font-roboto m-0 text-lg">{story?.status === 'ACTIVE' ? "✅ Mở full truyện: " : "✅ Mở tất cả chương đã ra: "}
+                  <strong className="text-[#02f094]">{formatStringToNumber(fullPriceStory?.remained)}</strong>{" "}
+                  <span className="inline-flex items-center">
+                    <img
+                      src={story?.contributorId ? "/images/red-diamond.png" : "/images/blue-diamond.png"}
+                      style={{ width: "20px" }}
+                      alt="diamond"
+                    />
+                  </span>
+                </p>
+                {story?.status === 'PENDING' && <p className='white-text my-[10px] mx-[20px] text-sm'><i><strong>Lưu ý:</strong> Truyện này chưa ra full chương. Các chương ra mới tiếp theo 👉 bạn cần thêm kim cương</i></p>}
               </>
             }
             {qrCode === '' && 

@@ -14,41 +14,55 @@ const mapPackages = {
     label: "15,500",
     deposit: "18,000VNĐ",
     value: 18000,
+    diamondValue: 15000,
+    qrUrl: "/images/qr-15k-son.jpg"
+  },
+  18000: {
+    label: "15,500",
+    deposit: "18,000VNĐ",
+    value: 18000,
+    diamondValue: 15000,
     qrUrl: "/images/qr-15k-son.jpg"
   },
   50000: {
     label: "50,000",
     deposit: "50,000VNĐ",
     value: 50000,
+    diamondValue: 50000,
     qrUrl: "/images/qr-50k-son.jpg"
   },
   100000: {
     label: "105,000",
     deposit: "100,000VNĐ",
     value: 100000,
+    diamondValue: 105000,
     qrUrl: "/images/qr-100k-son.jpg"
   },
   200000: {
     label: "210,000",
     deposit: "200,000VNĐ",
+    diamondValue: 210000,
     value: 200000,
     qrUrl: "/images/qr-200k-son.jpg"
   },
   300000: {
     label: "315,000",
     deposit: "300,000VNĐ",
+    diamondValue: 315000,
     value: 300000,
     qrUrl: "/images/qr-300k-son.jpg"
   },
   500000: {
     label: "530,000",
     deposit: "500,000VNĐ",
+    diamondValue: 530000,
     value: 500000,
     qrUrl: "/images/qr-500k-son.jpg"
   },
   1000000: {
     label: "1,060,000",
     deposit: "1,000,000VNĐ",
+    diamondValue: 1060000,
     value: 1000000,
     qrUrl: "/images/qr-1000k-son.jpg"
   },
@@ -722,7 +736,7 @@ export const getDepositPackage = async(value) => {
   if (value <= 15000) {
     return mapPackages["15000"];
   }
-  if (value < 50000) {
+  if (value > 15000) {
     return mapPackages["50000"];
   }
   if (value < 105000) {
@@ -744,4 +758,9 @@ export const getDepositPackage = async(value) => {
 
 export const urlCheck = (string) => {
   return string?.split("/")?.includes("media.truyenso1.xyz")
+}
+
+export const getQrUrl = (amount) => {
+  const value = mapPackages[`${amount}`];
+  return value.qrUrl;
 }

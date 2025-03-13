@@ -8,7 +8,7 @@ const Stories = ({ detail, canonical }) => {
     <>
       <HeaderServer
         title={
-          detail?.seoTitle || "Thể loại truyện hấp dẫn được tổng hợp từ Toidoc"
+          detail?.seoTitle || `️🎯 Thể loại truyện ${detail?.name} HOT từ Toidoc`
         }
         description={
           detail?.metaDescription ||

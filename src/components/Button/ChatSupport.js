@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { getMobileOperatingSystem } from "../../utils/utils";
+import GlobalStore from "../../stores/GlobalStore";
 
 let isMobile = true;
 
@@ -34,7 +35,7 @@ const ChatSupport = ({showChat, setShowChat}) => {
   };
 
   const handleOnClick = () => {
-    window.open(`https://m.me/185169981351799?text=Mình đang đọc truyện trên web. Hỗ trợ giúp mình với.`, "_blank", "Toidoc");
+    window.open(`https://m.me/185169981351799?text=Mình đang đọc truyện trên web. Hỗ trợ giúp mình với.${GlobalStore.profile?.referralCode ? 'Mã KH: ' + GlobalStore.profile?.referralCode : ''}`, "_blank", "Toidoc");
     setShowChat(false);
   };
 

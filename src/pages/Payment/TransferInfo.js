@@ -5,13 +5,15 @@ import Header from "../../components/Header/Header";
 import { observer } from "mobx-react";
 import Router, { useRouter } from "next/router";
 import HeaderPayment from "./HeaderPayment";
-import FooterDesktop from "../../components/FooterDesktop";
+import Image from 'next/image';
 import { QRCode } from "react-qrcode-logo";
-import { formatStringToNumber } from "../../utils/utils";
+import { formatStringToNumber, getQrUrl } from "../../utils/utils";
 import Button from "../../components/Button/Button";
 import { Alert } from "antd";
 import { CopyOutlined } from "@ant-design/icons";
 import { toast } from "react-toastify";
+import imageLoader from "../../loader/imageLoader";
+import ModalComponent from "../../components/Modal/Modal";
 
 const TransferInfo = () => {
   const [accountName, setAccountName] = useState("");
@@ -22,6 +24,8 @@ const TransferInfo = () => {
   const [copiedAccountMessage, setCopiedAccountMessage] = useState("");
   const [copiedAmountMessage, setCopiedAmountMessage] = useState("");
   const [copiedDescriptionMessage, setCopiedDescriptionMessage] = useState("");
+  const [qrUrl, setQrUrl] = useState("");
+  const [showDepositSuccessWarning, setShowDepositSuccessWarning] = useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
 
   const router = useRouter();
@@ -33,27 +37,39 @@ const TransferInfo = () => {
   const chapterSlug = useRef("");
 
   useEffect(() => {
-    const dateTimeStr = router.query.expiredAt;
-    console.log("expiredAt: ", dateTimeStr);
-    const reverseDateTime =
-      dateTimeStr === "" ? new Date() : new Date(dateTimeStr);
-    console.log("reverseDateTime: ", reverseDateTime);
-    const now = new Date();
-    const duration = reverseDateTime - now;
-    console.log("duration:", duration);
-    const remainTime = Math.floor(duration / 1000);
-    setTimeLeft(remainTime);
-    counter.current = remainTime;
+    if (router.query.qrCode && router.query.qrCode !== '') {
+      const dateTimeStr = router.query.expiredAt;
+      console.log("expiredAt: ", dateTimeStr);
+      const reverseDateTime =
+        dateTimeStr === "" ? new Date() : new Date(dateTimeStr);
+      console.log("reverseDateTime: ", reverseDateTime);
+      const now = new Date();
+      const duration = reverseDateTime - now;
+      console.log("duration:", duration);
+      const remainTime = Math.floor(duration / 1000);
+      setTimeLeft(remainTime);
+      counter.current = remainTime;
 
-    setAccountName(router.query.accountName || "");
-    setAccountNumber(router.query.accountNumber || "");
-    setAmount(router.query.amount || "");
-    setDescription(router.query.description || "");
-    setQrCode(router.query.qrCode || "");
-    orderCode.current = router.query.order || "";
-    paymentId.current = router.query.paymentId || "";
-    storySlug.current = router.query.story || "";
-    chapterSlug.current = router.query.chapter || "";
+      setAccountName(router.query.accountName || "");
+      setAccountNumber(router.query.accountNumber || "");
+      setAmount(router.query.amount || "");
+      setDescription(router.query.description || "");
+      setQrCode(router.query.qrCode || "");
+      orderCode.current = router.query.order || "";
+      paymentId.current = router.query.paymentId || "";
+      storySlug.current = router.query.story || "";
+      chapterSlug.current = router.query.chapter || "";
+    } else {
+      if (router.query.amount) {
+        setQrUrl(getQrUrl(router.query.amount));
+      }
+      setAccountName(router.query.accountName || "");
+      setAccountNumber(router.query.accountNumber || "");
+      setAmount(router.query.amount || "");
+      setDescription(router.query.description || "");
+      storySlug.current = router.query.story || "";
+      chapterSlug.current = router.query.chapter || "";
+    }
   }, [
     router.query.accountName,
     router.query.accountNumber,
@@ -73,8 +89,10 @@ const TransferInfo = () => {
       }
     }, 1000);
 
-    // Cleanup khi component bị unmount
-    return () => clearInterval(timer);
+    if (router.query.qrCode && router.query.qrCode !== '') {
+      // Cleanup khi component bị unmount
+      return () => clearInterval(timer);
+    }
   }, []);
 
   // Hàm để chuyển đổi giây sang phút và giây
@@ -160,6 +178,25 @@ const TransferInfo = () => {
     );
   };
 
+  const handleOKWarningDepositSuccess = async () => {
+    setShowDepositSuccessWarning(false);
+    window.open(
+      `https://m.me/185169981351799?text=${
+        router.query.referralCode
+          ? "Mã KH của mình là: " + router.query.referralCode + ". "
+          : ""
+      }Mình vừa chuyển khoản thành công qua web, nạp kim cương giúp mình với.`,
+      "_blank"
+    );
+    if (storySlug.current !== 'undefined' && storySlug.current !== '') {
+      if (chapterSlug.current !== '') {
+        Router.push(`/${storySlug.current}/${chapterSlug.current}`);
+      } else {
+        Router.push(`/${storySlug.current}`);
+      }
+    }
+  };
+
   return (
     <CommonLayout active="HOME">
       <div>
@@ -168,7 +205,7 @@ const TransferInfo = () => {
         </div>
         <div className="relative max-w-[768px] mx-auto bg-white md:pt-[88px] flex flex-col justify-center text-second-color">
           <HeaderPayment />
-          {timeLeft <= 0 ? (
+          {(timeLeft <= 0 && router.query.qrCode && router.query.qrCode !== '') ? (
             <div style={{ marginTop: "20%" }}>
               <img
                 src={"/images/expired_at.png"}
@@ -206,24 +243,24 @@ const TransferInfo = () => {
               <p className="text-[20px] font-bold main-text text-center mb-[0px]">
                 Thông Tin Chuyển Khoản
               </p>
-              <p
+              {qrCode && qrCode !== '' && <p
                 className="text-[16px] main-text text-center"
                 dangerouslySetInnerHTML={{
                   __html: `Sẽ hết hạn sau <strong>${formatTime(
                     timeLeft
                   )}</strong> nữa`,
                 }}
-              />
+              />}
               <div className="pl-[20px] pr-[20px] mb-[30px]">
                 <p className="text-[14px] font-bold mb-[0px]">
                   Hãy ấn nút Copy thông tin chuyển khoản bên dưới
                 </p>
-                <Alert
+                {qrCode && qrCode !== '' && <Alert
                   message="Lưu ý: chỉ khi copy đúng các thông tin, thì kim cương mới tự động về tài khoản của bạn."
                   showIcon
                   type="warning"
-                />
-                <div className="text-xs box-transfer-info">
+                />}
+                <div className="text-xs box-transfer-info pt-[10px]">
                   <div>
                     <div className="m-2 flex">
                       <div className="mr-3 flex justify-center">
@@ -300,9 +337,15 @@ const TransferInfo = () => {
                   <div>
                     <div className="grid grid-cols-8 m-2">
                       <div className="col-span-6 text-left">
-                        <p className="lh-1 text-lg text-[#fff] mb-[5px]">
-                        4. Ấn sao chép lấy nội dung: <span className='text-[#feb313] text-sm'><strong><i>(Không copy chính xác, kim cương sẽ không về TK)</i></strong></span>
-                        </p>
+                        {qrCode && qrCode !== '' ? 
+                          <p className="lh-1 text-lg text-[#fff] mb-[5px]">
+                            4. Ấn sao chép lấy nội dung: <span className='text-[#feb313] text-sm'><strong><i>(Không copy chính xác, kim cương sẽ không về TK)</i></strong></span>
+                          </p>
+                          :
+                          <p className="lh-1 text-lg text-[#fff] mb-[5px]">
+                            4. Ấn sao chép lấy nội dung:
+                          </p>
+                        }
                         <p className="text-[#00e60e] font-bold text-sm">
                           {description}
                         </p>
@@ -319,7 +362,7 @@ const TransferInfo = () => {
                   </div>
                 </div>
                 <br />
-                {qrCode && (
+                {qrCode && qrCode !== '' ?
                   <>
                     <p className="text-center text-[14px] font-bold mb-[0px]">
                       Hoặc bạn có thể quét mã QR dưới đây
@@ -351,7 +394,37 @@ const TransferInfo = () => {
                       </div>
                     </div>
                   </>
-                )}
+                  :
+                  <>
+                    <div className='flex justify-center'>
+                      <div>
+                        <div className='flex justify-center'>
+                          <Image
+                            loader={imageLoader}
+                            height={200}
+                            width={170}
+                            src={qrUrl || '/images/qr-son.jpg'}
+                            priority
+                            className="bd-radius-10"
+                          />
+                        </div>
+                        <div className='flex justify-center mt-[10px]'>
+                          <a
+                            className="bg-[#02f094] rounded-md px-3 py-1.5 text-[#000] font-semibold shadow-md"
+                            href={qrUrl || '/images/qr-son.jpg'}
+                            download="qr-ck.jpg"
+                          >
+                            Tải mã QR
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                    <div style={{'margin': '20px 0px', 'borderTop': '0.5px solid #b9b9b9'}}></div>
+                    <button className="btnMain btnSecondDeposit" onClick={() => setShowDepositSuccessWarning(true)}>
+                      Báo CK thành công 👆
+                    </button>
+                  </>
+                }
                 <Button
                   className="btnSecond-Second"
                   onClick={() => {
@@ -371,6 +444,25 @@ const TransferInfo = () => {
           {/*<FooterDesktop />*/}
         </div>
       </div>
+      {showDepositSuccessWarning && (
+        <ModalComponent
+          show={showDepositSuccessWarning}
+          handleClose={(e) => setShowDepositSuccessWarning(false)}
+          styleBody="background-gradient-gray"
+        >
+          <div className="px-[20px] pb-[20px] pt-[10px]">
+            <div className='flex justify-center pb-[15px]'>
+              <img src='/images/info-icon.png' className='w-[20px] h-[20px] mr-[5px]'/>
+              <p><strong>Lưu ý</strong></p>
+            </div>
+            <div className='px-[10px]'>
+              <p>Bạn nhớ gửi kèm theo ảnh chuyển khoản thành công để Admin phê duyệt nhé!</p>
+              <p>Sau khi Admin nạp kim cương, bạn chỉ cần mở khoá chương là đọc được tiếp.</p>
+              <a className='btnMain' onClick={() => handleOKWarningDepositSuccess()}>OK</a>
+            </div>
+          </div>
+        </ModalComponent>
+      )}
     </CommonLayout>
   );
 };

@@ -7,12 +7,12 @@ const Dtruyen = ({}) => {
   return (
     <>
       <HeaderServer 
-        title={"⭐ DTruyen, WebTruyen | Danh sách truyện điền văn hot nhất hiện nay "} 
-        description = {'Danh sách truyện dtruyen, webtruyen, điền văn hot nhất hiện nay mà bạn không thể bỏ qua. Đây là tuyển tập được nhiều độc giả yêu thích và tìm kiếm với đa dạng các truyện có tình tiết hấp dẫn. Mời độc giả đón đọc ⭐⭐⭐⭐⭐'}
-        keywords={'dtruyen, truyện dtruyen, webtruyen, truyện webtruyen, điền văn, truyện điền văn, truyen hot,'}
+        title={"⭐ DTruyen Toidoc | Top truyện điền văn hot nhất hiện nay "} 
+        description = {'Top truyện điền văn DTruyen hot nhất, được đông đảo độc giả yêu thích và săn đón. Những câu chuyện hấp dẫn, nội dung cuốn hút, đa dạng thể loại đang chờ bạn khám phá. Đọc ngay! ⭐⭐⭐⭐⭐'}
+        keywords={'dtruyen, truyện dtruyen, đọc truyện dtruyen, điền văn, truyện điền văn, truyen hot,'}
         canonical={'https://toidoc.vn/dtruyen'}
       />
-      <DtruyenComponent />
+      <DtruyenComponent pageType={'Dtruyen'}/>
     </>
   )
 }
