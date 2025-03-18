@@ -133,7 +133,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         result?.contents?.length > 0
       ) {
         await getQuestion();
-        setShowQuestion(true);
       }
 
       if (
@@ -194,6 +193,9 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         hideError: true
       });
       setQuestion(result?.data);
+      if (result?.data && result?.data?.id !== null) {
+        setShowQuestion(true);
+      }
     } catch (err) {}
   };
 

@@ -82,7 +82,7 @@ const Header = ({ selectedTab }) => {
                     ? "/images/search-loupe-active.svg"
                     : "/images/search-loupe.svg"
                 }
-                className="w-[24px] mr-[4px]"
+                className="w-[24px] m-auto"
                 alt="Khám phá danh sách truyện full"
               />
               <p
@@ -109,7 +109,7 @@ const Header = ({ selectedTab }) => {
                     ? "/images/story-type-active.svg"
                     : "/images/story-type.svg"
                 }
-                className="w-[24px] mr-[4px]"
+                className="w-[24px] m-auto"
                 alt="Thể loại truyện full"
               />
               <p
@@ -136,7 +136,7 @@ const Header = ({ selectedTab }) => {
                     ? "/images/blog-active.svg"
                     : "/images/blog.svg"
                 }
-                className="w-[24px] mr-[4px]"
+                className="w-[24px] m-auto"
                 alt="Blog truyện"
               />
               <p
@@ -179,13 +179,13 @@ const Header = ({ selectedTab }) => {
               Blog
             </p>
           </div>*/}
-          {/*<div
+          <div
             className={classNames(
-              "menu-header mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
+              "hidden md:block menu-header mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
               selectedTab === "AUTHOR" && "bg-tab-active text-active"
             )}
             onClick={() => {
-              window.open("https://tacgia.toidoc.vn", "_blank");
+              window.open("https://toidoc.vn/register-author-summary.html", "_blank");
             }}
           >
             <img
@@ -194,7 +194,7 @@ const Header = ({ selectedTab }) => {
                   ? "/images/author-active.svg"
                   : "/images/author.svg"
               }
-              className="w-[28px] mr-[4px]"
+              className="w-[28px] mr-[4px] items-center"
               alt="Đăng truyện tại Toidoc"
             />
             <p
@@ -205,7 +205,7 @@ const Header = ({ selectedTab }) => {
             >
               Đăng truyện
             </p>
-          </div>*/}
+          </div>
           {/*<div
             className={classNames(
               "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
@@ -272,7 +272,7 @@ const Header = ({ selectedTab }) => {
                     ? "/images/user-active.svg"
                     : "/images/user.svg"
                 }
-                className="w-[24px] mr-[4px] bd-radius-24"
+                className="w-[24px] m-auto bd-radius-24"
                 alt="Tài khoản cá nhân"
               />
               <p

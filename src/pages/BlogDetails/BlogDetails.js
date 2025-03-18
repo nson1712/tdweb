@@ -35,6 +35,7 @@ const BlogDetails = ({ data }) => {
 
   const fetchData = () => {
     const fetchUrl = `https://fsdfssf.truyenso1.xyz/data/article/list?size=${size}`;
+    // const fetchUrl = `https://uatapi.truyenso1.xyz/data/article/list?size=${size}`;
 
     setLoading(true);
     fetch(fetchUrl)

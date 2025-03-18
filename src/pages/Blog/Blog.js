@@ -25,6 +25,7 @@ const Blog = () => {
 
   const fetchData = (currentPage) => {
     const fetchUrl = `https://fsdfssf.truyenso1.xyz/data/article/list?size=${size}&page=${currentPage}`;
+    // const fetchUrl = `https://uatapi.truyenso1.xyz/data/article/list?size=${size}&page=${currentPage}`;
 
     setLoading(true);
     fetch(fetchUrl)

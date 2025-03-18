@@ -4,14 +4,14 @@ import HeaderServerSchema from '../../src/components/HeaderServerSchema'
 import axios from 'axios'
 import { countWords } from '../../src/utils/utils'
 
-const StorySummary = ({detail, article}) => {
+const StorySummary = ({detail, article, canonical}) => {
   return (
     <>
       <HeaderServerSchema title={`✅ ${(detail?.status === 'ACTIVE' ? '[FULL] ' : '') + detail?.title}${countWords(detail?.title) <= 70 ? '| Nền tảng cộng đồng đọc truyện online hấp dẫn' : ''}`}
         description={detail?.metaDescription ? detail?.metaDescription.replace(/"/g,'') : detail?.metaDescription}
         keywords={detail?.metaKeywords}
         image={detail?.thumbnail || detail?.coverImage}
-        canonical={`https://toidoc.vn/${detail?.slug}`}
+        canonical={`https://toidoc.vn/${canonical}`}
         author={detail?.author?.name}
         rating={detail ? ((detail?.rate == null || detail?.rate === 0) ? 4.3 : detail?.rate) : 4.3}
         slug={detail?.slug}
@@ -35,18 +35,21 @@ StorySummary.getInitialProps = async (ctx) => {
         // const resultBlog = await axios.get(`https://fsdfssf.truyenso1.xyz/data/article/story/${ctx.query.storySlug}`);
         return {
           detail: result?.data?.data,
-          article: resultBlog?.data?.data
+          article: resultBlog?.data?.data,
+          canonical: ctx.query.storySlug
         }
       }
       return {
         detail: {},
-        article: {}
+        article: {},
+        canonical: ctx.query.storySlug
       }
     } catch(e) {
       console.log('server call error', e)
       return {
         detail: {},
-        article: {}
+        article: {},
+        canonical: ctx.query.storySlug
       }
     }
   }

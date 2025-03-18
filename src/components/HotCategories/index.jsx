@@ -6,7 +6,8 @@ const HotCategories = ({ data }) => {
   return (
     <div className="py-2 space-y-4">
       <div className="flex gap-x-2">
-        <CategoryIcon />
+        {/*<CategoryIcon />*/}
+        <img src='/images/icon-category.png' className='w-[24px] h-[24px]' />
         <h2 className="text-lg font-bold">Thể loại nổi bật</h2>
       </div>
 

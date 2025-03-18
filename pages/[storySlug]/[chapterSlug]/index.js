@@ -72,8 +72,16 @@ StoryDetail.getInitialProps = async (ctx) => {
       }
 
       
+      const canonical =
+          "https://toidoc.vn/" +
+          ctx.query.storySlug +
+          "/" +
+          ctx.query.chapterSlug;
       return {
-        detail: {titleSlug: ctx.query.storySlug,},
+        detail: {
+          titleSlug: ctx.query.storySlug,
+        },
+        canonical: canonical,
       };
     } catch (e) {
       console.log("Error get chapter detail: ", e);
@@ -84,9 +92,9 @@ StoryDetail.getInitialProps = async (ctx) => {
           ctx.query.chapterSlug;
       return {
         detail: {
-          canonical: canonical,
           titleSlug: ctx.query.storySlug,
         },
+        canonical: canonical,
       };
     }
   };

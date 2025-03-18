@@ -56,6 +56,9 @@ BlogDetailPage.getInitialProps = async (ctx) => {
             ? `https://fsdfssf.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`
             : `http://10.8.22.205:8082/article/detail/${ctx.query.blogSlug}`
         // `https://fsdfssf.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`
+        // typeof window !== "undefined"
+        //     ? `https://uatapi.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`
+        //     : `http://10.8.22.250:18111/data/article/detail/${ctx.query.blogSlug}`
         );
         return {
           detail: result.data.data,

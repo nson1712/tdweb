@@ -24,6 +24,7 @@ Stories.getInitialProps = async (ctx) => {
     if (ctx.query.collectionSlug) {
       const result = await Api.get({
         url: typeof window !== 'undefined' ? 'https://fsdfssf.truyenso1.xyz/data/private/data/collection/detail' : 'http://10.8.22.205:8082/private/data/collection/detail',
+        // url: typeof window !== 'undefined' ? 'https://uatapi.truyenso1.xyz/data/private/data/collection/detail' : 'http://10.8.22.250:18111/data/private/data/collection/detail',
         params: {
           slug: ctx.query.collectionSlug,
         },

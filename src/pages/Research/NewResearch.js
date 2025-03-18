@@ -19,6 +19,7 @@ import HashtagSection from "./HashtagSection";
 import UnfinishedStory from "../../components/UnfinishedStory";
 import Link from "next/link";
 import { ArrowRightOutlined } from "@ant-design/icons";
+import HeadMenu from "./HeadMenu";
 
 let timeout;
 
@@ -217,6 +218,9 @@ const Research = () => {
             </div>
           ) : (
             <div className="space-y-6">
+              <div className="block md:hidden">
+                <HeadMenu />
+              </div>
               <div className="space-y-2 mx-2">
                 {(isLoggedIn && viewings?.data?.length > 0) && (
                   <div className="block md:hidden pt-1 pb-1 md:mt-0 px-2 space-y-2 bg-slate-100 rounded-xl">
@@ -289,7 +293,7 @@ const Research = () => {
           </a>
         </ModalComponent>} */}
       </div>
-      <ChatSupport showChat={showChat} setShowChat={setShowChat} />
+      {/*<ChatSupport showChat={showChat} setShowChat={setShowChat} />*/}
     </CommonLayout>
   );
 };

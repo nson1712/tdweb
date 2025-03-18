@@ -32,6 +32,9 @@ Stories.getInitialProps = async (ctx) => {
             ? "https://fsdfssf.truyenso1.xyz/data/private/data/categories/detail"
             : "http://10.8.22.205:8082/private/data/categories/detail",
           // "https://fsdfssf.truyenso1.xyz/data/private/data/categories/detail",
+          // typeof window !== "undefined"
+          //   ? "https://uatapi.truyenso1.xyz/data/private/data/categories/detail"
+          //   : "http://10.8.22.250:18111/data/private/data/categories/detail",
         params: {
           code: ctx.query.categorySlug,
         },

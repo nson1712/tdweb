@@ -30,6 +30,9 @@ StoriesByHashTag.getInitialProps = async (ctx) => {
             ? "https://fsdfssf.truyenso1.xyz/data/private/data/story/search-by-hashtag"
             : "http://10.8.22.205:8082/private/data/story/search-by-hashtag",
           // "https://fsdfssf.truyenso1.xyz/data/private/data/story/search-by-hashtag",
+          // typeof window !== "undefined"
+          //   ? "https://uatapi.truyenso1.xyz/data/private/data/story/search-by-hashtag"
+          //   : "http://10.8.22.250:18111/data/private/data/story/search-by-hashtag",
         params: {
           hashtag: ctx.query.hashtag,
         },
