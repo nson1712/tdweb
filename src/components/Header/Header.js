@@ -194,7 +194,7 @@ const Header = ({ selectedTab }) => {
                   ? "/images/author-active.svg"
                   : "/images/author.svg"
               }
-              className="w-[28px] mr-[4px] items-center"
+              className="w-[28px] m-auto items-center"
               alt="Đăng truyện tại Toidoc"
             />
             <p

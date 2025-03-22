@@ -1,7 +1,7 @@
 import React from "react";
-import StoriesComponent from "../../../src/pages/Stories";
 import HeaderServer from "../../../src/components/HeaderServer";
 import * as Api from "../../../src/api/api";
+import StoriesByHashtag from "../../../src/pages/StoriesByHashtag";
 
 const StoriesByHashTag = ({ detail, canonical, hashtagName }) => {
   return (
@@ -15,7 +15,8 @@ const StoriesByHashTag = ({ detail, canonical, hashtagName }) => {
         keywords={detail?.metaKeywords || `thể loại truyện ${hashtagName}, danh sách truyện ${hashtagName}, tìm truyện ${hashtagName}, truyện full ${hashtagName}, đọc truyện ${hashtagName}, truyện hay ${hashtagName}`}
         canonical={canonical}
       />
-      <StoriesComponent />
+      <StoriesByHashtag />
+
     </>
   );
 };

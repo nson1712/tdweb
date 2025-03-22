@@ -96,7 +96,7 @@ class StoryStore {
           chapterMax,
           status,
         },
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -111,7 +111,7 @@ class StoryStore {
     try {
       const result = await Api.get({
         url: "data/private/data/collections?page=1&pageSize=10",
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -124,7 +124,7 @@ class StoryStore {
     try {
       const result = await Api.get({
         url: "data/private/data/collections?page=2&pageSize=10",
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -137,7 +137,7 @@ class StoryStore {
     try {
       const result = await Api.get({
         url: "data/private/data/story/search/recent",
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -153,7 +153,7 @@ class StoryStore {
         data: {
           storySlug,
         },
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -224,7 +224,7 @@ class StoryStore {
           params: {
             slug: storySlug,
           },
-          hideError: true
+          hideError: true,
         });
 
         return result.data;
@@ -241,7 +241,7 @@ class StoryStore {
         params: {
           storySlug,
         },
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -262,7 +262,7 @@ class StoryStore {
           pageSize,
           slug,
         },
-        hideError: true
+        hideError: true,
       });
 
       if (page === 1) {
@@ -293,7 +293,7 @@ class StoryStore {
           page,
           pageSize,
         },
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -312,7 +312,7 @@ class StoryStore {
           page,
           pageSize,
         },
-        hideError: true
+        hideError: true,
       });
 
       if (page === 1) {
@@ -341,7 +341,7 @@ class StoryStore {
           pageSize,
           key: "view",
         },
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -360,7 +360,7 @@ class StoryStore {
           page,
           pageSize,
         },
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -379,7 +379,7 @@ class StoryStore {
           page,
           pageSize,
         },
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -398,7 +398,7 @@ class StoryStore {
           page,
           pageSize,
         },
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -413,7 +413,7 @@ class StoryStore {
     try {
       const result = await Api.get({
         url: "data/private/data/categories",
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -428,7 +428,7 @@ class StoryStore {
     try {
       const result = await Api.get({
         url: "/customer/public/customer/categories",
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -469,7 +469,7 @@ class StoryStore {
           limit,
           ...params,
         },
-        hideError: true
+        hideError: true,
       });
 
       if (last === undefined) {
@@ -553,7 +553,7 @@ class StoryStore {
             chapterSlug: chapterSlug,
           },
         },
-        hideError: true
+        hideError: true,
       });
     } catch (e) {
       console.log(e);
@@ -785,7 +785,7 @@ class StoryStore {
           page,
           size,
         },
-        hideError: true
+        hideError: true,
       });
 
       runInAction(() => {
@@ -804,7 +804,7 @@ class StoryStore {
           page,
           size,
         },
-        hideError: true
+        hideError: true,
       });
 
       if (page === 1) {
@@ -833,21 +833,13 @@ class StoryStore {
           page,
           size,
         },
-        hideError: true
+        hideError: true,
       });
 
-      if (page === 0) {
-        runInAction(() => {
-          this.storiesByHashtag = result?.data;
-        });
-      } else {
-        runInAction(() => {
-          this.storiesByHashtag = {
-            ...result?.data,
-            data: [...this.storiesByHashtag.data, ...result.data?.data],
-          };
-        });
-      }
+      runInAction(() => {
+        this.storiesByHashtag = result?.data;
+      });
+      
     } catch (e) {
       console.log(e);
     }
