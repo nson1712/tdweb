@@ -23,7 +23,7 @@ const Maintainance = () => {
               <a href='https://toidoc.onelink.me/59bO/d42503wz' style={{'float': 'left', 'marginRight': '20px'}}>
                   <img src='https://media.truyenso1.xyz/ads/app-store.png' alt='Apple Store' style={{'maxWidth':'150px'}}/>
               </a>
-              <a href='https://toidoc.onelink.me/59bO/d42503wz'>
+              <a href='https://toidoc.onelink.me/59bO/d42503wz' rel="nofollow">
                   <img src='https://media.truyenso1.xyz/ads/google-play.png' alt='Google Play' style={{'maxWidth': '150px'}}/>
               </a>
               </div>

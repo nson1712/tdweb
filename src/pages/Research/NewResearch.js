@@ -293,7 +293,7 @@ const Research = () => {
           </a>
         </ModalComponent>} */}
       </div>
-      {/*<ChatSupport showChat={showChat} setShowChat={setShowChat} />*/}
+      <ChatSupport showChat={showChat} setShowChat={setShowChat} />
     </CommonLayout>
   );
 };

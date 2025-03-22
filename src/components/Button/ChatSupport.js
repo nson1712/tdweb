@@ -42,7 +42,7 @@ const ChatSupport = ({showChat, setShowChat}) => {
   return (
     isMobile ? 
       <div
-        className={`chat-icon  ${
+        className={`hidden md:block chat-icon  ${
           (showChat || scrollDirection === 'up') ? "show-share" : "hide"
         }`
          }

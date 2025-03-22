@@ -32,6 +32,7 @@ import ButtonViewAll from "../../components/ButtonViewAll";
 import withIconTitle from "../../components/CustomIconTitle";
 import TrendingIcon from "../../../public/icons/TrendingIcon";
 import NewIcon from "../../../public/icons/NewIcon";
+import Button3D from "../../components/3DButton";
 
 const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [showBubble, setShowBubble] = useState("up");
@@ -350,7 +351,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     } catch(e) {}
   };
 
-  const handlePaymentDepositAuto = async(isOpenFull) => {
+  const handlePaymentDepositAuto = async(isOpenFull, isShowAlertSuccess) => {
     try {
       // console.log('isOpenFull 2: ', isOpenFull);
       if (isOpenFull) {
@@ -362,6 +363,12 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             isOpenFull: true,
           },
         });
+        if (isShowAlertSuccess) {
+          toast('Bạn đã mở chương thành công!', {
+            type: "success",
+            theme: "colored",
+          });
+        }
       }
       await fetchData();
       window.scrollTo({ top: 0, behavior: "smooth" });
@@ -668,12 +675,39 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                     ) : (
                       <>
                         {chapterContents?.map((item, i) => (
-                          <ContentDisplay
+                          <>
+                            <ContentDisplay
                               item={item}
                               fdsfsjs={fdfssfds}
                               dfjkdsfds={jkdjfk}
                               order={i}
                             />
+                            {i === (chapterContents.length - 6) && 
+                              <div className='mt-[40px] mb-[20px]'>
+                                {/*<p><strong><i>LIVESTREAM</i> 💥- Xem ngay kẻo lỡ bộ sưu tập thời trang HOT NHẤT mùa này</strong></p>*/}
+                                <p><strong><i>Mê e váy xếp ly này lắm luôn 🤭</i> 💥- Mặc đi chơi thể thao, hoặc đi làm đều okela </strong></p>
+                                <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
+                                <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
+                                <p>👉 FREE SHIP Toàn Quốc</p>
+                                {/*<div className='flex items-center justify-center' dangerouslySetInnerHTML={{__html: `<iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Fguchicofficial%2Fvideos%2F991771309198143%2F&show_text=false&width=300&t=0" width="300" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`}}/>*/}
+                                <div className='flex items-center justify-center'>
+                                  <Link href={`https://www.facebook.com/guchicofficial/posts/pfbid0QsfGVehfPkHUGAFCeFZEAji7M8PxCs827ZBj7j5ruQTaswHkw4Xdy3PWuSu9ZgcBl`} passHref>
+                                    <a id='live-chapter-content-image' target='_blank' rel="nofollow">
+                                      <img src='/images/quan-ao/vay-xep-ly-cao-cap.jpg' className='w-[350px]'></img>
+                                    </a>
+                                  </Link>
+                                </div>
+                                <div className='mt-[20px] flex items-center justify-center'>
+                                  {/*<Link href={`https://www.facebook.com/watch/live/?ref=watch_permalink&v=991771309198143`} passHref>
+                                    <a id='live-story-detail' className='w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px]' target='_blank'>Vào Facebook Xem Live</a>
+                                  </Link>*/}
+                                  <Link href={`https://www.facebook.com/guchicofficial/posts/pfbid0QsfGVehfPkHUGAFCeFZEAji7M8PxCs827ZBj7j5ruQTaswHkw4Xdy3PWuSu9ZgcBl`} passHref>
+                                    <a id='live-chapter-content' className='w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px]' target='_blank' rel="nofollow">Xem thêm</a>
+                                  </Link>
+                                </div>
+                              </div>
+                            }
+                          </>
                         ))}
                       </>
                     )}

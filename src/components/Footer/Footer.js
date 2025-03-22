@@ -85,7 +85,7 @@ const Footer = () => {
             </div>
             <div className="self-center">|</div>
             <div className="self-center">
-              <Link href="https://www.facebook.com/messages/t/185169981351799">
+              <Link href="/lien-he">
                 <a
                   title="Liên hệ Toidoc"
                   target="_blank"

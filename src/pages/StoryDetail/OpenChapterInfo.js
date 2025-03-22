@@ -148,7 +148,7 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
             theme: "colored",
           });
           // console.log('isOpenFull 1: ', isOpenFull.current);
-          await handlePaymentDepositAuto(isOpenFull.current);
+          await handlePaymentDepositAuto(isOpenFull.current, false);
         }
       }
     } catch (e) {
@@ -265,13 +265,19 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
           </div>}
           
           <a id={chapter?.price <= availableCash?.balance ? 'open-chapter-btn' : 'deposit-diamond-btn'} style={{'marginTop': '30px', 'display': 'flex', 'justifyContent': 'center'}}>
-            <Button onClick={() => handleOpenChapter()} className='button-open-chapter'>{chapter?.price <= availableCash?.balance ? 'Mở khoá chương' : 'Nạp kim cương'}</Button>
+            <Button onClick={() => handleOpenChapter()} className='button-open-chapter w-[290px] pl-[20px] text-base font-bold'>{chapter?.price <= availableCash?.balance ? 'Chỉ Mở Chương Này' : 'Nạp kim cương'}</Button>
           </a>
+          {availableCash?.balance >= fullPriceStory?.remained && 
+            <a id='btn-open-full-chapter' style={{'marginTop': '30px', 'display': 'flex', 'justifyContent': 'center'}}>
+              <Button onClick={() => handlePaymentDepositAuto(true, true)} className="bg-gradient-to-r from-[#FFE279] to-[#DA9226] text-white py-2.5 px-5 text-base font-bold rounded-md animate-shimmer hover:-translate-y-2 transition delay-100">{story?.status === 'ACTIVE' ? 'Mở Tất Cả Các Chương' : 'Mở Tất Cả Chương Đã Ra'}</Button>
+            </a>
+          }
           <div style={{'marginTop': '30px', 'display': 'flex', 'justifyContent': 'center'}}>
           
-            <Button onClick={() => handleSupport()} className='button-support-chapter' style={{'padding': '10px 20px'}}>
-              <img src='/images/messenger.png' className='fl' style={{'width': '20px', 'height': '20px', 'marginRight': '10px'}}/>Hỗ trợ
-            </Button>
+            <a className='flex text-underline text-[#e2bd1e] text-[16px]' onClick={() => handleSupport()}>
+              <img src='/images/messenger.png' className='mr-[5px] w-[24px] h-[24px]'/>
+              Liên Hệ Hỗ Trợ
+            </a>
           </div>
         </div>
         :

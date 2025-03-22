@@ -476,7 +476,7 @@ const StorySummary = ({storyDetail, articleDetail}) => {
             src={storyDetail?.thumbnail || storyDetail?.coverImage}
             alt={`Truyện ${storyDetail?.title}`}
             title={storyDetail?.title}
-            className="w-full h-[200px] object-cover"
+            className="w-full h-[235px] object-cover"
           />
           <div className="absolute left-0 right-0 bottom-0 top-0 summary-banner z-[2] flex flex-col justify-between px-5 pt-6 pb-9">
             <div className="relative flex items-center justify-between">
@@ -546,7 +546,7 @@ const StorySummary = ({storyDetail, articleDetail}) => {
                   src={storyDetail?.thumbnail || storyDetail?.coverImage}
                   alt={`Truyện ${storyDetail?.title}`}
                   title={storyDetail?.title}
-                  className="w-28 h-30 rounded-[10px]"
+                  className="w-[100px] h-[115px] rounded-[10px]"
                 />
               </div>
 
@@ -642,6 +642,24 @@ const StorySummary = ({storyDetail, articleDetail}) => {
                 </div>
               </div>
             </div>
+            <div className='mt-[10px]'>
+               <a className='flex text-underline text-[#e2bd1e]'
+                href='https://www.facebook.com/groups/congdongdoctoidoc'
+                target='_blank'
+                nofollow
+              >
+                  <img src='/images/facebook-group.png' className='mr-[5px] w-[24px] h-[24px]'/>
+                  Tham gia cộng đồng đọc Toidoc
+              </a>
+              <a className='flex mt-[5px] text-underline text-[#e2bd1e]'
+                href='https://zalo.me/g/rddcdg525'
+                target='_blank'
+                nofollow
+              >
+                <img src='/images/icons8-zalo-48.png' className='mr-[5px] w-[24px] h-[24px]'/>
+                Bàn luận truyện HOT
+              </a>
+            </div>
           </div>
         </div>
 
@@ -668,14 +686,6 @@ const StorySummary = ({storyDetail, articleDetail}) => {
             </a>
           </Link>
         </div>
-        {finalChargeDiamond > 0 && (
-          <PriceInfo
-            discountValue={discountValue}
-            finalChargeValue={finalChargeDiamond}
-            storyDetail={storyDetail}
-            handleOpenFullChapter={handleOpenFullChapter}
-          />
-        )}
 
         <div className="py-4">
           <p className="text-lg font-bold main-text text-underline px-2">Giới thiệu truyện</p>
@@ -686,7 +696,37 @@ const StorySummary = ({storyDetail, articleDetail}) => {
               {/*<div className="fb-comments" data-href={`https://toidoc.vn/${storyDetail.slug}`} data-width="" data-numposts="10"></div>*/}
             </div>
           </div>
-
+          {finalChargeDiamond > 0 && (
+            <PriceInfo
+              discountValue={discountValue}
+              finalChargeValue={finalChargeDiamond}
+              storyDetail={storyDetail}
+              handleOpenFullChapter={handleOpenFullChapter}
+            />
+          )}
+          <div className='mt-[40px] mb-[20px]'>
+            {/*<p><strong><i>LIVESTREAM</i> 💥- Xem ngay kẻo lỡ bộ sưu tập thời trang HOT NHẤT mùa này</strong></p>*/}
+            <p><strong><i>Mê e váy xếp ly này lắm luôn 🤭</i> 💥- Mặc đi chơi thể thao, hoặc đi làm đều okela </strong></p>
+            <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
+            <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
+            <p>👉 FREE SHIP Toàn Quốc</p>
+            {/*<div className='flex items-center justify-center' dangerouslySetInnerHTML={{__html: `<iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Fguchicofficial%2Fvideos%2F991771309198143%2F&show_text=false&width=300&t=0" width="300" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`}}/>*/}
+            <div className='flex items-center justify-center'>
+              <Link href={`https://www.facebook.com/guchicofficial/posts/pfbid0QsfGVehfPkHUGAFCeFZEAji7M8PxCs827ZBj7j5ruQTaswHkw4Xdy3PWuSu9ZgcBl`} passHref>
+                <a id='live-story-detail-image' target='_blank' rel="nofollow">
+                  <img src='/images/quan-ao/vay-xep-ly-cao-cap.jpg' className='w-[350px]'></img>
+                </a>
+              </Link>
+            </div>
+            <div className='mt-[20px] flex items-center justify-center'>
+              {/*<Link href={`https://www.facebook.com/watch/live/?ref=watch_permalink&v=991771309198143`} passHref>
+                <a id='live-story-detail' className='w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px]' target='_blank'>Vào Facebook Xem Live</a>
+              </Link>*/}
+              <Link href={`https://www.facebook.com/guchicofficial/posts/pfbid0QsfGVehfPkHUGAFCeFZEAji7M8PxCs827ZBj7j5ruQTaswHkw4Xdy3PWuSu9ZgcBl`} passHref>
+                <a id='live-story-detail' className='w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px] pt-[13px]' target='_blank' rel="nofollow">Xem thêm</a>
+              </Link>
+            </div>
+          </div>
           {storyDetail?.chapters?.length > 0 && (
             <>
               <div className="border-b-[1px] border-color pb-4 px-2">

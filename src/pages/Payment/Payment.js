@@ -346,7 +346,7 @@ const Payment = ({
                 <p style={{ color: "rgb(204 46 73)", margin: 0 }}>
                   <i>
                     Trường hợp bạn ở nước ngoài không tiện chuyển khoản, vui lòng
-                    <a href={`https://m.me/185169981351799?text=${referralCode ? 'Mã KH của mình là: ' + referralCode + '. ' : ''}Mình ở nước ngoài cần nạp kim cương. Hỗ trợ giúp mình với.`} target="_blank" className="px-1">
+                    <a href={`https://m.me/185169981351799?text=${referralCode ? 'Mã KH của mình là: ' + referralCode + '. ' : ''}Mình ở nước ngoài cần nạp kim cương. Hỗ trợ giúp mình với.`} target="_blank" className="px-1" rel="nofollow">
                       Liên Hệ Toidoc
                     </a>
                     để được hỗ trợ.
@@ -354,7 +354,7 @@ const Payment = ({
                 </p>
               </div>
               <div className="align-center mt-[20px]">
-                <a href="https://toidoc.onelink.me/59bO/d42503wz">
+                <a href="https://toidoc.onelink.me/59bO/d42503wz" target='_blank' rel="nofollow">
                   <img
                     src="/images/apple-icon-min.png"
                     style={{
@@ -364,7 +364,7 @@ const Payment = ({
                     }}
                   />
                 </a>
-                <a href="https://toidoc.onelink.me/59bO/d42503wz">
+                <a href="https://toidoc.onelink.me/59bO/d42503wz" target='_blank' rel="nofollow">
                   <img
                     src="/images/android-icon-min.png"
                     style={{

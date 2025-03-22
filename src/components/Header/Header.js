@@ -72,7 +72,7 @@ const Header = ({ selectedTab }) => {
           <Link href="/tim-kiem" passHref>
             <a
               className={classNames(
-                "menu-header mx-[2px] px-[20px] py-[8px] h-[45px] rounded-[30px] cursor-pointer",
+                "menu-header px-[12px] h-[45px] rounded-[30px] cursor-pointer",
                 selectedTab === "RESEARCH" && "bg-tab-active text-active"
               )}
             >
@@ -99,7 +99,7 @@ const Header = ({ selectedTab }) => {
           <Link href="/the-loai" passHref>
             <a
               className={classNames(
-                "menu-header mx-[2px] px-[20px] py-[8px] h-[45px] rounded-[30px] cursor-pointer",
+                "menu-header px-[12px] h-[45px] rounded-[30px] cursor-pointer",
                 selectedTab === "STORY_TYPE" && "bg-tab-active text-active"
               )}
             >
@@ -126,7 +126,7 @@ const Header = ({ selectedTab }) => {
           <Link href="/blog-truyen-full" passHref>
             <a
               className={classNames(
-                "menu-header mx-[2px] px-[20px] py-[8px] h-[45px] rounded-[30px] cursor-pointer",
+                "menu-header px-[12px] h-[45px] rounded-[30px] cursor-pointer",
                 selectedTab === "BLOG" && "bg-tab-active text-active"
               )}
             >
@@ -181,7 +181,7 @@ const Header = ({ selectedTab }) => {
           </div>*/}
           <div
             className={classNames(
-              "hidden md:block menu-header mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
+              "hidden md:block menu-header px-[12px] h-455px] rounded-[20px] cursor-pointer",
               selectedTab === "AUTHOR" && "bg-tab-active text-active"
             )}
             onClick={() => {
@@ -206,6 +206,33 @@ const Header = ({ selectedTab }) => {
               Đăng truyện
             </p>
           </div>
+          <Link href="/lien-he" passHref >
+            <a
+              className={classNames(
+                "block md:hidden menu-header px-[12px] h-[45px] rounded-[20px] cursor-pointer",
+                selectedTab === "CONTACT" && "bg-tab-active text-active"
+              )}
+            >
+              <img
+                src={
+                  selectedTab === "CONTACT"
+                    ? "/images/contact-active.svg"
+                    : "/images/contact.svg"
+                }
+                className="w-[28px] mr-[4px] items-center"
+                alt="Đăng truyện tại Toidoc"
+              />
+              <p
+                className={classNames(
+                  "mb-0 text-[12px] font-bold label-text leading-[16px] whitespace-nowrap",
+                  selectedTab === "CONTACT" && "text-active block"
+                )}
+              >
+                Hỗ trợ
+              </p>
+            </a>
+          </Link>
+          
           {/*<div
             className={classNames(
               "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
@@ -254,7 +281,7 @@ const Header = ({ selectedTab }) => {
             <a
               id="profile-btn"
               className={classNames(
-                "menu-header mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
+                "menu-header px-[12px] h-[45px] rounded-[20px] cursor-pointer",
                 selectedTab === "PROFILE" && "bg-tab-active text-active"
               )}
               onClick={(e) => {
