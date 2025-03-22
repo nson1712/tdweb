@@ -7,11 +7,11 @@ const VerticalStory = ({ items }) => {
       {convertedItems.map((item, index) => (
         <VerticalStoryItem
           key={index}
-          id={item.id}
-          title={item.title}
-          coverImage={item.thumbnail || item.coverImage}
-          slug={item.slug}
-          status={item.status}
+          id={item?.id || index}
+          title={item?.title}
+          coverImage={item?.thumbnail || item?.coverImage}
+          slug={item?.slug}
+          status={item?.status}
         />
       ))}
     </div>
