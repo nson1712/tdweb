@@ -689,7 +689,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                                 <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
                                 <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
                                 <p>👉 FREE SHIP Toàn Quốc</p>
-                                {/*<div className='flex items-center justify-center' dangerouslySetInnerHTML={{__html: `<iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Fguchicofficial%2Fvideos%2F991771309198143%2F&show_text=false&width=300&t=0" width="300" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`}}/>*/}
+                                {/*<div className='flex items-center justify-center' dangerouslySetInnerHTML={{__html: `<iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Fguchicofficial%2Fvideos%2F1157857955517332%2F&show_text=false&width=300&t=0" width="300" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`}}/>*/}
                                 <div className='flex items-center justify-center'>
                                   <Link href={`https://www.facebook.com/guchicofficial/posts/pfbid0QsfGVehfPkHUGAFCeFZEAji7M8PxCs827ZBj7j5ruQTaswHkw4Xdy3PWuSu9ZgcBl`} passHref>
                                     <a id='live-chapter-content-image' target='_blank' rel="nofollow">
@@ -698,7 +698,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                                   </Link>
                                 </div>
                                 <div className='mt-[20px] flex items-center justify-center'>
-                                  {/*<Link href={`https://www.facebook.com/watch/live/?ref=watch_permalink&v=991771309198143`} passHref>
+                                  {/*<Link href={`https://www.facebook.com/100069123038327/videos/1157857955517332`} passHref>
                                     <a id='live-story-detail' className='w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px]' target='_blank'>Vào Facebook Xem Live</a>
                                   </Link>*/}
                                   <Link href={`https://www.facebook.com/guchicofficial/posts/pfbid0QsfGVehfPkHUGAFCeFZEAji7M8PxCs827ZBj7j5ruQTaswHkw4Xdy3PWuSu9ZgcBl`} passHref>

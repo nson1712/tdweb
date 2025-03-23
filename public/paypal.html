@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thanh toán bằng PayPal</title>
+    <script src="https://www.paypal.com/sdk/js?client-id=Ad_kfIztCssh1X3HrKoDMxBQiCI0B6quYjgppzA5U4YIuZQ17Fur5M2UR6-QiwSnwJqKnXzxfDDlZDqO&currency=USD"></script>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Poppins"
+    />
+    <style>
+      body {
+        font-family: "Roboto", sans-serif;
+        background: linear-gradient(135deg, #6b73ff, #000dff);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        color: #444;
+      }
+
+      .payment-container {
+        background-color: #ffffff;
+        padding: 35px;
+        border-radius: 20px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 450px;
+        text-align: center;
+        overflow-y: auto;
+        transition: max-height 0.3s ease;
+      }
+
+      h2 {
+        margin-bottom: 25px;
+        color: #333;
+        font-size: 26px;
+      }
+
+      label {
+        font-size: 16px;
+        color: #555;
+      }
+
+      select,
+      input[type="number"] {
+        padding: 12px;
+        margin: 15px 0;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        font-size: 16px;
+        width: 100%;
+        box-sizing: border-box;
+        transition: border-color 0.3s;
+      }
+
+      select:focus,
+      input[type="number"]:focus {
+        border-color: #6b73ff;
+        outline: none;
+      }
+
+      .radio-group {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 15px;
+      }
+
+      .radio-group input {
+        margin-right: 5px;
+      }
+
+      .radio-group {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 15px;
+        font-size: 18px; /* Tăng kích thước text */
+      }
+
+      .radio-group label {
+        font-weight: bold; /* In đậm chữ của radiobutton */
+        cursor: pointer;
+      }
+
+      .radio-group input[type="radio"] {
+        width: 18px; /* Tăng kích thước nút radio */
+        height: 18px;
+        transform: scale(1.3);
+        margin-right: 8px;
+      }
+
+      #paypal-button-container {
+        margin-top: 20px;
+      }
+
+      @media (max-width: 500px) {
+        .payment-container {
+          padding: 25px;
+          width: 90%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="payment-container" id="paymentContainer">
+      <h2>Cổng thanh toán PayPal chính thức của Toidoc</h2>
+
+      <div class="radio-group">
+        <label
+          ><input type="radio" name="paymentType" value="diamond" checked /> Nạp
+          Kim Cương</label
+        >
+        <label
+          ><input type="radio" name="paymentType" value="premium" /> Mua Gói
+          Premium</label
+        >
+      </div>
+
+      <label for="amount">Chọn số tiền thanh toán:</label>
+      <select id="amount"></select>
+
+      <div id="paypal-button-container"></div>
+    </div>
+
+    <script>
+      const amountSelect = document.getElementById("amount");
+      const customAmountInput = document.getElementById("customAmount");
+      const paymentTypeRadios = document.getElementsByName("paymentType");
+      const paymentContainer = document.getElementById("paymentContainer");
+
+      function updateOptions() {
+        amountSelect.innerHTML = "";
+        let options = [];
+
+        if (
+          document.querySelector('input[name="paymentType"]:checked').value ===
+          "diamond"
+        ) {
+          options = [
+            { label: "136,500 Kim cương đỏ - $7", value: 7 },
+            { label: "315,000 Kim cương đỏ - $15", value: 15 },
+            { label: "530,000 Kim cương đỏ - $23", value: 23 },
+            { label: "1,060,000 Kim cương đỏ - $43", value: 43 },
+          ];
+        } else {
+          options = [
+            { label: "1 Tháng - $10", value: 10 },
+            { label: "3 Tháng - $23.5", value: 23.5 },
+            { label: "6 Tháng - $42", value: 42 },
+            { label: "1 Năm - $76", value: 76 },
+          ];
+        }
+
+        options.forEach((opt) => {
+          let option = document.createElement("option");
+          option.value = opt.value;
+          option.textContent = opt.label;
+          amountSelect.appendChild(option);
+        });
+      }
+
+      paymentTypeRadios.forEach((radio) =>
+        radio.addEventListener("change", updateOptions)
+      );
+      amountSelect.addEventListener("change", function () {
+        customAmountInput.style.display =
+          this.value === "custom" ? "block" : "none";
+      });
+
+      updateOptions();
+
+      paypal
+        .Buttons({
+          createOrder: function (data, actions) {
+            let amount =
+              amountSelect.value === "custom"
+                ? customAmountInput.value
+                : amountSelect.value;
+            if (!amount || amount <= 0) {
+              alert("Vui lòng nhập số tiền hợp lệ!");
+              return;
+            }
+            return actions.order.create({
+              intent: "CAPTURE",
+              purchase_units: [
+                { amount: { value: amount, currency_code: "USD" } },
+              ],
+            });
+          },
+          onApprove: function (data, actions) {
+            return actions.order.capture().then(function (details) {
+              alert(
+                "Thanh toán thành công! Cảm ơn " +
+                  details.payer.name.given_name +
+                  " đã sử dụng dịch vụ."
+              );
+            });
+          },
+          onError: function (err) {
+            console.error("Lỗi PayPal:", err);
+            alert("Thanh toán thất bại! Vui lòng thử lại.");
+          },
+          onClick: function () {
+            paymentContainer.style.maxHeight = "800px";
+          },
+        })
+        .render("#paypal-button-container");
+    </script>
+  </body>
+</html>
