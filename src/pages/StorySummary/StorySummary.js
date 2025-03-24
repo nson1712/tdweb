@@ -696,7 +696,7 @@ const StorySummary = ({storyDetail, articleDetail}) => {
               {/*<div className="fb-comments" data-href={`https://toidoc.vn/${storyDetail.slug}`} data-width="" data-numposts="10"></div>*/}
             </div>
           </div>
-          {finalChargeDiamond > 0 && (
+          {finalChargeDiamond > 0 && GlobalStore.isLoggedIn && (
             <PriceInfo
               discountValue={discountValue}
               finalChargeValue={finalChargeDiamond}
@@ -706,24 +706,24 @@ const StorySummary = ({storyDetail, articleDetail}) => {
           )}
           <div className='mt-[40px] mb-[20px]'>
             {/*<p><strong><i>LIVESTREAM</i> 💥- Xem ngay kẻo lỡ bộ sưu tập thời trang HOT NHẤT mùa này</strong></p>*/}
-            <p><strong><i>Mê e váy xếp ly này lắm luôn 🤭</i> 💥- Mặc đi chơi thể thao, hoặc đi làm đều okela </strong></p>
+            <p><strong><i>Ulatroi, dạo này gu chị em đỉnh phê ê tờ ết  🤭</i> 💥 - Form áo đẹp, mix set hay tách set đều okela </strong></p>
             <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
             <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
             <p>👉 FREE SHIP Toàn Quốc</p>
             {/*<div className='flex items-center justify-center' dangerouslySetInnerHTML={{__html: `<iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Fguchicofficial%2Fvideos%2F1157857955517332%2F&show_text=false&width=300&t=0" width="300" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`}}/>*/}
             <div className='flex items-center justify-center'>
-              <Link href={`https://www.facebook.com/guchicofficial/posts/pfbid0QsfGVehfPkHUGAFCeFZEAji7M8PxCs827ZBj7j5ruQTaswHkw4Xdy3PWuSu9ZgcBl`} passHref>
+              <Link href={`https://www.facebook.com/share/p/16CvwpVpNJ/`} passHref>
                 <a id='live-story-detail-image' target='_blank' rel="nofollow">
-                  <img src='/images/quan-ao/vay-xep-ly-cao-cap.jpg' className='w-[350px]'></img>
+                  <img src='/images/quan-ao/gifmaker_me.gif' className='w-[200px]'></img>
                 </a>
               </Link>
             </div>
-            <div className='mt-[20px] flex items-center justify-center'>
+            <div className='flex items-center justify-center'>
               {/*<Link href={`https://www.facebook.com/100069123038327/videos/1157857955517332`} passHref>
                 <a id='live-story-detail' className='w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px]' target='_blank'>Vào Facebook Xem Live</a>
               </Link>*/}
-              <Link href={`https://www.facebook.com/guchicofficial/posts/pfbid0QsfGVehfPkHUGAFCeFZEAji7M8PxCs827ZBj7j5ruQTaswHkw4Xdy3PWuSu9ZgcBl`} passHref>
-                <a id='live-story-detail' className='w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px] pt-[13px]' target='_blank' rel="nofollow">Xem thêm</a>
+              <Link href={`https://www.facebook.com/share/p/16CvwpVpNJ/`} passHref>
+                <a id='live-story-detail' className='w-[200px] btnLiveStream px-[4px] py-[2px] text-[12px]' target='_blank' rel="nofollow">Xem Sản Phẩm</a>
               </Link>
             </div>
           </div>

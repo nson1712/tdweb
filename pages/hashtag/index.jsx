@@ -7,8 +7,8 @@ const Hashtags = () => {
     <>
       <HeaderServer
         title="Danh sách thể loại truyện full theo hashtag | Webtruyen"
-        description="Danh sách toàn bộ các thể loại truyện full online mà toidoc cung cấp. Bạn có thể xem danh sách các truyện có trong từng thể loại."
-        canonical="https://toidoc.vn/the-loai"
+        description="Danh sách toàn bộ các thể loại truyện full đặc trưng mà được nhà dịch, tác giả, độc giả phân loại kỹ càng. Bạn có thể xem danh sách các truyện có trong từng thể loại."
+        canonical="https://toidoc.vn/hashtag"
       />
       <HashtagsPage />
     </>

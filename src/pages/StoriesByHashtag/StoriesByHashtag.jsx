@@ -109,7 +109,7 @@ const StoriesByHashtag = () => {
 
 
   const title = useMemo(() => {
-    if (route.query.hashtag) return `# ${route.query.hashtag}`;
+    if (route.query.hashtag) return `Danh sách truyện #${route.query.hashtag}`;
   }, [route.query]);
 
   const onShowSizeChange = (_, pageSize) => {
