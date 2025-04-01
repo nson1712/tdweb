@@ -13,6 +13,7 @@
   "dependencies": {
     "@ant-design/icons": "^5.5.2",
     "@fortawesome/fontawesome-free": "^6.1.1",
+    "@paypal/react-paypal-js": "^8.8.2",
     "@react-oauth/google": "^0.12.1",
     "@tailwindcss/line-clamp": "^0.4.2",
     "animated-number-react": "^0.1.2",
