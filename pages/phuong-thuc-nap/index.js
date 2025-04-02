@@ -4,7 +4,6 @@ import HeaderServer from "../../src/components/HeaderServer";
 import PaymentMethods from "../../src/pages/Payment/PaymentMethods";
 
 const PaymentMethodPage = (data) => {
-  console.log("DATA: ", data)
   return (
     <GoogleReCaptchaProvider reCaptchaKey="6LemlQIqAAAAAN3GiXSgwfSljLMiGgRAINr1ALev">
       <>
