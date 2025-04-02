@@ -19,7 +19,6 @@ const PaymentMethodPage = (data) => {
 };
 
 PaymentMethodPage.getInitialProps = async (ctx) => {
-  console.log("CTXXXXXXXX: ", ctx)
   const getDetail = async () => {
     try {
       if (ctx.query.ref) {
