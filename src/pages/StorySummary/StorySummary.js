@@ -146,7 +146,8 @@ const StorySummary = ({storyDetail, articleDetail}) => {
   const [currentChapterDetail, setCurrentChapterDetail] = useState([]);
 
   const [currentTab, setCurrentTab] = useState("CONTENT");
-  const [chapters, setChapters] = useState([]);
+  const [chapters, setChapters] = useState([]);const [affType, setAffType] = useState("");
+  const [affObj, setAffObj] = useState({});
 
   const route = useRouter();
 
@@ -221,6 +222,8 @@ const StorySummary = ({storyDetail, articleDetail}) => {
             setFinalChargeDiamond(storyDetail?.totalDiamond);
           }
         }
+
+        await getAds();
       }
     };
     fetchData();
@@ -251,70 +254,23 @@ const StorySummary = ({storyDetail, articleDetail}) => {
       }
     }
   };
-  // useEffect(() => {
-  //   const trackScrolling = () => {
-  //     clearTimeout(timeout)
-  //     timeout = setTimeout(async () => {
-  //       const windowHeight = "innerHeight" in window ? window.innerHeight : document.documentElement.offsetHeight;
-  //       const body = document.body;
-  //       const html = document.documentElement;
-  //       const docHeight = Math.max(body.scrollHeight, body.offsetHeight, html.clientHeight, html.scrollHeight, html.offsetHeight);
-  //       const windowBottom = windowHeight + window.pageYOffset;
-  //       const isBottom = windowBottom >= docHeight - 600;
-  //       const isEndChapter = window.pageYOffset === 100;
-
-  //       setScrollOffset(window.pageYOffset)
-
-  //       if (isBottom && storyDetail.chapters && storyDetail.chapters[chapters.length] && !loadingChapterDetail) {
-  //         if (time <= 0) {
-  //           setTime(180)
-  //         }
-  //         if (orderPopupUrl >= 4) {
-  //           setOrderPopupUrl(1)
-  //         }
-  //         const newUrl = `/${route.query.storySlug}/${storyDetail.chapters[chapters.length]?.slug}`
-
-  //         window.history.replaceState({ ...window.history.state, as: newUrl, url: newUrl }, '', newUrl);
-
-  //         const result = await getChapterDetail(route.query.storySlug, storyDetail.chapters[chapters.length]?.slug)
-  //         setChapters(prev => {
-  //           if (prev[prev.length - 1]?.id !== storyDetail.chapters[chapters.length]?.id) {
-  //             return [...prev, {
-  //               ...storyDetail.chapters[chapters.length],
-  //               chapterDetail: result
-  //             }]
-  //           }
-
-  //           return prev
-
-  //         })
-  //         setCurrentChapterDetail(result);
-  //         setShowBubble('up');
-
-  //         window.gtag("event", "page_view", {
-  //           page_path: location.pathname,
-  //         });
-
-  //         setPopUpUrl(`/images/download-app/popup-${orderPopupUrl}.png`)
-  //         setOrderPopupUrl(orderPopupUrl => orderPopupUrl + 1)
-  //       }
-
-  //     }, 100)
-  //   }
-  //   window.addEventListener('scroll', trackScrolling);
-
-  //   return () => {
-  //     window.removeEventListener('scroll', trackScrolling);
-  //   }
-  // }, [chapters, storyDetail, loadingChapterDetail])
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setTime((time) => (time !== 0 ? time - 1 : 0));
-  //   }, 1000);
-
-  //   return () => clearInterval(interval);
-  // }, []);
+  
+  const getAds = async () => {
+    try {
+      const result = await Api.get({
+        url: "/data/shopee/aff/detail",
+        params: {
+          type: "ALL",
+        },
+        hideError: true
+      });
+      if (result?.data && result?.data?.linkAff) {
+        setAffType(result?.data?.type);
+        setAffObj(result?.data);
+      }
+    } catch (err) {
+    }
+  };
 
   const getAvailableCash = async () => {
     try {
@@ -704,29 +660,40 @@ const StorySummary = ({storyDetail, articleDetail}) => {
               handleOpenFullChapter={handleOpenFullChapter}
             />
           )}
-          <div className='mt-[40px] mb-[20px]'>
-            {/*<p><strong><i>LIVESTREAM</i> 💥- Xem ngay kẻo lỡ bộ sưu tập thời trang HOT NHẤT mùa này</strong></p>*/}
-            <p><strong><i>Ulatroi, dạo này gu chị em đỉnh phê ê tờ ết  🤭</i> 💥 - Form áo đẹp, mix set hay tách set đều okela </strong></p>
-            <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
-            <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
-            <p>👉 FREE SHIP Toàn Quốc</p>
-            {/*<div className='flex items-center justify-center' dangerouslySetInnerHTML={{__html: `<iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Fguchicofficial%2Fvideos%2F1157857955517332%2F&show_text=false&width=300&t=0" width="300" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`}}/>*/}
-            <div className='flex items-center justify-center'>
-              <Link href={`https://www.facebook.com/share/p/16CvwpVpNJ/`} passHref>
-                <a id='live-story-detail-image' target='_blank' rel="nofollow">
-                  <img src='/images/quan-ao/gifmaker_me.gif' className='w-[200px]'></img>
-                </a>
-              </Link>
+          {affType !== '' && affType === 'LIVESTREAM' ?
+            <div className='mt-[40px] mb-[20px]'>
+              <p dangerouslySetInnerHTML={{__html: `${affObj?.productName}`}}/>
+              <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
+              <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
+              <p>👉 FREE SHIP Toàn Quốc</p>
+              <div className='flex items-center justify-center' dangerouslySetInnerHTML={{__html: `${affObj?.linkAff}`}}/>
+              <div className='flex items-center justify-center'>
+                <Link href={`https://www.facebook.com/guchicofficial`} passHref>
+                  <a id='live-story-detail' className='w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px]' target='_blank'>Vào Facebook Xem Live</a>
+                </Link>
+              </div>
             </div>
-            <div className='flex items-center justify-center'>
-              {/*<Link href={`https://www.facebook.com/100069123038327/videos/1157857955517332`} passHref>
-                <a id='live-story-detail' className='w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px]' target='_blank'>Vào Facebook Xem Live</a>
-              </Link>*/}
-              <Link href={`https://www.facebook.com/share/p/16CvwpVpNJ/`} passHref>
-                <a id='live-story-detail' className='w-[200px] btnLiveStream px-[4px] py-[2px] text-[12px]' target='_blank' rel="nofollow">Xem Sản Phẩm</a>
-              </Link>
-            </div>
-          </div>
+            :
+            affType !== '' &&
+              <div className='mt-[40px] mb-[20px]'>
+                <p dangerouslySetInnerHTML={{__html: `${affObj?.productName}`}}/>
+                <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
+                <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
+                <p>👉 FREE SHIP Toàn Quốc</p>
+                <div className='flex items-center justify-center'>
+                  <Link href={`${affObj.linkAff}`} passHref>
+                    <a id='live-chapter-content-image' target='_blank' rel="nofollow">
+                      <img src={`${affObj?.image}`} className='w-[200px]'></img>
+                    </a>
+                  </Link>
+                </div>
+                <div className='flex items-center justify-center'>
+                  <Link href={`${affObj.linkAff}`} passHref>
+                    <a id='live-chapter-content' className='w-[200px] btnLiveStream px-[4px] py-[2px] text-[12px]' target='_blank' rel="nofollow">Xem Sản Phẩm</a>
+                  </Link>
+                </div>
+              </div>
+          }
           {storyDetail?.chapters?.length > 0 && (
             <>
               <div className="border-b-[1px] border-color pb-4 px-2">

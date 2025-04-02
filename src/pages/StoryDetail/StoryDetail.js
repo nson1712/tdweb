@@ -70,7 +70,8 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [showModal, setShowModal] = useState(false);
   const [showQuestion, setShowQuestion] = useState(false);
   const [showModalApp, setShowModalApp] = useState(false);
-  const [isEnoughDiamond, setIsEnoughDiamond] = useState(true);
+  const [affType, setAffType] = useState("");
+  const [affObj, setAffObj] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [availableCash, setAvailableCash] = useState({});
   const [showModalNotEnoughDiamond, setShowModalNotEnoughDiamond] =
@@ -153,6 +154,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       if (isLoggedIn && result?.free && result?.contentEnabled) {
         saveLastStory(route.query.storySlug, route.query.chapterSlug);
       }
+      await getAds();
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
@@ -176,11 +178,25 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         hideError: true
       });
       setAvailableCash(result?.data);
-      if (currentChapterDetail?.price > result?.data?.balance) {
-        setIsEnoughDiamond(false);
-      }
     } catch (err) {
       setAvailableCash({ balance: 0 });
+    }
+  };
+
+  const getAds = async () => {
+    try {
+      const result = await Api.get({
+        url: "/data/shopee/aff/detail",
+        params: {
+          type: "ALL",
+        },
+        hideError: true
+      });
+      if (result?.data && result?.data?.linkAff) {
+        setAffType(result?.data?.type);
+        setAffObj(result?.data);
+      }
+    } catch (err) {
     }
   };
 
@@ -682,30 +698,39 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                               dfjkdsfds={jkdjfk}
                               order={i}
                             />
-                            {i === (chapterContents.length - 6) && 
+                            {affType !== '' && affType === 'LIVESTREAM' && i === (chapterContents.length - 6) ?
                               <div className='mt-[40px] mb-[20px]'>
-                                {/*<p><strong><i>LIVESTREAM</i> 💥- Xem ngay kẻo lỡ bộ sưu tập thời trang HOT NHẤT mùa này</strong></p>*/}
-                                <p><strong><i>Ulatroi, dạo này gu chị em đỉnh phê ê tờ ết  🤭</i> 💥 - Form áo đẹp, mix set hay tách set đều okela </strong></p>
+                                <p dangerouslySetInnerHTML={{__html: `${affObj?.productName}`}}/>
                                 <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
                                 <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
                                 <p>👉 FREE SHIP Toàn Quốc</p>
-                                {/*<div className='flex items-center justify-center' dangerouslySetInnerHTML={{__html: `<iframe src="https://www.facebook.com/plugins/video.php?height=476&href=https%3A%2F%2Fwww.facebook.com%2Fguchicofficial%2Fvideos%2F1157857955517332%2F&show_text=false&width=300&t=0" width="300" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowfullscreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share" allowFullScreen="true"></iframe>`}}/>*/}
+                                <div className='flex items-center justify-center' dangerouslySetInnerHTML={{__html: `${affObj?.linkAff}`}}/>
                                 <div className='flex items-center justify-center'>
-                                  <Link href={`https://www.facebook.com/share/p/16CvwpVpNJ/`} passHref>
-                                    <a id='live-chapter-content-image' target='_blank' rel="nofollow">
-                                      <img src='/images/quan-ao/gifmaker_me.gif' className='w-[200px]'></img>
-                                    </a>
-                                  </Link>
-                                </div>
-                                <div className='flex items-center justify-center'>
-                                  {/*<Link href={`https://www.facebook.com/100069123038327/videos/1157857955517332`} passHref>
+                                  <Link href={`https://www.facebook.com/guchicofficial`} passHref>
                                     <a id='live-story-detail' className='w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px]' target='_blank'>Vào Facebook Xem Live</a>
-                                  </Link>*/}
-                                  <Link href={`https://www.facebook.com/share/p/16CvwpVpNJ/`} passHref>
-                                    <a id='live-chapter-content' className='w-[200px] btnLiveStream px-[4px] py-[2px] text-[12px]' target='_blank' rel="nofollow">Xem Sản Phẩm</a>
                                   </Link>
                                 </div>
                               </div>
+                              :
+                              affType !== '' && i === (chapterContents.length - 6) &&
+                                <div className='mt-[40px] mb-[20px]'>
+                                  <p dangerouslySetInnerHTML={{__html: `${affObj?.productName}`}}/>
+                                  <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
+                                  <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
+                                  <p>👉 FREE SHIP Toàn Quốc</p>
+                                  <div className='flex items-center justify-center'>
+                                    <Link href={`${affObj.linkAff}`} passHref>
+                                      <a id='live-chapter-content-image' target='_blank' rel="nofollow">
+                                        <img src={`${affObj?.image}`} className='w-[200px]'></img>
+                                      </a>
+                                    </Link>
+                                  </div>
+                                  <div className='flex items-center justify-center'>
+                                    <Link href={`${affObj.linkAff}`} passHref>
+                                      <a id='live-chapter-content' className='w-[200px] btnLiveStream px-[4px] py-[2px] text-[12px]' target='_blank' rel="nofollow">Xem Sản Phẩm</a>
+                                    </Link>
+                                  </div>
+                                </div>
                             }
                           </>
                         ))}
