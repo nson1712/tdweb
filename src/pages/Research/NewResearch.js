@@ -223,7 +223,7 @@ const Research = () => {
               </div>
               <div className="space-y-2 mx-2">
                 {(isLoggedIn && viewings?.data?.length > 0) && (
-                  <div className="block md:hidden pt-1 pb-1 md:mt-0 px-2 space-y-2 bg-slate-100 rounded-xl">
+                  <div className="block md:hidden py-3 md:mt-0 px-2 space-y-2 bg-slate-100 rounded-xl">
                     <UnfinishedStory
                       items={[
                         {

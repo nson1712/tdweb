@@ -145,7 +145,7 @@ const Profile = () => {
           </div>
           <div className="flex justify-center">
             <Link
-              href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}`}
+              href={`/phuong-thuc-nap`}
             >
               <Button3D id="nap-kim-cuong" name="Nạp kim cương" />
             </Link>
