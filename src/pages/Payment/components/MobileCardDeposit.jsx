@@ -1,6 +1,7 @@
 import { Button, Collapse, ConfigProvider, Form, Input, Select } from "antd";
 import ViettelIcon from "../../../../public/icons/ViettelIcon";
 import { useMobileCardPackages } from "../../../hook/useData";
+import MomoIcon from "../../../../public/icons/MomoIcon";
 
 const MobileCardDeposit = ({ referralCode }) => {
   const [form] = Form.useForm();

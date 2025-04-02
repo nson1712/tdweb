@@ -1,3 +1,5 @@
+import { useState } from "react";
+import { usePaypalPackages } from "../../../hook/useData";
 import { Collapse, ConfigProvider, Form, Select } from "antd";
 import PaypalIcon from "../../../../public/icons/PaypalIcon";
 import {
@@ -10,8 +12,6 @@ import {
   PayPalScriptProvider,
 } from "@paypal/react-paypal-js";
 import SubmitPayment from "./SubmitPayment";
-import { useState } from "react";
-import { usePaypalPackages } from "../../../hook/useData";
 
 const PaypalDeposit = ({ api }) => {
   const [form] = Form.useForm();
@@ -97,7 +97,22 @@ const PaypalDeposit = ({ api }) => {
                 </div>
               ),
               children: (
-                <>
+                <div className="text-base">
+                <p className="text-lg font-bold">Hướng dẫn nạp kim cương qua Paypal</p>
+                <p><span className="font-bold">Bước 1:</span> Chọn gói kim cương muốn nạp</p>
+                <p><span className="font-bold">Bước 2:</span> Bấm nút Paypal màu vàng bên dưới để thực hiện thanh toán</p>
+                <p><span className="font-bold">Bước 3:</span> Sau khi thanh toán thành công, vui lòng chụp lại hóa đơn
+                    thanh toán rồi gửi cho Admin xác nhận{" "}
+                    <span>
+                      <a
+                        className="text-lg text-blue-500 hover:!text-blue-600 font-bold"
+                        href="https://m.me/185169981351799"
+                        target="_blank"
+                      >
+                        TẠI ĐÂY
+                      </a>
+                    </span></p>
+
                   <Form.Item label="Chọn gói kim cương">
                     <Select
                       defaultValue={7}
@@ -121,7 +136,7 @@ const PaypalDeposit = ({ api }) => {
                     <PayPalCVVField />
                     <SubmitPayment />
                   </PayPalCardFieldsProvider>
-                </>
+                </div>
               ),
             },
           ]}
