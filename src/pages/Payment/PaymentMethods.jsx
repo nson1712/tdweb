@@ -7,29 +7,31 @@ import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import Header from "../../components/Header/Header";
 import MomoDeposit from "./components/MomoDeposit";
 import ForeignDeposit from "./components/ForeignDeposit";
-import { ArrowLeftOutlined } from "@ant-design/icons";
-import { useRouter } from "next/router";
+import GlobalStore from "../../stores/GlobalStore";
+import { useEffect } from "react";
+import Title from "./components/Title";
 
-const PaymentMethods = ({ referralCode }) => {
+const PaymentMethods = ({ referralCode, storySlug, chapterSlug }) => {
   const [api, contextHolder] = notification.useNotification();
-  const router = useRouter();
+  const { checkIsLogin } = GlobalStore;
+
+  useEffect(() => {
+    checkIsLogin();
+  }, []);
+
   return (
     <CommonLayout>
       {contextHolder}
       <Header />
       <div className="h-lvh max-w-[768px] mx-auto sm:pt-24 pb-10 overflow-y-auto bg-white">
-        <div className="relative">
-          <ArrowLeftOutlined
-            onClick={() => router.back()}
-            className="absolute left-5 top-5 text-lg sm:text-3xl"
-          />
-          <div className="text-xl sm:text-3xl text-center font-bold pt-3 pb-3 sm:pb-0 bg-gradient-to-br from-[#ADF7F2] to-[#15AAFF] sm:bg-none">
-            {" "}
-            Các phương thức nạp của Toidoc
-          </div>
-        </div>
+        <Title />
+
         <div className="mx-auto max-w-[600px] space-y-4 mt-10 px-2">
-          <AutoDeposit />
+          <AutoDeposit
+            referralCode={referralCode}
+            storySlug={storySlug}
+            chapterSlug={chapterSlug}
+          />
           <DefaultDeposit />
           <MobileCardDeposit referralCode={referralCode} />
           <PaypalDeposit api={api} />

@@ -9,6 +9,7 @@ import { CopyOutlined } from '@ant-design/icons';
 import { QRCode } from "react-qrcode-logo";
 import imageLoader from '../../loader/imageLoader';
 import { toast } from 'react-toastify';
+import Link from 'next/link';
 
 const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, availableCash, fullPriceStory, setShowWarningDepositSuccess, handlePaymentDepositAuto, handleSupportOpenChapter}) => {
   
@@ -528,9 +529,19 @@ const OpenChapterInfo = ({story, chapter, handleOpenChapter, handleSupport, avai
           
           <div>
             <div className='flex justify-center'>
-              <a href={`/nap-kim-cuong${GlobalStore.profile?.referralCode ? ('?ref=' + GlobalStore.profile?.referralCode + '&story=' + story?.slug + '&chapter=' + chapter?.slug) : ''}`} className="text-underline white-text">
-                Xem thêm gói khác
-              </a>
+              <Link 
+              href={{
+                pathname: "/phuong-thuc-nap",
+                query: {
+                  ref: GlobalStore.profile ? GlobalStore.profile?.referralCode : "",
+                  story: story?.slug,
+                  chapter: chapter?.slug
+                }
+              }}
+              >
+              <a className="text-underline text-white">
+                Phương thức và gói nạp khác
+              </a></Link>
             </div>
             <Button
               className="btnSecond-Second support-btn"

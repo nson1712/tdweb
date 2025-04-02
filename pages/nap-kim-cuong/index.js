@@ -2,7 +2,6 @@ import React from 'react'
 import PaymentComponent from '../../src/pages/Payment'
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
 import HeaderServer from '../../src/components/HeaderServer'
-import PaymentMethods from '../../src/pages/Payment/PaymentMethods'
 
 const Payment = (data) => {
   return (
@@ -12,7 +11,6 @@ const Payment = (data) => {
         title={'Toidoc - Nạp kim cương tự động'} 
       />
       <PaymentComponent referralCode={data?.referralCode} storySlug={data?.storySlug} chapterSlug={data?.chapterSlug}/>
-      {/* <PaymentMethods /> */}
       </>
     </GoogleReCaptchaProvider>
   )

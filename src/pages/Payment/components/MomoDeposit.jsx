@@ -34,8 +34,7 @@ const MomoDeposit = () => {
               <div className="space-y-4">
                 <p className="text-lg font-bold">Hướng dẫn nạp kim cương: </p>
                 <p className="text-base">
-                  <span className="font-bold">Bước 1: </span>Mở App Momo, chọn
-                  quét QR
+                  <span className="font-bold">Bước 1: </span>Mở App ngân hàng bất kỳ, chọn biểu tượng quét QR tương tự như trong ảnh
                 </p>
 
                 <Image

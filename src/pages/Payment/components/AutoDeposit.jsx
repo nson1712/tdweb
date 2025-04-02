@@ -1,13 +1,22 @@
 import { useRouter } from "next/router";
 import ExchangeIcon from "../../../../public/icons/ExchangeIcon";
 import BestGif from "./BestGif";
+import Link from "next/link";
 
-const AutoDeposit = () => {
+const AutoDeposit = ({referralCode, storySlug, chapterSlug}) => {
   const router = useRouter();
+
   return (
-    <div
+    <Link href={{
+      pathname: "/nap-kim-cuong",
+      query: {
+        ref: referralCode,
+        story: storySlug,
+        chapter: chapterSlug,
+      }
+    }}>
+    <a
       className="relative bg-white border-1 border-slate-200 rounded-lg flex px-3 py-2.5 gap-x-4 hover:!bg-slate-50 transition duration-300 cursor-pointer z-10"
-      onClick={() => router.push("/nap-kim-cuong")}
     >
       <BestGif />
       <ExchangeIcon />
@@ -17,7 +26,8 @@ const AutoDeposit = () => {
           Nhanh, tiện, không cần chờ admin duyệt..
         </div>
       </div>
-    </div>
+    </a>
+    </Link>
   );
 };
 
