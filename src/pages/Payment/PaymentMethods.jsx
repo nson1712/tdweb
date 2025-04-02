@@ -15,7 +15,7 @@ const PaymentMethods = ({ referralCode }) => {
     <CommonLayout>
       {contextHolder}
       <Header />
-      <div className="h-screen max-w-[768px] mx-auto sm:pt-20 overflow-y-auto bg-white">
+      <div className="h-screen max-w-[768px] mx-auto sm:pt-24 overflow-y-auto bg-white">
         <Title className="self-center" level={2}>Các phương thức nạp của ToiDoc</Title>
         <div className="mx-auto max-w-[600px] space-y-4 mt-10 px-2">
           <AutoDeposit />
