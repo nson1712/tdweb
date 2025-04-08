@@ -358,7 +358,7 @@ class StoryStore {
         url: "data/private/data/story/hot1",
         params: {
           page,
-          pageSize,
+          size: pageSize,
         },
         hideError: true,
       });

@@ -75,7 +75,7 @@ const Homepage = () => {
       //   setSelectedCategories(selectedCategoriesStore.split(','))
       // }
       // checkCustomerClickAffLocal();
-      
+      setShowModal(true);
       
     }, 2000)
     
@@ -113,7 +113,7 @@ const Homepage = () => {
       window.open('https://toidoc.onelink.me/59bO/d42503wz', '_blank', 'Toidoc')
     } else {
       
-      window.open(`https://www.facebook.com/toidoc.support/posts/pfbid02FE94wAvXZLq3cAVT3TSppkFLM8uabRcJ8AwMuHa9LYdbCFM7TfnpqW1crVnadNPel`, '_blank', 'Toidoc')
+      window.open(`https://www.facebook.com/toidoc.support/posts/pfbid0CLDdAD1P7nipafSHAfn7mdoXtzpefZtqqmNibjBG6SmVVbzGczmprprZo5F25SB6l`, '_blank', 'Toidoc')
     }
   }
 
@@ -308,7 +308,7 @@ const Homepage = () => {
           countDownTime={5}
         >
           <a onClick={(e) => handleClick(e, 'big-banner')}>
-            <img src='https://media.truyenso1.xyz/ads/banner-lixi-tet-1.png' className='imgBanner'/>
+            <img src='https://media.truyenso1.xyz/ads/bao-tri-3-4.png' className='imgBanner'/>
           </a>
         </ModalComponent>}
         <ChatSupport showChat={showChat} setShowChat={setShowChat} />

@@ -111,7 +111,7 @@ const Research = () => {
     getHashtags(1, 40);
     // getcollections1();
     // getcollections2();
-    // setShowModal(true)
+    // setShowModal(true);
     // checkCustomerClickAffLocal();
   }, []);
 
@@ -144,7 +144,7 @@ const Research = () => {
       window.open("https://toidoc.onelink.me/59bO/d42503wz");
     } else {
       window.open(
-        `https://www.facebook.com/toidoc.support/posts/pfbid02FE94wAvXZLq3cAVT3TSppkFLM8uabRcJ8AwMuHa9LYdbCFM7TfnpqW1crVnadNPel`,
+        `https://www.facebook.com/toidoc.support/posts/pfbid0dFWJ4nSzqf2UN4rR54mzVEBhAqqrbbFsC21Pxxsc23W4xh9ZTe7hzjK5NP2J1zsbl`,
         "_blank",
         "Toidoc"
       );
@@ -282,16 +282,16 @@ const Research = () => {
           )}
         </div>
 
-        {/* {showModal && <ModalComponent
+        {/*{showModal && <ModalComponent
           show={showModal}
           handleClose={(e) => handleCloseModal('aff')}
           isCountDown={false}
           countDownTime={5}
         >
           <a onClick={(e) => handleClick(e, 'big-banner-research')}>
-            <img src="https://media.truyenso1.xyz/ads/banner-lixi-tet-1.png" className='imgBanner'/>
+            <img src="https://media.truyenso1.xyz/ads/flashsale-4-4.png" className='imgBanner'/>
           </a>
-        </ModalComponent>} */}
+        </ModalComponent>}*/}
       </div>
       <ChatSupport showChat={showChat} setShowChat={setShowChat} />
     </CommonLayout>

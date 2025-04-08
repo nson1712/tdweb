@@ -16,7 +16,7 @@ const Maintainance = () => {
           </div>
           <p style={{'fontSize': '18px'}}><strong>📢 Thông báo nâng cấp Website Toidoc 🛠</strong></p>
               <p>Xin chào các độc giả thân mến!</p>
-              <p>⚠️ Toidoc xin thông báo về việc nâng cấp Website Toidoc để nâng trải nghiệm cho độc giả. Website sẽ bảo trì hoạt động đến <strong>12:00 13/01/2025</strong>. ⏱ 🛠</p>
+              <p>⚠️ Toidoc xin thông báo về việc nâng cấp Website Toidoc để nâng trải nghiệm cho độc giả. Nền tảng Toidoc sẽ bảo trì đến <strong>12:00 trưa ngày 03/04/2025</strong>. ⏱ 🛠</p>
               <p>🔜 Trong thời gian nâng câps, bạn có thể truy cập vào Ứng dụng đọc truyện Toidoc của chúng tôi để tiếp tục đọc </p>
               <div>
                   <div>

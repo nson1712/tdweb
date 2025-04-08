@@ -14,7 +14,9 @@ const BlogShortDescription = ({ item }) => {
       </div>
       <div>
         <ClockCircleOutlined />{" "}
-        {DateTime.fromMillis(item.createdAt ?? 0).toFormat("dd/MM/yyyy HH:mm")}
+        {item.createdAt
+          ? DateTime.fromISO(item.createdAt).toFormat("dd/MM/yyyy HH:mm")
+          : ""}
       </div>
     </>
   );

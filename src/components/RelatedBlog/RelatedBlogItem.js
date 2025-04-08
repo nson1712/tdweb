@@ -4,9 +4,7 @@ import BlogImageLink from "../../components/BlogImageLink";
 import BlogTitleLink from "../../components/BlogTitleLink";
 
 const RelatedBlogItem = ({ item }) => {
-  const formattedDate = DateTime.fromMillis(item.createdAt ?? 0).toFormat(
-    "dd/MM/yyyy HH:mm"
-  );
+  const formattedDate = item.createdAt ? DateTime.fromISO(item.createdAt).toFormat("dd/MM/yyyy HH:mm") : "";
 
   return (
     <div className="flex gap-x-2">
