@@ -83,7 +83,7 @@ const MobileCardDeposit = ({ referralCode }) => {
                     initialValue="viettel"
                   >
                     <Select
-                      defaultValue="viettel"
+                      initialValues="viettel"
                       placeholder="Chọn nhà mạng"
                       allowClear
                       options={networkProvider}
