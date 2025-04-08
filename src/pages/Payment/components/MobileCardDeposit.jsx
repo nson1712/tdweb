@@ -1,7 +1,6 @@
 import { Button, Collapse, ConfigProvider, Form, Input, Select } from "antd";
 import ViettelIcon from "../../../../public/icons/ViettelIcon";
 import { useMobileCardPackages } from "../../../hook/useData";
-import MomoIcon from "../../../../public/icons/MomoIcon";
 
 const MobileCardDeposit = ({ referralCode }) => {
   const [form] = Form.useForm();
@@ -10,18 +9,16 @@ const MobileCardDeposit = ({ referralCode }) => {
   const onCardFinish = (values) => {
     window.open(
       `https://m.me/185169981351799?text=Mình muốn nạp kim cương bằng thẻ điện thoại, Toidoc hỗ trợ mình nhé! %0A Mã KH: ${
-        referralCode ?? ""
+        referralCode || values.referralCode
       } %0A Loại thẻ: ${
         values.networkProvider
       } %0A Mệnh giá thẻ: ${values.cardAmount
         .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}VNĐ %0A Số thẻ: ${
-        values.code
-      } %0A Số seri: ${values.serialNumber}`
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}VNĐ %0A Số thẻ: ${values.code}`
     );
     form.resetFields();
   };
-  
+
   return (
     <ConfigProvider
       theme={{
@@ -59,6 +56,21 @@ const MobileCardDeposit = ({ referralCode }) => {
                   tương đương 70% giá trị của thẻ!
                 </p>
                 <Form form={form} onFinish={onCardFinish}>
+                  {!referralCode && (
+                    <Form.Item
+                      name="referralCode"
+                      label="Mã khách hàng"
+                      rules={[
+                        {
+                          message: "Vui lòng nhập mã khách hàng!",
+                          required: true,
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Nhập mã khách hàng" />
+                    </Form.Item>
+                  )}
+
                   <Form.Item
                     name="networkProvider"
                     label="Nhà mạng"
@@ -106,19 +118,6 @@ const MobileCardDeposit = ({ referralCode }) => {
                     ]}
                   >
                     <Input placeholder="Nhập mã thẻ cào (Sau lớp tráng bạc)" />
-                  </Form.Item>
-
-                  <Form.Item
-                    name="serialNumber"
-                    label="Số seri"
-                    rules={[
-                      {
-                        message: "Vui lòng nhập số seri!",
-                        required: true,
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Nhập số seri" />
                   </Form.Item>
 
                   <Form.Item label={null}>

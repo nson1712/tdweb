@@ -29,7 +29,7 @@ const Header = ({ selectedTab }) => {
   };
 
   return (
-    <div className="py-[16px] shadow-header fixed bottom-[0px] md:bottom-auto md:top-0 left-0 right-0 z-[99] border-t-[1px] md:border-t-0 border-color ">
+    <div className="py-[16px] shadow-header fixed bottom-[0px] md:bottom-auto md:top-0 left-0 right-0 z-[999] border-t-[1px] md:border-t-0 border-color ">
       <div className="flex justify-center max-w-[768px] mx-auto">
         <Link href="/tim-kiem" passHref>
           <a>

@@ -1,13 +1,33 @@
 import { useState } from "react";
-import { Collapse, ConfigProvider, Image, Typography } from "antd";
+import {
+  Button,
+  Collapse,
+  ConfigProvider,
+  Form,
+  Image,
+  Input,
+  Typography,
+} from "antd";
 import { useDiamondPackages } from "../../../hook/useData";
 import DepositDiamondIcon from "../../../../public/icons/DiamondDepositIcon";
+import { useRouter } from "next/router";
 
 const { Paragraph } = Typography;
 
 const DefaultDeposit = () => {
+  const [form] = Form.useForm();
+  const router = useRouter();
+  const { ref } = router.query;
   const { diamondPackage } = useDiamondPackages();
   const [previewQr, setPreviewQr] = useState({ visible: false, qr: null });
+
+  const onFinish = (values) => {
+    window.open(
+      `https://m.me/185169981351799?text=Mình vừa thanh toán qua chuyển khoản, Toidoc hỗ trợ mình nhé! %0A Mã khách hàng: ${
+        ref || values.referralCode
+      }`
+    );
+  };
   return (
     <div>
       <ConfigProvider
@@ -65,22 +85,45 @@ const DefaultDeposit = () => {
                     </div>
                   </p>
 
-                  <p className="text-base font-medium">
-                    Sau khi chuyển khoản thành công, vui lòng chụp lại màn hình
-                    thanh toán rồi gửi cho Admin xác nhận{" "}
-                    <a
-                      className="text-lg text-blue-500 hover:!text-blue-600"
-                      href="https://m.me/185169981351799"
-                      target="_blank"
-                    >
-                      TẠI ĐÂY
-                    </a>
-                  </p>
+                  <Form
+                    form={form}
+                    onFinish={onFinish}
+                    scrollToFirstError={{ behavior: "smooth", block: "center" }}
+                  >
+                    <p className="text-base font-medium">
+                      Sau khi chuyển khoản thành công, vui lòng chụp lại màn
+                      hình thanh toán rồi gửi cho Admin xác nhận{" "}
+                      <Form.Item noStyle label={null}>
+                        <Button
+                          className="text-lg font-bold text-blue-500 hover:!text-blue-600 hover:!bg-transparent px-1"
+                          type="text"
+                          htmlType="submit"
+                        >
+                          TẠI ĐÂY
+                        </Button>
+                      </Form.Item>
+                    </p>
+
+                    {!ref && (
+                      <Form.Item
+                        name="referralCode"
+                        label="Mã khách hàng"
+                        rules={[
+                          {
+                            message: "Vui lòng nhập mã khách hàng!",
+                            required: true,
+                          },
+                        ]}
+                      >
+                        <Input placeholder="Nhập mã khách hàng" />
+                      </Form.Item>
+                    )}
+                  </Form>
 
                   <div className="mt-4 space-y-2">
                     {diamondPackage.map((item, index) => (
                       <div key={index}>
-                        <div 
+                        <div
                           class="text-gray-900 bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center cursor-pointer transition duration-300"
                           onClick={() =>
                             setPreviewQr({ visible: true, qr: item.qr })

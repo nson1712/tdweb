@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { usePaypalPackages } from "../../../hook/useData";
-import { Collapse, ConfigProvider, Form, Select } from "antd";
+import { Button, Collapse, ConfigProvider, Form, Input, Select } from "antd";
 import PaypalIcon from "../../../../public/icons/PaypalIcon";
 import {
   PayPalButtons,
@@ -12,9 +12,12 @@ import {
   PayPalScriptProvider,
 } from "@paypal/react-paypal-js";
 import SubmitPayment from "./SubmitPayment";
+import { useRouter } from "next/router";
 
 const PaypalDeposit = ({ api }) => {
   const [form] = Form.useForm();
+  const router = useRouter();
+  const { ref } = router.query;
   const { paypalPackages } = usePaypalPackages();
   const [selectedPackage, setSelectedPackage] = useState(
     paypalPackages?.[0] ? paypalPackages[0].value : 7
@@ -26,7 +29,7 @@ const PaypalDeposit = ({ api }) => {
     });
   };
 
-  const createOrder = (data, actions) => {
+  const createOrder = (_, actions) => {
     if (!selectedPackage) {
       openNotificationWithIcon("error", "Vui lòng chọn gói!");
       return;
@@ -44,7 +47,7 @@ const PaypalDeposit = ({ api }) => {
     });
   };
 
-  const onApprove = (data, actions) => {
+  const onApprove = (_, actions) => {
     return actions.order.capture().then(() => {
       openNotificationWithIcon("success", "Thanh toán thành công!");
       form.resetFields();
@@ -56,6 +59,14 @@ const PaypalDeposit = ({ api }) => {
   const paypalCardButtonTransactionProps = {
     createdOrder() {},
     onApprove() {},
+  };
+
+  const onFinish = (values) => {
+    window.open(
+      `https://m.me/185169981351799?text=Mình vừa thanh toán qua Momo, Toidoc hỗ trợ mình nhé! %0A Mã khách hàng: ${
+        ref || values.referralCode
+      }`
+    );
   };
   return (
     <PayPalScriptProvider
@@ -98,29 +109,64 @@ const PaypalDeposit = ({ api }) => {
               ),
               children: (
                 <div className="text-base">
-                <p className="text-lg font-bold">Hướng dẫn nạp kim cương qua Paypal</p>
-                <p><span className="font-bold">Bước 1:</span> Chọn gói kim cương muốn nạp</p>
-                <p><span className="font-bold">Bước 2:</span> Bấm nút Paypal màu vàng bên dưới để thực hiện thanh toán</p>
-                <p><span className="font-bold">Bước 3:</span> Sau khi thanh toán thành công, vui lòng chụp lại hóa đơn
-                    thanh toán rồi gửi cho Admin xác nhận{" "}
-                    <span>
-                      <a
-                        className="text-lg text-blue-500 hover:!text-blue-600 font-bold"
-                        href="https://m.me/185169981351799"
-                        target="_blank"
-                      >
-                        TẠI ĐÂY
-                      </a>
-                    </span></p>
+                  <p className="text-lg font-bold">
+                    Hướng dẫn nạp kim cương qua Paypal
+                  </p>
+                  <p>
+                    <span className="font-bold">Bước 1:</span> Chọn gói kim
+                    cương muốn nạp
+                  </p>
+                  <p>
+                    <span className="font-bold">Bước 2:</span> Bấm nút Paypal
+                    màu vàng bên dưới để thực hiện thanh toán
+                  </p>
+                  <Form
+                    form={form}
+                    onFinish={onFinish}
+                    scrollToFirstError={{ behavior: "smooth" }}
+                  >
+                    <p className="text-base">
+                      <span className="font-bold">Bước 3:</span> Sau khi thanh
+                      toán thành công, vui lòng chụp lại hóa đơn thanh toán rồi
+                      gửi cho Admin xác nhận{" "}
+                      <span>
+                        <Form.Item noStyle label={null}>
+                          <Button
+                            className="text-lg font-bold text-blue-500 hover:!text-blue-600 hover:!bg-transparent px-1"
+                            type="text"
+                            htmlType="submit"
+                          >
+                            TẠI ĐÂY
+                          </Button>
+                        </Form.Item>
+                      </span>
+                    </p>
 
-                  <Form.Item label="Chọn gói kim cương">
-                    <Select
-                      defaultValue={7}
-                      placeholder="Chọn gói kim cương"
-                      onChange={(value) => setSelectedPackage(value)}
-                      options={paypalPackages}
-                    />
-                  </Form.Item>
+                    {!ref && (
+                      <Form.Item
+                        name="referralCode"
+                        label="Mã khách hàng"
+                        rules={[
+                          {
+                            message: "Vui lòng nhập mã khách hàng!",
+                            required: true,
+                          },
+                        ]}
+                      >
+                        <Input placeholder="Nhập mã khách hàng" />
+                      </Form.Item>
+                    )}
+
+                    <Form.Item label="Chọn gói kim cương" required>
+                      <Select
+                        defaultValue={7}
+                        placeholder="Chọn gói kim cương"
+                        onChange={(value) => setSelectedPackage(value)}
+                        options={paypalPackages}
+                      />
+                    </Form.Item>
+                  </Form>
+
                   <PayPalButtons
                     style={{ layout: "vertical" }}
                     createOrder={createOrder}
