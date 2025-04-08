@@ -4,7 +4,7 @@ const ForeignDeposit = () => {
   return (
     <div
       className="relative bg-white border-1 border-slate-200 rounded-lg flex px-3 py-2.5 gap-x-4 hover:!bg-slate-50 transition duration-300 cursor-pointer z-10"
-      onClick={() => window.open("https://m.me/185169981351799?text=Mình là khách hàng nước ngoài muốn nạp kim cương. Toidoc hỗ trợ mình nhé!")}
+      onClick={() => window.open("https://m.me/185169981351799?text=Mình ở nước ngoài, muốn nạp kim cương. Toidoc hỗ trợ mình nhé!")}
     >
       <EarthIcon />
       <div>
