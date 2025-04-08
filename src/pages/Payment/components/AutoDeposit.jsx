@@ -21,7 +21,7 @@ const AutoDeposit = ({ referralCode, storySlug, chapterSlug }) => {
         <ExchangeIcon />
         <div>
           <div className="text-[#f40233] text-base font-semibold">
-            Nạp kim cương tự động
+            Nạp tự động
           </div>
           <div className="text-[#5124ec] text-xs sm:text-sm line-clamp-1">
             Nhanh, tiện, không cần chờ admin duyệt..
