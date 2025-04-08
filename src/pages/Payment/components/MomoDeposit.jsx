@@ -22,10 +22,10 @@ const MomoDeposit = () => {
                 <MomoIcon />
                 <div>
                   <div className="text-base font-semibold">
-                    Nạp kim cương qua Momo
+                    Nạp qua Momo
                   </div>
                   <div className="text-slate-500 text-xs sm:text-sm line-clamp-1">
-                    Chuyển khoản thủ công, cần chờ admin duyệt..
+                    Chuyển khoản thủ công, cần chờ admin duyệt 5 - 10 phút
                   </div>
                 </div>
               </div>
