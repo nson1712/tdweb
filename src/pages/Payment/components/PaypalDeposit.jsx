@@ -98,10 +98,10 @@ const PaypalDeposit = ({ api }) => {
                     <PaypalIcon />
                     <div>
                       <div className="text-base font-semibold">
-                        Nạp kim cương qua Paypal
+                        Nạp qua Paypal
                       </div>
                       <div className="text-slate-500 text-xs sm:text-sm line-clamp-1">
-                        Cần chờ admin duyệt, phù hợp với khách hàng nước ngoài..
+                        Cần chờ admin duyệt 5 - 10 phút, phù hợp với khách hàng nước ngoài..
                       </div>
                     </div>
                   </div>

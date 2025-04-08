@@ -40,10 +40,10 @@ const MobileCardDeposit = ({ referralCode }) => {
                   <ViettelIcon />
                   <div>
                     <div className="text-base font-semibold">
-                      Nạp bằng thẻ điện thoại
+                      Nạp qua thẻ điện thoại
                     </div>
                     <div className="text-slate-500 sm:text-sm line-clamp-1 text-xs">
-                      Cần chờ admin duyệt, chỉ nhận được 70% giá trị thẻ..
+                      Chỉ nhận được 70% giá trị thẻ, cần chờ admin duyệt 5 - 10 phút
                     </div>
                   </div>
                 </div>
@@ -52,8 +52,8 @@ const MobileCardDeposit = ({ referralCode }) => {
             children: (
               <>
                 <p className="italic text-red-500 font-bold text-sm sm:text-base">
-                  Lưu ý: Nạp bằng thẻ điện thoại sẽ chỉ nhận được số kim cương
-                  tương đương 70% giá trị của thẻ!
+                  Lưu ý: Hiện tại Toidoc chỉ hỗ trợ nạp bằng thẻ Viettel. Số kim cương
+                  bạn nhận được sẽ = 70% giá trị của thẻ!
                 </p>
                 <Form form={form} onFinish={onCardFinish}>
                   {!referralCode && (
@@ -80,10 +80,10 @@ const MobileCardDeposit = ({ referralCode }) => {
                         required: true,
                       },
                     ]}
-                    initialValue="vinaphone"
+                    initialValue="viettel"
                   >
                     <Select
-                      defaultValue="vinaphone"
+                      defaultValue="viettel"
                       placeholder="Chọn nhà mạng"
                       allowClear
                       options={networkProvider}
@@ -127,7 +127,7 @@ const MobileCardDeposit = ({ referralCode }) => {
                       type="primary"
                       htmlType="submit"
                     >
-                      Nạp thẻ
+                      Gửi thông tin cho Toidoc
                     </Button>
                   </Form.Item>
                 </Form>
