@@ -145,7 +145,12 @@ const Profile = () => {
           </div>
           <div className="flex justify-center">
             <Link
-              href={`/phuong-thuc-nap`}
+              href={{
+                pathname: "/phuong-thuc-nap",
+                query: {
+                  ref: GlobalStore?.profile ? GlobalStore.profile.referralCode : ""
+                }
+              }}
             >
               <Button3D id="nap-kim-cuong" name="Nạp kim cương" />
             </Link>

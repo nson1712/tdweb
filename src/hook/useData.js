@@ -1,11 +1,11 @@
 import RedDiamondIcon from "../pages/Payment/RedDiamondIcon";
-import qr18k from "../../public/images/qr-18.jpg";
-import qr50k from "../../public/images/qr-50.jpg";
-import qr100k from "../../public/images/qr-100.jpg";
-import qr200k from "../../public/images/qr-200.jpg";
-import qr300k from "../../public/images/qr-300.jpg";
-import qr500k from "../../public/images/qr-500.jpg";
-import qr1000k from "../../public/images/qr-1000.jpg";
+import qr18k from "../../public/images/18k.jpg";
+import qr50k from "../../public/images/50k.jpg";
+import qr100k from "../../public/images/100k.jpg";
+import qr200k from "../../public/images/200k.jpg";
+import qr300k from "../../public/images/300k.jpg";
+import qr500k from "../../public/images/500k.jpg";
+import qr1000k from "../../public/images/1tr.jpg";
 
 export const useDiamondPackages = () => {
   const diamondPackage = [

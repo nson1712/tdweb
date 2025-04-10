@@ -103,9 +103,13 @@ const sendRequest = async ({
       return response.data;
     })
     .catch(async(error) => {
-      if ((error?.response?.status === 401 || error?.response?.status === 403 || error?.response?.status === 406) && url.includes('/data/chapter/slug')) {
+      if ((error?.response?.status === 401 || error?.response?.status === 403 || error?.response?.status === 406) && url.includes('/data/chapter/detail')) {
         await removeToken();
         GlobalStore.isLoggedIn = false;
+        toast("Vui lòng đăng nhập lại để tiếp tục sử dụng!", {
+          type: "error",
+          theme: "colored",
+        })
         return {
           'data': {
             'price': 0,

@@ -1,28 +1,49 @@
-import React from 'react'
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
-import HeaderServer from '../../src/components/HeaderServer'
-import PaymentMethods from '../../src/pages/Payment/PaymentMethods'
-import { PayPalScriptProvider } from '@paypal/react-paypal-js'
+import React from "react";
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
+import HeaderServer from "../../src/components/HeaderServer";
+import PaymentMethods from "../../src/pages/Payment/PaymentMethods";
 
-const PaymentMethodPage = () => {
+const PaymentMethodPage = (data) => {
   return (
-    // <GoogleReCaptchaProvider reCaptchaKey="6LemlQIqAAAAAN3GiXSgwfSljLMiGgRAINr1ALev">
-      // <PayPalScriptProvider options={{
-      //   clientId:
-      //     "Ad_kfIztCssh1X3HrKoDMxBQiCI0B6quYjgppzA5U4YIuZQ17Fur5M2UR6-QiwSnwJqKnXzxfDDlZDqO",
-      //   currency: "USD",
-      //   intent: "capture",
-      //   components: "card-fields,buttons",
-      // }}>
+    <GoogleReCaptchaProvider reCaptchaKey="6LemlQIqAAAAAN3GiXSgwfSljLMiGgRAINr1ALev">
       <>
-      <HeaderServer
-        title={'Toidoc - Phương thức nạp'} 
-      />
-      <PaymentMethods />
+        <HeaderServer title={"Toidoc - Phương thức nạp"} />
+        <PaymentMethods
+          referralCode={data?.referralCode}
+          storySlug={data?.storySlug}
+          chapterSlug={data?.chapterSlug}
+        />
       </>
-      // {/* </PayPalScriptProvider> */}
-    // {/* </GoogleReCaptchaProvider> */}
-  )
-}
+    </GoogleReCaptchaProvider>
+  );
+};
 
-export default PaymentMethodPage
+PaymentMethodPage.getInitialProps = async (ctx) => {
+  const getDetail = async () => {
+    try {
+      if (ctx.query.ref) {
+        return {
+          referralCode: ctx.query.ref,
+          storySlug: ctx.query.story,
+          chapterSlug: ctx.query.chapter,
+        };
+      }
+
+      return {
+        referralCode: "",
+        storySlug: "",
+        chapterSlug: "",
+      };
+    } catch (e) {
+      return {
+        referralCode: "",
+        storySlug: "",
+        chapterSlug: "",
+      };
+    }
+  };
+
+  return await getDetail();
+};
+
+export default PaymentMethodPage;

@@ -9,18 +9,16 @@ const MobileCardDeposit = ({ referralCode }) => {
   const onCardFinish = (values) => {
     window.open(
       `https://m.me/185169981351799?text=Mình muốn nạp kim cương bằng thẻ điện thoại, Toidoc hỗ trợ mình nhé! %0A Mã KH: ${
-        referralCode ?? ""
+        referralCode || values.referralCode
       } %0A Loại thẻ: ${
         values.networkProvider
       } %0A Mệnh giá thẻ: ${values.cardAmount
         .toString()
-        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}VNĐ %0A Số thẻ: ${
-        values.code
-      } %0A Số seri: ${values.serialNumber}`
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",")}VNĐ %0A Số thẻ: ${values.code}`
     );
     form.resetFields();
   };
-  
+
   return (
     <ConfigProvider
       theme={{
@@ -42,10 +40,10 @@ const MobileCardDeposit = ({ referralCode }) => {
                   <ViettelIcon />
                   <div>
                     <div className="text-base font-semibold">
-                      Nạp bằng thẻ điện thoại
+                      Nạp qua thẻ điện thoại
                     </div>
                     <div className="text-slate-500 sm:text-sm line-clamp-1 text-xs">
-                      Cần chờ admin duyệt, chỉ nhận được 70% giá trị thẻ..
+                      Chỉ nhận được 70% giá trị thẻ, cần chờ admin duyệt 5 - 10 phút
                     </div>
                   </div>
                 </div>
@@ -54,10 +52,25 @@ const MobileCardDeposit = ({ referralCode }) => {
             children: (
               <>
                 <p className="italic text-red-500 font-bold text-sm sm:text-base">
-                  Lưu ý: Nạp bằng thẻ điện thoại sẽ chỉ nhận được số kim cương
-                  tương đương 70% giá trị của thẻ!
+                  Lưu ý: Hiện tại Toidoc chỉ hỗ trợ nạp bằng thẻ Viettel. Số kim cương
+                  bạn nhận được sẽ = 70% giá trị của thẻ!
                 </p>
                 <Form form={form} onFinish={onCardFinish}>
+                  {!referralCode && (
+                    <Form.Item
+                      name="referralCode"
+                      label="Mã khách hàng"
+                      rules={[
+                        {
+                          message: "Vui lòng nhập mã khách hàng!",
+                          required: true,
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Nhập mã khách hàng" />
+                    </Form.Item>
+                  )}
+
                   <Form.Item
                     name="networkProvider"
                     label="Nhà mạng"
@@ -67,10 +80,10 @@ const MobileCardDeposit = ({ referralCode }) => {
                         required: true,
                       },
                     ]}
-                    initialValue="vinaphone"
+                    initialValue="viettel"
                   >
                     <Select
-                      defaultValue="vinaphone"
+                      initialValues="viettel"
                       placeholder="Chọn nhà mạng"
                       allowClear
                       options={networkProvider}
@@ -107,19 +120,6 @@ const MobileCardDeposit = ({ referralCode }) => {
                     <Input placeholder="Nhập mã thẻ cào (Sau lớp tráng bạc)" />
                   </Form.Item>
 
-                  <Form.Item
-                    name="serialNumber"
-                    label="Số seri"
-                    rules={[
-                      {
-                        message: "Vui lòng nhập số seri!",
-                        required: true,
-                      },
-                    ]}
-                  >
-                    <Input placeholder="Nhập số seri" />
-                  </Form.Item>
-
                   <Form.Item label={null}>
                     <Button
                       className="w-full"
@@ -127,7 +127,7 @@ const MobileCardDeposit = ({ referralCode }) => {
                       type="primary"
                       htmlType="submit"
                     >
-                      Nạp thẻ
+                      Gửi thông tin cho Toidoc
                     </Button>
                   </Form.Item>
                 </Form>

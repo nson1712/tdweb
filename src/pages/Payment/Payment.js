@@ -16,6 +16,7 @@ import ModalComponent from "../../components/Modal/Modal";
 import HeaderPayment from "./HeaderPayment";
 import GlobalStore from "../../stores/GlobalStore";
 import Button3D from "../../components/3DButton";
+import { ArrowLeftOutlined } from "@ant-design/icons";
 
 const Payment = ({
   values,
@@ -177,8 +178,8 @@ const Payment = ({
         </div>
         <div className="relative max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] flex flex-col justify-center text-second-color">
           <HeaderPayment />
-          <p className="text-[20px] font-bold main-text text-center">
-            Web Nạp ♦️ chính thức duy nhất của Toidoc
+          <p className="text-[20px] font-bold main-text text-center flex justify-center gap-x-4">
+            <ArrowLeftOutlined onClick={() => Router.back()} /> Web Nạp ♦️ chính thức duy nhất của Toidoc
           </p>
 
             <div className="flex justify-center">

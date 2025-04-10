@@ -848,7 +848,13 @@ const StorySummary = ({storyDetail, articleDetail}) => {
                 }}
               >
                 <Link
-                  href={`/nap-kim-cuong?ref=${GlobalStore.profile?.referralCode}&story=${storyDetail?.slug}&chapter=`}
+                  href={{
+                    pathname: "/phuong-thuc-nap",
+                    query: {
+                      ref: GlobalStore?.profile ? GlobalStore.profile.referralCode : "",
+                      story: storyDetail?.slug
+                    }
+                  }}
                   passHref
                 >
                   <a
