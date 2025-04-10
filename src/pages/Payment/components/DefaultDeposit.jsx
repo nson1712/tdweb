@@ -23,7 +23,7 @@ const DefaultDeposit = () => {
 
   const onFinish = (values) => {
     window.open(
-      `https://m.me/185169981351799?text=Mình vừa thanh toán qua chuyển khoản, Toidoc hỗ trợ mình nhé! %0A Mã khách hàng: ${
+      `https://m.me/185169981351799?text=Mình vừa chuyển khoản qua web, bạn nạp cho mình vs! %0A Mã khách hàng: ${
         ref || values.referralCode
       }`
     );

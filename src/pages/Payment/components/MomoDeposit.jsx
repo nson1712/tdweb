@@ -9,7 +9,7 @@ const MomoDeposit = () => {
 
   const onFinish = (values) => {
     window.open(
-      `https://m.me/185169981351799?text=Mình vừa thanh toán qua Momo, Toidoc hỗ trợ mình nhé! %0A Mã khách hàng: ${
+      `https://m.me/185169981351799?text=Mình vừa chuyển khoản qua Momo trên web, bạn nạp cho mình với! %0A Mã khách hàng: ${
         ref || values.referralCode
       }`
     );

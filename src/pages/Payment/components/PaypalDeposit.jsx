@@ -63,7 +63,7 @@ const PaypalDeposit = ({ api }) => {
 
   const onFinish = (values) => {
     window.open(
-      `https://m.me/185169981351799?text=Mình vừa thanh toán qua Momo, Toidoc hỗ trợ mình nhé! %0A Mã khách hàng: ${
+      `https://m.me/185169981351799?text=Mình vừa thanh toán Paypal trên web, Toidoc nạp giúp mình vs! %0A Mã khách hàng: ${
         ref || values.referralCode
       }`
     );
