@@ -1,10 +1,10 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import Router, { useRouter } from "next/router";
 import * as Api from "../../api/api";
 import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import { observer } from "mobx-react";
 import StoryStore from "../../stores/StoryStore";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import Chapters from "./Chapters";
 import MobileShare from "../StorySummary/MobileShare";
 import Header from "../../components/Header/Header";
@@ -16,7 +16,7 @@ import {
 import ModalComponent from "../../components/Modal/Modal";
 import ModalWithoutCloseButton from "../../components/Modal/ModalWithoutCloseButton";
 import ChatSupportAutoClose from "../../components/Button/ChatSupportAutoClose";
-import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3"
+import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import ShortLogin from "../Login/ShortLogin";
 import GlobalStore from "../../stores/GlobalStore";
 import Question from "./Question";
@@ -24,7 +24,7 @@ import OpenInAppInfo from "./OpenInAppInfo";
 import OpenChapterInfo from "./OpenChapterInfo";
 import ContentDisplay from "./ContentDisplay";
 import Link from "next/link";
-import { Modal, Spin, Table } from "antd";
+import { Modal, Spin, Table, Watermark } from "antd";
 import { LeftOutlined, MenuOutlined, RightOutlined } from "@ant-design/icons";
 import { useStoryChapterTableOptions } from "../../hook/useTableOption";
 import HotStories from "../../components/HotStories";
@@ -33,6 +33,7 @@ import withIconTitle from "../../components/CustomIconTitle";
 import TrendingIcon from "../../../public/icons/TrendingIcon";
 import NewIcon from "../../../public/icons/NewIcon";
 import Button3D from "../../components/3DButton";
+import { Buffer } from "buffer";
 
 const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [showBubble, setShowBubble] = useState("up");
@@ -60,6 +61,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [chapterContents, setChapterContents] = useState([]);
   const [currentChapter, setCurrentChapter] = useState({});
   const [currentChapterDetail, setCurrentChapterDetail] = useState({});
+  console.log("CURRENT CHAPTER DETAIL: ", currentChapterDetail)
   const [loggedIn, setLoggedIn] = useState(false);
   const [needOpenChapter, setNeedOpenChapter] = useState(false);
   const [allowOpenWeb, setAllowOpenWeb] = useState(false);
@@ -81,7 +83,8 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [openChapterList, setOpenChapterList] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState("oldest");
-  const [showDepositSuccessWarning, setShowDepositSuccessWarning] = useState(false);
+  const [showDepositSuccessWarning, setShowDepositSuccessWarning] =
+    useState(false);
 
   const { storyChapterColumns } = useStoryChapterTableOptions();
 
@@ -95,7 +98,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         route.query.chapterSlug,
         isLoggedIn
       );
-      
+
       if (route.query.storySlug) {
         const detailStory = await getStoryDetail(route.query.storySlug);
         if (isLoggedIn && !result?.free) {
@@ -121,9 +124,9 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         ...result,
         next: nextChapter,
         previous: prevChapter,
-        slug: route.query.chapterSlug
+        slug: route.query.chapterSlug,
       });
-      
+
       //setLoggedIn(isLoggedIn || ((result?.order < 5 || (result?.totalChapter > 20 && result?.order < 10) || (result?.totalChapter > 50 && result?.order < 26)) && result?.free));
       setLoggedIn(isLoggedIn || result?.free);
       setNeedOpenChapter(!result?.free);
@@ -175,7 +178,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             ? "UNLOCK_EXCLUSIVE_CHAPTER"
             : "UNLOCK_NORMAL_CHAPTER",
         },
-        hideError: true
+        hideError: true,
       });
       setAvailableCash(result?.data);
     } catch (err) {
@@ -190,14 +193,13 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         params: {
           type: "ALL",
         },
-        hideError: true
+        hideError: true,
       });
       if (result?.data && result?.data?.linkAff) {
         setAffType(result?.data?.type);
         setAffObj(result?.data);
       }
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   const getQuestion = async () => {
@@ -207,7 +209,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     try {
       const result = await Api.get({
         url: "/data/private/data/question",
-        hideError: true
+        hideError: true,
       });
       setQuestion(result?.data);
       if (result?.data && result?.data?.id !== null) {
@@ -358,16 +360,16 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           isOpenFull: false,
         },
       });
-      toast('Bạn đã mở chương thành công!', {
-          type: "success",
-          theme: "colored",
+      toast("Bạn đã mở chương thành công!", {
+        type: "success",
+        theme: "colored",
       });
       fetchData();
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch(e) {}
+    } catch (e) {}
   };
 
-  const handlePaymentDepositAuto = async(isOpenFull, isShowAlertSuccess) => {
+  const handlePaymentDepositAuto = async (isOpenFull, isShowAlertSuccess) => {
     try {
       // console.log('isOpenFull 2: ', isOpenFull);
       if (isOpenFull) {
@@ -380,7 +382,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           },
         });
         if (isShowAlertSuccess) {
-          toast('Bạn đã mở chương thành công!', {
+          toast("Bạn đã mở chương thành công!", {
             type: "success",
             theme: "colored",
           });
@@ -388,10 +390,8 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       }
       await fetchData();
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch(e) {
-    }
-    
-  }
+    } catch (e) {}
+  };
 
   const handleSupport = async () => {
     window.open(
@@ -472,8 +472,33 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     setFilter(filter);
   };
 
-  const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥")
-  const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥")
+  const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥");
+  const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥");
+
+  const svg = `
+  <svg xmlns="http://www.w3.org/2000/svg" width="300" height="90">
+    <defs>
+      <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+        <stop offset="0%" stop-color="#fd746c" stop-opacity="0.5"/> 
+        <stop offset="100%" stop-color="#ff9068" stop-opacity="0.5"/>
+      </linearGradient>
+    </defs>
+    <text 
+      x="55%" y="40%" 
+      text-anchor="middle" 
+      dominant-baseline="middle" 
+      font-size="50" 
+      fill="url(#grad)"
+    >
+      TOI DOC
+    </text>
+  </svg>`;
+
+  // 2. Base64‑encode it into a data URI:
+  const base64 = Buffer.from(svg).toString("base64");
+  const gradientImage = `data:image/svg+xml;base64,${base64}`;
+
+  const midIndex = Math.ceil(chapterContents.length / 2);
 
   return (
     <CommonLayout>
@@ -549,7 +574,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             </Link>
           </div>
 
-          <div className="flex sm:hidden items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 bg-story">
+          <div className="flex sm:hidden items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 bg-story z-50">
             <a
               className="p-[20px]"
               title={`Truyện ${storyDetail?.title}`}
@@ -567,7 +592,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             <Link href={`/${storyDetail?.slug}`} passHref>
               <a title={`Truyện ${storyDetail?.title} ${chapterTitle}`}>
                 <h1 className="text-[20px] leading-[24px] font-bold main-text mb-0 line-clamp-1">
-                  {storyDetail?.title} {chapterTitle} 
+                  {storyDetail?.title} {chapterTitle}
                 </h1>
               </a>
             </Link>
@@ -682,15 +707,24 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                             handleSupport={handleSupport}
                             availableCash={availableCash}
                             fullPriceStory={fullPriceStory}
-                            setShowWarningDepositSuccess={() => setShowDepositSuccessWarning(true) }
+                            setShowWarningDepositSuccess={() =>
+                              setShowDepositSuccessWarning(true)
+                            }
                             handlePaymentDepositAuto={handlePaymentDepositAuto}
                             handleSupportOpenChapter={handleSupportOpenChapter}
                           />
                         </GoogleReCaptchaProvider>
                       </div>
                     ) : (
+                      currentChapterDetail.price && currentChapterDetail.order % 2 !== 0 ? 
                       <>
-                        {chapterContents?.map((item, i) => (
+                      <Watermark
+                        gap={[1000, 500]}
+                        image={gradientImage}
+                        rotate={-10}
+                        width={400}
+                      >
+                        {chapterContents?.slice(0, midIndex).map((item, i) => (
                           <>
                             <ContentDisplay
                               item={item}
@@ -698,43 +732,113 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                               dfjkdsfds={jkdjfk}
                               order={i}
                             />
-                            {affType !== '' && affType === 'LIVESTREAM' && i === (chapterContents.length - 6) ?
-                              <div className='mt-[40px] mb-[20px]'>
-                                <p dangerouslySetInnerHTML={{__html: `${affObj?.productName}`}}/>
-                                <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
+
+                            {affType !== "" &&
+                            affType === "LIVESTREAM" &&
+                            i === chapterContents.length - 6 ? (
+                              <div className="mt-[40px] mb-[20px]">
+                                <p
+                                  dangerouslySetInnerHTML={{
+                                    __html: `${affObj?.productName}`,
+                                  }}
+                                />
+                                <p className="text-[#ff0600]">
+                                  <strong>
+                                    🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁
+                                  </strong>
+                                </p>
                                 <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
                                 <p>👉 FREE SHIP Toàn Quốc</p>
-                                <div className='flex items-center justify-center' dangerouslySetInnerHTML={{__html: `${affObj?.linkAff}`}}/>
-                                <div className='flex items-center justify-center'>
-                                  <Link href={`https://www.facebook.com/guchicofficial`} passHref>
-                                    <a id='live-story-detail' className='w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px]' target='_blank'>Vào Facebook Xem Live</a>
+                                <div
+                                  className="flex items-center justify-center"
+                                  dangerouslySetInnerHTML={{
+                                    __html: `${affObj?.linkAff}`,
+                                  }}
+                                />
+                                <div className="flex items-center justify-center">
+                                  <Link
+                                    href={`https://www.facebook.com/guchicofficial`}
+                                    passHref
+                                  >
+                                    <a
+                                      id="live-story-detail"
+                                      className="w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px]"
+                                      target="_blank"
+                                    >
+                                      Vào Facebook Xem Live
+                                    </a>
                                   </Link>
                                 </div>
                               </div>
-                              :
-                              affType !== '' && i === (chapterContents.length - 6) &&
-                                <div className='mt-[40px] mb-[20px]'>
-                                  <p dangerouslySetInnerHTML={{__html: `${affObj?.productName}`}}/>
-                                  <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
+                            ) : (
+                              affType !== "" &&
+                              i === chapterContents.length - 6 && (
+                                <div className="mt-[40px] mb-[20px]">
+                                  <p
+                                    dangerouslySetInnerHTML={{
+                                      __html: `${affObj?.productName}`,
+                                    }}
+                                  />
+                                  <p className="text-[#ff0600]">
+                                    <strong>
+                                      🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁
+                                    </strong>
+                                  </p>
                                   <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
                                   <p>👉 FREE SHIP Toàn Quốc</p>
-                                  <div className='flex items-center justify-center'>
+                                  <div className="flex items-center justify-center">
                                     <Link href={`${affObj.linkAff}`} passHref>
-                                      <a id='live-chapter-content-image' target='_blank' rel="nofollow">
-                                        <img src={`${affObj?.image}`} className='w-[200px]'></img>
+                                      <a
+                                        id="live-chapter-content-image"
+                                        target="_blank"
+                                        rel="nofollow"
+                                      >
+                                        <img
+                                          src={`${affObj?.image}`}
+                                          className="w-[200px]"
+                                        ></img>
                                       </a>
                                     </Link>
                                   </div>
-                                  <div className='flex items-center justify-center'>
+                                  <div className="flex items-center justify-center">
                                     <Link href={`${affObj.linkAff}`} passHref>
-                                      <a id='live-chapter-content' className='w-[200px] btnLiveStream px-[4px] py-[2px] text-[12px]' target='_blank' rel="nofollow">Xem Sản Phẩm</a>
+                                      <a
+                                        id="live-chapter-content"
+                                        className="w-[200px] btnLiveStream px-[4px] py-[2px] text-[12px]"
+                                        target="_blank"
+                                        rel="nofollow"
+                                      >
+                                        Xem Sản Phẩm
+                                      </a>
                                     </Link>
                                   </div>
                                 </div>
-                            }
+                              )
+                            )}
                           </>
                         ))}
+                      </Watermark>
+                       {chapterContents.slice(midIndex).map((item, i) => (
+                        <ContentDisplay
+                          key={midIndex + i}
+                          item={item}
+                          fdsfsjs={fdfssfds}
+                          dfjkdsfds={jkdjfk}
+                          order={midIndex + i}
+                        />
+                      ))}
                       </>
+                      : 
+                      <>
+                      {chapterContents.map((item, i) => (
+                        <ContentDisplay
+                          key={midIndex + i}
+                          item={item}
+                          fdsfsjs={fdfssfds}
+                          dfjkdsfds={jkdjfk}
+                          order={midIndex + i}
+                        />
+                      ))}</>
                     )}
                   </>
                 ) : isLoading ? (
@@ -790,7 +894,10 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-4">
             <TopTrendingTitle />
-            <HotStories className="grid grid-cols-4 justify-center gap-x-2 gap-y-5" data={topTrending?.data}/>
+            <HotStories
+              className="grid grid-cols-4 justify-center gap-x-2 gap-y-5"
+              data={topTrending?.data}
+            />
             <div className="flex">
               <ButtonViewAll
                 className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
@@ -802,7 +909,10 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 sm:mt-4">
             <TopNewTitle />
-            <HotStories className="grid grid-cols-4 justify-center gap-x-2 gap-y-5" data={topNew?.data}/>
+            <HotStories
+              className="grid grid-cols-4 justify-center gap-x-2 gap-y-5"
+              data={topNew?.data}
+            />
             <div className="flex">
               <ButtonViewAll
                 className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
@@ -913,14 +1023,30 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           styleBody="background-gradient-gray"
         >
           <div className="px-[20px] pb-[20px] pt-[10px]">
-            <div className='flex justify-center pb-[15px]'>
-              <img src='/images/info-icon.png' className='w-[20px] h-[20px] mr-[5px]'/>
-              <p><strong>Lưu ý</strong></p>
+            <div className="flex justify-center pb-[15px]">
+              <img
+                src="/images/info-icon.png"
+                className="w-[20px] h-[20px] mr-[5px]"
+              />
+              <p>
+                <strong>Lưu ý</strong>
+              </p>
             </div>
-            <div className='px-[10px]'>
-              <p>Bạn nhớ gửi kèm theo ảnh chuyển khoản thành công để Admin phê duyệt nhé!</p>
-              <p>Sau khi Admin nạp kim cương, bạn chỉ cần mở khoá chương là đọc được tiếp.</p>
-              <a className='btnMain' onClick={() => handleOKWarningDepositSuccess()}>OK</a>
+            <div className="px-[10px]">
+              <p>
+                Bạn nhớ gửi kèm theo ảnh chuyển khoản thành công để Admin phê
+                duyệt nhé!
+              </p>
+              <p>
+                Sau khi Admin nạp kim cương, bạn chỉ cần mở khoá chương là đọc
+                được tiếp.
+              </p>
+              <a
+                className="btnMain"
+                onClick={() => handleOKWarningDepositSuccess()}
+              >
+                OK
+              </a>
             </div>
           </div>
         </ModalComponent>
