@@ -72,7 +72,11 @@ const Header = ({ selectedTab }) => {
           <Link href="/tim-kiem" passHref>
             <a
               className={classNames(
-                "menu-header px-[12px] h-[45px] rounded-[30px] cursor-pointer",
+                `menu-header px-[12px] h-[45px] rounded-[30px] ${
+                  !GlobalStore.isLoggedIn
+                    ? "pointer-events-none cursor-none"
+                    : "cursor-pointer"
+                }`,
                 selectedTab === "RESEARCH" && "bg-tab-active text-active"
               )}
             >
@@ -99,7 +103,11 @@ const Header = ({ selectedTab }) => {
           <Link href="/the-loai" passHref>
             <a
               className={classNames(
-                "menu-header px-[12px] h-[45px] rounded-[30px] cursor-pointer",
+                `menu-header px-[12px] h-[45px] rounded-[30px] ${
+                  !GlobalStore.isLoggedIn
+                    ? "pointer-events-none cursor-none"
+                    : "cursor-pointer"
+                }`,
                 selectedTab === "STORY_TYPE" && "bg-tab-active text-active"
               )}
             >
@@ -126,7 +134,11 @@ const Header = ({ selectedTab }) => {
           <Link href="/blog-truyen-full" passHref>
             <a
               className={classNames(
-                "menu-header px-[12px] h-[45px] rounded-[30px] cursor-pointer",
+                `menu-header px-[12px] h-[45px] rounded-[30px] ${
+                  !GlobalStore.isLoggedIn
+                    ? "pointer-events-none cursor-none"
+                    : "cursor-pointer"
+                }`,
                 selectedTab === "BLOG" && "bg-tab-active text-active"
               )}
             >
@@ -150,7 +162,7 @@ const Header = ({ selectedTab }) => {
               </p>
             </a>
           </Link>
-         {/*<div
+          {/*<div
             className={classNames(
               "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
               selectedTab === "LIBRARY" && "bg-tab-active text-active"
@@ -181,11 +193,18 @@ const Header = ({ selectedTab }) => {
           </div>*/}
           <div
             className={classNames(
-              "hidden md:block menu-header px-[12px] h-455px] rounded-[20px] cursor-pointer",
+              `hidden md:block menu-header px-[12px] h-455px] rounded-[20px] ${
+                !GlobalStore.isLoggedIn
+                  ? "pointer-events-none cursor-none"
+                  : "cursor-pointer"
+              }`,
               selectedTab === "AUTHOR" && "bg-tab-active text-active"
             )}
             onClick={() => {
-              window.open("https://toidoc.vn/register-author-summary.html", "_blank");
+              window.open(
+                "https://toidoc.vn/register-author-summary.html",
+                "_blank"
+              );
             }}
           >
             <img
@@ -206,7 +225,7 @@ const Header = ({ selectedTab }) => {
               Đăng truyện
             </p>
           </div>
-          <Link href="/lien-he" passHref >
+          <Link href="/lien-he" passHref>
             <a
               className={classNames(
                 "block md:hidden menu-header px-[12px] h-[45px] rounded-[20px] cursor-pointer",
@@ -232,7 +251,7 @@ const Header = ({ selectedTab }) => {
               </p>
             </a>
           </Link>
-          
+
           {/*<div
             className={classNames(
               "flex items-center mx-[2px] px-[16px] h-[40px] rounded-[20px] cursor-pointer",
@@ -277,19 +296,27 @@ const Header = ({ selectedTab }) => {
             </p>
           </div> */}
 
-          <Link href={GlobalStore.isLoggedIn ? "/tai-khoan" : "/dang-nhap"} passHref>
+          <Link
+            className={!GlobalStore.isLoggedIn ? "pointer-events-none" : ""}
+            href={GlobalStore.isLoggedIn ? "/tai-khoan" : "/dang-nhap"}
+            passHref
+          >
             <a
               id="profile-btn"
               className={classNames(
-                "menu-header px-[12px] h-[45px] rounded-[20px] cursor-pointer",
+                `menu-header px-[12px] h-[45px] rounded-[20px] ${
+                  !GlobalStore.isLoggedIn
+                    ? "pointer-events-none cursor-none"
+                    : "cursor-pointer"
+                }`,
                 selectedTab === "PROFILE" && "bg-tab-active text-active"
               )}
-              onClick={(e) => {
-                if (!GlobalStore.isLoggedIn) {
-                  e.preventDefault();
-                  setShowLogin(true);
-                }
-              }}
+              // onClick={(e) => {
+              //   if (!GlobalStore.isLoggedIn) {
+              //     e.preventDefault();
+              //     setShowLogin(true);
+              //   }
+              // }}
             >
               <img
                 src={
@@ -327,6 +354,7 @@ const Header = ({ selectedTab }) => {
                 Router.push(`/tim-kiem-truyen?tukhoa=${value}`);
               }, 600);
             }}
+            disabled={!GlobalStore.isLoggedIn}
           />
           <img src="/images/search.svg" className="search-icon" alt="search" />
         </div>
