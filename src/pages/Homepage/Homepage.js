@@ -158,7 +158,6 @@ const Homepage = () => {
   }, [selectedCategories, categories])
 
   return (
-    <CommonLayout active='HOME'>
       <div>
         <Header selectedTab={'HOME'}/>
         <div className='relative pb-[100px] max-w-[768px] mx-auto bg-white md:pt-[88px] px-0 md:px-[8px]'>
@@ -313,9 +312,6 @@ const Homepage = () => {
         </ModalComponent>}
         <ChatSupport showChat={showChat} setShowChat={setShowChat} />
       </div>
-      
-      
-    </CommonLayout>
   )
 }
 

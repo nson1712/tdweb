@@ -127,11 +127,11 @@ const PremiumPayment = ({
   };
 
   return (
-    <CommonLayout>
+    <>
       {contextHolder}
       <div>
         <div className="header-payment">
-          <Header />
+          {/* <Header /> */}
         </div>
         <div className="relative max-w-[768px] mx-auto bg-white md:pt-[88px] flex flex-col justify-center text-second-color">
           <HeaderPayment />
@@ -265,7 +265,7 @@ const PremiumPayment = ({
       )}
 
       <Spin fullscreen={true} spinning={loading} />
-    </CommonLayout>
+    </>
   );
 };
 

@@ -3,7 +3,6 @@ import AutoDeposit from "./components/AutoDeposit";
 import DefaultDeposit from "./components/DefaultDeposit";
 import MobileCardDeposit from "./components/MobileCardDeposit";
 import PaypalDeposit from "./components/PaypalDeposit";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import Header from "../../components/Header/Header";
 import MomoDeposit from "./components/MomoDeposit";
 import ForeignDeposit from "./components/ForeignDeposit";
@@ -20,9 +19,9 @@ const PaymentMethods = ({ referralCode, storySlug, chapterSlug }) => {
   }, []);
 
   return (
-    <CommonLayout>
+    <>
       {contextHolder}
-      <Header />
+      {/* <Header /> */}
       <div className="h-lvh max-w-[768px] mx-auto sm:pt-24 pb-10 overflow-y-auto bg-white">
         <Title />
 
@@ -39,7 +38,7 @@ const PaymentMethods = ({ referralCode, storySlug, chapterSlug }) => {
           <ForeignDeposit />
         </div>
       </div>
-    </CommonLayout>
+    </>
   );
 };
 

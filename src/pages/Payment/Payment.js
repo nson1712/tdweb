@@ -171,11 +171,11 @@ const Payment = ({
   };
 
   return (
-    <CommonLayout>
+    <>
       <div>
-        <div className="header-payment">
+        {/* <div className="header-payment">
           <Header />
-        </div>
+        </div> */}
         <div className="relative max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] flex flex-col justify-center text-second-color">
           <HeaderPayment />
           <p className="text-[20px] font-bold main-text text-center flex justify-center gap-x-4">
@@ -406,7 +406,7 @@ const Payment = ({
           />
         </ModalComponent>
       )}
-    </CommonLayout>
+    </>
   );
 };
 

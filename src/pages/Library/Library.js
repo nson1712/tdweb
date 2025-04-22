@@ -86,7 +86,6 @@ const Library = () => {
   };
 
   return (
-    <CommonLayout >
       <div>
         <Header selectedTab={'LIBRARY'}/>
         <div className='relative pb-[100px] max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] px-0 md:px-[8px]'>
@@ -142,7 +141,6 @@ const Library = () => {
           
         </div>
       </div>
-    </CommonLayout>
   )
 }
 

@@ -5,7 +5,7 @@ import Header from "../../components/Header/Header";
 import { observer } from "mobx-react";
 import Router, { useRouter } from "next/router";
 import HeaderPayment from "./HeaderPayment";
-import Image from 'next/image';
+import Image from "next/image";
 import { QRCode } from "react-qrcode-logo";
 import { formatStringToNumber, getQrUrl } from "../../utils/utils";
 import Button from "../../components/Button/Button";
@@ -25,7 +25,8 @@ const TransferInfo = () => {
   const [copiedAmountMessage, setCopiedAmountMessage] = useState("");
   const [copiedDescriptionMessage, setCopiedDescriptionMessage] = useState("");
   const [qrUrl, setQrUrl] = useState("");
-  const [showDepositSuccessWarning, setShowDepositSuccessWarning] = useState(false);
+  const [showDepositSuccessWarning, setShowDepositSuccessWarning] =
+    useState(false);
   const [timeLeft, setTimeLeft] = useState(0);
 
   const router = useRouter();
@@ -37,7 +38,7 @@ const TransferInfo = () => {
   const chapterSlug = useRef("");
 
   useEffect(() => {
-    if (router.query.qrCode && router.query.qrCode !== '') {
+    if (router.query.qrCode && router.query.qrCode !== "") {
       const dateTimeStr = router.query.expiredAt;
       console.log("expiredAt: ", dateTimeStr);
       const reverseDateTime =
@@ -89,7 +90,7 @@ const TransferInfo = () => {
       }
     }, 1000);
 
-    if (router.query.qrCode && router.query.qrCode !== '') {
+    if (router.query.qrCode && router.query.qrCode !== "") {
       // Cleanup khi component bị unmount
       return () => clearInterval(timer);
     }
@@ -111,16 +112,16 @@ const TransferInfo = () => {
         };
         const result = await axios.post(
           `https://fsdfssf.truyenso1.xyz/customer/public/customer/deposit/qr/result`,
-          data,
+          data
         );
-        console.log('result QR Deposit: ', result);
+        console.log("result QR Deposit: ", result);
         if (result?.data?.data?.code === 200) {
-          if (storySlug.current !== '') {
+          if (storySlug.current !== "") {
             toast(`Nạp kim cương thành công!`, {
               type: "success",
               theme: "colored",
             });
-            if (chapterSlug.current !== '') {
+            if (chapterSlug.current !== "") {
               Router.push(`/${storySlug.current}/${chapterSlug.current}`);
             } else {
               Router.push(`/${storySlug.current}`);
@@ -188,8 +189,8 @@ const TransferInfo = () => {
       }Mình vừa chuyển khoản thành công qua web, nạp kim cương giúp mình với.`,
       "_blank"
     );
-    if (storySlug.current !== 'undefined' && storySlug.current !== '') {
-      if (chapterSlug.current !== '') {
+    if (storySlug.current !== "undefined" && storySlug.current !== "") {
+      if (chapterSlug.current !== "") {
         Router.push(`/${storySlug.current}/${chapterSlug.current}`);
       } else {
         Router.push(`/${storySlug.current}`);
@@ -198,14 +199,16 @@ const TransferInfo = () => {
   };
 
   return (
-    <CommonLayout active="HOME">
+    <>
       <div>
         <div className="header-payment">
-          <Header />
+          {/* <Header /> */}
         </div>
         <div className="relative max-w-[768px] mx-auto bg-white md:pt-[88px] flex flex-col justify-center text-second-color">
           <HeaderPayment />
-          {(timeLeft <= 0 && router.query.qrCode && router.query.qrCode !== '') ? (
+          {timeLeft <= 0 &&
+          router.query.qrCode &&
+          router.query.qrCode !== "" ? (
             <div style={{ marginTop: "20%" }}>
               <img
                 src={"/images/expired_at.png"}
@@ -243,23 +246,27 @@ const TransferInfo = () => {
               <p className="text-[20px] font-bold main-text text-center mb-[0px]">
                 Thông Tin Chuyển Khoản
               </p>
-              {qrCode && qrCode !== '' && <p
-                className="text-[16px] main-text text-center"
-                dangerouslySetInnerHTML={{
-                  __html: `Sẽ hết hạn sau <strong>${formatTime(
-                    timeLeft
-                  )}</strong> nữa`,
-                }}
-              />}
+              {qrCode && qrCode !== "" && (
+                <p
+                  className="text-[16px] main-text text-center"
+                  dangerouslySetInnerHTML={{
+                    __html: `Sẽ hết hạn sau <strong>${formatTime(
+                      timeLeft
+                    )}</strong> nữa`,
+                  }}
+                />
+              )}
               <div className="pl-[20px] pr-[20px] mb-[30px]">
                 <p className="text-[14px] font-bold mb-[0px]">
                   Hãy ấn nút Copy thông tin chuyển khoản bên dưới
                 </p>
-                {qrCode && qrCode !== '' && <Alert
-                  message="Lưu ý: chỉ khi copy đúng các thông tin, thì kim cương mới tự động về tài khoản của bạn."
-                  showIcon
-                  type="warning"
-                />}
+                {qrCode && qrCode !== "" && (
+                  <Alert
+                    message="Lưu ý: chỉ khi copy đúng các thông tin, thì kim cương mới tự động về tài khoản của bạn."
+                    showIcon
+                    type="warning"
+                  />
+                )}
                 <div className="text-xs box-transfer-info pt-[10px]">
                   <div>
                     <div className="m-2 flex">
@@ -280,15 +287,21 @@ const TransferInfo = () => {
                         />
                       </div>
                       <div>
-                        <p className="lh-1 text-lg text-[#fff] mb-[5px]">Ngân hàng thụ hưởng</p>
-                        <p className="font-bold text-sm text-[#00e60e]">Ngân hàng Phương Đông OCB</p>
+                        <p className="lh-1 text-lg text-[#fff] mb-[5px]">
+                          Ngân hàng thụ hưởng
+                        </p>
+                        <p className="font-bold text-sm text-[#00e60e]">
+                          Ngân hàng Phương Đông OCB
+                        </p>
                       </div>
                     </div>
                   </div>
                   <div>
                     <div className="grid grid-cols-7 m-2">
                       <div className="col-span-5 text-left">
-                        <p className="lh-1 text-lg text-[#fff] mb-[5px]">1. Chủ tài khoản:</p>
+                        <p className="lh-1 text-lg text-[#fff] mb-[5px]">
+                          1. Chủ tài khoản:
+                        </p>
                         <p className="font-bold text-sm text-[#00e60e]">
                           {accountName}
                         </p>
@@ -299,7 +312,13 @@ const TransferInfo = () => {
                     <div className="grid grid-cols-7 m-2">
                       <div className="col-span-5 text-left">
                         <p className="lh-1 text-lg text-[#fff] mb-[5px]">
-                          2. Ấn sao chép lấy số tài khoản <span className='text-[#feb313] text-sm'><strong><i>(Nhớ copy cả mã CAS)</i></strong></span>:
+                          2. Ấn sao chép lấy số tài khoản{" "}
+                          <span className="text-[#feb313] text-sm">
+                            <strong>
+                              <i>(Nhớ copy cả mã CAS)</i>
+                            </strong>
+                          </span>
+                          :
                         </p>
                         <p className="font-bold text-sm text-[#00e60e]">
                           {accountNumber}
@@ -319,7 +338,9 @@ const TransferInfo = () => {
                   <div>
                     <div className="grid grid-cols-7 m-2">
                       <div className="col-span-5 text-left">
-                        <p className="lh-1 text-lg text-[#fff] mb-[5px]">3. Số tiền:</p>
+                        <p className="lh-1 text-lg text-[#fff] mb-[5px]">
+                          3. Số tiền:
+                        </p>
                         <p className="font-bold text-[#00e60e] text-sm">
                           {formatStringToNumber(amount)}VNĐ
                         </p>
@@ -337,15 +358,23 @@ const TransferInfo = () => {
                   <div>
                     <div className="grid grid-cols-8 m-2">
                       <div className="col-span-6 text-left">
-                        {qrCode && qrCode !== '' ? 
+                        {qrCode && qrCode !== "" ? (
                           <p className="lh-1 text-lg text-[#fff] mb-[5px]">
-                            4. Ấn sao chép lấy nội dung: <span className='text-[#feb313] text-sm'><strong><i>(Không copy chính xác, kim cương sẽ không về TK)</i></strong></span>
+                            4. Ấn sao chép lấy nội dung:{" "}
+                            <span className="text-[#feb313] text-sm">
+                              <strong>
+                                <i>
+                                  (Không copy chính xác, kim cương sẽ không về
+                                  TK)
+                                </i>
+                              </strong>
+                            </span>
                           </p>
-                          :
+                        ) : (
                           <p className="lh-1 text-lg text-[#fff] mb-[5px]">
                             4. Ấn sao chép lấy nội dung:
                           </p>
-                        }
+                        )}
                         <p className="text-[#00e60e] font-bold text-sm">
                           {description}
                         </p>
@@ -355,14 +384,15 @@ const TransferInfo = () => {
                           className="h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-xs sm:text-sm text-center shadow-2xl hover:!text-black cursor-pointer"
                           onClick={() => copyToClipboard("description")}
                         >
-                          {copiedDescriptionMessage || "Sao chép "} <CopyOutlined />
+                          {copiedDescriptionMessage || "Sao chép "}{" "}
+                          <CopyOutlined />
                         </button>
                       </div>
                     </div>
                   </div>
                 </div>
                 <br />
-                {qrCode && qrCode !== '' ?
+                {qrCode && qrCode !== "" ? (
                   <>
                     <p className="text-center text-[14px] font-bold mb-[0px]">
                       Hoặc bạn có thể quét mã QR dưới đây
@@ -394,24 +424,24 @@ const TransferInfo = () => {
                       </div>
                     </div>
                   </>
-                  :
+                ) : (
                   <>
-                    <div className='flex justify-center'>
+                    <div className="flex justify-center">
                       <div>
-                        <div className='flex justify-center'>
+                        <div className="flex justify-center">
                           <Image
                             loader={imageLoader}
                             height={200}
                             width={170}
-                            src={qrUrl || '/images/qr-son.jpg'}
+                            src={qrUrl || "/images/qr-son.jpg"}
                             priority
                             className="bd-radius-10"
                           />
                         </div>
-                        <div className='flex justify-center mt-[10px]'>
+                        <div className="flex justify-center mt-[10px]">
                           <a
                             className="bg-[#02f094] rounded-md px-3 py-1.5 text-[#000] font-semibold shadow-md"
-                            href={qrUrl || '/images/qr-son.jpg'}
+                            href={qrUrl || "/images/qr-son.jpg"}
                             download="qr-ck.jpg"
                           >
                             Tải mã QR
@@ -419,12 +449,20 @@ const TransferInfo = () => {
                         </div>
                       </div>
                     </div>
-                    <div style={{'margin': '20px 0px', 'borderTop': '0.5px solid #b9b9b9'}}></div>
-                    <button className="btnMain btnSecondDeposit" onClick={() => setShowDepositSuccessWarning(true)}>
+                    <div
+                      style={{
+                        margin: "20px 0px",
+                        borderTop: "0.5px solid #b9b9b9",
+                      }}
+                    ></div>
+                    <button
+                      className="btnMain btnSecondDeposit"
+                      onClick={() => setShowDepositSuccessWarning(true)}
+                    >
                       Báo CK thành công 👆
                     </button>
                   </>
-                }
+                )}
                 <Button
                   className="btnSecond-Second"
                   onClick={() => {
@@ -435,7 +473,10 @@ const TransferInfo = () => {
                     );
                   }}
                 >
-                  <img src='/images/warning.png' className='mr-[5px] w-[20px]'/>
+                  <img
+                    src="/images/warning.png"
+                    className="mr-[5px] w-[20px]"
+                  />
                   Báo lỗi không nạp được
                 </Button>
               </div>
@@ -451,19 +492,35 @@ const TransferInfo = () => {
           styleBody="background-gradient-gray"
         >
           <div className="px-[20px] pb-[20px] pt-[10px]">
-            <div className='flex justify-center pb-[15px]'>
-              <img src='/images/info-icon.png' className='w-[20px] h-[20px] mr-[5px]'/>
-              <p><strong>Lưu ý</strong></p>
+            <div className="flex justify-center pb-[15px]">
+              <img
+                src="/images/info-icon.png"
+                className="w-[20px] h-[20px] mr-[5px]"
+              />
+              <p>
+                <strong>Lưu ý</strong>
+              </p>
             </div>
-            <div className='px-[10px]'>
-              <p>Bạn nhớ gửi kèm theo ảnh chuyển khoản thành công để Admin phê duyệt nhé!</p>
-              <p>Sau khi Admin nạp kim cương, bạn chỉ cần mở khoá chương là đọc được tiếp.</p>
-              <a className='btnMain' onClick={() => handleOKWarningDepositSuccess()}>OK</a>
+            <div className="px-[10px]">
+              <p>
+                Bạn nhớ gửi kèm theo ảnh chuyển khoản thành công để Admin phê
+                duyệt nhé!
+              </p>
+              <p>
+                Sau khi Admin nạp kim cương, bạn chỉ cần mở khoá chương là đọc
+                được tiếp.
+              </p>
+              <a
+                className="btnMain"
+                onClick={() => handleOKWarningDepositSuccess()}
+              >
+                OK
+              </a>
             </div>
           </div>
         </ModalComponent>
       )}
-    </CommonLayout>
+    </>
   );
 };
 

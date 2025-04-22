@@ -8,9 +8,8 @@ import Router from "next/router";
 
 const PremiumPaymentFail = () => {
   return (
-    <CommonLayout>
       <div>
-        <Header />
+        {/* <Header /> */}
         <div className="relative max-w-[768px] mx-auto bg-white md:pt-[88px] flex flex-col justify-center text-second-color">
           <HeaderPayment />
           <div className="w-full mx-auto" style={{ marginTop: "50px" }}>
@@ -43,7 +42,6 @@ const PremiumPaymentFail = () => {
           {/*<FooterDesktop />*/}
         </div>
       </div>
-    </CommonLayout>
   );
 };
 

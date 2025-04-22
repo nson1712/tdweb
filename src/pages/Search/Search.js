@@ -71,7 +71,7 @@ const Search = ({ hiddenSearch, setShowSearch }) => {
   return (
     <div>
       <div className="hidden md:block">
-        <Header />
+        {/* <Header /> */}
       </div>
       <div className="max-w-[768px] mx-[auto] pt-20 md:bg-white">
         {!hiddenSearch && (

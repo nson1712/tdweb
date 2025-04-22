@@ -114,7 +114,7 @@ const Stories = ({pageType}) => {
   }
 
   return (
-    <CommonLayout>
+    <>
     <div>
       <div className='hidden md:block'>
         <Header />
@@ -166,7 +166,7 @@ const Stories = ({pageType}) => {
         </div>
       </div>
     </div>
-    </CommonLayout>
+    </>
   )
 }
 

@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import Header from '../../components/Header/Header'
-import CommonLayout from '../../layouts/CommonLayout/CommonLayout'
 import Button from '../../components/Button/Button'
-import FooterDesktop from '../../components/FooterDesktop'
 import ChatSupport from '../../components/Button/ChatSupport'
 import HeaderPayment from './HeaderPayment'
 import Router from 'next/router'
@@ -11,7 +9,7 @@ const PaymentSuccess = ({
 }) => {
   const [showChat, setShowChat] = useState(true);
   return (
-    <CommonLayout >
+    <>
       <div>
         <Header/>
         <div className='relative max-w-[768px] mx-auto bg-white md:pt-[88px] flex flex-col justify-center text-second-color'>
@@ -87,7 +85,7 @@ const PaymentSuccess = ({
         </div>
       </div>
       <ChatSupport showChat={showChat} setShowChat={setShowChat} />
-    </CommonLayout>
+    </>
   )
 }
 

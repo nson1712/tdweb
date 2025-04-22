@@ -41,37 +41,34 @@ const StoryType = () => {
   }, []);
 
   return (
-    <CommonLayout>
-      <div>
-        <Header selectedTab={'STORY_TYPE'}/>
-        <div className="max-w-[768px] mx-[auto] md:pt-[80px] md:bg-white pb-64">
-          <div className="flex items-center justify-between fixed md:static top-0 left-0 right-0 bg-white z-50">
-            <a
-              className="p-[20px]"
-              onClick={() => {
-                Router.back();
-              }}
+    <div>
+      <Header selectedTab={"STORY_TYPE"} />
+      <div className="max-w-[768px] mx-[auto] md:pt-[80px] md:bg-white pb-64">
+        <div className="flex items-center justify-between fixed md:static top-0 left-0 right-0 bg-white z-50">
+          <a
+            className="p-[20px]"
+            onClick={() => {
+              Router.back();
+            }}
+          >
+            <img src="/images/arrow-left.svg" className="w-[24px]" />
+          </a>
+
+          <h1 className="text-[16px] leading-[20px] font-bold main-text mb-0">
+            Danh Sách Thể Loại Truyện
+          </h1>
+
+          <div className="w-[68px]" />
+        </div>
+
+        <div className="px-[16px] pt-[64px] md:pt-0 grid grid-cols-2 gap-x-2">
+          {categories.map((item) => (
+            <div
+              className="py-[16px] border-b-[1px] border-color cursor-pointer flex gap-x-2"
+              key={item.code}
             >
-              <img src="/images/arrow-left.svg" className="w-[24px]" />
-            </a>
-
-            <h1 className="text-[16px] leading-[20px] font-bold main-text mb-0">
-              Danh Sách Thể Loại Truyện
-            </h1>
-
-            <div className="w-[68px]" />
-          </div>
-
-          <div className="px-[16px] pt-[64px] md:pt-0 grid grid-cols-2 gap-x-2">
-            {categories.map((item) => (
-              <div
-                className="py-[16px] border-b-[1px] border-color cursor-pointer flex gap-x-2"
-                key={item.code}
-              >
-                <Link href={`/the-loai/${item.code}`} passHref>
-                  <a className="flex"
-                    title={`Thể loại ${item.name}`}
-                  >
+              <Link href={`/the-loai/${item.code}`} passHref>
+                <a className="flex" title={`Thể loại ${item.name}`}>
                   {(item.thumbnail || item.image) && (
                     <Image
                       loader={imageLoader}
@@ -88,14 +85,13 @@ const StoryType = () => {
                       {formatStringToNumber(item.totalStory)} truyện
                     </p>
                   </div>
-                  </a>
-                </Link>
-              </div>
-            ))}
-          </div>
+                </a>
+              </Link>
+            </div>
+          ))}
         </div>
       </div>
-    </CommonLayout>
+    </div>
   );
 };
 

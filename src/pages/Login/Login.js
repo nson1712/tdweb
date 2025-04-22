@@ -86,7 +86,6 @@ const Login = ({
     }});
 
   return (
-    <CommonLayout >
       <div>
         <Header selectedTab={'PROFILE'}/>
         <div className='relative pb-[100px] max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] md:px-[8px] min-h-[100vh] flex flex-col justify-center px-[20px]'>
@@ -134,7 +133,6 @@ const Login = ({
           <ShortLogin description='Chỉ cần 1 chạm đăng nhập qua các phương thức dưới nhé' navigate='/tai-khoan'/>
         </div>
       </div>
-    </CommonLayout>
   )
 }
 

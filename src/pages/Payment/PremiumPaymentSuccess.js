@@ -10,9 +10,9 @@ import { Alert } from "antd";
 const PremiumPaymentSuccess = ({}) => {
   const [showChat, setShowChat] = useState(true);
   return (
-    <CommonLayout>
+    <>
       <div>
-        <Header />
+        {/* <Header /> */}
         <div className="relative max-w-[768px] mx-auto bg-white md:pt-[88px] flex flex-col justify-center text-second-color">
           <HeaderPayment />
           <img src={"https://js.pngtree.com/a4/static/l03b0s.d57ca31e.gif"} />
@@ -52,7 +52,7 @@ const PremiumPaymentSuccess = ({}) => {
         </div>
       </div>
       <ChatSupport showChat={showChat} setShowChat={setShowChat} />
-    </CommonLayout>
+    </>
   );
 };
 

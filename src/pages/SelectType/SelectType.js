@@ -27,7 +27,6 @@ const SelectType = () => {
   }
 
   return (
-    <CommonLayout >
       <div className='relative'>
         <div className='hidden md:block'>
           <Header selectedTab={'HOME'}/>
@@ -74,7 +73,6 @@ const SelectType = () => {
         }
         </div>
       </div>
-    </CommonLayout>
   )
 }
 

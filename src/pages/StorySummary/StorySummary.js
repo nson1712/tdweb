@@ -384,9 +384,9 @@ const StorySummary = ({storyDetail, articleDetail}) => {
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥")
 
   return (
-    <CommonLayout>
+    <>
       {/* <div className='hidden md:block'> */}
-      <Header />
+      {/* <Header /> */}
       {/* </div> */}
       <div className="max-w-[620px] mx-[auto] pt-10 md:pt-20 bg-story">
         {/*<div className={classNames('flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 top-0 z-[99] bg-white mobile-header', scrollOffset > 100 && 'mobile-header-show', `${scrollDirection === 'down' ? 'hide' : 'show-header'}`)}>
@@ -893,7 +893,7 @@ const StorySummary = ({storyDetail, articleDetail}) => {
       {/*<MobileShare showBubble={showBubble} setShowBubble={setShowBubble}/>*/}
       {/*<ChatSupportAutoClose/>*/}
       <Spin spinning={loadingChapterDetail || loading} fullscreen={true} />
-    </CommonLayout>
+    </>
   );
 };
 

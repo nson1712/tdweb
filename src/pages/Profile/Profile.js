@@ -94,7 +94,6 @@ const Profile = () => {
   };
 
   return (
-    <CommonLayout>
       <div>
         <Header selectedTab={"PROFILE"} />
         <div className="relative pb-24 max-w-[768px] mx-auto bg-white min-h-screen px-2 md:pt-24">
@@ -180,7 +179,6 @@ const Profile = () => {
           <div className="bg-white pb-20">{renderContent()}</div>
         </div>
       </div>
-    </CommonLayout>
   );
 };
 

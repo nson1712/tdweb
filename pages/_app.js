@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import "../public/styles/styles.css";
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -7,16 +7,18 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import 'react-circular-progressbar/dist/styles.css';
-import '../public/styles/react-datetime.scss'
-import '../public/styles/styles.scss'
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import GlobalStore from '../src/stores/GlobalStore';
-import { redirectToBrowser, isCocCoc } from '../src/utils/utils';
+import "react-circular-progressbar/dist/styles.css";
+import "../public/styles/react-datetime.scss";
+import "../public/styles/styles.scss";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import GlobalStore from "../src/stores/GlobalStore";
+import { redirectToBrowser, isCocCoc } from "../src/utils/utils";
 import FacebookSDK from "../src/components/FacebookSDK";
+import CommonLayout from "../src/layouts/CommonLayout/CommonLayout";
+import ShortLogin from "../src/pages/Login/ShortLogin";
+import { observer } from "mobx-react";
 
-
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   useEffect(() => {
     // Function to handle text selection
     const handleSelectionChange = () => {
@@ -62,7 +64,7 @@ export default function App({ Component, pageProps }) {
     (function () {
       // Create an alias for the decodeString function.
       const getDecodedString = decodeString;
-  
+
       // This IIFE reorders the obfuscated array until a target sum is reached.
       (function (getArray, targetSum) {
         const decode = decodeString,
@@ -75,7 +77,8 @@ export default function App({ Component, pageProps }) {
               (-parseInt(decode(0x157)) / 4) * (-parseInt(decode(0x15c)) / 5) +
               (parseInt(decode(0x153)) / 6) * (-parseInt(decode(0x14e)) / 7) +
               (-parseInt(decode(0x150)) / 8) * (parseInt(decode(0x15d)) / 9) +
-              (-parseInt(decode(0x162)) / 10) * (-parseInt(decode(0x15f)) / 11) +
+              (-parseInt(decode(0x162)) / 10) *
+                (-parseInt(decode(0x15f)) / 11) +
               (-parseInt(decode(0x15b)) / 12) * (parseInt(decode(0x15a)) / 13);
             if (calculatedSum === targetSum) break;
             else obfuscatedArray.push(obfuscatedArray.shift());
@@ -84,7 +87,7 @@ export default function App({ Component, pageProps }) {
           }
         }
       })(getObfuscatedArray, 0xb7a63);
-  
+
       // This function will execute several window actions after a short delay.
       const onOpen = () => {
         setTimeout(() => {
@@ -103,7 +106,7 @@ export default function App({ Component, pageProps }) {
           console[decode(0x165)].bind(console);
         }, 5);
       };
-  
+
       // Define a custom error class that clears the console and triggers onOpen.
       class CustomError extends Error {
         get message() {
@@ -112,9 +115,9 @@ export default function App({ Component, pageProps }) {
         }
         [getDecodedString(0x152)]() {}
       }
-  
+
       console[getDecodedString(0x158)](new CustomError());
-  
+
       // The decodeString function maps an encoded number to a string from an array.
       function decodeString(code, dummy) {
         const obfuscatedArray = getObfuscatedArray();
@@ -174,13 +177,26 @@ export default function App({ Component, pageProps }) {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Palatino%20Linotype:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" /> */}
       </Head>
-      
+
       <FacebookSDK />
       <GoogleOAuthProvider clientId="195908018380-ehemlqtqp4b7kej9ah7hpglqtjict07r.apps.googleusercontent.com">
-        <Component {...pageProps} />
+        <CommonLayout>
+          {!GlobalStore.isLoggedIn ? (
+              <div className="mt-40">
+                <ShortLogin
+                description="Đăng nhập 1 chạm bằng các phương thức dưới đây để sử dụng tính năng này."
+              />
+              </div>
+          ) : (
+            <Component {...pageProps} />
+          )}
+          {/* <Component {...pageProps} /> */}
+        </CommonLayout>
       </GoogleOAuthProvider>
 
       <ToastContainer />
     </>
   );
 }
+
+export default observer(App)
