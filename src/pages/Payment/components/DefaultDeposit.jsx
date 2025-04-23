@@ -136,7 +136,7 @@ const DefaultDeposit = () => {
                             className="hidden"
                             preview={{
                               visible: previewQr.visible,
-                              src: previewQr.qr.src,
+                              src: previewQr.qr,
                               onVisibleChange: (vis) =>
                                 setPreviewQr({ visible: vis, qr: null }),
                             }}
