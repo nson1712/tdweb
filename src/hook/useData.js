@@ -1,13 +1,6 @@
 import Image from "next/image";
 import imageLoader from "../../src/loader/imageLoader";
 import RedDiamondIcon from "../pages/Payment/RedDiamondIcon";
-import qr18k from "../../public/images/18k.jpg";
-import qr50k from "../../public/images/50k.jpg";
-import qr100k from "../../public/images/100k.jpg";
-import qr200k from "../../public/images/200k.jpg";
-import qr300k from "../../public/images/300k.jpg";
-import qr500k from "../../public/images/500k.jpg";
-import qr1000k from "../../public/images/1tr.jpg";
 import crownIcon from "../../public/images/queen-crown.png";
 
 export const useDiamondPackages = () => {
@@ -19,7 +12,7 @@ export const useDiamondPackages = () => {
           Nạp 15,000 <RedDiamondIcon />
         </div>
       ),
-      qr: qr18k,
+      qr: "/images/18k.jpg",
     },
     {
       value: "50000",
@@ -28,7 +21,7 @@ export const useDiamondPackages = () => {
           Nạp 50,000 <RedDiamondIcon className="self-center" />
         </div>
       ),
-      qr: qr50k,
+      qr: "/images/50k.jpg",
     },
     {
       value: "100000",
@@ -37,7 +30,7 @@ export const useDiamondPackages = () => {
           Nạp 105,000 <RedDiamondIcon className="self-center" />
         </div>
       ),
-      qr: qr100k,
+      qr: "/images/100k.jpg",
     },
     {
       value: "200000",
@@ -46,7 +39,7 @@ export const useDiamondPackages = () => {
           Nạp 210,000 <RedDiamondIcon className="self-center" />
         </div>
       ),
-      qr: qr200k,
+      qr: "/images/200k.jpg",
     },
     {
       value: "300000",
@@ -55,7 +48,7 @@ export const useDiamondPackages = () => {
           Nạp 315,000 <RedDiamondIcon className="self-center" />
         </div>
       ),
-      qr: qr300k,
+      qr: "/images/300k.jpg",
     },
     {
       value: "500000",
@@ -64,7 +57,7 @@ export const useDiamondPackages = () => {
           Nạp 530,000 <RedDiamondIcon className="self-center" />
         </div>
       ),
-      qr: qr500k,
+      qr: "/images/500k.jpg",
     },
     {
       value: "1000000",
@@ -73,7 +66,7 @@ export const useDiamondPackages = () => {
           Nạp 1,060,000 <RedDiamondIcon className="self-center" />
         </div>
       ),
-      qr: qr1000k,
+      qr: "/images/1tr.jpg",
     },
   ];
 
