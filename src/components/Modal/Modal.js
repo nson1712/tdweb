@@ -34,7 +34,7 @@ const ModalComponent = ({ show, handleClose, title, children, className, isCount
             <h3 className='mb-0 text-[20px] lg:text-[32px] font-bold main-text'>
               { title }
             </h3>
-            {isCountDown && time > 0 ? 
+            {isCountDown && time > 0 ?
               <div className="items-center justify-center iconCountDown"><p className="text-[20px] main-text">{time}</p></div>
             :
               <a className='flex items-center justify-center'onClick={handleClose}>

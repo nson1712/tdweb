@@ -7,6 +7,7 @@ import Footer from '../../components/Footer'
 import { Modal } from 'react-bootstrap'
 import GlobalStore from '../../stores/GlobalStore'
 import Confirm from '../../components/Confirm'
+import Header from '../../components/Header/Header';
 
 const CommonLayout = ({children, active}) => {
   const { confirm, showConfirm, handleHideConfirmDialog } = GlobalStore
@@ -21,12 +22,12 @@ const CommonLayout = ({children, active}) => {
   }, [])
 
   return (
-    <div className={classes.container}>
-      {/* <div className={classes.header}>
+    <div className="min-h-svh">
+      <div className={classes.header}>
         <Header active={active}/>
-      </div> */}
+      </div>
       
-      <div className={classes.content}>
+      <div className="min-h-screen">
         {children}
       </div>
       

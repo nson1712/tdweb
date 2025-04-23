@@ -476,12 +476,9 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥")
 
   return (
-    <CommonLayout>
-      <Header />
+    <>
       <div
-        className={`bg-story flex items-start justify-center ${
-          !isMobile && "mt-[100px]"
-        }`}
+        className={`bg-story flex items-start justify-center sm:mt-[100px]`}
       >
         {/* <div
           className={`${
@@ -989,7 +986,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         </div>
       </Modal>
       <Spin spinning={loadingChapterDetail} />
-    </CommonLayout>
+    </>
   );
 };
 

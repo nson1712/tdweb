@@ -17,7 +17,7 @@ const Contact = () => {
     window.open('https://toidoc.onelink.me/59bO/d42503wz', '_blank', 'Toidoc')
   }
   return (
-    <CommonLayout >
+    <>
       <div>
         <Header selectedTab={'CONTACT'}/>
         <div className='home-content pt-[16px] pt-[10px] px-[50px]'>
@@ -50,7 +50,7 @@ const Contact = () => {
           </Button>
         </div>
       </div>
-    </CommonLayout>
+    </>
   )
 }
 

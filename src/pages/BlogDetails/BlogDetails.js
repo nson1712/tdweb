@@ -130,7 +130,7 @@ const BlogDetails = ({ data }) => {
   };
 
   return (
-    <CommonLayout className="text-base bg-transparent">
+    <div className="text-base bg-transparent">
       <div className="top-0">
         <Header selectedTab={"LIBRARY"} />
       </div>
@@ -164,7 +164,7 @@ const BlogDetails = ({ data }) => {
 
         <RelatedBlog relatedBlogList={randomList} />
       </div>
-    </CommonLayout>
+    </div>
   );
 };
 

@@ -161,7 +161,7 @@ const Research = () => {
   };
 
   return (
-    <CommonLayout active="HOME">
+    <>
       <div>
         <Header selectedTab={"RESEARCH"} />
         <h1 style={{display: 'none'}}>Top truyện full hoàn, mới ra lò, truyện mới nổi được cập nhật nhanh nhất</h1>
@@ -294,7 +294,7 @@ const Research = () => {
         </ModalComponent>}*/}
       </div>
       <ChatSupport showChat={showChat} setShowChat={setShowChat} />
-    </CommonLayout>
+    </>
   );
 };
 

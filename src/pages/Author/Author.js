@@ -6,7 +6,7 @@ import { observer } from 'mobx-react'
 const Author = () => {
 
   return (
-    <CommonLayout >
+    <>
       <div>
         <Header selectedTab={'AUTHOR'}/>
         <div className='home-content pt-[16px]'>
@@ -39,7 +39,7 @@ const Author = () => {
           </div>
         </div>
       </div>
-    </CommonLayout>
+    </>
   )
 }
 

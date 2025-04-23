@@ -57,7 +57,7 @@ const Collections = () => {
   }
 
   return (
-    <CommonLayout >
+    <>
       <div className='relative'>
         <div className='hidden md:block'>
           <Header selectedTab={'HOME'}/>
@@ -79,7 +79,7 @@ const Collections = () => {
           </div>
         </div>
       </div>
-    </CommonLayout>
+    </>
   )
 }
 
