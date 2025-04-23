@@ -34,8 +34,8 @@ const Header = ({ selectedTab }) => {
         <Link href="/tim-kiem" passHref>
           <a>
             <img
-              src="/images/logo-toidoc.svg"
-              className="mr-[24px] hidden md:block cursor-pointer"
+              src="/images/icon-logo.png"
+              className="mr-[24px] hidden md:block cursor-pointer w-[50px]"
               alt="Trang chủ truyện full Toidoc"
             />
           </a>

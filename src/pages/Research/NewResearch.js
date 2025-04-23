@@ -144,7 +144,7 @@ const Research = () => {
       window.open("https://toidoc.onelink.me/59bO/d42503wz");
     } else {
       window.open(
-        `https://www.facebook.com/toidoc.support/posts/pfbid0dFWJ4nSzqf2UN4rR54mzVEBhAqqrbbFsC21Pxxsc23W4xh9ZTe7hzjK5NP2J1zsbl`,
+        `https://www.facebook.com/groups/congdongdoctoidoc/posts/660925509994581`,
         "_blank",
         "Toidoc"
       );
@@ -282,16 +282,16 @@ const Research = () => {
           )}
         </div>
 
-        {/*{showModal && <ModalComponent
+        {showModal && <ModalComponent
           show={showModal}
           handleClose={(e) => handleCloseModal('aff')}
           isCountDown={false}
           countDownTime={5}
         >
           <a onClick={(e) => handleClick(e, 'big-banner-research')}>
-            <img src="https://media.truyenso1.xyz/ads/flashsale-4-4.png" className='imgBanner'/>
+            <img src="https://media.truyenso1.xyz/ads/event-16-4.png" className='imgBanner'/>
           </a>
-        </ModalComponent>}*/}
+        </ModalComponent>}
       </div>
       <ChatSupport showChat={showChat} setShowChat={setShowChat} />
     </>

@@ -358,7 +358,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
   const handleClickShopee = async () => {
     // recordClickAff(localStorage.getItem('DEVICE_ID'), 'STORY_SUMMARY')
     setShowModal(false);
-    window.open(`https://toidoc.onelink.me/59bO/d42503wz`, "_blank", "Toidoc");
+    window.open(`https://www.facebook.com/groups/congdongdoctoidoc/posts/660925509994581`, "_blank", "Toidoc");
     // recordClickAff(localStorage.getItem('DEVICE_ID'), 'STORY_SUMMARY')
     // window.open(`https://s.shopee.vn/6KjCdy3HYx`, '_blank', 'Toidoc')
   };
@@ -429,7 +429,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
             src={storyDetail?.thumbnail || storyDetail?.coverImage}
             alt={`Truyện ${storyDetail?.title}`}
             title={storyDetail?.title}
-            className="w-full h-[235px] object-cover"
+            className="w-full h-[240px] object-cover"
           />
           <div className="absolute left-0 right-0 bottom-0 top-0 summary-banner z-[2] flex flex-col justify-between px-5 pt-6 pb-9">
             <div className="relative flex items-center justify-between">
@@ -595,18 +595,15 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                 </div>
               </div>
             </div>
-            <div className="mt-[10px]">
-              <a
-                className="flex text-underline text-[#e2bd1e]"
-                href="https://www.facebook.com/groups/congdongdoctoidoc"
-                target="_blank"
+            <div className='mt-[10px]'>
+               <a className='flex text-underline text-[#e2bd1e]'
+                href='https://www.facebook.com/groups/congdongdoctoidoc/posts/660925509994581/'
+                target='_blank'
                 nofollow
               >
-                <img
-                  src="/images/facebook-group.png"
-                  className="mr-[5px] w-[24px] h-[24px]"
-                />
-                Tham gia cộng đồng đọc Toidoc
+                  <img src='/images/icon-facebook.png' className='mr-[8px] w-[24px] h-[24px] mt-[10px]'/>
+                  Vô ngay Group 👉 Nhận ♦️<br/>
+                  Tìm cạ cứng lọt "hố"!
               </a>
               <a
                 className="flex mt-[5px] text-underline text-[#e2bd1e]"
@@ -614,10 +611,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                 target="_blank"
                 nofollow
               >
-                <img
-                  src="/images/icons8-zalo-48.png"
-                  className="mr-[5px] w-[24px] h-[24px]"
-                />
+                <img src='/images/icons8-zalo-48.png' className='mr-[8px] w-[24px] h-[24px]'/>
                 Bàn luận truyện HOT
               </a>
             </div>
@@ -859,7 +853,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
           >
             <a onClick={(e) => handleClickShopee()}>
               <img
-                src="https://media.truyenso1.xyz/ads/bxh-ve-vang-20-9.png"
+                src="https://media.truyenso1.xyz/ads/event-16-4.png"
                 className="imgBanner"
                 rel="nofollow"
               />
