@@ -118,10 +118,6 @@ const StoriesByHashtag = () => {
 
   return (
     <div>
-      {/* <div className="hidden md:block">
-        <Header />
-      </div> */}
-
       <div className="max-w-[768px] mx-[auto] md:pt-[80px] md:bg-white py-16">
         <div className="flex items-center justify-between fixed md:static top-0 left-0 right-0 bg-white z-50">
           <div className="flex items-center">

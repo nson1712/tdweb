@@ -104,7 +104,7 @@ function useScrollDirection() {
   return scrollDirection;
 }
 
-const StorySummary = ({storyDetail, articleDetail}) => {
+const StorySummary = ({ storyDetail, articleDetail }) => {
   const scrollDirection = useScrollDirection();
   const [showBubble, setShowBubble] = useState("up");
   const [scrollOffset, setScrollOffset] = useState(0);
@@ -140,17 +140,17 @@ const StorySummary = ({storyDetail, articleDetail}) => {
     topTrending,
     getTopTrending,
     topNew,
-    getTopNew
+    getTopNew,
   } = StoryStore;
   // const { storyDetailArticle, getBlogStoryDetail } = BlogStore;
   const [currentChapterDetail, setCurrentChapterDetail] = useState([]);
 
   const [currentTab, setCurrentTab] = useState("CONTENT");
-  const [chapters, setChapters] = useState([]);const [affType, setAffType] = useState("");
+  const [chapters, setChapters] = useState([]);
+  const [affType, setAffType] = useState("");
   const [affObj, setAffObj] = useState({});
 
   const route = useRouter();
-
 
   // useEffect(() => {
   //   if (route.query.storySlug && chapters && chapters?.length > 0) {
@@ -239,7 +239,6 @@ const StorySummary = ({storyDetail, articleDetail}) => {
     getTopNew(0, 16);
   }, [route.query.storySlug]);
 
-
   const getPriceInfo = async () => {
     if (GlobalStore.isLoggedIn) {
       const storyPrice = await getStoryPrice(route.query.storySlug);
@@ -254,7 +253,7 @@ const StorySummary = ({storyDetail, articleDetail}) => {
       }
     }
   };
-  
+
   const getAds = async () => {
     try {
       const result = await Api.get({
@@ -262,14 +261,13 @@ const StorySummary = ({storyDetail, articleDetail}) => {
         params: {
           type: "ALL",
         },
-        hideError: true
+        hideError: true,
       });
       if (result?.data && result?.data?.linkAff) {
         setAffType(result?.data?.type);
         setAffObj(result?.data);
       }
-    } catch (err) {
-    }
+    } catch (err) {}
   };
 
   const getAvailableCash = async () => {
@@ -281,7 +279,7 @@ const StorySummary = ({storyDetail, articleDetail}) => {
             ? "UNLOCK_EXCLUSIVE_CHAPTER"
             : "UNLOCK_NORMAL_CHAPTER",
         },
-        hideError: true
+        hideError: true,
       });
       setAvailableCash(result?.data);
     } catch (err) {
@@ -373,21 +371,20 @@ const StorySummary = ({storyDetail, articleDetail}) => {
 
   // }, [chapters])
 
-  const modifiedContent = articleDetail ? articleDetail?.content
-    ?.replace(/<(h[1-6])([^>]*)>/g, '<$1$2 class="text-lg">')
-    .replace(
-      /<figure([^>]*)>(.*?)<\/figure>/g,
-      '<div class="flex justify-center"><figure$1>$2</figure></div>'
-    ) : '';
+  const modifiedContent = articleDetail
+    ? articleDetail?.content
+        ?.replace(/<(h[1-6])([^>]*)>/g, '<$1$2 class="text-lg">')
+        .replace(
+          /<figure([^>]*)>(.*?)<\/figure>/g,
+          '<div class="flex justify-center"><figure$1>$2</figure></div>'
+        )
+    : "";
 
-  const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥")
-  const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥")
+  const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥");
+  const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥");
 
   return (
     <>
-      {/* <div className='hidden md:block'> */}
-      {/* <Header /> */}
-      {/* </div> */}
       <div className="max-w-[620px] mx-[auto] pt-10 md:pt-20 bg-story">
         {/*<div className={classNames('flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 top-0 z-[99] bg-white mobile-header', scrollOffset > 100 && 'mobile-header-show', `${scrollDirection === 'down' ? 'hide' : 'show-header'}`)}>
           <a className='p-[10px]' title={`Truyện ${storyDetail?.title}`}
@@ -598,21 +595,29 @@ const StorySummary = ({storyDetail, articleDetail}) => {
                 </div>
               </div>
             </div>
-            <div className='mt-[10px]'>
-               <a className='flex text-underline text-[#e2bd1e]'
-                href='https://www.facebook.com/groups/congdongdoctoidoc'
-                target='_blank'
+            <div className="mt-[10px]">
+              <a
+                className="flex text-underline text-[#e2bd1e]"
+                href="https://www.facebook.com/groups/congdongdoctoidoc"
+                target="_blank"
                 nofollow
               >
-                  <img src='/images/facebook-group.png' className='mr-[5px] w-[24px] h-[24px]'/>
-                  Tham gia cộng đồng đọc Toidoc
+                <img
+                  src="/images/facebook-group.png"
+                  className="mr-[5px] w-[24px] h-[24px]"
+                />
+                Tham gia cộng đồng đọc Toidoc
               </a>
-              <a className='flex mt-[5px] text-underline text-[#e2bd1e]'
-                href='https://zalo.me/g/rddcdg525'
-                target='_blank'
+              <a
+                className="flex mt-[5px] text-underline text-[#e2bd1e]"
+                href="https://zalo.me/g/rddcdg525"
+                target="_blank"
                 nofollow
               >
-                <img src='/images/icons8-zalo-48.png' className='mr-[5px] w-[24px] h-[24px]'/>
+                <img
+                  src="/images/icons8-zalo-48.png"
+                  className="mr-[5px] w-[24px] h-[24px]"
+                />
                 Bàn luận truyện HOT
               </a>
             </div>
@@ -644,7 +649,9 @@ const StorySummary = ({storyDetail, articleDetail}) => {
         </div>
 
         <div className="py-4">
-          <p className="text-lg font-bold main-text text-underline px-2">Giới thiệu truyện</p>
+          <p className="text-lg font-bold main-text text-underline px-2">
+            Giới thiệu truyện
+          </p>
           <div className="border-b-[1px] border-color pb-4 px-2">
             <div style={{ marginBottom: "10px" }}>
               <ReadMore>{storyDetail?.shortDescription}</ReadMore>
@@ -660,40 +667,69 @@ const StorySummary = ({storyDetail, articleDetail}) => {
               handleOpenFullChapter={handleOpenFullChapter}
             />
           )}
-          {affType !== '' && affType === 'LIVESTREAM' ?
-            <div className='mt-[40px] mb-[20px]'>
-              <p dangerouslySetInnerHTML={{__html: `${affObj?.productName}`}}/>
-              <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
+          {affType !== "" && affType === "LIVESTREAM" ? (
+            <div className="mt-[40px] mb-[20px]">
+              <p
+                dangerouslySetInnerHTML={{ __html: `${affObj?.productName}` }}
+              />
+              <p className="text-[#ff0600]">
+                <strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong>
+              </p>
               <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
               <p>👉 FREE SHIP Toàn Quốc</p>
-              <div className='flex items-center justify-center' dangerouslySetInnerHTML={{__html: `${affObj?.linkAff}`}}/>
-              <div className='flex items-center justify-center'>
+              <div
+                className="flex items-center justify-center"
+                dangerouslySetInnerHTML={{ __html: `${affObj?.linkAff}` }}
+              />
+              <div className="flex items-center justify-center">
                 <Link href={`https://www.facebook.com/guchicofficial`} passHref>
-                  <a id='live-story-detail' className='w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px]' target='_blank'>Vào Facebook Xem Live</a>
+                  <a
+                    id="live-story-detail"
+                    className="w-[300px] h-[50px] btnLiveStream px-[4px] py-[8px]"
+                    target="_blank"
+                  >
+                    Vào Facebook Xem Live
+                  </a>
                 </Link>
               </div>
             </div>
-            :
-            affType !== '' &&
-              <div className='mt-[40px] mb-[20px]'>
-                <p dangerouslySetInnerHTML={{__html: `${affObj?.productName}`}}/>
-                <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
+          ) : (
+            affType !== "" && (
+              <div className="mt-[40px] mb-[20px]">
+                <p
+                  dangerouslySetInnerHTML={{ __html: `${affObj?.productName}` }}
+                />
+                <p className="text-[#ff0600]">
+                  <strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong>
+                </p>
                 <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
                 <p>👉 FREE SHIP Toàn Quốc</p>
-                <div className='flex items-center justify-center'>
+                <div className="flex items-center justify-center">
                   <Link href={`${affObj.linkAff}`} passHref>
-                    <a id='live-chapter-content-image' target='_blank' rel="nofollow">
-                      <img src={`${affObj?.image}`} className='w-[200px]'></img>
+                    <a
+                      id="live-chapter-content-image"
+                      target="_blank"
+                      rel="nofollow"
+                    >
+                      <img src={`${affObj?.image}`} className="w-[200px]"></img>
                     </a>
                   </Link>
                 </div>
-                <div className='flex items-center justify-center'>
+                <div className="flex items-center justify-center">
                   <Link href={`${affObj.linkAff}`} passHref>
-                    <a id='live-chapter-content' className='w-[200px] btnLiveStream px-[4px] py-[2px] text-[12px]' target='_blank' rel="nofollow">Xem Sản Phẩm</a>
+                    <a
+                      id="live-chapter-content"
+                      className="w-[200px] btnLiveStream px-[4px] py-[2px] text-[12px]"
+                      target="_blank"
+                      rel="nofollow"
+                    >
+                      Xem Sản Phẩm
+                    </a>
                   </Link>
                 </div>
               </div>
-          }
+            )
+          )}
           {storyDetail?.chapters?.length > 0 && (
             <>
               <div className="border-b-[1px] border-color pb-4 px-2">
@@ -712,14 +748,16 @@ const StorySummary = ({storyDetail, articleDetail}) => {
                         <img
                           src="/images/Done.png"
                           className="w-5 float-left mr-[5px]"
-                          width="20" height="20"
+                          width="20"
+                          height="20"
                           alt="Chương mở Free"
                         />
                       ) : (
                         <img
                           src="/images/lock.png"
                           className="w-5 float-left mr-[5px]"
-                          width="20" height="20"
+                          width="20"
+                          height="20"
                           alt="Chương bị khoá"
                         />
                       )}
@@ -747,28 +785,34 @@ const StorySummary = ({storyDetail, articleDetail}) => {
         </div>
 
         <div className="border-1 px-2 py-3 rounded-2xl space-y-4 mx-2 mt-4">
-            <TopTrendingTitle />
-            <HotStories className="grid grid-cols-4 justify-center gap-x-2 gap-y-5" data={topTrending?.data}/>
-            <div className="flex">
-              <ButtonViewAll
-                className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
-                url="/danh-sach-truyen/trending"
-                title="Xem thêm danh sách truyện HOT"
-              />
-            </div>
+          <TopTrendingTitle />
+          <HotStories
+            className="grid grid-cols-4 justify-center gap-x-2 gap-y-5"
+            data={topTrending?.data}
+          />
+          <div className="flex">
+            <ButtonViewAll
+              className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
+              url="/danh-sach-truyen/trending"
+              title="Xem thêm danh sách truyện HOT"
+            />
           </div>
+        </div>
 
-          <div className="border-1 px-2 py-3 rounded-2xl space-y-4 mx-2 my-4">
-            <TopNewTitle />
-            <HotStories className="grid grid-cols-4 justify-center gap-x-2 gap-y-5" data={topNew?.data}/>
-            <div className="flex">
-              <ButtonViewAll
-                className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
-                url="/danh-sach-truyen/moi-nhat"
-                title="Xem thêm danh sách truyện mới ra"
-              />
-            </div>
+        <div className="border-1 px-2 py-3 rounded-2xl space-y-4 mx-2 my-4">
+          <TopNewTitle />
+          <HotStories
+            className="grid grid-cols-4 justify-center gap-x-2 gap-y-5"
+            data={topNew?.data}
+          />
+          <div className="flex">
+            <ButtonViewAll
+              className="w-full border-1 text-[#5C95C6] bg-[#F5F8FF] font-medium rounded-lg text-base px-5 py-2.5 text-center shadow-sm hover:bg-[#5C95C6] hover:transition hover:delay-50 hover:!text-white cursor-pointer"
+              url="/danh-sach-truyen/moi-nhat"
+              title="Xem thêm danh sách truyện mới ra"
+            />
           </div>
+        </div>
 
         {modifiedContent && (
           <div className="mt-[20px]">
@@ -851,9 +895,11 @@ const StorySummary = ({storyDetail, articleDetail}) => {
                   href={{
                     pathname: "/phuong-thuc-nap",
                     query: {
-                      ref: GlobalStore?.profile ? GlobalStore.profile.referralCode : "",
-                      story: storyDetail?.slug
-                    }
+                      ref: GlobalStore?.profile
+                        ? GlobalStore.profile.referralCode
+                        : "",
+                      story: storyDetail?.slug,
+                    },
                   }}
                   passHref
                 >

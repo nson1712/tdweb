@@ -54,47 +54,44 @@ const Hashtags = () => {
   };
 
   return (
-      <div>
-        {/* <Header /> */}
-        <div className="max-w-[768px] mx-[auto] md:pt-[80px] md:bg-white pb-64">
-          <div className="flex items-center justify-between fixed md:static top-0 left-0 right-0 bg-white">
-            <a
-              className="p-[20px]"
-              onClick={() => {
-                Router.back();
-              }}
-            >
-              <img src="/images/arrow-left.svg" className="w-[24px]" />
-            </a>
+    <div className="max-w-[768px] mx-[auto] md:pt-[80px] md:bg-white pb-64">
+      <div className="flex items-center justify-between fixed md:static top-0 left-0 right-0 bg-white">
+        <a
+          className="p-[20px]"
+          onClick={() => {
+            Router.back();
+          }}
+        >
+          <img src="/images/arrow-left.svg" className="w-[24px]" />
+        </a>
 
-            <h1 className="text-[16px] leading-[20px] font-bold main-text mb-0">
-              Hashtag
-            </h1>
+        <h1 className="text-[16px] leading-[20px] font-bold main-text mb-0">
+          Hashtag
+        </h1>
 
-            <div className="w-[68px]" />
-          </div>
-
-          <div className="px-[16px] pt-[64px] md:pt-0 sm:grid sm:grid-cols-3">
-            {hashtags?.data?.map((item) => (
-              <div
-                className="py-[16px] border-b-[1px] border-color cursor-pointer flex gap-x-2"
-                key={item.code}
-              >
-                <div>
-                  <Link href={`/hashtag/${item.name}`} passHref>
-                    <a
-                      className="text-[16px] leading-[16px] font-semibold mb-[8px] text-black max-w-[150px] line-clamp-1 text-ellipsis"
-                      title={`#${item.name}`}
-                    >
-                      #{item.name}
-                    </a>
-                  </Link>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
+        <div className="w-[68px]" />
       </div>
+
+      <div className="px-[16px] pt-[64px] md:pt-0 sm:grid sm:grid-cols-3">
+        {hashtags?.data?.map((item) => (
+          <div
+            className="py-[16px] border-b-[1px] border-color cursor-pointer flex gap-x-2"
+            key={item.code}
+          >
+            <div>
+              <Link href={`/hashtag/${item.name}`} passHref>
+                <a
+                  className="text-[16px] leading-[16px] font-semibold mb-[8px] text-black max-w-[150px] line-clamp-1 text-ellipsis"
+                  title={`#${item.name}`}
+                >
+                  #{item.name}
+                </a>
+              </Link>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };
 

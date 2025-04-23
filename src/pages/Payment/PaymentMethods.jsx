@@ -21,7 +21,6 @@ const PaymentMethods = ({ referralCode, storySlug, chapterSlug }) => {
   return (
     <>
       {contextHolder}
-      {/* <Header /> */}
       <div className="h-lvh max-w-[768px] mx-auto sm:pt-24 pb-10 overflow-y-auto bg-white">
         <Title />
 

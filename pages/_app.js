@@ -163,6 +163,10 @@ function App({ Component, pageProps }) {
     })();
   }, []);
 
+  useEffect(() => {
+    GlobalStore.checkIsLogin()
+  }, [])
+
   return (
     <>
       <Head>
@@ -190,7 +194,6 @@ function App({ Component, pageProps }) {
           ) : (
             <Component {...pageProps} />
           )}
-          {/* <Component {...pageProps} /> */}
         </CommonLayout>
       </GoogleOAuthProvider>
 
