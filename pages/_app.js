@@ -164,6 +164,28 @@ function App({ Component, pageProps }) {
   }, []);
 
   useEffect(() => {
+    const handleKeyDown = (e) => {
+      // Chặn Ctrl+S / ⌘+S
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === "s") {
+        e.preventDefault();
+      }
+    };
+
+    const handleContextMenu = (e) => {
+      // Chặn chuột phải
+      e.preventDefault();
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("contextmenu", handleContextMenu);
+
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("contextmenu", handleContextMenu);
+    };
+  }, []);
+
+  useEffect(() => {
     GlobalStore.checkIsLogin()
   }, [])
 
