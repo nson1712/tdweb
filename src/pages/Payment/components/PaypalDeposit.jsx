@@ -1,7 +1,17 @@
 import { useState } from "react";
-import { usePaypalPackages } from "../../../hook/useData";
-import { Button, Collapse, ConfigProvider, Form, Input, Select } from "antd";
+import { useRouter } from "next/router";
+import {
+  Button,
+  Collapse,
+  ConfigProvider,
+  Form,
+  Input,
+  Select,
+  Radio,
+} from "antd";
 import PaypalIcon from "../../../../public/icons/PaypalIcon";
+import { usePaypalPackages } from "../../../hook/useData";
+
 import {
   PayPalButtons,
   PayPalCardFieldsProvider,
@@ -12,16 +22,29 @@ import {
   PayPalScriptProvider,
 } from "@paypal/react-paypal-js";
 import SubmitPayment from "./SubmitPayment";
-import { useRouter } from "next/router";
 
 const PaypalDeposit = ({ api }) => {
   const [form] = Form.useForm();
   const router = useRouter();
   const { ref } = router.query;
-  const { paypalPackages } = usePaypalPackages();
-  const [selectedPackage, setSelectedPackage] = useState(
-    paypalPackages?.[0] ? paypalPackages[0].value : 7
+  const { paypalDiamondPackages, paypalPremiumPackages } = usePaypalPackages();
+  const [selectedDiamondPackage, setSelectedDiamondPackage] = useState(
+    paypalDiamondPackages?.[0] ? paypalDiamondPackages[0].value : 7
   );
+  const [selectedPremiumPackage, setSelectedPremiumPackage] = useState(
+    paypalPremiumPackages?.[0] ? paypalPremiumPackages[0].value : 25
+  );
+  const [type, setType] = useState("diamond");
+  const options = [
+    {
+      value: "diamond",
+      label: "Kim cương",
+    },
+    {
+      value: "premium",
+      label: "Premium",
+    },
+  ];
 
   const openNotificationWithIcon = (type, message) => {
     api[type]({
@@ -30,7 +53,10 @@ const PaypalDeposit = ({ api }) => {
   };
 
   const createOrder = (_, actions) => {
-    if (!selectedPackage) {
+    const selectedValue =
+      type === "diamond" ? selectedDiamondPackage : selectedPremiumPackage;
+
+    if (!selectedValue) {
       openNotificationWithIcon("error", "Vui lòng chọn gói!");
       return;
     }
@@ -40,7 +66,7 @@ const PaypalDeposit = ({ api }) => {
         {
           amount: {
             currency_code: "USD",
-            value: selectedPackage.toString(),
+            value: selectedValue.toString(),
           },
         },
       ],
@@ -101,7 +127,8 @@ const PaypalDeposit = ({ api }) => {
                         Nạp qua Paypal
                       </div>
                       <div className="text-slate-500 text-xs sm:text-sm line-clamp-1">
-                        Cần chờ admin duyệt 5 - 10 phút, phù hợp với khách hàng nước ngoài..
+                        Cần chờ admin duyệt 5 - 10 phút, phù hợp với khách hàng
+                        nước ngoài..
                       </div>
                     </div>
                   </div>
@@ -157,14 +184,45 @@ const PaypalDeposit = ({ api }) => {
                       </Form.Item>
                     )}
 
-                    <Form.Item label="Chọn gói kim cương" required>
-                      <Select
-                        defaultValue={7}
-                        placeholder="Chọn gói kim cương"
-                        onChange={(value) => setSelectedPackage(value)}
-                        options={paypalPackages}
+                    <Form.Item>
+                      <Radio.Group
+                        options={options}
+                        defaultValue="diamond"
+                        onChange={(e) => {
+                          if (e.target.value === "diamond") {
+                            setType("diamond");
+                            setSelectedPremiumPackage(null);
+                            setSelectedDiamondPackage(7);
+                          } else {
+                            setType("premium");
+                            setSelectedDiamondPackage(null);
+                            setSelectedPremiumPackage(25);
+                          }
+                        }}
                       />
                     </Form.Item>
+
+                    {type === "diamond" ? (
+                      <Form.Item label="Chọn gói kim cương" required>
+                        <Select
+                          // defaultValue={7}
+                          value={selectedDiamondPackage}
+                          placeholder="Chọn gói kim cương"
+                          onChange={(value) => setSelectedDiamondPackage(value)}
+                          options={paypalDiamondPackages}
+                        />
+                      </Form.Item>
+                    ) : (
+                      <Form.Item label="Chọn gói premium" required>
+                        <Select
+                          // defaultValue={25}
+                          value={selectedPremiumPackage}
+                          placeholder="Chọn gói premium"
+                          onChange={(value) => setSelectedPremiumPackage(value)}
+                          options={paypalPremiumPackages}
+                        />
+                      </Form.Item>
+                    )}
                   </Form>
 
                   <PayPalButtons

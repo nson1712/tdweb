@@ -1,15 +1,15 @@
+import { useEffect } from "react";
 import { notification } from "antd";
-import AutoDeposit from "./components/AutoDeposit";
-import DefaultDeposit from "./components/DefaultDeposit";
 import MobileCardDeposit from "./components/MobileCardDeposit";
+import DefaultDeposit from "./components/DefaultDeposit";
+import ForeignDeposit from "./components/ForeignDeposit";
 import PaypalDeposit from "./components/PaypalDeposit";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import Header from "../../components/Header/Header";
 import MomoDeposit from "./components/MomoDeposit";
-import ForeignDeposit from "./components/ForeignDeposit";
-import GlobalStore from "../../stores/GlobalStore";
-import { useEffect } from "react";
+import AutoDeposit from "./components/AutoDeposit";
 import Title from "./components/Title";
+import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
+import GlobalStore from "../../stores/GlobalStore";
 
 const PaymentMethods = ({ referralCode, storySlug, chapterSlug }) => {
   const [api, contextHolder] = notification.useNotification();
