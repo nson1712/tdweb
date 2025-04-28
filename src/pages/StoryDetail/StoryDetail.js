@@ -476,7 +476,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥");
 
   const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="550" height="90">
+  <svg xmlns="http://www.w3.org/2000/svg" width="820" height="90">
     <defs>
       <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
         <stop offset="0%" stop-color="#09B2E5" stop-opacity="0.5"/> 
@@ -484,14 +484,14 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       </linearGradient>
     </defs>
     <text 
+      style="font-family: 'Abel', sans-serif"
       x="80%" y="40%" 
       text-anchor="middle" 
       dominant-baseline="middle" 
       font-size="60"
-      font-family="Arial"
       fill="url(#grad)"
     >
-      TOI DOC
+      TOIDOC.VN
     </text>
   </svg>`;
 

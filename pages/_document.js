@@ -16,6 +16,7 @@ class WebDocument extends Document {
             rel="stylesheet"
           />
           <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"/>
+          <link href="https://fonts.googleapis.com/css2?family=Abel&display=swap" rel="stylesheet"></link>
           <script
             dangerouslySetInnerHTML={{
               __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
