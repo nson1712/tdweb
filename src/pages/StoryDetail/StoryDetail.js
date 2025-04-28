@@ -476,18 +476,19 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥");
 
   const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="300" height="90">
+  <svg xmlns="http://www.w3.org/2000/svg" width="550" height="90">
     <defs>
       <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#fd746c" stop-opacity="0.5"/> 
-        <stop offset="100%" stop-color="#ff9068" stop-opacity="0.5"/>
+        <stop offset="0%" stop-color="#09B2E5" stop-opacity="0.5"/> 
+        <stop offset="100%" stop-color="#005993" stop-opacity="0.5"/>
       </linearGradient>
     </defs>
     <text 
-      x="55%" y="40%" 
+      x="80%" y="40%" 
       text-anchor="middle" 
       dominant-baseline="middle" 
-      font-size="50" 
+      font-size="60"
+      font-family="Arial"
       fill="url(#grad)"
     >
       TOI DOC
