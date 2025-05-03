@@ -107,6 +107,42 @@ class StoryStore {
     }
   };
 
+  getStories1 = async ({
+    categoryCode,
+    page = 1,
+    size = 20,
+    keyword,
+    sortBy = "totalView",
+    sortDirection = "DESC",
+    chapterMin,
+    chapterMax,
+    status
+  }) => {
+    try {
+      const result = await Api.get({
+        url: "data/private/data/story",
+        params: {
+          categoryCode,
+          page,
+          size,
+          keyword,
+          sortBy,
+          sortDirection,
+          chapterMin,
+          chapterMax,
+          status,
+        },
+        hideError: true,
+      });
+
+      runInAction(() => {
+        this.stories = result.data;
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   getcollections1 = async () => {
     try {
       const result = await Api.get({

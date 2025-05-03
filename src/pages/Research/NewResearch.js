@@ -144,7 +144,7 @@ const Research = () => {
       window.open("https://toidoc.onelink.me/59bO/d42503wz");
     } else {
       window.open(
-        `https://www.facebook.com/groups/congdongdoctoidoc/posts/660925509994581`,
+        `https://www.facebook.com/groups/congdongdoctoidoc/posts/674053792015086/`,
         "_blank",
         "Toidoc"
       );
@@ -289,7 +289,7 @@ const Research = () => {
           countDownTime={5}
         >
           <a onClick={(e) => handleClick(e, 'big-banner-research')}>
-            <img src="https://media.truyenso1.xyz/ads/event-16-4.png" className='imgBanner'/>
+            <img src="https://media.truyenso1.xyz/ads/flash-sale-3-5.png" className='imgBanner'/>
           </a>
         </ModalComponent>}
       </div>

@@ -13,7 +13,7 @@ import Header from "../../components/Header/Header";
 import Chapters from "../StoryDetail/Chapters";
 import MobileShare from "./MobileShare";
 import LaunchCountdown from "../../components/LaunchCountdown";
-import { getMobileOperatingSystem } from "../../utils/utils";
+import { getMobileOperatingSystem, getRadomNumber } from "../../utils/utils";
 import ModalComponent from "../../components/Modal/Modal";
 import { toast } from "react-toastify";
 import PaginatedList from "./PaginatedList";
@@ -38,6 +38,21 @@ const TABS = [
   {
     label: "Mục lục",
     value: "CHAPTERS",
+  },
+];
+
+const ADS = [
+  {
+    content: "<b>VINWOMEN</b> - Hỗ trợ tăng cường khả năng chống oxy hoá, giảm tình trạng thiếu hụt nội tiết tố nữ, giúp giảm lão hoá da",
+    image: "https://media.truyenso1.xyz/ads/vin-woman.png",
+  },
+  {
+    content: "<b>ĐÔNG TRÙNG HẠ THẢO</b> - Giúp bổ thận, bổ phổi, hỗ trợ tăng cường sức đề kháng, giúp giảm lão hoá, nâng cao thể trạng cơ thể.",
+    image: "https://media.truyenso1.xyz/ads/dong-trung-ha-thao-150g.jpg",
+  },
+  {
+    content: "<b>LINH CHI ĐỎ</b> - Hỗ trợ tăng cường giải độc gan, nâng cao sức đề kháng, an thần, giúp giảm mệt mỏi, mất ngủ",
+    image: "https://media.truyenso1.xyz/ads/linh-chi-do.png",
   },
 ];
 
@@ -255,19 +270,21 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
   };
 
   const getAds = async () => {
-    try {
-      const result = await Api.get({
-        url: "/data/shopee/aff/detail",
-        params: {
-          type: "ALL",
-        },
-        hideError: true,
-      });
-      if (result?.data && result?.data?.linkAff) {
-        setAffType(result?.data?.type);
-        setAffObj(result?.data);
-      }
-    } catch (err) {}
+    let i = getRadomNumber(0, 3);
+    setAffObj(ADS[i]);
+    // try {
+    //   const result = await Api.get({
+    //     url: "/data/shopee/aff/detail",
+    //     params: {
+    //       type: "ALL",
+    //     },
+    //     hideError: true,
+    //   });
+    //   if (result?.data && result?.data?.linkAff) {
+    //     setAffType(result?.data?.type);
+    //     setAffObj(result?.data);
+    //   }
+    // } catch (err) {}
   };
 
   const getAvailableCash = async () => {
@@ -597,13 +614,12 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
             </div>
             <div className='mt-[10px]'>
                <a className='flex text-underline text-[#e2bd1e]'
-                href='https://www.facebook.com/groups/congdongdoctoidoc/posts/660925509994581/'
+                href='https://www.facebook.com/groups/congdongdoctoidoc'
                 target='_blank'
                 nofollow
               >
                   <img src='/images/icon-facebook.png' className='mr-[8px] w-[24px] h-[24px] mt-[10px]'/>
-                  Vô ngay Group 👉 Nhận ♦️<br/>
-                  Tìm cạ cứng lọt "hố"!
+                  📚 Group truyện độc quyền Toidoc<br/>Gia nhập ngay! 👈
               </a>
               <a
                 className="flex mt-[5px] text-underline text-[#e2bd1e]"
@@ -661,7 +677,32 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
               handleOpenFullChapter={handleOpenFullChapter}
             />
           )}
-          {affType !== "" && affType === "LIVESTREAM" ? (
+          {affObj && <div className="mt-[40px] mb-[20px] border-1 px-2 py-2">
+            <img src='/images/img-ad-icon.png' className="w-[30px] align-center margin-auto"></img>
+            <p className="text-center" dangerouslySetInnerHTML={{ __html: `${affObj?.content}` }}/>
+            <Link href={`https://zalo.me/+84933258199`} passHref>
+              <a
+                id="live-chapter-content-image"
+                target="_blank"
+                rel="nofollow"
+              >
+                <img src={`${affObj?.image}`} className="w-[200px] align-center margin-auto"></img>
+              </a>
+            </Link>
+            <div className="flex items-center justify-center">
+              <Link href={`https://zalo.me/+84933258199`} passHref>
+                <a
+                  id="live-chapter-content"
+                  className="w-[200px] btnLiveStream px-[4px] py-[2px] text-[12px]"
+                  target="_blank"
+                  rel="nofollow"
+                >
+                  Xem Sản Phẩm
+                </a>
+              </Link>
+            </div>
+          </div>}
+          {/*affType !== "" && affType === "LIVESTREAM" ? (
             <div className="mt-[40px] mb-[20px]">
               <p
                 dangerouslySetInnerHTML={{ __html: `${affObj?.productName}` }}
@@ -723,7 +764,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                 </div>
               </div>
             )
-          )}
+          )*/}
           {storyDetail?.chapters?.length > 0 && (
             <>
               <div className="border-b-[1px] border-color pb-4 px-2">

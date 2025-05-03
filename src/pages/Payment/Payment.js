@@ -64,11 +64,11 @@ const Payment = ({
       deposit: "500,000VNĐ",
       value: 500000,
     },
-    {
-      label: "1,060,000",
-      deposit: "1,000,000VNĐ",
-      value: 1000000,
-    },
+    // {
+    //   label: "1,060,000",
+    //   deposit: "1,000,000VNĐ",
+    //   value: 1000000,
+    // },
   ];
 
   useEffect(() => {

@@ -157,7 +157,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       if (isLoggedIn && result?.free && result?.contentEnabled) {
         saveLastStory(route.query.storySlug, route.query.chapterSlug);
       }
-      await getAds();
+      // await getAds();
       setIsLoading(false);
     } catch (e) {
       setIsLoading(false);
@@ -730,21 +730,10 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                               dfjkdsfds={jkdjfk}
                               order={i}
                             />
-
-                            {affType !== "" &&
-                            affType === "LIVESTREAM" &&
-                            i === chapterContents.length - 6 ? (
-                              <div className="mt-[40px] mb-[20px]">
-                                <p
-                                  dangerouslySetInnerHTML={{
-                                    __html: `${affObj?.productName}`,
-                                  }}
-                                />
-                                <p className="text-[#ff0600]">
-                                  <strong>
-                                    🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁
-                                  </strong>
-                                </p>
+                            {/*affType !== '' && affType === 'LIVESTREAM' && i === (chapterContents.length - 6) ?
+                              <div className='mt-[40px] mb-[20px]'>
+                                <p dangerouslySetInnerHTML={{__html: `${affObj?.productName}`}}/>
+                                <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
                                 <p>👉 Giảm ngay 10% khi gửi mã TOIDOC</p>
                                 <p>👉 FREE SHIP Toàn Quốc</p>
                                 <div
@@ -812,7 +801,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                                   </div>
                                 </div>
                               )
-                            )}
+                            )*/}
                           </>
                         ))}
                       </Watermark>
