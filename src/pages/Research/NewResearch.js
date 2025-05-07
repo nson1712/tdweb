@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import ModalComponent from "../../components/Modal/Modal";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import Header from "../../components/Header/Header";
 import { observer } from "mobx-react";
 import Router, { useRouter } from "next/router";

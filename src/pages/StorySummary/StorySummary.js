@@ -3,7 +3,6 @@ import Router, { useRouter } from "next/router";
 import * as Api from "../../api/api";
 import Button from "../../components/Button/Button";
 import { formatStringToNumber } from "../../utils/utils";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import { observer } from "mobx-react";
 import StoryStore from "../../stores/StoryStore";
 import classNames from "classnames";

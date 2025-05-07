@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import * as Api from "../../api/api";
 import Router from "next/router";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import GlobalStore from "../../stores/GlobalStore";
 import { removeToken } from "../../utils/storage";
 import StoryStore from "../../stores/StoryStore";

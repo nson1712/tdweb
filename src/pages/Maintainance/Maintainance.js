@@ -1,12 +1,9 @@
 import React from "react";
-import Header from "../../components/Header/Header";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import { observer } from "mobx-react";
 
 const Maintainance = () => {
   return (
     <div>
-      <Header selectedTab={"HOME"} />
       <div className="relative pb-[100px] max-w-[768px] mx-auto bg-white mt-[16px] md:pt-[88px] px-5 md:px-[8px]">
         <div style={{ width: "100%" }}>
           <img

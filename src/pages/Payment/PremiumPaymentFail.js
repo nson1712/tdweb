@@ -1,8 +1,5 @@
 import React from "react";
-import Header from "../../components/Header/Header";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import Button from "../../components/Button/Button";
-import FooterDesktop from "../../components/FooterDesktop";
 import HeaderPayment from "./HeaderPayment";
 import Router from "next/router";
 

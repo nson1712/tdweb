@@ -1,6 +1,5 @@
 import React from 'react'
 import Header from '../../components/Header/Header'
-import CommonLayout from '../../layouts/CommonLayout/CommonLayout'
 import Button from '../../components/Button'
 import { observer } from 'mobx-react'
 import StoryStore from '../../stores/StoryStore'

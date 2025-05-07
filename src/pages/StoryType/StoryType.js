@@ -3,7 +3,6 @@ import StoryItem from "../../components/StoryItem/StoryItem";
 import { formatStringToNumber } from "../../utils/utils";
 import Router from "next/router";
 import Header from "../../components/Header/Header";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import { observer } from "mobx-react";
 import StoryStore from "../../stores/StoryStore";
 import Image from "next/image";

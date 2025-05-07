@@ -1,8 +1,6 @@
 import React, { useEffect, useMemo, useState } from "react";
 import StoryItem from "../../components/StoryItem/StoryItem";
 import Router, { useRouter } from "next/router";
-import Header from "../../components/Header/Header";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import { observer } from "mobx-react";
 import StoryStore from "../../stores/StoryStore";
 import ModalComponent from "../../components/Modal";

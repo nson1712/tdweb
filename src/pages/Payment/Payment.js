@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Router from "next/router";
-import Header from "../../components/Header/Header";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import * as Api from "../../api/api";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import LocalForm from "../../components/Form/LocalForm";

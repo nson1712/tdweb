@@ -8,7 +8,6 @@ import Header from "../../components/Header/Header";
 import MomoDeposit from "./components/MomoDeposit";
 import AutoDeposit from "./components/AutoDeposit";
 import Title from "./components/Title";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import GlobalStore from "../../stores/GlobalStore";
 
 const PaymentMethods = ({ referralCode, storySlug, chapterSlug }) => {

@@ -1,7 +1,4 @@
 import React, { useState } from "react";
-import Header from "../../components/Header/Header";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
-import FooterDesktop from "../../components/FooterDesktop";
 import ChatSupport from "../../components/Button/ChatSupport";
 import HeaderPayment from "./HeaderPayment";
 import Router from "next/router";

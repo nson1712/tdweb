@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import Header from "../../components/Header/Header";
 import { Button, List, Skeleton } from "antd";
 import UnderLineTitle from "../../components/UnderLineTitle/UnderLineTitle";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import BlogTitleLink from "../../components/BlogTitleLink";
 import BlogImageLink from "../../components/BlogImageLink";
 import BlogShortDescription from "../../components/BlogShortDescription";

@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from "react";
 import StoryItem from "../../components/StoryItem/StoryItem";
 import Router, { useRouter } from "next/router";
-import Header from "../../components/Header/Header";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import { observer } from "mobx-react";
 
 import * as Api from "../../api/api";
