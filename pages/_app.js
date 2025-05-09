@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Head from "next/head";
 import "../public/styles/styles.css";
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -18,8 +18,10 @@ import CommonLayout from "../src/layouts/CommonLayout/CommonLayout";
 import ShortLogin from "../src/pages/Login/ShortLogin";
 import { observer } from "mobx-react";
 import { useRouter } from "next/router";
+import { Alert, Modal } from "antd";
 
 function App({ Component, pageProps }) {
+  const [open, setOpen] = useState(false)
   const router = useRouter();
 
   useEffect(() => {
@@ -44,11 +46,14 @@ function App({ Component, pageProps }) {
 
     isCocCoc().then((result) => {
       if (result) {
+        setOpen(true)
         console.log("Người dùng đang sử dụng trình duyệt Cốc Cốc.");
       } else {
+        setOpen(false)
         console.log("Không phải trình duyệt Cốc Cốc.");
       }
     });
+
     // Redirect to browser instead of open webview
     redirectToBrowser();
 
@@ -223,6 +228,31 @@ function App({ Component, pageProps }) {
       </GoogleOAuthProvider>
 
       <ToastContainer />
+      <Modal
+        open={open}
+        footer={null}
+        closeIcon={null}
+      >
+        <Alert
+          className="text-xl"
+          showIcon
+          type="error"
+          message={
+            <div>
+              Vui lòng sử dụng trình duyệt Chrome! Nếu chưa có,{" "}
+              <span>
+                <a
+                  href="https://www.google.com/intl/vi_vn/chrome/"
+                  target="_blank"
+                >
+                  bấm vào đây
+                </a>
+              </span>{" "}
+              để tải xuống!
+            </div>
+          }
+        />
+      </Modal>
     </>
   );
 }

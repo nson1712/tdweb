@@ -2,7 +2,6 @@ import { observer } from 'mobx-react'
 import React, { useEffect, useState } from 'react'
 import classNames from 'classnames'
 import Header from '../../components/Header/Header'
-import CommonLayout from '../../layouts/CommonLayout/CommonLayout'
 import StoryStore from '../../stores/StoryStore'
 import Router from 'next/router'
 

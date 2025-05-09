@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Router from "next/router";
-import Header from "../../components/Header/Header";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import * as Api from "../../api/api";
 import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import LocalForm from "../../components/Form/LocalForm";
@@ -10,7 +8,6 @@ import InputField from "../../components/InputField/InputField";
 import Button from "../../components/Button/Button";
 import Field from "../../components/Form/Field";
 import { formatStringToNumber } from "../../utils/utils";
-import FooterDesktop from "../../components/FooterDesktop";
 import ChatSupport from "../../components/Button/ChatSupport";
 import ModalComponent from "../../components/Modal/Modal";
 import HeaderPayment from "./HeaderPayment";

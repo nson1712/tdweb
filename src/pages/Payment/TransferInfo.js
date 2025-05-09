@@ -1,7 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
-import Header from "../../components/Header/Header";
 import { observer } from "mobx-react";
 import Router, { useRouter } from "next/router";
 import HeaderPayment from "./HeaderPayment";

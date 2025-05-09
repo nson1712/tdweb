@@ -1,21 +1,16 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 import * as Api from "../../api/api";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import { observer } from "mobx-react";
 import StoryStore from "../../stores/StoryStore";
 import { toast } from "react-toastify";
 import Chapters from "./Chapters";
-import MobileShare from "../StorySummary/MobileShare";
-import Header from "../../components/Header/Header";
-import LaunchCountdown from "../../components/LaunchCountdown";
-import {
-  getMobileOperatingSystem,
-  formatStringToNumber,
-} from "../../utils/utils";
+// import MobileShare from "../StorySummary/MobileShare";
+// import LaunchCountdown from "../../components/LaunchCountdown";
+import { formatStringToNumber } from "../../utils/utils";
 import ModalComponent from "../../components/Modal/Modal";
 import ModalWithoutCloseButton from "../../components/Modal/ModalWithoutCloseButton";
-import ChatSupportAutoClose from "../../components/Button/ChatSupportAutoClose";
+// import ChatSupportAutoClose from "../../components/Button/ChatSupportAutoClose";
 import { GoogleReCaptchaProvider } from "react-google-recaptcha-v3";
 import ShortLogin from "../Login/ShortLogin";
 import GlobalStore from "../../stores/GlobalStore";
@@ -32,22 +27,20 @@ import ButtonViewAll from "../../components/ButtonViewAll";
 import withIconTitle from "../../components/CustomIconTitle";
 import TrendingIcon from "../../../public/icons/TrendingIcon";
 import NewIcon from "../../../public/icons/NewIcon";
-import Button3D from "../../components/3DButton";
-import { Buffer } from "buffer";
 
 const StoryDetail = ({ chapterTitle, storyTitle }) => {
-  const [showBubble, setShowBubble] = useState("up");
+  // const [showBubble, setShowBubble] = useState("up");
   const {
     loadingChapterDetail,
     getChapterDetail,
     storyDetail,
     getStoryDetail,
     saveLastStory,
-    saveFavoriteCategories,
-    saveViewStory,
+    // saveFavoriteCategories,
+    // saveViewStory,
     getStoryPrice,
-    checkCustomerClickAff,
-    recordClickAff,
+    // checkCustomerClickAff,
+    // recordClickAff,
     topNew,
     getTopNew,
     topTrending,
@@ -61,12 +54,11 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [chapterContents, setChapterContents] = useState([]);
   const [currentChapter, setCurrentChapter] = useState({});
   const [currentChapterDetail, setCurrentChapterDetail] = useState({});
-  console.log("CURRENT CHAPTER DETAIL: ", currentChapterDetail)
+  console.log("CURRENT CHAPTER DETAIL: ", currentChapterDetail);
   const [loggedIn, setLoggedIn] = useState(false);
   const [needOpenChapter, setNeedOpenChapter] = useState(false);
   const [allowOpenWeb, setAllowOpenWeb] = useState(false);
-  const [isMobile, setIsMobile] = useState(true);
-  const [time, setTime] = useState(180);
+  // const [time, setTime] = useState(180);
   const [fdfssfds, setFdfssfds] = useState("MlsHlea8IaH3qS8MjoXB1kMnlMImwCE7");
   const [jkdjfk, setJkdjfk] = useState("HIwhXNiX7d1z7VxZ");
   const [showModal, setShowModal] = useState(false);
@@ -80,7 +72,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     useState(false);
   const [fullPriceStory, setFullPriceStory] = useState({});
   const [question, setQuestion] = useState({});
-  const [openChapterList, setOpenChapterList] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filter, setFilter] = useState("oldest");
   const [showDepositSuccessWarning, setShowDepositSuccessWarning] =
@@ -91,7 +82,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      setIsMobile(getMobileOperatingSystem());
       const isLoggedIn = await GlobalStore.checkIsLogin();
       const result = await getChapterDetail(
         route.query.storySlug,
@@ -186,21 +176,21 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     }
   };
 
-  const getAds = async () => {
-    try {
-      const result = await Api.get({
-        url: "/data/shopee/aff/detail",
-        params: {
-          type: "ALL",
-        },
-        hideError: true,
-      });
-      if (result?.data && result?.data?.linkAff) {
-        setAffType(result?.data?.type);
-        setAffObj(result?.data);
-      }
-    } catch (err) {}
-  };
+  // const getAds = async () => {
+  //   try {
+  //     const result = await Api.get({
+  //       url: "/data/shopee/aff/detail",
+  //       params: {
+  //         type: "ALL",
+  //       },
+  //       hideError: true,
+  //     });
+  //     if (result?.data && result?.data?.linkAff) {
+  //       setAffType(result?.data?.type);
+  //       setAffObj(result?.data);
+  //     }
+  //   } catch (err) {}
+  // };
 
   const getQuestion = async () => {
     if (!GlobalStore.isLoggedIn) {
@@ -475,37 +465,35 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥");
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥");
 
-  const svg = `
-  <svg xmlns="http://www.w3.org/2000/svg" width="820" height="90">
-    <defs>
-      <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-        <stop offset="0%" stop-color="#09B2E5" stop-opacity="0.5"/> 
-        <stop offset="100%" stop-color="#005993" stop-opacity="0.5"/>
-      </linearGradient>
-    </defs>
-    <text 
-      style="font-family: 'Abel', sans-serif"
-      x="80%" y="40%" 
-      text-anchor="middle" 
-      dominant-baseline="middle" 
-      font-size="60"
-      fill="url(#grad)"
-    >
-      TOIDOC.VN
-    </text>
-  </svg>`;
+  // const svg = `
+  // <svg xmlns="http://www.w3.org/2000/svg" width="820" height="90">
+  //   <defs>
+  //     <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
+  //       <stop offset="0%" stop-color="#09B2E5" stop-opacity="0.5"/>
+  //       <stop offset="100%" stop-color="#005993" stop-opacity="0.5"/>
+  //     </linearGradient>
+  //   </defs>
+  //   <text
+  //     style="font-family: 'Abel', sans-serif"
+  //     x="80%" y="40%"
+  //     text-anchor="middle"
+  //     dominant-baseline="middle"
+  //     font-size="60"
+  //     fill="url(#grad)"
+  //   >
+  //     TOIDOC.VN
+  //   </text>
+  // </svg>`;
 
-  // 2. Base64‑encode it into a data URI:
-  const base64 = Buffer.from(svg).toString("base64");
-  const gradientImage = `data:image/svg+xml;base64,${base64}`;
+  // // 2. Base64‑encode it into a data URI:
+  // const base64 = Buffer.from(svg).toString("base64");
+  // const gradientImage = `data:image/svg+xml;base64,${base64}`;
 
   const midIndex = Math.ceil(chapterContents.length / 2);
 
   return (
     <>
-      <div
-        className={`bg-story flex items-start justify-center sm:mt-[100px]`}
-      >
+      <div className="bg-story flex items-start justify-center sm:mt-[100px]">
         {/* <div
           className={`${
             isMobile && "hidden"
@@ -713,24 +701,28 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                           />
                         </GoogleReCaptchaProvider>
                       </div>
-                    ) : (
-                      currentChapterDetail.price && currentChapterDetail.order % 2 !== 0 ? 
+                    ) : currentChapterDetail.price &&
+                      currentChapterDetail.order > 50 &&
+                      currentChapterDetail.order % 10 <= 5 ? (
                       <>
-                      <Watermark
-                        gap={[1000, 500]}
-                        image={gradientImage}
-                        rotate={-10}
-                        width={400}
-                      >
-                        {chapterContents?.slice(0, midIndex).map((item, i) => (
-                          <>
-                            <ContentDisplay
-                              item={item}
-                              fdsfsjs={fdfssfds}
-                              dfjkdsfds={jkdjfk}
-                              order={i}
-                            />
-                            {/*affType !== '' && affType === 'LIVESTREAM' && i === (chapterContents.length - 6) ?
+                        <Watermark
+                          gap={[30, 0]}
+                          height={160}
+                          width={160}
+                          image="../images/td-logo.png"
+                          className="overflow-visible"
+                        >
+                          <div className="max-h-full overflow-auto">
+                            {chapterContents.map((item, i) => (
+                              <>
+                                <ContentDisplay
+                                  key={midIndex + i}
+                                  item={item}
+                                  fdsfsjs={fdfssfds}
+                                  dfjkdsfds={jkdjfk}
+                                  order={midIndex + i}
+                                />
+                                {/*affType !== '' && affType === 'LIVESTREAM' && i === (chapterContents.length - 6) ?
                               <div className='mt-[40px] mb-[20px]'>
                                 <p dangerouslySetInnerHTML={{__html: `${affObj?.productName}`}}/>
                                 <p className='text-[#ff0600]'><strong>🎁 ƯU ĐÃI ĐỘC QUYỀN từ TOIDOC 🎁</strong></p>
@@ -801,31 +793,27 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                                   </div>
                                 </div>
                               )
+                            )}
                             )*/}
-                          </>
-                        ))}
-                      </Watermark>
-                       {chapterContents.slice(midIndex).map((item, i) => (
-                        <ContentDisplay
-                          key={midIndex + i}
-                          item={item}
-                          fdsfsjs={fdfssfds}
-                          dfjkdsfds={jkdjfk}
-                          order={midIndex + i}
-                        />
-                      ))}
+                              </>
+                            ))}
+                          </div>
+                        </Watermark>
                       </>
-                      : 
+                    ) : (
                       <>
-                      {chapterContents.map((item, i) => (
-                        <ContentDisplay
-                          key={midIndex + i}
-                          item={item}
-                          fdsfsjs={fdfssfds}
-                          dfjkdsfds={jkdjfk}
-                          order={midIndex + i}
-                        />
-                      ))}</>
+                        <div className="max-h-full overflow-auto">
+                          {chapterContents.map((item, i) => (
+                            <ContentDisplay
+                              key={midIndex + i}
+                              item={item}
+                              fdsfsjs={fdfssfds}
+                              dfjkdsfds={jkdjfk}
+                              order={midIndex + i}
+                            />
+                          ))}
+                        </div>
+                      </>
                     )}
                   </>
                 ) : isLoading ? (
@@ -840,49 +828,48 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                     handleOpenChapter={handleOpenChapter}
                   />
                 )}
-
-                <div className="flex justify-between pt-4 sm:pt-6 px-2">
-                  <Link
-                    href={`/${storyDetail?.slug}/${currentChapter?.previous}`}
-                    passHref
-                  >
-                    <a
-                      className={`${
-                        currentChapter?.previous ? "block" : "invisible"
-                      } h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-sm text-center shadow-md hover:!text-black cursor-pointer`}
-                    >
-                      <LeftOutlined /> Chương trước
-                    </a>
-                  </Link>
-
-                  <div
-                    className="flex border border-slate-300 h-fit py-2 px-2.5 bg-slate-100 rounded-md shadow-md cursor-pointer"
-                    onClick={showchapterModal}
-                  >
-                    <MenuOutlined />
-                  </div>
-
-                  <Link
-                    href={`/${storyDetail?.slug}/${currentChapter?.next}`}
-                    passHref
-                  >
-                    <a
-                      className={`${
-                        currentChapter?.next ? "block" : "invisible"
-                      } h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-sm text-center shadow-md hover:!text-black cursor-pointer`}
-                    >
-                      Chương Tiếp <RightOutlined />
-                    </a>
-                  </Link>
-                </div>
               </div>
             </div>
+          </div>
+          <div className="flex justify-between pt-2 px-2">
+            <Link
+              href={`/${storyDetail?.slug}/${currentChapter?.previous}`}
+              passHref
+            >
+              <a
+                className={`${
+                  currentChapter?.previous ? "block" : "invisible"
+                } h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-sm text-center shadow-md hover:!text-black cursor-pointer`}
+              >
+                <LeftOutlined /> Chương trước
+              </a>
+            </Link>
+
+            <div
+              className="flex border border-slate-300 h-fit py-2 px-2.5 bg-slate-100 rounded-md shadow-md cursor-pointer"
+              onClick={showchapterModal}
+            >
+              <MenuOutlined />
+            </div>
+
+            <Link
+              href={`/${storyDetail?.slug}/${currentChapter?.next}`}
+              passHref
+            >
+              <a
+                className={`${
+                  currentChapter?.next ? "block" : "invisible"
+                } h-fit p-2 text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-sm text-center shadow-md hover:!text-black cursor-pointer`}
+              >
+                Chương Tiếp <RightOutlined />
+              </a>
+            </Link>
           </div>
 
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-4">
             <TopTrendingTitle />
             <HotStories
-              className="grid grid-cols-4 justify-center gap-x-2 gap-y-5"
+              className="grid grid-cols-4 justify-center gap-x-2 gap-y-5 "
               data={topTrending?.data}
             />
             <div className="flex">

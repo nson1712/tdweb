@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import Header from '../../components/Header/Header'
-import CommonLayout from '../../layouts/CommonLayout/CommonLayout'
 import { observer } from 'mobx-react'
 
 const Author = () => {

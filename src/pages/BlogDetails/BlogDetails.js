@@ -1,6 +1,5 @@
 import { observer } from "mobx-react";
 import React, { useEffect, useState } from "react";
-import CommonLayout from "../../layouts/CommonLayout/CommonLayout";
 import Content from "./Content";
 import Menu from "./Menu";
 import parse from "html-react-parser";

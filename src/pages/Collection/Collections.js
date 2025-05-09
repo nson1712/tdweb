@@ -1,7 +1,6 @@
 import { observer } from 'mobx-react'
 import React, { useEffect, useState, useMemo } from 'react'
 import Header from '../../components/Header/Header'
-import CommonLayout from '../../layouts/CommonLayout/CommonLayout'
 import StoryStore from '../../stores/StoryStore'
 import CollectionItem from '../Research/CollectionItem'
 import GlobalStore from '../../stores/GlobalStore'
