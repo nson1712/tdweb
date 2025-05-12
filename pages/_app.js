@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import "../public/styles/styles.css";
 import "@fortawesome/fontawesome-free/css/all.css";
@@ -18,11 +18,24 @@ import CommonLayout from "../src/layouts/CommonLayout/CommonLayout";
 import ShortLogin from "../src/pages/Login/ShortLogin";
 import { observer } from "mobx-react";
 import { useRouter } from "next/router";
-import { Alert, Modal } from "antd";
+import { Alert, Image, Modal } from "antd";
+
+const MODAL_STORAGE_KEY = "lastPreviewShownDate";
 
 function App({ Component, pageProps }) {
   const [open, setOpen] = useState(false)
   const router = useRouter();
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const today = new Date().toISOString().split("T")[0];
+    const lastShown = localStorage.getItem(MODAL_STORAGE_KEY);
+
+    if (lastShown !== today) {
+      setVisible(true);
+      localStorage.setItem(MODAL_STORAGE_KEY, today);
+    }
+  }, []);
 
   useEffect(() => {
     // Function to handle text selection
@@ -197,6 +210,29 @@ function App({ Component, pageProps }) {
     GlobalStore.checkIsLogin();
   }, []);
 
+  const handlePremiumBannerClick = () => {
+    window.open(
+      `https://m.me/185169981351799?text=Mình muốn tìm hiểu về gói Premium, Toidoc tư vấn cho mình nhé! %0A Mã khách hàng: ${GlobalStore.profile?.referralCode}`
+    );
+  };
+
+  const containerRef = useRef(null)
+
+  useEffect(() => {
+    const container = containerRef.current
+    if (!container) return
+
+    const onClick = (e) => {
+      const target = e.target
+      if (target.classList.contains('ant-image-preview-img')) {
+        handlePremiumBannerClick()
+      }
+    }
+
+    container.addEventListener('click', onClick)
+    return () => container.removeEventListener('click', onClick)
+  }, [])
+
   return (
     <>
       <Head>
@@ -253,6 +289,30 @@ function App({ Component, pageProps }) {
           }
         />
       </Modal>
+
+      <div ref={containerRef}>
+      <Image.PreviewGroup
+        preview={{
+          getContainer: () => containerRef.current,
+          visible,
+          onVisibleChange: vis => setVisible(vis),
+          movable: false,
+          toolbarRender: () => [],
+          scaleStep: 0,
+          destroyOnClose: true,
+          rootClassName: 'preview-responsive',
+          countRender: () => null,
+        }}
+      >
+        <Image
+          src="/images/pre-banner.png"
+          className="hidden"
+          onClick={() => setVisible(true)}
+        />
+      </Image.PreviewGroup>
+    </div>
+
+
     </>
   );
 }

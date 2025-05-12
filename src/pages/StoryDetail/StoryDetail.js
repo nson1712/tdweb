@@ -27,6 +27,8 @@ import ButtonViewAll from "../../components/ButtonViewAll";
 import withIconTitle from "../../components/CustomIconTitle";
 import TrendingIcon from "../../../public/icons/TrendingIcon";
 import NewIcon from "../../../public/icons/NewIcon";
+import Image from "next/image";
+import imageLoader from "../../loader/imageLoader";
 
 const StoryDetail = ({ chapterTitle, storyTitle }) => {
   // const [showBubble, setShowBubble] = useState("up");
@@ -450,6 +452,12 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     );
   };
 
+  const handlePremiumBannerClick = () => {
+    window.open(
+      `https://m.me/185169981351799?text=Mình muốn tìm hiểu về gói Premium, Toidoc tư vấn cho mình nhé! %0A Mã khách hàng: ${GlobalStore.profile?.referralCode}`
+    );
+  };
+
   const showchapterModal = () => {
     setIsModalOpen(true);
   };
@@ -488,8 +496,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   // // 2. Base64‑encode it into a data URI:
   // const base64 = Buffer.from(svg).toString("base64");
   // const gradientImage = `data:image/svg+xml;base64,${base64}`;
-
-  const midIndex = Math.ceil(chapterContents.length / 2);
 
   return (
     <>
@@ -669,7 +675,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                 </a>
               </Link>
 
-              <div className="text-[20px] leading-[32px]  breakword">
+              <div className="text-[20px] leading-[32px] breakword">
                 {allowOpenWeb ? (
                   <>
                     {GlobalStore.copyData ? (
@@ -716,11 +722,11 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                             {chapterContents.map((item, i) => (
                               <>
                                 <ContentDisplay
-                                  key={midIndex + i}
+                                  key={i}
                                   item={item}
                                   fdsfsjs={fdfssfds}
                                   dfjkdsfds={jkdjfk}
-                                  order={midIndex + i}
+                                  order={i}
                                 />
                                 {/*affType !== '' && affType === 'LIVESTREAM' && i === (chapterContents.length - 6) ?
                               <div className='mt-[40px] mb-[20px]'>
@@ -805,11 +811,11 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                         <div className="max-h-full overflow-auto">
                           {chapterContents.map((item, i) => (
                             <ContentDisplay
-                              key={midIndex + i}
+                              key={i}
                               item={item}
                               fdsfsjs={fdfssfds}
                               dfjkdsfds={jkdjfk}
-                              order={midIndex + i}
+                              order={i}
                             />
                           ))}
                         </div>
@@ -831,6 +837,20 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
               </div>
             </div>
           </div>
+
+          <div
+            className="flex justify-center my-2 cursor-pointer"
+            onClick={handlePremiumBannerClick}
+          >
+            <Image
+              width={400}
+              height={533}
+              className="aspect-[3/4]"
+              src="/images/pre-banner.png"
+              loader={imageLoader}
+            />
+          </div>
+
           <div className="flex justify-between pt-2 px-2">
             <Link
               href={`/${storyDetail?.slug}/${currentChapter?.previous}`}
