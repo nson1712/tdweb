@@ -216,23 +216,6 @@ function App({ Component, pageProps }) {
     );
   };
 
-  const containerRef = useRef(null);
-
-  useEffect(() => {
-    const container = containerRef.current;
-    if (!container) return;
-
-    const onClick = (e) => {
-      const target = e.target;
-      if (target.classList.contains("ant-image-preview-img")) {
-        handlePremiumBannerClick();
-      }
-    };
-
-    container.addEventListener("click", onClick);
-    return () => container.removeEventListener("click", onClick);
-  }, []);
-
   return (
     <>
       <Head>
@@ -287,10 +270,8 @@ function App({ Component, pageProps }) {
       </Modal>
 
       {GlobalStore.isLoggedIn && (
-        <div ref={containerRef}>
           <Image.PreviewGroup
             preview={{
-              getContainer: () => containerRef.current,
               visible,
               onVisibleChange: (vis) => setVisible(vis),
               movable: false,
@@ -299,6 +280,17 @@ function App({ Component, pageProps }) {
               destroyOnClose: true,
               rootClassName: "preview-responsive",
               countRender: () => null,
+              modalRender: modal => (
+                <div
+                  onClick={e => {
+                    if ((e.target).classList.contains('ant-image-preview-img')) {
+                      handlePremiumBannerClick()
+                    }
+                  }}
+                >
+                  {modal}
+                </div>
+              ),
             }}
           >
             <Image
@@ -307,7 +299,6 @@ function App({ Component, pageProps }) {
               onClick={() => setVisible(true)}
             />
           </Image.PreviewGroup>
-        </div>
       )}
     </>
   );
