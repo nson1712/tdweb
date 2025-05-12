@@ -288,7 +288,8 @@ const Research = () => {
           countDownTime={5}
         >
           <a onClick={(e) => handleClick(e, 'big-banner-research')}>
-            <img src="https://media.truyenso1.xyz/ads/flash-sale-3-5.png" className='imgBanner'/>
+            {/* <img src="https://media.truyenso1.xyz/ads/flash-sale-3-5.png" className='imgBanner'/> */}
+            <img src="/images/pre-banner.png" className='premium-banner'/>
           </a>
         </ModalComponent>}
       </div>

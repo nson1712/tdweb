@@ -42,15 +42,18 @@ const TABS = [
 
 const ADS = [
   {
-    content: "<b>VINWOMEN</b> - Hỗ trợ tăng cường khả năng chống oxy hoá, giảm tình trạng thiếu hụt nội tiết tố nữ, giúp giảm lão hoá da",
+    content:
+      "<b>VINWOMEN</b> - Hỗ trợ tăng cường khả năng chống oxy hoá, giảm tình trạng thiếu hụt nội tiết tố nữ, giúp giảm lão hoá da",
     image: "https://media.truyenso1.xyz/ads/vin-woman.png",
   },
   {
-    content: "<b>ĐÔNG TRÙNG HẠ THẢO</b> - Giúp bổ thận, bổ phổi, hỗ trợ tăng cường sức đề kháng, giúp giảm lão hoá, nâng cao thể trạng cơ thể.",
+    content:
+      "<b>ĐÔNG TRÙNG HẠ THẢO</b> - Giúp bổ thận, bổ phổi, hỗ trợ tăng cường sức đề kháng, giúp giảm lão hoá, nâng cao thể trạng cơ thể.",
     image: "https://media.truyenso1.xyz/ads/dong-trung-ha-thao-150g.jpg",
   },
   {
-    content: "<b>LINH CHI ĐỎ</b> - Hỗ trợ tăng cường giải độc gan, nâng cao sức đề kháng, an thần, giúp giảm mệt mỏi, mất ngủ",
+    content:
+      "<b>LINH CHI ĐỎ</b> - Hỗ trợ tăng cường giải độc gan, nâng cao sức đề kháng, an thần, giúp giảm mệt mỏi, mất ngủ",
     image: "https://media.truyenso1.xyz/ads/linh-chi-do.png",
   },
 ];
@@ -374,7 +377,11 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
   const handleClickShopee = async () => {
     // recordClickAff(localStorage.getItem('DEVICE_ID'), 'STORY_SUMMARY')
     setShowModal(false);
-    window.open(`https://www.facebook.com/groups/congdongdoctoidoc/posts/660925509994581`, "_blank", "Toidoc");
+    window.open(
+      `https://www.facebook.com/groups/congdongdoctoidoc/posts/660925509994581`,
+      "_blank",
+      "Toidoc"
+    );
     // recordClickAff(localStorage.getItem('DEVICE_ID'), 'STORY_SUMMARY')
     // window.open(`https://s.shopee.vn/6KjCdy3HYx`, '_blank', 'Toidoc')
   };
@@ -386,6 +393,12 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
   //   }
 
   // }, [chapters])
+
+  const handlePremiumBannerClick = () => {
+    window.open(
+      `https://m.me/185169981351799?text=Mình muốn tìm hiểu về gói Premium, Toidoc tư vấn cho mình nhé! %0A Mã khách hàng: ${GlobalStore.profile?.referralCode}`
+    );
+  };
 
   const modifiedContent = articleDetail
     ? articleDetail?.content
@@ -611,14 +624,20 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                 </div>
               </div>
             </div>
-            <div className='mt-[10px]'>
-               <a className='flex text-underline text-[#e2bd1e]'
-                href='https://www.facebook.com/groups/congdongdoctoidoc'
-                target='_blank'
+            <div className="mt-[10px]">
+              <a
+                className="flex text-underline text-[#e2bd1e]"
+                href="https://www.facebook.com/groups/congdongdoctoidoc"
+                target="_blank"
                 nofollow
               >
-                  <img src='/images/icon-facebook.png' className='mr-[8px] w-[24px] h-[24px] mt-[10px]'/>
-                  📚 Group truyện độc quyền Toidoc<br/>Gia nhập ngay! 👈
+                <img
+                  src="/images/icon-facebook.png"
+                  className="mr-[8px] w-[24px] h-[24px] mt-[10px]"
+                />
+                📚 Group truyện độc quyền Toidoc
+                <br />
+                Gia nhập ngay! 👈
               </a>
               <a
                 className="flex mt-[5px] text-underline text-[#e2bd1e]"
@@ -626,7 +645,10 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                 target="_blank"
                 nofollow
               >
-                <img src='/images/icons8-zalo-48.png' className='mr-[8px] w-[24px] h-[24px]'/>
+                <img
+                  src="/images/icons8-zalo-48.png"
+                  className="mr-[8px] w-[24px] h-[24px]"
+                />
                 Bàn luận truyện HOT
               </a>
             </div>
@@ -635,6 +657,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
 
         {latestReadingChapter && latestReadingChapter?.chapterSlug && (
           <Alert
+            rootClassName="mx-2"
             message={`Bạn đang đọc tới: ${latestReadingChapter?.chapterTitle}. Bạn muốn đọc tiếp?`}
             type="warning"
             className="mb-4 text-base"
@@ -676,31 +699,42 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
               handleOpenFullChapter={handleOpenFullChapter}
             />
           )}
-          {affObj && <div className="mt-[40px] mb-[20px] border-1 px-2 py-2">
-            <img src='/images/img-ad-icon.png' className="w-[30px] align-center margin-auto"></img>
-            <p className="text-center" dangerouslySetInnerHTML={{ __html: `${affObj?.content}` }}/>
-            <Link href={`https://zalo.me/+84933258199`} passHref>
-              <a
-                id="live-chapter-content-image"
-                target="_blank"
-                rel="nofollow"
-              >
-                <img src={`${affObj?.image}`} className="w-[200px] align-center margin-auto"></img>
-              </a>
-            </Link>
-            <div className="flex items-center justify-center">
+          {affObj && (
+            <div className="mt-[40px] mb-[20px] border-1 px-2 py-2">
+              <img
+                src="/images/img-ad-icon.png"
+                className="w-[30px] align-center margin-auto"
+              ></img>
+              <p
+                className="text-center"
+                dangerouslySetInnerHTML={{ __html: `${affObj?.content}` }}
+              />
               <Link href={`https://zalo.me/+84933258199`} passHref>
                 <a
-                  id="live-chapter-content"
-                  className="w-[200px] btnLiveStream px-[4px] py-[2px] text-[12px]"
+                  id="live-chapter-content-image"
                   target="_blank"
                   rel="nofollow"
                 >
-                  Xem Sản Phẩm
+                  <img
+                    src={`${affObj?.image}`}
+                    className="w-[200px] align-center margin-auto"
+                  ></img>
                 </a>
               </Link>
+              <div className="flex items-center justify-center">
+                <Link href={`https://zalo.me/+84933258199`} passHref>
+                  <a
+                    id="live-chapter-content"
+                    className="w-[200px] btnLiveStream px-[4px] py-[2px] text-[12px]"
+                    target="_blank"
+                    rel="nofollow"
+                  >
+                    Xem Sản Phẩm
+                  </a>
+                </Link>
+              </div>
             </div>
-          </div>}
+          )}
           {/*affType !== "" && affType === "LIVESTREAM" ? (
             <div className="mt-[40px] mb-[20px]">
               <p
@@ -808,6 +842,19 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                       </Link>
                     </div>
                   ))}
+              </div>
+
+              <div
+                className="flex justify-center my-2 cursor-pointer"
+                onClick={handlePremiumBannerClick}
+              >
+                <Image
+                  width={400}
+                  height={533}
+                  className="aspect-[3/4]"
+                  src="/images/pre-banner.png"
+                  loader={imageLoader}
+                />
               </div>
 
               <h2 className="text-lg font-bold main-text mt-4 text-underline px-2">

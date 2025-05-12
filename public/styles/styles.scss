@@ -2574,3 +2574,17 @@ ul>li {
 .ant-collapse-header:hover {
   background-color: #f8fafc;
 }
+
+.preview-responsive .ant-image-preview img {
+  cursor: pointer;
+  width: auto !important;
+  max-width: 100%;
+}
+
+/* Mobile (dưới 576px): ảnh preview chiếm 90% viewport */
+@media (max-width: 576px) {
+  .preview-responsive .ant-image-preview img {
+    width: 90% !important;
+    height: auto;
+  }
+}
