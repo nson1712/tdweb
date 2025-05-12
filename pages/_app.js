@@ -212,7 +212,7 @@ function App({ Component, pageProps }) {
 
   const handlePremiumBannerClick = () => {
     window.open(
-      `https://m.me/185169981351799?text=Mình muốn tìm hiểu về gói Premium, Toidoc tư vấn cho mình nhé! %0A Mã khách hàng: ${GlobalStore.profile?.referralCode}`
+      `https://m.me/185169981351799?text=Mình muốn đký gói Premium trên Web, Toidoc hỗ trợ mình nhé! %0A Mã khách hàng: ${GlobalStore.profile?.referralCode}`
     );
   };
 

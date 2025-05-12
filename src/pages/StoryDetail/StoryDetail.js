@@ -454,7 +454,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
   const handlePremiumBannerClick = () => {
     window.open(
-      `https://m.me/185169981351799?text=Mình muốn tìm hiểu về gói Premium, Toidoc tư vấn cho mình nhé! %0A Mã khách hàng: ${GlobalStore.profile?.referralCode}`
+      `https://m.me/185169981351799?text=Mình muốn đký gói Premium trên Web, Toidoc hỗ trợ mình nhé! %0A Mã khách hàng: ${GlobalStore.profile?.referralCode}`
     );
   };
 
@@ -838,18 +838,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             </div>
           </div>
 
-          <div
-            className="flex justify-center my-2 cursor-pointer"
-            onClick={handlePremiumBannerClick}
-          >
-            <Image
-              width={400}
-              height={533}
-              className="aspect-[3/4]"
-              src="/images/pre-banner.png"
-              loader={imageLoader}
-            />
-          </div>
+          
 
           <div className="flex justify-between pt-2 px-2">
             <Link
@@ -884,6 +873,19 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                 Chương Tiếp <RightOutlined />
               </a>
             </Link>
+          </div>
+
+          <div
+            className="flex justify-center my-5 cursor-pointer"
+            onClick={handlePremiumBannerClick}
+          >
+            <Image
+              width={400}
+              height={533}
+              className="aspect-[3/4]"
+              src="/images/pre-banner.png"
+              loader={imageLoader}
+            />
           </div>
 
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-4">
