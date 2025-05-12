@@ -150,10 +150,10 @@ export const usePaypalPackages = () => {
               src={crownIcon}
             />
           </div>{" "}
-          3 Tháng - 25$
+          3 Tháng - 26$
         </div>
       ),
-      value: 25,
+      value: 26,
     },
     {
       label: (
@@ -166,10 +166,10 @@ export const usePaypalPackages = () => {
               src={crownIcon}
             />
           </div>{" "}
-          6 Tháng - 42$
+          6 Tháng - 46$
         </div>
       ),
-      value: 42,
+      value: 46,
     },
     {
       label: (
@@ -182,10 +182,10 @@ export const usePaypalPackages = () => {
               src={crownIcon}
             />
           </div>{" "}
-          1 Năm - 76$
+          1 Năm - 79$
         </div>
       ),
-      value: 76,
+      value: 79,
     },
 
   ];

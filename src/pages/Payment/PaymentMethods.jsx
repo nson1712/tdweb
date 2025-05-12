@@ -4,7 +4,6 @@ import MobileCardDeposit from "./components/MobileCardDeposit";
 import DefaultDeposit from "./components/DefaultDeposit";
 import ForeignDeposit from "./components/ForeignDeposit";
 import PaypalDeposit from "./components/PaypalDeposit";
-import Header from "../../components/Header/Header";
 import MomoDeposit from "./components/MomoDeposit";
 import AutoDeposit from "./components/AutoDeposit";
 import Title from "./components/Title";

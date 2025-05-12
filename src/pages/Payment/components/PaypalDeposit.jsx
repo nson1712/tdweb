@@ -8,6 +8,7 @@ import {
   Input,
   Select,
   Radio,
+  Alert,
 } from "antd";
 import PaypalIcon from "../../../../public/icons/PaypalIcon";
 import { usePaypalPackages } from "../../../hook/useData";
@@ -22,6 +23,7 @@ import {
   PayPalScriptProvider,
 } from "@paypal/react-paypal-js";
 import SubmitPayment from "./SubmitPayment";
+import RedDiamondIcon from "../RedDiamondIcon";
 
 const PaypalDeposit = ({ api }) => {
   const [form] = Form.useForm();
@@ -32,7 +34,7 @@ const PaypalDeposit = ({ api }) => {
     paypalDiamondPackages?.[0] ? paypalDiamondPackages[0].value : 7
   );
   const [selectedPremiumPackage, setSelectedPremiumPackage] = useState(
-    paypalPremiumPackages?.[0] ? paypalPremiumPackages[0].value : 25
+    paypalPremiumPackages?.[0] ? paypalPremiumPackages[0].value : 26
   );
   const [type, setType] = useState("diamond");
   const options = [
@@ -137,7 +139,7 @@ const PaypalDeposit = ({ api }) => {
               children: (
                 <div className="text-base">
                   <p className="text-lg font-bold">
-                    Hướng dẫn nạp kim cương qua Paypal
+                    Hướng dẫn nạp kim cương | premium qua Paypal
                   </p>
                   <p>
                     <span className="font-bold">Bước 1:</span> Chọn gói kim
@@ -196,11 +198,40 @@ const PaypalDeposit = ({ api }) => {
                           } else {
                             setType("premium");
                             setSelectedDiamondPackage(null);
-                            setSelectedPremiumPackage(25);
+                            setSelectedPremiumPackage(26);
                           }
                         }}
                       />
                     </Form.Item>
+
+                    {type === "premium" && (
+                      <Alert
+                        className="pb-0 pt-3 mb-4"
+                        type="success"
+                        message={
+                          <div className="font-medium text-base">
+                            <p>
+                              ✨ Đọc <span className="font-bold">KHÔNG</span>{" "}
+                              giới hạn số truyện
+                            </p>
+                            <p>
+                              ✨ Đọc <span className="font-bold">KHÔNG</span>{" "}
+                              mất kim cương (cả 💎 và{" "}
+                              <RedDiamondIcon
+                                className="inline-block"
+                                width={15}
+                                height={14}
+                              />
+                              )
+                            </p>
+                            <p>
+                              ✨ Đọc <span className="font-bold">KHÔNG</span>{" "}
+                              giới hạn loại truyện
+                            </p>
+                          </div>
+                        }
+                      />
+                    )}
 
                     {type === "diamond" ? (
                       <Form.Item label="Chọn gói kim cương" required>
