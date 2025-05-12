@@ -3,8 +3,8 @@ const RedDiamondIcon = (props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     xmlSpace="preserve"
-    width={20}
-    height={20}
+    width={props.width || 20}
+    height={props.height || 20}
     viewBox="0 0 58 58"
     {...props}
   >
