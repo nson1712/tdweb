@@ -72,11 +72,7 @@ const Header = ({ selectedTab }) => {
           <Link href="/tim-kiem" passHref>
             <a
               className={classNames(
-                `menu-header px-[12px] h-[45px] rounded-[30px] ${
-                  !GlobalStore.isLoggedIn
-                    ? "pointer-events-none cursor-none"
-                    : "cursor-pointer"
-                }`,
+                `menu-header px-[12px] h-[45px] rounded-[30px] cursor-pointer`,
                 selectedTab === "RESEARCH" && "bg-tab-active text-active"
               )}
             >
@@ -103,11 +99,7 @@ const Header = ({ selectedTab }) => {
           <Link href="/the-loai" passHref>
             <a
               className={classNames(
-                `menu-header px-[12px] h-[45px] rounded-[30px] ${
-                  !GlobalStore.isLoggedIn
-                    ? "pointer-events-none cursor-none"
-                    : "cursor-pointer"
-                }`,
+                `menu-header px-[12px] h-[45px] rounded-[30px] cursor-pointer`,
                 selectedTab === "STORY_TYPE" && "bg-tab-active text-active"
               )}
             >
@@ -134,11 +126,7 @@ const Header = ({ selectedTab }) => {
           <Link href="/blog-truyen-full" passHref>
             <a
               className={classNames(
-                `menu-header px-[12px] h-[45px] rounded-[30px] ${
-                  !GlobalStore.isLoggedIn
-                    ? "pointer-events-none cursor-none"
-                    : "cursor-pointer"
-                }`,
+                `menu-header px-[12px] h-[45px] rounded-[30px] cursor-pointer`,
                 selectedTab === "BLOG" && "bg-tab-active text-active"
               )}
             >
@@ -193,11 +181,7 @@ const Header = ({ selectedTab }) => {
           </div>*/}
           <div
             className={classNames(
-              `hidden md:block menu-header px-[12px] h-455px] rounded-[20px] ${
-                !GlobalStore.isLoggedIn
-                  ? "pointer-events-none cursor-none"
-                  : "cursor-pointer"
-              }`,
+              `hidden md:block menu-header px-[12px] h-455px] rounded-[20px] cursor-pointer`,
               selectedTab === "AUTHOR" && "bg-tab-active text-active"
             )}
             onClick={() => {
@@ -297,18 +281,14 @@ const Header = ({ selectedTab }) => {
           </div> */}
 
           <Link
-            className={!GlobalStore.isLoggedIn ? "pointer-events-none" : ""}
+            // className={!GlobalStore.isLoggedIn ? "pointer-events-none" : ""}
             href={GlobalStore.isLoggedIn ? "/tai-khoan" : "/dang-nhap"}
             passHref
           >
             <a
               id="profile-btn"
               className={classNames(
-                `menu-header px-[12px] h-[45px] rounded-[20px] ${
-                  !GlobalStore.isLoggedIn
-                    ? "pointer-events-none cursor-none"
-                    : "cursor-pointer"
-                }`,
+                `menu-header px-[12px] h-[45px] rounded-[20px] cursor-pointer`,
                 selectedTab === "PROFILE" && "bg-tab-active text-active"
               )}
               // onClick={(e) => {

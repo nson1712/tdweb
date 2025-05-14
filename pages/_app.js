@@ -234,7 +234,7 @@ function App({ Component, pageProps }) {
       <FacebookSDK />
       <GoogleOAuthProvider clientId="195908018380-ehemlqtqp4b7kej9ah7hpglqtjict07r.apps.googleusercontent.com">
         <CommonLayout>
-          {!GlobalStore.isLoggedIn &&
+          {/* {!GlobalStore.isLoggedIn &&
           !router.route.includes("/phuong-thuc-nap") &&
           !router.route.includes("/nap-kim-cuong") ? (
             <div className="mt-40">
@@ -242,7 +242,9 @@ function App({ Component, pageProps }) {
             </div>
           ) : (
             <Component {...pageProps} />
-          )}
+          )} */}
+          <Component {...pageProps} />
+          
         </CommonLayout>
       </GoogleOAuthProvider>
 
