@@ -17,9 +17,15 @@ module.exports = {
           "0%": { transform: "translateX(-100%)" },
           "100%": { transform: "translateX(100%)" },
         },
+        "bounce-low": {
+          "0%, 20%, 50%, 80%, 100%": { transform: "translateY(0)" },
+          "40%": { transform: "translateY(-10px)" },
+          "60%": { transform: "translateY(-5px)" },
+        },
       },
       animation: {
         slide: "slide 2s infinite",
+        "bounce-low": "bounce-low 3s infinite",
       },
     },
   },
