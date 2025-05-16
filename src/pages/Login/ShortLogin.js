@@ -1,29 +1,31 @@
-import React, { useState } from 'react';
-import * as Api from '../../api/api';
-import Button from '../../components/Button';
-import { useGoogleLogin } from '@react-oauth/google';
-import { base64URLdecode, isCocCoc } from '../../utils/utils';
-import { setAccessToken, setRefreshToken } from '../../utils/storage';
-import GlobalStore from '../../stores/GlobalStore';
-import Router from 'next/router';
-import { toast } from 'react-toastify';
+import React, { useState } from "react";
+import * as Api from "../../api/api";
+import Button from "../../components/Button";
+import { useGoogleLogin } from "@react-oauth/google";
+import { base64URLdecode, isCocCoc } from "../../utils/utils";
+import { setAccessToken, setRefreshToken } from "../../utils/storage";
+import GlobalStore from "../../stores/GlobalStore";
+import Router from "next/router";
+import { toast } from "react-toastify";
+import Image from "next/image";
+import imageLoader from "../../loader/imageLoader";
 
-const ShortLogin = ({description, navigate='', closeModal, enableFB}) => {
-  const [loading, setLoading] = useState(false)
+const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
+  const [loading, setLoading] = useState(false);
   const handleLoginGoogle = useGoogleLogin({
-    onSuccess: async(tokenResponse) => {
+    onSuccess: async (tokenResponse) => {
       const loginResult = await Api.post({
-        url: '/customer/public/login-by-social',
+        url: "/customer/public/login-by-social",
         data: {
           token: tokenResponse.access_token,
-          socialType: 'GOOGLE',
+          socialType: "GOOGLE",
         },
       });
 
       await setAccessToken(loginResult?.data?.accessToken);
       await setRefreshToken(loginResult?.data?.refreshToken);
 
-      const tokens = loginResult?.data?.accessToken.split('.');
+      const tokens = loginResult?.data?.accessToken.split(".");
       const decoded = base64URLdecode(tokens[1]);
       const jsonObj = JSON.parse(decoded);
       GlobalStore.profile = {
@@ -34,15 +36,15 @@ const ShortLogin = ({description, navigate='', closeModal, enableFB}) => {
       if (closeModal) {
         closeModal();
       }
-      toast('Bạn đã đăng nhập thành công!', {
+      toast("Bạn đã đăng nhập thành công!", {
         type: "success",
         theme: "colored",
-      })
-      if (navigate !== '') {
+      });
+      if (navigate !== "") {
         Router.push(navigate);
       }
-      
-    }});
+    },
+  });
 
   const handleFacebookLogin = () => {
     if (typeof window.FB !== "undefined") {
@@ -59,21 +61,21 @@ const ShortLogin = ({description, navigate='', closeModal, enableFB}) => {
       );
     }
   };
-  
+
   const sendTokenToBackend = async (accessToken) => {
     try {
       const loginResult = await Api.post({
-        url: '/customer/public/login-by-social',
+        url: "/customer/public/login-by-social",
         data: {
           token: accessToken,
-          socialType: 'FACEBOOK',
+          socialType: "FACEBOOK",
         },
       });
 
       await setAccessToken(loginResult?.data?.accessToken);
       await setRefreshToken(loginResult?.data?.refreshToken);
 
-      const tokens = loginResult?.data?.accessToken.split('.');
+      const tokens = loginResult?.data?.accessToken.split(".");
       const decoded = base64URLdecode(tokens[1]);
       const jsonObj = JSON.parse(decoded);
       GlobalStore.profile = {
@@ -84,11 +86,11 @@ const ShortLogin = ({description, navigate='', closeModal, enableFB}) => {
       if (closeModal) {
         closeModal();
       }
-      toast('Bạn đã đăng nhập thành công!', {
+      toast("Bạn đã đăng nhập thành công!", {
         type: "success",
         theme: "colored",
-      })
-      if (navigate !== '') {
+      });
+      if (navigate !== "") {
         Router.push(navigate);
       }
     } catch (error) {
@@ -97,55 +99,129 @@ const ShortLogin = ({description, navigate='', closeModal, enableFB}) => {
   };
 
   const handleLoginEmail = () => {
-    Router.push('/dang-nhap');
-  }
+    Router.push("/dang-nhap");
+  };
+
+  const handleSupport = () => {
+    window.open(
+      "https://m.me/185169981351799?text=Mình muốn đăng nhập trên web không được. Trợ giúp mình với.",
+      "_blank"
+    );
+  };
+
+  const handleBirdClick = () => {
+    window.open(
+      `https://m.me/185169981351799?text=Mình đang đọc truyện trên web. Hỗ trợ giúp mình với.`,
+      "_blank"
+    );
+  };
 
   return (
-    <>
-      <div className='box-login'>
-        <h3 className='white-text' style={{'margin': 'auto', 'fontWeight': 'bold', 'marginBottom': '10px'}}>Bạn chưa đăng nhập !</h3>
-        <p className='white-text text-left'>{description || 'Đăng nhập 1 chạm bằng các phương thức dưới đây để đọc nội dung này'}</p>
-        <div style={{'margin': 'auto'}}>
-          <a id='google-login-btn' className='align-center'>
-            <Button className='login-button login-google-bg'
-              onClick={(e) => handleLoginGoogle(e)}>
-              <img src='/images/google.png' style={{'float': 'left', 'marginRight': '10px', 'width': '25px', height: '25px'}}/>
+    <div className="relative">
+      <div className="box-login">
+        <h3
+          className="white-text"
+          style={{ margin: "auto", fontWeight: "bold", marginBottom: "10px" }}
+        >
+          Bạn chưa đăng nhập !
+        </h3>
+        <p className="white-text text-left">
+          {description ||
+            "Đăng nhập 1 chạm bằng các phương thức dưới đây để đọc nội dung này"}
+        </p>
+        <div style={{ margin: "auto" }}>
+          <a id="google-login-btn" className="align-center">
+            <Button
+              className="login-button login-google-bg"
+              onClick={(e) => handleLoginGoogle(e)}
+            >
+              <img
+                src="/images/google.png"
+                style={{
+                  float: "left",
+                  marginRight: "10px",
+                  width: "25px",
+                  height: "25px",
+                }}
+              />
               Đăng Nhập Bằng GOOGLE
             </Button>
           </a>
-          <a id='facebook-login-btn' className='align-center mt-[10px]'>
-            <Button className='login-button login-fb-bg'
-              onClick={(e) => handleFacebookLogin(e)}>
-              <img src='/images/facebook.png' style={{'float': 'left', 'marginRight': '10px', 'width': '15px', height: '25px'}}/>
+          <a id="facebook-login-btn" className="align-center mt-[10px]">
+            <Button
+              className="login-button login-fb-bg"
+              onClick={(e) => handleFacebookLogin(e)}
+            >
+              <img
+                src="/images/facebook.png"
+                style={{
+                  float: "left",
+                  marginRight: "10px",
+                  width: "15px",
+                  height: "25px",
+                }}
+              />
               Đăng Nhập Bằng FACEBOOK
             </Button>
           </a>
-          
 
-          <div style={{'margin': '30px 10px', 'borderTop': '1px solid #fff'}}></div>
-          <p className='white-text px-[10px] '>Hoặc bạn tải <a className='text-[#08e9ed] underline'href='https://toidoc.onelink.me/59bO/d42503wz'>App Toidoc</a>, đăng nhập và đọc truyện mượt mà hơn.</p>
-          <div className='align-center'>
-              <a href='https://toidoc.onelink.me/59bO/d42503wz'>
-                <img src='/images/apple-icon-min.png' style={{'float': 'left', 'marginRight': '10px', 'width': '135px'}}/>
-              </a>
-              <a href='https://toidoc.onelink.me/59bO/d42503wz'>
-                <img src='/images/android-icon-min.png'  style={{'float': 'left', 'marginRight': '10px', 'width': '135px'}}/>
-              </a>
+          <div
+            style={{ margin: "30px 10px", borderTop: "1px solid #fff" }}
+          ></div>
+          <p className="white-text px-[10px] ">
+            Hoặc bạn tải{" "}
+            <a
+              className="text-[#08e9ed] underline"
+              href="https://toidoc.onelink.me/59bO/d42503wz"
+            >
+              App Toidoc
+            </a>
+            , đăng nhập và đọc truyện mượt mà hơn.
+          </p>
+          <div className="align-center">
+            <a href="https://toidoc.onelink.me/59bO/d42503wz">
+              <img
+                src="/images/apple-icon-min.png"
+                className="float-left mr-2.5 w-[135px] hover:translate-y-[-10%] transition delay-50 cursor-pointer"
+                // style={{ float: "left", marginRight: "10px", width: "135px" }}
+              />
+            </a>
+            <a href="https://toidoc.onelink.me/59bO/d42503wz">
+              <img
+                src="/images/android-icon-min.png"
+                className="float-left mr-2.5 w-[135px] hover:translate-y-[-10%] transition delay-50 cursor-pointer"
+              />
+            </a>
           </div>
           {/*<Button className='login-button white-text login-email-button'
             onClick={() => handleLoginEmail()}>
             <img src='/images/email.png'  style={{'float': 'left', 'marginRight': '10px', 'width': '30px'}}/>
             Dùng email cá nhân
           </Button>*/}
-          <div style={{'display': 'flex', 'alignItems': 'center', 'justifyContent': 'center', 'marginTop': '20px'}}>
-            <a className='text-underline' style={{color: '#ebf269'}} href='https://m.me/185169981351799?text=Mình muốn đăng nhập trên web không được. Trợ giúp mình với.'>Báo lỗi đăng nhập</a>
-          </div>
-          
+
+          <button
+            className="w-full h-fit p-2 text-base sm:text-lg text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4"
+            onClick={handleSupport}
+          >
+            Báo lỗi đăng nhập
+          </button>
         </div>
       </div>
-    </>
-  )
-}
-
+      <div
+        className="absolute animate-bounce-low top-0 right-0 bottom-0 flex items-center justify-center cursor-pointer"
+        onClick={handleBirdClick}
+      >
+        <Image
+          width={100}
+          height={90}
+          className="aspect-square"
+          src="/images/bird-dark@3x.png"
+          alt="toidoc-support"
+          loader={imageLoader}
+        />
+      </div>
+    </div>
+  );
+};
 
 export default ShortLogin;
