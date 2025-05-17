@@ -200,7 +200,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
           </Button>*/}
 
           <button
-            className="w-full h-fit p-2 text-base sm:text-lg text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4"
+            className="w-full h-fit p-2 text-base sm:text-lg text-white bg-[#849EBF] font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4"
             onClick={handleSupport}
           >
             Báo lỗi đăng nhập
@@ -215,7 +215,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
           width={100}
           height={90}
           className="aspect-square"
-          src="/images/bird-dark@3x.png"
+          src="/images/bird-light@2x.png"
           alt="toidoc-support"
           loader={imageLoader}
         />
