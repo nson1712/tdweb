@@ -109,6 +109,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
       "https://m.me/185169981351799?text=Mình muốn đăng nhập trên web không được. Trợ giúp mình với.",
       "_blank"
     );
+    setShowWarning(false);
   };
 
   const handleBirdClick = () => {
