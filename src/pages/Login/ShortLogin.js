@@ -9,9 +9,11 @@ import Router from "next/router";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
+import { Alert } from "antd";
 
 const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
   const [loading, setLoading] = useState(false);
+  const [showWarning, setShowWarning] = useState(false);
   const handleLoginGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const loginResult = await Api.post({
@@ -107,6 +109,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
       "https://m.me/185169981351799?text=Mình muốn đăng nhập trên web không được. Trợ giúp mình với.",
       "_blank"
     );
+    setShowWarning(false);
   };
 
   const handleBirdClick = () => {
@@ -200,11 +203,31 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
           </Button>*/}
 
           <button
-            className="w-full h-fit p-2 text-base sm:text-lg text-black bg-gradient-to-r from-teal-200 to-lime-200 hover:bg-gradient-to-l hover:from-teal-200 hover:to-lime-200 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-teal-700 font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4"
-            onClick={handleSupport}
+            className="w-[270px] mx-auto flex justify-center h-fit p-2 text-base sm:text-lg text-white bg-[#849EBF] font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4"
+            onClick={() => setShowWarning(true)}
           >
             Báo lỗi đăng nhập
           </button>
+
+          {showWarning && (
+            <Alert
+              showIcon
+              type="warning"
+              className="text-xl sm:text-2xl mt-4"
+              message={
+                <div>
+                  Vui lòng kiểm tra lại trình duyệt bạn đang sử dụng!. Nếu bạn sử
+                  dụng{" "}
+                  <span className="font-bold text-red-500 italic">Cốc Cốc</span>{" "}
+                  hoặc{" "}
+                  <span className="font-bold text-red-500 italic">Firefox</span>
+                  , vui lòng chuyển sang{" "}
+                  <span className="font-bold text-red-500 italic">Chrome. </span>
+                  Nếu bạn đang sử dụng Chrome mà vẫn không đăng nhập được, vui lòng <span className="text-blue-500 font-bold cursor-pointer hover:text-blue-400" onClick={handleSupport}>liên hệ với Toidoc!</span>
+                </div>
+              }
+            />
+          )}
         </div>
       </div>
       <div
@@ -215,7 +238,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
           width={100}
           height={90}
           className="aspect-square"
-          src="/images/bird-dark@3x.png"
+          src="/images/bird-light@2x.png"
           alt="toidoc-support"
           loader={imageLoader}
         />

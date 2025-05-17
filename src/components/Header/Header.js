@@ -334,7 +334,7 @@ const Header = ({ selectedTab }) => {
                 Router.push(`/tim-kiem-truyen?tukhoa=${value}`);
               }, 600);
             }}
-            disabled={!GlobalStore.isLoggedIn}
+            // disabled={!GlobalStore.isLoggedIn}
           />
           <img src="/images/search.svg" className="search-icon" alt="search" />
         </div>
