@@ -844,7 +844,13 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                   ))}
               </div>
 
-              <div
+              {(storyDetail?.slug === 'nu-phu-phao-hoi-luon-doi-treo-co-full' || 
+                storyDetail?.slug === 'thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang' ||
+                storyDetail?.slug === 'nguoi-yeu-online-la-anh-de' ||
+                storyDetail?.slug === 'thap-nien-70-mang-theo-khong-gian-ga-cho-chang-quan-nhan-mat-lanh-1' ||
+                storyDetail?.slug === 'xuyen-thanh-nu-chinh-phan-cong-bay-nam-chinh-dien-loan' ||
+                storyDetail?.slug === 'tan-the-thien-tai-ta-mang-theo-khong-gian-trong-trot'
+                ) && <div
                 className="flex justify-center my-2 cursor-pointer"
                 onClick={handlePremiumBannerClick}
               >
@@ -855,7 +861,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                   src="/images/pre-banner.png"
                   loader={imageLoader}
                 />
-              </div>
+              </div>}
 
               <h2 className="text-lg font-bold main-text mt-4 text-underline px-2">
                 Danh sách chương

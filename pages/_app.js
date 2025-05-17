@@ -271,7 +271,7 @@ function App({ Component, pageProps }) {
         />
       </Modal>
 
-      {GlobalStore.isLoggedIn && (
+      {/*GlobalStore.isLoggedIn && (
           <Image.PreviewGroup
             preview={{
               visible,
@@ -301,7 +301,7 @@ function App({ Component, pageProps }) {
               onClick={() => setVisible(true)}
             />
           </Image.PreviewGroup>
-      )}
+      )*/}
     </>
   );
 }

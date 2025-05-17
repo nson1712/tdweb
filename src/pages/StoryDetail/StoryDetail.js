@@ -875,7 +875,13 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             </Link>
           </div>
 
-          <div
+              {(storyDetail?.slug === 'nu-phu-phao-hoi-luon-doi-treo-co-full' || 
+                storyDetail?.slug === 'thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang' ||
+                storyDetail?.slug === 'nguoi-yeu-online-la-anh-de' ||
+                storyDetail?.slug === 'thap-nien-70-mang-theo-khong-gian-ga-cho-chang-quan-nhan-mat-lanh-1' ||
+                storyDetail?.slug === 'xuyen-thanh-nu-chinh-phan-cong-bay-nam-chinh-dien-loan' ||
+                storyDetail?.slug === 'tan-the-thien-tai-ta-mang-theo-khong-gian-trong-trot'
+                ) && <div
             className="flex justify-center my-5 cursor-pointer"
             onClick={handlePremiumBannerClick}
           >
@@ -886,7 +892,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
               src="/images/pre-banner.png"
               loader={imageLoader}
             />
-          </div>
+          </div>}
 
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-4">
             <TopTrendingTitle />
