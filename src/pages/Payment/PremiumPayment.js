@@ -97,7 +97,13 @@ const PremiumPayment = ({
         });
         setLoading(false);
         if ("00" !== result?.data.code) {
-          alert(result?.data.message);
+          const now = new Date();
+          const timePlusTenMinutes = new Date(now.getTime() + 10 * 60000);
+          Router.push(
+            `/premium/thong-tin-chuyen-khoan?accountName=PHAM NGOC SON&accountNumber=CAS0913431088&amount=${
+              planCode === 'premium_1month' ? 219000 : planCode === 'premium_3month' ? 569000 : planCode === 'premium_6month' ? 1059000 : 1899000
+            }&description=Ung ho kc&qrCode=&expiredAt=${timePlusTenMinutes.toISOString()}&order=&paymentId=`
+          );
         } else {
           const now = new Date();
           const timePlusTenMinutes = new Date(now.getTime() + 10 * 60000);

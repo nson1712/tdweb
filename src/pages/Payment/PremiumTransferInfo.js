@@ -1,13 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import axios from "axios";
 import { observer } from "mobx-react";
+import Image from "next/image";
 import Router, { useRouter } from "next/router";
 import HeaderPayment from "./HeaderPayment";
 import { QRCode } from "react-qrcode-logo";
 import { formatStringToNumber } from "../../utils/utils";
 import Button from "../../components/Button/Button";
 import { Alert } from "antd";
-import { toast } from "react-toastify";
+import ModalComponent from "../../components/Modal/Modal";
+import imageLoader from "../../loader/imageLoader";
 
 const PremiumTransferInfo = ({ type }) => {
   const [accountName, setAccountName] = useState("");
@@ -19,6 +21,7 @@ const PremiumTransferInfo = ({ type }) => {
   const [copiedAmountMessage, setCopiedAmountMessage] = useState("");
   const [copiedDescriptionMessage, setCopiedDescriptionMessage] = useState("");
   const [timeLeft, setTimeLeft] = useState(0);
+  const [showDepositSuccessWarning, setShowDepositSuccessWarning] = useState(false);
 
   const router = useRouter();
   const qrRef = useRef(null);
@@ -131,6 +134,18 @@ const PremiumTransferInfo = ({ type }) => {
           setCopiedDescriptionMessage("Copy lỗi");
         }
       }
+    );
+  };
+
+  const handleOKWarningDepositSuccess = async () => {
+    setShowDepositSuccessWarning(false);
+    window.open(
+      `https://m.me/185169981351799?text=${
+        router.query.referralCode
+          ? "Mã KH của mình là: " + router.query.referralCode + ". "
+          : ""
+      }Mình vừa chuyển khoản Đky Premium thành công qua web, kiểm tra giúp mình với.`,
+      "_blank"
     );
   };
 
@@ -300,7 +315,7 @@ const PremiumTransferInfo = ({ type }) => {
               </div>
             </div>
             <br />
-            {qrCode && (
+            {qrCode ? (
               <>
                 <p className="text-center text-[14px] font-bold mb-[0px]">
                   Hoặc bạn có thể quét mã QR dưới đây
@@ -331,6 +346,45 @@ const PremiumTransferInfo = ({ type }) => {
                     </Button>
                   </div>
                 </div>
+              </>)
+            :
+            (
+              <>
+                <div className="flex justify-center">
+                  <div>
+                    <div className="flex justify-center">
+                      <Image
+                        loader={imageLoader}
+                        height={250}
+                        width={200}
+                        src={`${amount === '219000' ? '/images/qr-219.png' : amount === '569000' ? '/images/qr-569.png' : amount === '1059000' ? '/images/qr-1059.png' : '/images/qr-1899.png'}`}
+                        priority
+                        className="bd-radius-10"
+                      />
+                    </div>
+                    <div className="flex justify-center mt-[10px]">
+                      <a
+                        className="bg-[#02f094] rounded-md px-3 py-1.5 text-[#000] font-semibold shadow-md"
+                        href={`${amount === '219000' ? '/images/qr-219.png' : amount === '569000' ? '/images/qr-569.png' : amount === '1059000' ? '/images/qr-1059.png' : '/images/qr-1899.png'}`}
+                        download="qr-ck.jpg"
+                      >
+                        Tải mã QR
+                      </a>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  style={{
+                    margin: "20px 0px",
+                    borderTop: "0.5px solid #b9b9b9",
+                  }}
+                ></div>
+                <button
+                  className="btnMain btnSecondDeposit"
+                  onClick={() => setShowDepositSuccessWarning(true)}
+                >
+                  Báo CK thành công 👆
+                </button>
               </>
             )}
             <Button
@@ -348,6 +402,42 @@ const PremiumTransferInfo = ({ type }) => {
             </Button>
           </div>
         </>
+      )}
+
+      {showDepositSuccessWarning && (
+        <ModalComponent
+          show={showDepositSuccessWarning}
+          handleClose={(e) => setShowDepositSuccessWarning(false)}
+          styleBody="background-gradient-gray"
+        >
+          <div className="px-[20px] pb-[20px] pt-[10px]">
+            <div className="flex justify-center pb-[15px]">
+              <img
+                src="/images/info-icon.png"
+                className="w-[20px] h-[20px] mr-[5px]"
+              />
+              <p>
+                <strong>Lưu ý</strong>
+              </p>
+            </div>
+            <div className="px-[10px]">
+              <p>
+                Bạn nhớ gửi kèm theo ảnh chuyển khoản thành công để Admin phê
+                duyệt nhé!
+              </p>
+              <p>
+                Sau khi Admin nạp kim cương, bạn chỉ cần mở khoá chương là đọc
+                được tiếp.
+              </p>
+              <a
+                className="btnMain"
+                onClick={() => handleOKWarningDepositSuccess()}
+              >
+                OK
+              </a>
+            </div>
+          </div>
+        </ModalComponent>
       )}
       {/*<FooterDesktop />*/}
     </div>
