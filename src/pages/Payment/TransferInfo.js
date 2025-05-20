@@ -103,7 +103,7 @@ const TransferInfo = () => {
 
   const validatePaymentResult = async () => {
     try {
-      if (orderCode.current) {
+      if (orderCode.current && orderCode.current !== "") {
         const data = {
           orderCode: orderCode.current,
           paymentLinkId: paymentId.current,

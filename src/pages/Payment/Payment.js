@@ -116,7 +116,9 @@ const Payment = ({
         if (result) {
           setLoading(false);
           if ("00" !== result?.data.code) {
-            alert(result?.data.message);
+            Router.push(
+              `/nap-kim-cuong/thong-tin-chuyen-khoan?accountName=PHAM NGOC SON&accountNumber=CAS0913431088&amount=${cash}&description=Ung ho kc&qrCode=&expiredAt=&order=&referralCode=&paymentId=&story=${storySlug || ''}` + (chapterSlug ? `&chapter=${chapterSlug}` : '')
+            );
           } else {
             const now = new Date();
             // Add 10 minutes to the current time
