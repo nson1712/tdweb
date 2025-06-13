@@ -18,6 +18,7 @@ export const useTableOptions = () => {
           >
             <RightOutlined /> {record.title}
           </a>
+          {record?.latestChapter?.title && <a title={record.latestChapter.title}>{`(${record.latestChapter.title})`})</a>}
         </Link>
       ),
     },

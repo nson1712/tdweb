@@ -171,6 +171,18 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
           <div
             style={{ margin: "30px 10px", borderTop: "1px solid #fff" }}
           ></div>
+          <div>
+            <a href="https://toidoc.onelink.me/59bO/d42503wz" target='_blank' rel="nofollow">
+                <Image
+                  loader={imageLoader}
+                  className="rounded-xl self-center"
+                  width={500}
+                  height={400}
+                  src={"/images/intro-app.png"}
+                  priority
+                />
+            </a>
+          </div>
           <p className="white-text px-[10px] ">
             Hoặc bạn tải{" "}
             <a

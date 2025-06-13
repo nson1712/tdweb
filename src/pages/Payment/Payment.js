@@ -315,7 +315,7 @@ const Payment = ({
                 type="submit"
                 loading={loading}
               >
-                Ủng Hộ Kim Cương 👆
+                Nạp Kim Cương 👆
               </Button>
               <p className="mt-[8px]">
                 ✅ Kim cương sẽ vào tài khoản ngay sau khi thanh toán thành công
