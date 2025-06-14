@@ -11,15 +11,24 @@ export const useTableOptions = () => {
       key: "title",
       width: "60%",
       render: (_, record) => (
-        <Link href={`/${record.slug}`} passHref>
-          <a
-            title={record.title}
-            className="text-black font-bold line-clamp-1 cursor-pointer hover:!text-blue-500"
-          >
-            <RightOutlined /> {record.title}
-          </a>
-          {record?.latestChapter?.title && <a title={record.latestChapter.title}>{`(${record.latestChapter.title})`})</a>}
-        </Link>
+        console.log("RECORD: ", record),
+        (
+          <div>
+            <Link href={`/${record?.slug}`} passHref>
+              <a title={`${record.title} - ${record?.latestChapter?.title}`}>
+                <div className="text-black font-bold cursor-pointer hover:!text-blue-500">
+                  <RightOutlined /> {record.title}
+                </div>
+                {record?.latestChapter?.title && (
+                  <div
+                    title={record.latestChapter.title}
+                    className="hover:!text-black text-black"
+                  >{`(${record.latestChapter.title})`}</div>
+                )}
+              </a>
+            </Link>
+          </div>
+        )
       ),
     },
     {
@@ -64,7 +73,11 @@ export const useStoryChapterTableOptions = () => {
             title={record.title}
             className="text-black font-bold line-clamp-1 cursor-pointer hover:!text-blue-500"
           >
-            <img src={record?.isFree ? "/images/Done.png" : "/images/lock.png"} class="w-5 float-left mr-[5px]" /> {record.title}
+            <img
+              src={record?.isFree ? "/images/Done.png" : "/images/lock.png"}
+              class="w-5 float-left mr-[5px]"
+            />{" "}
+            {record.title}
           </a>
         </Link>
       ),
