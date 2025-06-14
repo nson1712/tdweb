@@ -231,12 +231,12 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         </div>
       </div>
       <div
-        className="absolute animate-bounce-low top-0 right-0 bottom-0 flex items-center justify-center cursor-pointer"
+        className="absolute animate-bounce-low top-0 right-0 bottom-0 my-auto h-fit cursor-pointer"
         onClick={handleBirdClick}
       >
         <Image
-          width={100}
-          height={90}
+          width={80}
+          height={70}
           className="aspect-square"
           src="/images/bird-light@2x.png"
           alt="toidoc-support"
