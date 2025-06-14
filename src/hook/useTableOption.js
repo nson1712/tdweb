@@ -11,24 +11,21 @@ export const useTableOptions = () => {
       key: "title",
       width: "60%",
       render: (_, record) => (
-        console.log("RECORD: ", record),
-        (
-          <div>
-            <Link href={`/${record?.slug}`} passHref>
-              <a title={`${record.title} - ${record?.latestChapter?.title}`}>
-                <div className="text-black font-bold cursor-pointer hover:!text-blue-500">
-                  <RightOutlined /> {record.title}
-                </div>
-                {record?.latestChapter?.title && (
-                  <div
-                    title={record.latestChapter.title}
-                    className="hover:!text-black text-black"
-                  >{`(${record.latestChapter.title})`}</div>
-                )}
-              </a>
-            </Link>
-          </div>
-        )
+        <div>
+          <Link href={`/${record?.slug}`} passHref>
+            <a title={`${record.title} - ${record?.latestChapter?.title}`}>
+              <div className="text-black font-bold cursor-pointer hover:!text-blue-500">
+                <RightOutlined /> {record.title}
+              </div>
+              {record?.latestChapter?.title && (
+                <div
+                  title={record.latestChapter.title}
+                  className="hover:!text-black text-black"
+                >{`(${record.latestChapter.title})`}</div>
+              )}
+            </a>
+          </Link>
+        </div>
       ),
     },
     {
