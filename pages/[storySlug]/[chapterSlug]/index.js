@@ -7,6 +7,7 @@ const StoryDetail = ({ detail, canonical, titleSlug }) => {
   return (
     <>
       <HeaderServerSchema
+        containTitle={detail ? detail.storyTitle : ""}
         title={detail ? `✅ Truyện ${detail.storyTitle} ${detail.seoTitle}` : `✅${titleSlug}| Nền tảng đọc truyện full cập nhật mới nhất `}
         description={
           detail.metaDescription

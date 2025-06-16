@@ -7,7 +7,9 @@ import { countWords } from '../../src/utils/utils'
 const StorySummary = ({detail, article, canonical}) => {
   return (
     <>
-      <HeaderServerSchema title={`✅ ${(detail?.status === 'ACTIVE' ? '[FULL] ' : '') + detail?.title}${countWords(detail?.title) <= 70 ? '| Nền tảng cộng đồng đọc truyện online hấp dẫn' : ''}`}
+      <HeaderServerSchema 
+        containTitle={detail ? detail.title : ""}
+        title={`✅ ${(detail?.status === 'ACTIVE' ? '[FULL] ' : '') + detail?.title}${countWords(detail?.title) <= 70 ? '| Nền tảng cộng đồng đọc truyện online hấp dẫn' : ''}`}
         description={detail?.metaDescription ? detail?.metaDescription.replace(/"/g,'') : detail?.metaDescription}
         keywords={detail?.metaKeywords}
         image={detail?.thumbnail || detail?.coverImage}

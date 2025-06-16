@@ -2,6 +2,7 @@ import React from "react"
 import Head from "next/head"
 
 const HeadSchemaComponent = ({
+  containTitle,
   title,
   description,
   keywords,
@@ -101,7 +102,7 @@ const HeadSchemaComponent = ({
           ></meta>
 
           <meta name="author" content="toidoc.vn"></meta>
-          <meta name="ROBOTS" content="INDEX,FOLLOW"></meta>
+          {containTitle ? <meta name="ROBOTS" content="INDEX,FOLLOW"></meta> : <meta name="ROBOTS" content="NOINDEX,NOFOLLOW"></meta>}
           <meta property="og:locale" content="vi_VN"></meta>
           <meta property="og:type" content="website"></meta>
           {/* Favicon */}
