@@ -4,13 +4,13 @@ import HeaderServerSchema from '../../src/components/HeaderServerSchema'
 import axios from 'axios'
 import { countWords } from '../../src/utils/utils'
 
-const StorySummary = ({detail, article, canonical}) => {
+const StorySummary = ({ detail, article, canonical }) => {
   return (
     <>
-      <HeaderServerSchema 
+      <HeaderServerSchema
         containTitle={detail ? detail.title : ""}
         title={`✅ ${(detail?.status === 'ACTIVE' ? '[FULL] ' : '') + detail?.title}${countWords(detail?.title) <= 70 ? '| Nền tảng cộng đồng đọc truyện online hấp dẫn' : ''}`}
-        description={detail?.metaDescription ? detail?.metaDescription.replace(/"/g,'') : detail?.metaDescription}
+        description={detail?.metaDescription ? detail?.metaDescription.replace(/"/g, '') : detail?.metaDescription}
         keywords={detail?.metaKeywords}
         image={detail?.thumbnail || detail?.coverImage}
         canonical={`https://toidoc.vn/${canonical}`}
@@ -19,45 +19,64 @@ const StorySummary = ({detail, article, canonical}) => {
         slug={detail?.slug}
         totalView={detail ? ((detail?.totalView === 0 || detail?.totalView === null) ? 10 : detail?.totalView) : 10}
       />
-      <StorySummaryComponent storyDetail={detail} articleDetail={article}/>
+      <StorySummaryComponent storyDetail={detail} articleDetail={article} />
     </>
   )
 }
 
-StorySummary.getInitialProps = async (ctx) => {
-  const getDetail = async () => {
-    try {
-      if (ctx.query.storySlug !== 'images' && ctx.query.storySlug !== 'img') {
-        const result = await axios.get(
-        typeof window !== 'undefined' ? `https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${ctx.query.storySlug}` : `http://10.8.22.205:8082/private/data/story/detail?slug=${ctx.query.storySlug}`)
-        // const result = await axios.get(`https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${ctx.query.storySlug}`)
-        // typeof window !== 'undefined' ? `https://uatapi.truyenso1.xyz/data/private/data/story/detail?slug=${ctx.query.storySlug}` : `http://10.8.22.250:18111/data/private/data/story/detail?slug=${ctx.query.storySlug}`)
-        // console.log('Result: ', result);
-        const resultBlog = await axios.get(typeof window !== 'undefined' ? `https://fsdfssf.truyenso1.xyz/data/article/story/${ctx.query.storySlug}` : `http://10.8.22.205:8082/article/story/${ctx.query.storySlug}`);
-        // const resultBlog = await axios.get(`https://fsdfssf.truyenso1.xyz/data/article/story/${ctx.query.storySlug}`);
-        return {
-          detail: result?.data?.data,
-          article: resultBlog?.data?.data,
-          canonical: ctx.query.storySlug
-        }
-      }
-      return {
+export async function getServerSideProps(context) {
+  const { storySlug } = context.params;
+
+  if (storySlug === 'images' || storySlug === 'img') {
+    return {
+      props: {
         detail: {},
         article: {},
-        canonical: ctx.query.storySlug
-      }
-    } catch(e) {
-      console.log('server call error', e)
-      return {
-        detail: {},
-        article: {},
-        canonical: ctx.query.storySlug
+        canonical: storySlug
       }
     }
   }
 
-  return await getDetail()
-  
+  try {
+    // const result = await axios.get(`https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}`);
+    // const resultBlog = await axios.get(`https://fsdfssf.truyenso1.xyz/data/article/story/${storySlug}`);
+
+    const result = await axios.get(
+    typeof window !== 'undefined' ? `https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}` : `http://10.8.22.205:8082/private/data/story/detail?slug=${storySlug}`)
+    // const result = await axios.get(`https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}`)
+    // typeof window !== 'undefined' ? `https://uatapi.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}` : `http://10.8.22.250:18111/data/private/data/story/detail?slug=${storySlug}`)
+    // console.log('Result: ', result);
+    const resultBlog = await axios.get(typeof window !== 'undefined' ? `https://fsdfssf.truyenso1.xyz/data/article/story/${storySlug}` : `http://10.8.22.205:8082/article/story/${storySlug}`);
+    // const resultBlog = await axios.get(`https://fsdfssf.truyenso1.xyz/data/article/story/${storySlug}`);
+
+    return {
+      props: {
+        detail: result?.data?.data || {},
+        article: resultBlog?.data?.data || {},
+        canonical: storySlug
+      }
+    };
+  } catch (e) {
+    console.log('server call error', e?.response?.data);
+
+    if (e?.response?.data?.error === "The story does not exist") {
+      console.log('The story does not exist ==========');
+      return {
+        redirect: {
+          destination: '/404.html',
+          permanent: true, // 301 redirect
+        }
+      };
+    }
+
+    return {
+      props: {
+        detail: {},
+        article: {},
+        canonical: storySlug
+      }
+    };
+  }
 }
 
-export default StorySummary
+export default StorySummary;
