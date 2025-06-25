@@ -28,6 +28,8 @@ import TrendingIcon from "../../../public/icons/TrendingIcon";
 import NewIcon from "../../../public/icons/NewIcon";
 import HotStories from "../../components/HotStories";
 import ButtonViewAll from "../../components/ButtonViewAll";
+import { RatingCard } from "../../components/RatingCard";
+import { toJS } from "mobx";
 
 const TABS = [
   {
@@ -158,6 +160,8 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     getTopTrending,
     topNew,
     getTopNew,
+    ratingsByStory,
+    getRatingsByStory
   } = StoryStore;
   // const { storyDetailArticle, getBlogStoryDetail } = BlogStore;
   const [currentChapterDetail, setCurrentChapterDetail] = useState([]);
@@ -255,6 +259,13 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     getTopTrending(0, 16);
     getTopNew(0, 16);
   }, [route.query.storySlug]);
+
+  console.log("STORY DETAIL: ", storyDetail)
+  useEffect(() => {
+    getRatingsByStory({parentId: storyDetail?.slug})
+  }, [])
+
+  console.log("RATINGS BY STORY: ", toJS(ratingsByStory))
 
   const getPriceInfo = async () => {
     if (GlobalStore.isLoggedIn) {
@@ -843,6 +854,9 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                     </div>
                   ))}
               </div>
+
+
+                <RatingCard />
 
               {(storyDetail?.slug === 'nu-phu-phao-hoi-luon-doi-treo-co-full' || 
                 storyDetail?.slug === 'thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang' ||

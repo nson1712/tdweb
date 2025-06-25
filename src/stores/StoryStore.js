@@ -50,6 +50,8 @@ class StoryStore {
 
   ratings = {};
 
+  ratingsByStory = {}
+
   hashtags = {};
 
   stories = {};
@@ -826,6 +828,31 @@ class StoryStore {
 
       runInAction(() => {
         this.ratings = result.data;
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  getRatingsByStory = async ({
+    page = 0, 
+    size = 20,
+    parentId,
+  }) => {
+    try {
+      const result = await Api.get({
+        url: "api/mobile/rating/list",
+        params: {
+          page,
+          size,
+          type: "STORY",
+          parentId: parentId
+        },
+        hideError: true,
+      });
+
+      runInAction(() => {
+        this.ratingsByStory = result.data;
       });
     } catch (e) {
       console.log(e);
