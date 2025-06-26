@@ -17,7 +17,7 @@ const Section1 = ({ viewings, categories }) => {
     <div className="px-2 sm:grid sm:grid-flow-col sm:grid-cols-12 gap-x-4">
       <div className="hidden sm:block sm:order-2 sm:col-span-5 md:col-span-4 bg-slate-100 space-y-4 pb-4 px-2 rounded-xl h-fit pt-4 mt-4 ">
         {(isLoggedIn && viewings?.data?.length > 0) && (
-          <div className="text-lg text-black font-bold pl-2">Danh sách đang đọc</div>
+          <div className="text-lg text-black font-bold pl-2">Danh Sách Đang Đọc</div>
         )}
         {(isLoggedIn && viewings?.data?.length > 0) && (
           <div className="space-y-4">

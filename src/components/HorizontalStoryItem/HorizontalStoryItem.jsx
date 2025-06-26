@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import clsx from "clsx";
 import TagComponent from "./TagComponent";
@@ -7,7 +6,6 @@ import StarsRate from "../StarRate";
 import StoryStatus from "../StoryStatus";
 import GoldenTicket from "../GoldenTicket";
 import imageLoader from "../../loader/imageLoader";
-import { getSlugfromSlugGenerate, slugGenerate } from "../../utils/utils";
 import Link from "next/link";
 import MarkedLabel from "../MarkedLabel";
 
@@ -112,10 +110,10 @@ const HorizontalStoryItem = ({
             >
               {starVisible && (
                 <div className={clsx("", { "mt-1": type === "primary" })}>
-                  <StarsRate rate={rate} lightBg={true} />
+                  <StarsRate rate={rate} lightBg={true} className={'h-6 font-bold'}/>
                 </div>
               )}
-              {viewVisible && <TotalView totalView={totalView || 0} />}
+              {viewVisible && <TotalView totalView={totalView || 0} textStyle="font-bold"/>}
               {statusVisible && <StoryStatus status={status} lightBg={true} />}
             </div>
 

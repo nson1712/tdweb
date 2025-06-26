@@ -10,6 +10,8 @@ const HotStories = ({ data, className }) => {
           slug={item.slug}
           coverImage={item.thumbnail || item.coverImage}
           status={item.status}
+          rate={item.rate}
+          totalView={item.totalView}
         />
       ))}
     </div>

@@ -56,7 +56,7 @@ const CommentCardItem = ({
 
           <div className="flex flex-row gap-x-2 max-h-4 w-fit">
             <div className="mt-0.5">
-              <StarsRate rate={customerRate} lightBg={true} color="primary" />
+              <StarsRate rate={customerRate} lightBg={true} color="primary" className={'h-6 font-bold'}/>
             </div>
             <TotalLike totalLike={totalLike} />
             <TotalComments totalComment={totalComment} />
