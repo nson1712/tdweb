@@ -1,7 +1,6 @@
 import Title from "./title";
 import TopFull from "../../../components/TopFull";
 import ButtonViewAll from "../../../components/ButtonViewAll";
-import { toJS } from "mobx";
 
 const Section4 = ({ topFull }) => {
   return (
