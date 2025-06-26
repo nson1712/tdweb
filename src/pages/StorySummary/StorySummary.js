@@ -414,7 +414,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
 
   return (
     <>
-      <div className="max-w-[620px] mx-[auto] pt-10 md:pt-20 bg-story">
+      <div className="max-w-[768px] mx-[auto] pt-10 md:pt-20 bg-story">
         {/*<div className={classNames('flex items-center justify-between border-b-[1px] border-color fixed md:static top-0 left-0 right-0 top-0 z-[99] bg-white mobile-header', scrollOffset > 100 && 'mobile-header-show', `${scrollDirection === 'down' ? 'hide' : 'show-header'}`)}>
           <a className='p-[10px]' title={`Truyện ${storyDetail?.title}`}
             onClick={() => {
@@ -452,6 +452,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
             __html: `<a id='link-video-header' href='https://toidoc.onelink.me/59bO/d42503wz'> <video autoplay loop muted playsinline><source src='https://media.truyenso1.xyz/ads/top-banner.mp4' type='video/mp4' rel='nofollow'/></video> </a>`,
           }}
         />*/}
+
         <div className="h-fit relative mb-4 pb-7 pt-4">
           <div className="bg-story-summary" />
           <img
@@ -844,24 +845,29 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                   ))}
               </div>
 
-              {(storyDetail?.slug === 'nu-phu-phao-hoi-luon-doi-treo-co-full' || 
-                storyDetail?.slug === 'thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang' ||
-                storyDetail?.slug === 'nguoi-yeu-online-la-anh-de' ||
-                storyDetail?.slug === 'thap-nien-70-mang-theo-khong-gian-ga-cho-chang-quan-nhan-mat-lanh-1' ||
-                storyDetail?.slug === 'xuyen-thanh-nu-chinh-phan-cong-bay-nam-chinh-dien-loan' ||
-                storyDetail?.slug === 'tan-the-thien-tai-ta-mang-theo-khong-gian-trong-trot'
-                ) && <div
-                className="flex justify-center my-2 cursor-pointer"
-                onClick={handlePremiumBannerClick}
-              >
-                <Image
-                  width={400}
-                  height={533}
-                  className="aspect-[3/4]"
-                  src="/images/pre-banner.png"
-                  loader={imageLoader}
-                />
-              </div>}
+              {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
+                storyDetail?.slug ===
+                  "thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang" ||
+                storyDetail?.slug === "nguoi-yeu-online-la-anh-de" ||
+                storyDetail?.slug ===
+                  "thap-nien-70-mang-theo-khong-gian-ga-cho-chang-quan-nhan-mat-lanh-1" ||
+                storyDetail?.slug ===
+                  "xuyen-thanh-nu-chinh-phan-cong-bay-nam-chinh-dien-loan" ||
+                storyDetail?.slug ===
+                  "tan-the-thien-tai-ta-mang-theo-khong-gian-trong-trot") && (
+                <div
+                  className="flex justify-center my-2 cursor-pointer"
+                  onClick={handlePremiumBannerClick}
+                >
+                  <Image
+                    width={400}
+                    height={533}
+                    className="aspect-[3/4]"
+                    src="/images/pre-banner.png"
+                    loader={imageLoader}
+                  />
+                </div>
+              )}
 
               <h2 className="text-lg font-bold main-text mt-4 text-underline px-2">
                 Danh sách chương
@@ -874,7 +880,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
         <div className="border-1 px-2 py-3 rounded-2xl space-y-4 mx-2 mt-4">
           <TopTrendingTitle />
           <HotStories
-            className="grid grid-cols-4 justify-center gap-x-2 gap-y-5"
+            className="grid grid-cols-3 sm:grid-cols-4 justify-center gap-x-3 gap-y-5"
             data={topTrending?.data}
           />
           <div className="flex">
@@ -889,7 +895,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
         <div className="border-1 px-2 py-3 rounded-2xl space-y-4 mx-2 my-4">
           <TopNewTitle />
           <HotStories
-            className="grid grid-cols-4 justify-center gap-x-2 gap-y-5"
+            className="grid grid-cols-3 sm:grid-cols-4 justify-center gap-x-3 gap-y-5"
             data={topNew?.data}
           />
           <div className="flex">

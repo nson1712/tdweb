@@ -3,7 +3,7 @@ import VerticalStoryItem from "../VerticalStoryItem/VerticalStoryItem";
 const HotStories = ({ data, className }) => {
   return (
     <div className={className}>
-      {data?.map((item, index) => (
+      {data?.slice(0, 15).map((item, index) => (
         <VerticalStoryItem
           key={index}
           title={item.title}
@@ -12,8 +12,24 @@ const HotStories = ({ data, className }) => {
           status={item.status}
           rate={item.rate}
           totalView={item.totalView}
+          totalLike={item.totalLike}
         />
       ))}
+
+      <div className="hidden sm:block">
+        {data?.slice(15, 16).map((item, index) => (
+          <VerticalStoryItem
+            key={index}
+            title={item.title}
+            slug={item.slug}
+            coverImage={item.thumbnail || item.coverImage}
+            status={item.status}
+            rate={item.rate}
+            totalView={item.totalView}
+            totalLike={item.totalLike}
+          />
+        ))}
+      </div>
     </div>
   );
 };

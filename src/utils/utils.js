@@ -4,6 +4,8 @@ import { pancakeSwapAbi, pancakeSwapContract } from "../contracts/pancake";
 import { toast } from "react-toastify";
 import { Base64 } from "js-base64";
 import crypto from "crypto";
+import {twMerge} from "tailwind-merge"
+import clsx from "clsx"
 
 export const zeroPad = (num, places) => String(num).padStart(places, "0");
 const secret_key = "MlsHlea8IaH3qS8MjoXB1kMnlMImwCE7";
@@ -15,56 +17,56 @@ const mapPackages = {
     deposit: "18,000VNĐ",
     value: 18000,
     diamondValue: 15000,
-    qrUrl: "/images/qr-15k-son.jpg"
+    qrUrl: "/images/qr-15k-son.jpg",
   },
   18000: {
     label: "15,500",
     deposit: "18,000VNĐ",
     value: 18000,
     diamondValue: 15000,
-    qrUrl: "/images/qr-15k-son.jpg"
+    qrUrl: "/images/qr-15k-son.jpg",
   },
   50000: {
     label: "50,000",
     deposit: "50,000VNĐ",
     value: 50000,
     diamondValue: 50000,
-    qrUrl: "/images/qr-50k-son.jpg"
+    qrUrl: "/images/qr-50k-son.jpg",
   },
   100000: {
     label: "105,000",
     deposit: "100,000VNĐ",
     value: 100000,
     diamondValue: 105000,
-    qrUrl: "/images/qr-100k-son.jpg"
+    qrUrl: "/images/qr-100k-son.jpg",
   },
   200000: {
     label: "210,000",
     deposit: "200,000VNĐ",
     diamondValue: 210000,
     value: 200000,
-    qrUrl: "/images/qr-200k-son.jpg"
+    qrUrl: "/images/qr-200k-son.jpg",
   },
   300000: {
     label: "315,000",
     deposit: "300,000VNĐ",
     diamondValue: 315000,
     value: 300000,
-    qrUrl: "/images/qr-300k-son.jpg"
+    qrUrl: "/images/qr-300k-son.jpg",
   },
   500000: {
     label: "530,000",
     deposit: "500,000VNĐ",
     diamondValue: 530000,
     value: 500000,
-    qrUrl: "/images/qr-500k-son.jpg"
+    qrUrl: "/images/qr-500k-son.jpg",
   },
   1000000: {
     label: "1,060,000",
     deposit: "1,000,000VNĐ",
     diamondValue: 1060000,
     value: 1000000,
-    qrUrl: "/images/qr-1000k-son.jpg"
+    qrUrl: "/images/qr-1000k-son.jpg",
   },
 };
 
@@ -318,7 +320,11 @@ export const getSlugfromSlugGenerate = (value) => {
 };
 
 export const cleanHtml = (value) => {
-  return value ? String(value).replace(/<[^>]+>/g, "").replace(/&nbsp;/g, " ") :  value;
+  return value
+    ? String(value)
+        .replace(/<[^>]+>/g, "")
+        .replace(/&nbsp;/g, " ")
+    : value;
 };
 
 export const appendNewLineAfterBlockLevelTags = (content) => {
@@ -730,9 +736,9 @@ export const getLastChild = (node) => {
 export const countWords = (text) => {
   if (!text || typeof text !== "string") return 0;
   return (text.match(/\b\w+\b/g) || []).length;
-}
+};
 
-export const getDepositPackage = async(value) => {
+export const getDepositPackage = async (value) => {
   if (value <= 15000) {
     return mapPackages["15000"];
   }
@@ -754,13 +760,17 @@ export const getDepositPackage = async(value) => {
   if (value < 1060000) {
     return mapPackages["1000000"];
   }
-}
+};
 
 export const urlCheck = (string) => {
-  return string?.split("/")?.includes("media.truyenso1.xyz")
-}
+  return string?.split("/")?.includes("media.truyenso1.xyz");
+};
 
 export const getQrUrl = (amount) => {
   const value = mapPackages[`${amount}`];
   return value.qrUrl;
+};
+
+export function cn(...inputs) {
+  return twMerge(clsx(inputs));
 }

@@ -56,7 +56,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [chapterContents, setChapterContents] = useState([]);
   const [currentChapter, setCurrentChapter] = useState({});
   const [currentChapterDetail, setCurrentChapterDetail] = useState({});
-  console.log("CURRENT CHAPTER DETAIL: ", currentChapterDetail);
   const [loggedIn, setLoggedIn] = useState(false);
   const [needOpenChapter, setNeedOpenChapter] = useState(false);
   const [allowOpenWeb, setAllowOpenWeb] = useState(false);
@@ -473,29 +472,13 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥");
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥");
 
-  // const svg = `
-  // <svg xmlns="http://www.w3.org/2000/svg" width="820" height="90">
-  //   <defs>
-  //     <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-  //       <stop offset="0%" stop-color="#09B2E5" stop-opacity="0.5"/>
-  //       <stop offset="100%" stop-color="#005993" stop-opacity="0.5"/>
-  //     </linearGradient>
-  //   </defs>
-  //   <text
-  //     style="font-family: 'Abel', sans-serif"
-  //     x="80%" y="40%"
-  //     text-anchor="middle"
-  //     dominant-baseline="middle"
-  //     font-size="60"
-  //     fill="url(#grad)"
-  //   >
-  //     TOIDOC.VN
-  //   </text>
-  // </svg>`;
+  console.log("CHAPTER TITLE: ", chapterTitle);
 
-  // // 2. Base64‑encode it into a data URI:
-  // const base64 = Buffer.from(svg).toString("base64");
-  // const gradientImage = `data:image/svg+xml;base64,${base64}`;
+  const handleErrorNotification = () => {
+    window.open(
+      `https://m.me/185169981351799?text=Mình đang đọc ${chapterTitle} %0A Truyện: ${storyTitle} %0A Nhưng bị thiếu nội dung, Toidoc hỗ trợ mình với!`
+    );
+  };
 
   return (
     <>
@@ -838,8 +821,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             </div>
           </div>
 
-          
-
           <div className="flex justify-between pt-2 px-2">
             <Link
               href={`/${storyDetail?.slug}/${currentChapter?.previous}`}
@@ -875,29 +856,41 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             </Link>
           </div>
 
-              {(storyDetail?.slug === 'nu-phu-phao-hoi-luon-doi-treo-co-full' || 
-                storyDetail?.slug === 'thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang' ||
-                storyDetail?.slug === 'nguoi-yeu-online-la-anh-de' ||
-                storyDetail?.slug === 'thap-nien-70-mang-theo-khong-gian-ga-cho-chang-quan-nhan-mat-lanh-1' ||
-                storyDetail?.slug === 'xuyen-thanh-nu-chinh-phan-cong-bay-nam-chinh-dien-loan' ||
-                storyDetail?.slug === 'tan-the-thien-tai-ta-mang-theo-khong-gian-trong-trot'
-                ) && <div
-            className="flex justify-center my-5 cursor-pointer"
-            onClick={handlePremiumBannerClick}
+          <button
+            className="w-[270px] mx-auto flex justify-center h-fit p-2 text-base sm:text-lg text-white bg-[#849EBF] font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4"
+            onClick={handleErrorNotification}
           >
-            <Image
-              width={400}
-              height={533}
-              className="aspect-[3/4]"
-              src="/images/pre-banner.png"
-              loader={imageLoader}
-            />
-          </div>}
+            Báo lỗi chương
+          </button>
+
+          {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
+            storyDetail?.slug ===
+              "thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang" ||
+            storyDetail?.slug === "nguoi-yeu-online-la-anh-de" ||
+            storyDetail?.slug ===
+              "thap-nien-70-mang-theo-khong-gian-ga-cho-chang-quan-nhan-mat-lanh-1" ||
+            storyDetail?.slug ===
+              "xuyen-thanh-nu-chinh-phan-cong-bay-nam-chinh-dien-loan" ||
+            storyDetail?.slug ===
+              "tan-the-thien-tai-ta-mang-theo-khong-gian-trong-trot") && (
+            <div
+              className="flex justify-center my-5 cursor-pointer"
+              onClick={handlePremiumBannerClick}
+            >
+              <Image
+                width={400}
+                height={533}
+                className="aspect-[3/4]"
+                src="/images/pre-banner.png"
+                loader={imageLoader}
+              />
+            </div>
+          )}
 
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-4">
             <TopTrendingTitle />
             <HotStories
-              className="grid grid-cols-4 justify-center gap-x-2 gap-y-5 "
+              className="grid grid-cols-3 sm:grid-cols-4 justify-center gap-x-3 gap-y-5"
               data={topTrending?.data}
             />
             <div className="flex">
@@ -912,7 +905,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 sm:mt-4">
             <TopNewTitle />
             <HotStories
-              className="grid grid-cols-4 justify-center gap-x-2 gap-y-5"
+              className="grid grid-cols-3  sm:grid-cols-4 justify-center gap-x-2 gap-y-5"
               data={topNew?.data}
             />
             <div className="flex">
