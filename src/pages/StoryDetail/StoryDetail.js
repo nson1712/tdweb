@@ -472,8 +472,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥");
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥");
 
-  console.log("CHAPTER TITLE: ", chapterTitle);
-
   const handleErrorNotification = () => {
     window.open(
       `https://m.me/185169981351799?text=Mình đang đọc ${chapterTitle} %0A Truyện: ${storyTitle} %0A Nhưng bị thiếu nội dung, Toidoc hỗ trợ mình với!`
