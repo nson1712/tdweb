@@ -1,12 +1,13 @@
-
 import ViewIcon from "../../../public/icons/ViewIcon";
-import { convertToShortScale } from "../../utils/utils";
+import { cn, convertToShortScale } from "../../utils/utils";
 
-const TotalView = ({ totalView, textStyle=''}) => {
+const TotalView = ({ totalView, className }) => {
   return (
     <div className="flex flex-row gap-x-1">
       <ViewIcon />
-      <div className={`${textStyle !== '' ? textStyle : 'text-black'} text-[12px] self-center`}>
+      <div
+        className={cn("text-xs self-center", className)}
+      >
         {convertToShortScale(totalView)}
       </div>
     </div>

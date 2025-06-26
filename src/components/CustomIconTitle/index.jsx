@@ -3,7 +3,7 @@ const withIconTitle = (IconComponent, title) => {
     return (
       <div className="flex gap-x-2">
         <IconComponent className="self-center" />
-        <h2 className="text-lg sm:text-xl font-bold">{title}</h2>
+        <h2 className="text-lg sm:text-xl font-bold self-center">{title}</h2>
       </div>
     );
   };

@@ -13,7 +13,8 @@ const VerticalStory = ({ items }) => {
           slug={item?.slug}
           status={item?.status}
           rate={item.rate}
-          totalView={item.totalView}
+          totalView={item?.totalView}
+          totalLike={item?.totalLike}
         />
       ))}
     </div>

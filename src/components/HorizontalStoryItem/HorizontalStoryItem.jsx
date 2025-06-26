@@ -102,7 +102,7 @@ const HorizontalStoryItem = ({
             )}
 
             <div
-              className={clsx("flex flex-row gap-x-2.5", {
+              className={clsx("flex gap-x-2.5", {
                 "max-h-3.5 self-center":
                   type !== "secondary" && type !== "primary",
                 "w-fit max-h-[22px] py-1": type === "secondary",
@@ -113,7 +113,7 @@ const HorizontalStoryItem = ({
                   <StarsRate rate={rate} lightBg={true} className={'h-6 font-bold'}/>
                 </div>
               )}
-              {viewVisible && <TotalView totalView={totalView || 0} textStyle="font-bold"/>}
+              {viewVisible && <TotalView totalView={totalView || 0} className="font-bold text-black" />}
               {statusVisible && <StoryStatus status={status} lightBg={true} />}
             </div>
 
