@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Router, { useRouter } from "next/router";
 import * as Api from "../../api/api";
 import Button from "../../components/Button/Button";
@@ -19,7 +19,7 @@ import PaginatedList from "./PaginatedList";
 import GlobalStore from "../../stores/GlobalStore";
 import PriceInfo from "./PriceInfo";
 import ShortLogin from "../Login/ShortLogin";
-import { Alert, Spin } from "antd";
+import { Alert, message, Spin } from "antd";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
 import BlogStore from "../../stores/BlogStore";
@@ -30,6 +30,9 @@ import HotStories from "../../components/HotStories";
 import ButtonViewAll from "../../components/ButtonViewAll";
 import { RatingCard } from "../../components/RatingCard";
 import { toJS } from "mobx";
+import { ratingsByStoryMock } from "../../data/testData";
+import {Swiper, SwiperSlide } from "swiper/react";
+import SlideRatings from "../../components/SliderRating";
 
 const TABS = [
   {
@@ -160,11 +163,12 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     getTopTrending,
     topNew,
     getTopNew,
-    ratingsByStory,
-    getRatingsByStory
+    // ratingsByStory,
+    // getRatingsByStory
   } = StoryStore;
   // const { storyDetailArticle, getBlogStoryDetail } = BlogStore;
   const [currentChapterDetail, setCurrentChapterDetail] = useState([]);
+  const [ratings, setRatings] = useState(ratingsByStoryMock.data.data);
 
   const [currentTab, setCurrentTab] = useState("CONTENT");
   const [chapters, setChapters] = useState([]);
@@ -172,6 +176,10 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
   const [affObj, setAffObj] = useState({});
 
   const route = useRouter();
+
+  const sliderRef = useRef(null);
+
+  console.log("RATINGSsssssssssssss: ", ratings)
 
   // useEffect(() => {
   //   if (route.query.storySlug && chapters && chapters?.length > 0) {
@@ -260,12 +268,9 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     getTopNew(0, 16);
   }, [route.query.storySlug]);
 
-  console.log("STORY DETAIL: ", storyDetail)
-  useEffect(() => {
-    getRatingsByStory({parentId: storyDetail?.slug})
-  }, [])
-
-  console.log("RATINGS BY STORY: ", toJS(ratingsByStory))
+  // useEffect(() => {
+  //   getRatingsByStory({parentId: storyDetail?.slug})
+  // }, [])
 
   const getPriceInfo = async () => {
     if (GlobalStore.isLoggedIn) {
@@ -422,6 +427,26 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
 
   const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥");
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥");
+
+  const loadMoreRatings = async () => {
+    // Giả sử bạn có logic tải thêm dữ liệu
+    const moreRatings = [
+      { id: 4, customer: { avatar: "url", name: "New User" }, rating: 5, message: "Z CZ CCxzc xz czxc zxc zxc zxc zxc" },
+      { id: 5, customer: { avatar: "url", name: "Another User" }, rating: 4, message: "Z CZ CCxzc xz czxc zxc zxc zxc zxc asd asd asd asd asd asd " },
+    ];
+
+    setRatings((prevRatings) => [...prevRatings, ...moreRatings]);
+    setLoading(false);
+  };
+
+  const handleScroll = () => {
+    const slider = sliderRef.current;
+
+    // Kiểm tra xem người dùng đã cuộn đến cuối hay chưa
+    if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10 && !loading) {
+      loadMoreRatings();
+    }
+  };
 
   return (
     <>
@@ -855,27 +880,42 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                   ))}
               </div>
 
+              <h2 className="text-lg font-bold mt-4 underline">Đánh giá của độc giả</h2>
 
-                <RatingCard />
+              {/* <div className="flex max-w-full overflow-x-auto gap-x-3">
+                {ratingsByStoryMock.data.data.map((item) => (
+                  <div className="flex-shrink-0" key={item.id}>
+                    <RatingCard avatar={item.customer?.avatar} displayName={item.customer?.name} {...item} />
+                  </div>
+                ))}
+              </div> */}
 
-              {(storyDetail?.slug === 'nu-phu-phao-hoi-luon-doi-treo-co-full' || 
-                storyDetail?.slug === 'thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang' ||
-                storyDetail?.slug === 'nguoi-yeu-online-la-anh-de' ||
-                storyDetail?.slug === 'thap-nien-70-mang-theo-khong-gian-ga-cho-chang-quan-nhan-mat-lanh-1' ||
-                storyDetail?.slug === 'xuyen-thanh-nu-chinh-phan-cong-bay-nam-chinh-dien-loan' ||
-                storyDetail?.slug === 'tan-the-thien-tai-ta-mang-theo-khong-gian-trong-trot'
-                ) && <div
-                className="flex justify-center my-2 cursor-pointer"
-                onClick={handlePremiumBannerClick}
-              >
-                <Image
-                  width={400}
-                  height={533}
-                  className="aspect-[3/4]"
-                  src="/images/pre-banner.png"
-                  loader={imageLoader}
-                />
-              </div>}
+              <SlideRatings ratings={ratingsByStoryMock.data.data} />
+        
+
+              {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
+                storyDetail?.slug ===
+                  "thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang" ||
+                storyDetail?.slug === "nguoi-yeu-online-la-anh-de" ||
+                storyDetail?.slug ===
+                  "thap-nien-70-mang-theo-khong-gian-ga-cho-chang-quan-nhan-mat-lanh-1" ||
+                storyDetail?.slug ===
+                  "xuyen-thanh-nu-chinh-phan-cong-bay-nam-chinh-dien-loan" ||
+                storyDetail?.slug ===
+                  "tan-the-thien-tai-ta-mang-theo-khong-gian-trong-trot") && (
+                <div
+                  className="flex justify-center my-2 cursor-pointer"
+                  onClick={handlePremiumBannerClick}
+                >
+                  <Image
+                    width={400}
+                    height={533}
+                    className="aspect-[3/4]"
+                    src="/images/pre-banner.png"
+                    loader={imageLoader}
+                  />
+                </div>
+              )}
 
               <h2 className="text-lg font-bold main-text mt-4 text-underline px-2">
                 Danh sách chương

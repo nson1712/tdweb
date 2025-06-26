@@ -851,9 +851,18 @@ class StoryStore {
         hideError: true,
       });
 
-      runInAction(() => {
-        this.ratingsByStory = result.data;
-      });
+      if (page === 0) {
+        runInAction(() => {
+          this.ratingsByStory = result?.data;
+        });
+      } else {
+        runInAction(() => {
+          this.ratingsByStory = {
+            ...result?.data,
+            data: [...this.ratingsByStory?.data, ...result.data?.data],
+          };
+        });
+      }
     } catch (e) {
       console.log(e);
     }

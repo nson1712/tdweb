@@ -40,7 +40,6 @@ export async function getServerSideProps(context) {
   try {
     // const result = await axios.get(`https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}`);
     // const resultBlog = await axios.get(`https://fsdfssf.truyenso1.xyz/data/article/story/${storySlug}`);
-    console.log("WINDOW: ", typeof window)
     // const result = await axios.get(
     // typeof window !== 'undefined' ? `https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}` : `http://10.8.22.205:8082/private/data/story/detail?slug=${storySlug}`)
     const result = await axios.get(`https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}`)
