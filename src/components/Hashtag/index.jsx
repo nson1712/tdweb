@@ -6,7 +6,14 @@ const Hashtag = ({ hashtag, index }) => {
   return (
     <>
       {hashtag?.image ?
-        <img src={hashtag?.image} style={{width: '18%', height: '18%'}}/>
+        <Link
+            href={`/hashtag/${hashtag?.name}`}
+            passHref
+          >
+            <a style={{width: '18%', height: '18%'}}>
+              <img src={hashtag?.image}/>
+            </a>
+          </Link>
         :
         <div className="font-medium text-xs sm:text-sm md:text-base rounded-2xl px-3 py-2 text-[#5C95C6] bg-gradient-to-r from-[#AACAF9] via-[#EAF1FB] to-[#D3E2F8] shadow-md shadow-blue-300 cursor-pointer hover:translate-y-[-5%] transition delay-100 hover:!text-[#5C95C6]">
           <Link

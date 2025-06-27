@@ -71,6 +71,10 @@ class StoryStore {
     });
   };
 
+  resetDataHastag = async () => {
+    this.hashtags = {};
+  }
+
   getStories = async (
     categoryCode,
     page = 1,
@@ -832,7 +836,7 @@ class StoryStore {
     }
   };
 
-  getHashtags = async (page = 1, size = 20) => {
+  getHashtags = async (page = 0, size = 20) => {
     try {
       const result = await Api.get({
         url: "data/private/hash-tag/popular",
@@ -843,7 +847,8 @@ class StoryStore {
         hideError: true,
       });
 
-      if (page === 1) {
+      console.log('Page: ', page);
+      if (page === 0) {
         runInAction(() => {
           this.hashtags = result?.data;
         });

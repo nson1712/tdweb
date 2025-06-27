@@ -7,7 +7,7 @@ import Link from "next/link";
 let timeout;
 const Hashtags = () => {
   const { hashtags, getHashtags } = StoryStore;
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState(0);
 
   useEffect(() => {
     getHashtags(page, 20);
