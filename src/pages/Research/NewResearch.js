@@ -106,7 +106,7 @@ const Research = () => {
     getTopViews();
     getTopNew();
     getTopFull();
-    getRatings(0, 4);
+    getRatings(0, 7);
     getHashtags(1, 40);
     // getcollections1();
     // getcollections2();
