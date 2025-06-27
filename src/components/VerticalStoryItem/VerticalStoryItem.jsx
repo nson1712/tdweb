@@ -32,8 +32,8 @@ const VerticalStoryItem = ({
               title={title}
             />
             <div className="w-full flex justify-center bg-black/60 mb-[5px] absolute bottom-0 max-w-full h-[15%] sm:h-[10%] ">
-              <div className="flex gap-x-1 sm:gap-4">
-                <div className="flex gap-x-0.5">
+              <div className="flex gap-x-4 sm:gap-x-10">
+                {/* <div className="flex gap-x-0.5">
                   <div className="h-3 w-3 flex self-center">
                     <Image
                       className="aspect-square"
@@ -47,7 +47,7 @@ const VerticalStoryItem = ({
                   <div className="text-white text-xs self-center">
                     {totalLike ?? 0}
                   </div>
-                </div>
+                </div> */}
 
                 <div className="flex gap-x-0.5">
                   <div className="h-3 w-3 flex self-center -mt-0.5">
@@ -61,14 +61,29 @@ const VerticalStoryItem = ({
                     />
                   </div>{" "}
                   <div className="text-white text-xs self-center">
-                    {(rate ?? 0).toFixed(1)}
+                    {Number.isInteger(rate ?? 0)
+                      ? rate ?? 0
+                      : (rate ?? 0).toFixed(1)}
                   </div>
                 </div>
                 <div className="self-center">
-                  <TotalView
-                  totalView={totalView || 0}
-                  className="text-white"
-                />
+                  {totalView < 500000 ? (
+                    <TotalView
+                      totalView={totalView || 0}
+                      className="text-white"
+                    />
+                  ) : (
+                    <div className="flex gap-x-1">
+                      <Image
+                        src="/images/icon-hot.png"
+                        width={12}
+                        height={12}
+                        alt="hot-icon"
+                        loader={imageLoader}
+                      />
+                      <div className="text-xs text-white">HOT</div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
