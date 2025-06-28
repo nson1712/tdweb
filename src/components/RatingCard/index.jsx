@@ -1,12 +1,12 @@
-"use client"
-import { CiCircleFilled, CommentOutlined, DotNetOutlined, LikeOutlined } from "@ant-design/icons";
+import { CommentOutlined, LikeFilled, LikeOutlined } from "@ant-design/icons";
 import { Divider, Rate } from "antd";
 import Image from "next/image";
 import { calculateCreatedTime } from "../../utils/utils";
-import { now } from "moment";
 import imageLoader from "../../loader/imageLoader";
 
 export const RatingCard = ({
+  id,
+  parentId,
   message,
   avatar,
   displayName,
@@ -14,6 +14,8 @@ export const RatingCard = ({
   totalLike,
   totalComment,
   createdAt,
+  isLike,
+  handleLikeUnlike,
 }) => {
   return (
     <div className="relative w-72 bg-white rounded-2xl mt-3 z-99">
@@ -23,33 +25,47 @@ export const RatingCard = ({
       <div className="flex gap-x-2 px-2 pt-3 pb-2">
         <div className="w-10 h-10">
           <Image
-          className="rounded-full"
-          width={40}
-          height={40}
-          // src={avatar ?? ""}
-          src={"https://media.truyenso1.xyz/story-coversau-khi-tai-sinh-toi-ket-hon-lai-lan-nua-1714721314538.jpg"}
-          alt="avatar"
-          loader={imageLoader}
-        />
+            className="rounded-full"
+            width={40}
+            height={40}
+            src={avatar ?? "/images/user.png"}
+            alt={displayName}
+            loader={imageLoader}
+          />
         </div>
-        <div className="flex-1 font-bold text-sm self-center line-clamp-2  break-words">{displayName}</div>
+        <div className="flex-1 font-bold text-sm self-center line-clamp-2  break-words">
+          {displayName}
+        </div>
       </div>
       <div className="h-16 overflow-y-auto break-words text-sm px-2">
         <div>{message}</div>
       </div>
 
-      <Divider className="my-3" style={{ width: '50%', margin: '0 auto' }} />
+      <Divider className="my-3" />
 
       <div className="flex pb-3 gap-x-2 justify-end self-center px-2">
         <div className="flex gap-x-1 text-xs text-gray-400/90">
-          <LikeOutlined className="self-center" /> <span className="self-center">{totalLike}</span>
+          <div
+            className="cursor-pointer hover:scale-110 transition-all duration-200 active:scale-90"
+            onClick={() => handleLikeUnlike(id, isLike, parentId)}
+          >
+            {isLike ? (
+              <LikeFilled className="self-center text-blue-500" />
+            ) : (
+              <LikeOutlined className="self-center" />
+            )}
+          </div>{" "}
+          <span className="self-center">{totalLike}</span>
         </div>
         <div className="flex gap-x-1 text-xs text-gray-400/90">
-          <CommentOutlined  />{" "}
+          <CommentOutlined />{" "}
           <span className="self-center">{totalComment}</span>
         </div>
         <div className="flex gap-x-1 text-xs">
-          <div className="bg-slate-500/50 rounded-full w-1 h-1 self-center"></div> <span className="text-gray-400">{calculateCreatedTime(createdAt)}</span>
+          <div className="bg-slate-500/50 rounded-full w-1 h-1 self-center"></div>{" "}
+          <span className="text-gray-400 font-light">
+            {calculateCreatedTime(createdAt)}
+          </span>
         </div>
       </div>
     </div>

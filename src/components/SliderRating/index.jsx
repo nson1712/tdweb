@@ -1,6 +1,8 @@
 import Slider from "react-slick";
-import classNames from "classnames";
 import { RatingCard } from "../RatingCard";
+import * as Api from "../../../src/api/api";
+import { observer } from "mobx-react";
+import StoryStore from "../../stores/StoryStore";
 
 const settings = {
   dots: false,
@@ -8,50 +10,48 @@ const settings = {
   arrows: false,
   speed: 500,
   autoPlay: true,
-  slidesToShow: 5.2,
-  slidesToScroll: 5,
+  slidesToShow: 2.1,
+  slidesToScroll: 2,
   responsive: [
     {
       breakpoint: 767,
       settings: {
-        slidesToShow: 2.2,
-        slidesToScroll: 2,
-        rows: 2,
-        slidesPerRow: 1,
+        slidesToShow: 1.4,
+        slidesToScroll: 1,
       },
     },
   ],
 };
 
-const SlideRatings = ({ ratings }) => {
-  return (
-    <div className="mb-[20px] mt-[20px]">
-      <div
-        className={classNames(
-          "flex items-center justify-between pb-[16px] px-[16px]"
-        )}
-      >
-        <h1 className="text-[20px] font-bold main-text leading-[20x] mb-0">
-          Bộ sưu tập hấp dẫn
-        </h1>
+const SlideRatings = ({ ratings, onEndReached }) => {
+  const handleAfterChange = (currentSlide) => {
+    // Nếu đang ở cuối (và có callback)
+    if (
+      currentSlide >= ratings.length - 4 &&
+      typeof onEndReached === "function"
+    ) {
+      onEndReached();
+    }
+  };
 
-        <a
-          className="link-color text-[14px] leading-[16px] font-semibold"
-          title={`Danh sách bộ sưu tập`}
-          href="/bo-suu-tap"
-        >
-          Xem thêm
-        </a>
-      </div>
-      <Slider className="flex" {...settings}>
-        {ratings?.map((item) => (
-          <div key={item.id} clas>
-            <RatingCard {...item} />
-          </div>
-        ))}
-      </Slider>
-    </div>
+  const handleLikeUnlike = async (id, isLike, parentId) => {
+    await StoryStore.handleLikeUnlike(id, isLike, parentId);
+  };
+
+  return (
+    <Slider className="flex" {...settings} afterChange={handleAfterChange}>
+      {ratings?.map((item) => (
+        <div key={item.id} className="pl-3">
+          <RatingCard
+            avatar={item.customer?.avatar}
+            displayName={item.customer?.name}
+            {...item}
+            handleLikeUnlike={handleLikeUnlike}
+          />
+        </div>
+      ))}
+    </Slider>
   );
 };
 
-export default SlideRatings;
+export default observer(SlideRatings);

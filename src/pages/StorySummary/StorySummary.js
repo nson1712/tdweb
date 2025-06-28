@@ -28,10 +28,7 @@ import TrendingIcon from "../../../public/icons/TrendingIcon";
 import NewIcon from "../../../public/icons/NewIcon";
 import HotStories from "../../components/HotStories";
 import ButtonViewAll from "../../components/ButtonViewAll";
-import { RatingCard } from "../../components/RatingCard";
 import { toJS } from "mobx";
-import { ratingsByStoryMock } from "../../data/testData";
-import {Swiper, SwiperSlide } from "swiper/react";
 import SlideRatings from "../../components/SliderRating";
 
 const TABS = [
@@ -142,6 +139,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [ratingsPage, setRatingsPage] = useState(0);
   const {
     // storyDetail,
     // getStoryDetail,
@@ -163,12 +161,11 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     getTopTrending,
     topNew,
     getTopNew,
-    // ratingsByStory,
-    // getRatingsByStory
+    ratingsByStory,
+    getRatingsByStory,
   } = StoryStore;
   // const { storyDetailArticle, getBlogStoryDetail } = BlogStore;
   const [currentChapterDetail, setCurrentChapterDetail] = useState([]);
-  const [ratings, setRatings] = useState(ratingsByStoryMock.data.data);
 
   const [currentTab, setCurrentTab] = useState("CONTENT");
   const [chapters, setChapters] = useState([]);
@@ -176,10 +173,6 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
   const [affObj, setAffObj] = useState({});
 
   const route = useRouter();
-
-  const sliderRef = useRef(null);
-
-  console.log("RATINGSsssssssssssss: ", ratings)
 
   // useEffect(() => {
   //   if (route.query.storySlug && chapters && chapters?.length > 0) {
@@ -268,9 +261,20 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     getTopNew(0, 16);
   }, [route.query.storySlug]);
 
-  // useEffect(() => {
-  //   getRatingsByStory({parentId: storyDetail?.slug})
-  // }, [])
+  useEffect(() => {
+    if (storyDetail?.slug) {
+      getRatingsByStory({ parentId: storyDetail.slug, page: 0 });
+    }
+  }, [storyDetail?.slug]);
+
+  const handleLoadMoreRatings = async () => {
+    const nextPage = ratingsPage + 1;
+    await getRatingsByStory({
+      page: nextPage,
+      parentId: storyDetail?.slug,
+    });
+    setRatingsPage(nextPage);
+  };
 
   const getPriceInfo = async () => {
     if (GlobalStore.isLoggedIn) {
@@ -427,26 +431,6 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
 
   const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥");
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥");
-
-  const loadMoreRatings = async () => {
-    // Giả sử bạn có logic tải thêm dữ liệu
-    const moreRatings = [
-      { id: 4, customer: { avatar: "url", name: "New User" }, rating: 5, message: "Z CZ CCxzc xz czxc zxc zxc zxc zxc" },
-      { id: 5, customer: { avatar: "url", name: "Another User" }, rating: 4, message: "Z CZ CCxzc xz czxc zxc zxc zxc zxc asd asd asd asd asd asd " },
-    ];
-
-    setRatings((prevRatings) => [...prevRatings, ...moreRatings]);
-    setLoading(false);
-  };
-
-  const handleScroll = () => {
-    const slider = sliderRef.current;
-
-    // Kiểm tra xem người dùng đã cuộn đến cuối hay chưa
-    if (slider.scrollLeft + slider.clientWidth >= slider.scrollWidth - 10 && !loading) {
-      loadMoreRatings();
-    }
-  };
 
   return (
     <>
@@ -880,18 +864,19 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                   ))}
               </div>
 
-              <h2 className="text-lg font-bold mt-4 underline">Đánh giá của độc giả</h2>
-
-              {/* <div className="flex max-w-full overflow-x-auto gap-x-3">
-                {ratingsByStoryMock.data.data.map((item) => (
-                  <div className="flex-shrink-0" key={item.id}>
-                    <RatingCard avatar={item.customer?.avatar} displayName={item.customer?.name} {...item} />
+              {ratingsByStory.data?.length !== 0 && (
+                <>
+                  <h2 className="text-lg font-bold mt-4 underline pl-3">
+                    Đánh giá của độc giả
+                  </h2>
+                  <div className="bg-[#F5F8FF] py-2">
+                    <SlideRatings
+                      ratings={ratingsByStory?.data}
+                      onEndReached={handleLoadMoreRatings}
+                    />
                   </div>
-                ))}
-              </div> */}
-
-              <SlideRatings ratings={ratingsByStoryMock.data.data} />
-        
+                </>
+              )}
 
               {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
                 storyDetail?.slug ===

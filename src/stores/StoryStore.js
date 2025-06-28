@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction, toJS } from "mobx";
 import GlobalStore from "./GlobalStore";
 import * as Api from "../api/api";
 import { decryptData } from "../utils/utils";
@@ -50,7 +50,9 @@ class StoryStore {
 
   ratings = {};
 
-  ratingsByStory = {}
+  ratingsByStory = {};
+
+  comments = {};
 
   hashtags = {};
 
@@ -118,7 +120,7 @@ class StoryStore {
     sortDirection = "DESC",
     chapterMin,
     chapterMax,
-    status
+    status,
   }) => {
     try {
       const result = await Api.get({
@@ -834,19 +836,15 @@ class StoryStore {
     }
   };
 
-  getRatingsByStory = async ({
-    page = 0, 
-    size = 20,
-    parentId,
-  }) => {
+  getRatingsByStory = async ({ page, size = 20, parentId, isLoggedIn }) => {
     try {
       const result = await Api.get({
-        url: "api/mobile/rating/list",
+        url: isLoggedIn ? "/data/web/rating/list" : "/data/web/rating/anonymous/list",
         params: {
           page,
           size,
           type: "STORY",
-          parentId: parentId
+          parentId: parentId,
         },
         hideError: true,
       });
@@ -911,9 +909,69 @@ class StoryStore {
       runInAction(() => {
         this.storiesByHashtag = result?.data;
       });
-      
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  handleLikeUnlike = async (id, isLike, parentId) => {
+    try {
+      const result = await Api.get({
+        url: "data/private/data/story/search-by-hashtag",
+        params: {
+          hashtag,
+          page,
+          size,
+        },
+        hideError: true,
+      });
+
+      runInAction(() => {
+        this.storiesByHashtag = result?.data;
+      });
+    } catch (e) {
+      console.log(e);
+    }
+    try {
+      const url = isLike
+        ? `/data/api/mobile/rating/${id}/unlike`
+        : `/data/api/mobile/rating/${id}/like`;
+
+      await Api.post({
+        url: url,
+        data: {
+          id: id,
+        },
+      });
+      // // After successfully liking/unliking, refetch the ratings data
+      await this.getRatingsByStory({
+        page: 0,
+        parentId: parentId,
+      });
+    } catch (error) {
+      console.error("Error while toggling like:", error);
+    }
+  };
+
+  getComments = async (page, size, parentId, isLoggedIn) => {
+    try {
+      const result = await Api.get({
+        url: isLoggedIn
+          ? "/data/web/comment/list"
+          : "/data/web/comment/anonymous/list",
+        params: {
+          type: "CHAPTER",
+          page: page,
+          size: size,
+          parentId: parentId,
+        },
+      });
+
+      runInAction(() => {
+        this.comments = result.data;
+      });
+    } catch (e) {
+      console.log("Error while fetching comments: ", e);
     }
   };
 }

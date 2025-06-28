@@ -7,7 +7,11 @@ import { toast } from "react-toastify";
 import Chapters from "./Chapters";
 // import MobileShare from "../StorySummary/MobileShare";
 // import LaunchCountdown from "../../components/LaunchCountdown";
-import { formatStringToNumber } from "../../utils/utils";
+import {
+  formatStringToNumber,
+  getContentAfterParenthesis,
+  getContentInsideBrackets,
+} from "../../utils/utils";
 import ModalComponent from "../../components/Modal/Modal";
 import ModalWithoutCloseButton from "../../components/Modal/ModalWithoutCloseButton";
 // import ChatSupportAutoClose from "../../components/Button/ChatSupportAutoClose";
@@ -19,7 +23,7 @@ import OpenInAppInfo from "./OpenInAppInfo";
 import OpenChapterInfo from "./OpenChapterInfo";
 import ContentDisplay from "./ContentDisplay";
 import Link from "next/link";
-import { Modal, Spin, Table, Watermark } from "antd";
+import { Avatar, Modal, Spin, Table, Watermark, Typography } from "antd";
 import { LeftOutlined, MenuOutlined, RightOutlined } from "@ant-design/icons";
 import { useStoryChapterTableOptions } from "../../hook/useTableOption";
 import HotStories from "../../components/HotStories";
@@ -29,6 +33,11 @@ import TrendingIcon from "../../../public/icons/TrendingIcon";
 import NewIcon from "../../../public/icons/NewIcon";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
+import { toJS } from "mobx";
+import Comment from "../../components/CommentItem";
+// import TextArea from "antd/es/input/TextArea";
+
+const { Paragraph } = Typography;
 
 const StoryDetail = ({ chapterTitle, storyTitle }) => {
   // const [showBubble, setShowBubble] = useState("up");
@@ -47,6 +56,8 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     getTopNew,
     topTrending,
     getTopTrending,
+    comments,
+    getComments,
   } = StoryStore;
 
   const [showChapter, setShowChapter] = useState(false);
@@ -55,8 +66,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
   const [chapterContents, setChapterContents] = useState([]);
   const [currentChapter, setCurrentChapter] = useState({});
-  const [currentChapterDetail, setCurrentChapterDetail] = useState({});
-  console.log("CURRENT CHAPTER DETAIL: ", currentChapterDetail);
   const [loggedIn, setLoggedIn] = useState(false);
   const [needOpenChapter, setNeedOpenChapter] = useState(false);
   const [allowOpenWeb, setAllowOpenWeb] = useState(false);
@@ -111,7 +120,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       if (prevChapter) {
         prevChapter = prevChapter.split("_")[1];
       }
-      setCurrentChapterDetail(result);
       setCurrentChapter({
         ...result,
         next: nextChapter,
@@ -220,6 +228,13 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     getTopNew(0, 16);
     getTopTrending(0, 16);
   }, []);
+
+  useEffect(() => {
+    getComments(0, 3, currentChapter?.id, GlobalStore.isLoggedIn);
+  }, [currentChapter?.id]);
+
+  console.log("CURRENT CHAP: ", currentChapter)
+  console.log("IS LOGGED IN: ", GlobalStore.isLoggedIn)
 
   // const [currentChappter, chapterIndex] = useMemo(() => {
 
@@ -339,7 +354,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
   const handleOpenChapter = async () => {
     try {
-      if (currentChapterDetail?.price > availableCash?.balance) {
+      if (currentChapter?.price > availableCash?.balance) {
         setShowModalNotEnoughDiamond(true);
         return;
       }
@@ -707,9 +722,9 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                           />
                         </GoogleReCaptchaProvider>
                       </div>
-                    ) : currentChapterDetail.price &&
-                      currentChapterDetail.order > 50 &&
-                      currentChapterDetail.order % 10 <= 5 ? (
+                    ) : currentChapter.price &&
+                      currentChapter.order > 50 &&
+                      currentChapter.order % 10 <= 5 ? (
                       <>
                         <Watermark
                           gap={[30, 0]}
@@ -829,7 +844,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                 ) : (
                   <OpenInAppInfo
                     handleSupport={handleSupportNotAllow}
-                    chapterDetail={currentChapterDetail}
+                    chapterDetail={currentChapter}
                     storyDetail={storyDetail}
                     handleOpenChapter={handleOpenChapter}
                   />
@@ -837,8 +852,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
               </div>
             </div>
           </div>
-
-          
 
           <div className="flex justify-between pt-2 px-2">
             <Link
@@ -875,24 +888,57 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             </Link>
           </div>
 
-              {(storyDetail?.slug === 'nu-phu-phao-hoi-luon-doi-treo-co-full' || 
-                storyDetail?.slug === 'thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang' ||
-                storyDetail?.slug === 'nguoi-yeu-online-la-anh-de' ||
-                storyDetail?.slug === 'thap-nien-70-mang-theo-khong-gian-ga-cho-chang-quan-nhan-mat-lanh-1' ||
-                storyDetail?.slug === 'xuyen-thanh-nu-chinh-phan-cong-bay-nam-chinh-dien-loan' ||
-                storyDetail?.slug === 'tan-the-thien-tai-ta-mang-theo-khong-gian-trong-trot'
-                ) && <div
-            className="flex justify-center my-5 cursor-pointer"
-            onClick={handlePremiumBannerClick}
-          >
-            <Image
-              width={400}
-              height={533}
-              className="aspect-[3/4]"
-              src="/images/pre-banner.png"
-              loader={imageLoader}
-            />
-          </div>}
+          <div className="px-3 space-y-2 mt-4">
+            <div className="font-bold rounded-t-2xl bg-[#F5F8FF] text-black p-2.5">Bình luận</div>
+
+            {/* <TextArea placeholder="Nhập bình luận.." /> */}
+          </div>
+
+          {comments?.data?.map((item, index) => (
+            <Comment
+              author={item.author?.name}
+              avatar={item.author?.avatar}
+              content={item?.message}
+              timestamp={item?.createdAt}
+              totalLike={item?.totalLike}
+              // onReply={() => handleReply(1)}
+            >
+              {item.children.map((childItem) => (
+                <Comment
+                  key={childItem.id}
+                  author={childItem.author?.name}
+                  avatar={childItem.author?.avatar}
+                  content={childItem?.message}
+                  timestamp={childItem?.createdAt}
+                  totalLike={childItem?.totalLike}
+                />
+              ))}
+            </Comment>
+          ))}
+
+          {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
+            storyDetail?.slug ===
+              "thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang" ||
+            storyDetail?.slug === "nguoi-yeu-online-la-anh-de" ||
+            storyDetail?.slug ===
+              "thap-nien-70-mang-theo-khong-gian-ga-cho-chang-quan-nhan-mat-lanh-1" ||
+            storyDetail?.slug ===
+              "xuyen-thanh-nu-chinh-phan-cong-bay-nam-chinh-dien-loan" ||
+            storyDetail?.slug ===
+              "tan-the-thien-tai-ta-mang-theo-khong-gian-trong-trot") && (
+            <div
+              className="flex justify-center my-5 cursor-pointer"
+              onClick={handlePremiumBannerClick}
+            >
+              <Image
+                width={400}
+                height={533}
+                className="aspect-[3/4]"
+                src="/images/pre-banner.png"
+                loader={imageLoader}
+              />
+            </div>
+          )}
 
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-4">
             <TopTrendingTitle />
