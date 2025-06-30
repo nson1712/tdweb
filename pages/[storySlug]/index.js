@@ -62,17 +62,24 @@ export async function getServerSideProps(context) {
   try {
     // const result = await axios.get(`https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}`);
     // const resultBlog = await axios.get(`https://fsdfssf.truyenso1.xyz/data/article/story/${storySlug}`);
-    // const result = await axios.get(
-    // typeof window !== 'undefined' ? `https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}` : `http://10.8.22.205:8082/private/data/story/detail?slug=${storySlug}`)
     const result = await axios.get(
-      `https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}`
+      typeof window !== "undefined"
+        ? `https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}`
+        : `http://10.8.22.205:8082/private/data/story/detail?slug=${storySlug}`
     );
+    // const result = await axios.get(
+    //   `https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}`
+    // );
     // typeof window !== 'undefined' ? `https://uatapi.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}` : `http://10.8.22.250:18111/data/private/data/story/detail?slug=${storySlug}`)
     // console.log('Result: ', result);
-    // const resultBlog = await axios.get(typeof window !== 'undefined' ? `https://fsdfssf.truyenso1.xyz/data/article/story/${storySlug}` : `http://10.8.22.205:8082/article/story/${storySlug}`);
     const resultBlog = await axios.get(
-      `https://fsdfssf.truyenso1.xyz/data/article/story/${storySlug}`
+      typeof window !== "undefined"
+        ? `https://fsdfssf.truyenso1.xyz/data/article/story/${storySlug}`
+        : `http://10.8.22.205:8082/article/story/${storySlug}`
     );
+    // const resultBlog = await axios.get(
+    //   `https://fsdfssf.truyenso1.xyz/data/article/story/${storySlug}`
+    // );
 
     return {
       props: {

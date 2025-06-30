@@ -3,6 +3,7 @@ import { Divider, Rate } from "antd";
 import Image from "next/image";
 import { calculateCreatedTime } from "../../utils/utils";
 import imageLoader from "../../loader/imageLoader";
+import GlobalStore from "../../stores/GlobalStore";
 
 export const RatingCard = ({
   id,
@@ -16,6 +17,7 @@ export const RatingCard = ({
   createdAt,
   isLike,
   handleLikeUnlike,
+  handleForceLogin
 }) => {
   return (
     <div className="relative w-72 bg-white rounded-2xl mt-3 z-99">
@@ -47,7 +49,8 @@ export const RatingCard = ({
         <div className="flex gap-x-1 text-xs text-gray-400/90">
           <div
             className="cursor-pointer hover:scale-110 transition-all duration-200 active:scale-90"
-            onClick={() => handleLikeUnlike(id, isLike, parentId)}
+            onClick={() => GlobalStore.isLoggedIn ? handleLikeUnlike(id, isLike, parentId) : handleForceLogin()}
+            // onClick={() => handleLikeUnlike(id, isLike, parentId)}
           >
             {isLike ? (
               <LikeFilled className="self-center text-blue-500" />

@@ -864,7 +864,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                   ))}
               </div>
 
-              {ratingsByStory.data?.length !== 0 && (
+              {ratingsByStory?.data?.length !== 0 && (
                 <>
                   <h2 className="text-lg font-bold mt-4 underline pl-3">
                     Đánh giá của độc giả

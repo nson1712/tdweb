@@ -1,8 +1,8 @@
 import Slider from "react-slick";
 import { RatingCard } from "../RatingCard";
-import * as Api from "../../../src/api/api";
 import { observer } from "mobx-react";
 import StoryStore from "../../stores/StoryStore";
+import { useRouter } from "next/router";
 
 const settings = {
   dots: false,
@@ -24,10 +24,11 @@ const settings = {
 };
 
 const SlideRatings = ({ ratings, onEndReached }) => {
+  const router = useRouter();
   const handleAfterChange = (currentSlide) => {
     // Nếu đang ở cuối (và có callback)
     if (
-      currentSlide >= ratings.length - 4 &&
+      currentSlide >= ratings?.length - 4 &&
       typeof onEndReached === "function"
     ) {
       onEndReached();
@@ -38,15 +39,19 @@ const SlideRatings = ({ ratings, onEndReached }) => {
     await StoryStore.handleLikeUnlike(id, isLike, parentId);
   };
 
+  const handleForceLogin = () => {
+    router.push("/dang-nhap");
+  };
   return (
     <Slider className="flex" {...settings} afterChange={handleAfterChange}>
       {ratings?.map((item) => (
         <div key={item.id} className="pl-3">
           <RatingCard
+            {...item}
             avatar={item.customer?.avatar}
             displayName={item.customer?.name}
-            {...item}
             handleLikeUnlike={handleLikeUnlike}
+            handleForceLogin={handleForceLogin}
           />
         </div>
       ))}

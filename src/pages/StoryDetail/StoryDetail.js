@@ -7,11 +7,7 @@ import { toast } from "react-toastify";
 import Chapters from "./Chapters";
 // import MobileShare from "../StorySummary/MobileShare";
 // import LaunchCountdown from "../../components/LaunchCountdown";
-import {
-  formatStringToNumber,
-  getContentAfterParenthesis,
-  getContentInsideBrackets,
-} from "../../utils/utils";
+import { formatStringToNumber } from "../../utils/utils";
 import ModalComponent from "../../components/Modal/Modal";
 import ModalWithoutCloseButton from "../../components/Modal/ModalWithoutCloseButton";
 // import ChatSupportAutoClose from "../../components/Button/ChatSupportAutoClose";
@@ -23,7 +19,7 @@ import OpenInAppInfo from "./OpenInAppInfo";
 import OpenChapterInfo from "./OpenChapterInfo";
 import ContentDisplay from "./ContentDisplay";
 import Link from "next/link";
-import { Avatar, Modal, Spin, Table, Watermark, Typography } from "antd";
+import { Modal, Spin, Table, Watermark, Button } from "antd";
 import { LeftOutlined, MenuOutlined, RightOutlined } from "@ant-design/icons";
 import { useStoryChapterTableOptions } from "../../hook/useTableOption";
 import HotStories from "../../components/HotStories";
@@ -33,11 +29,8 @@ import TrendingIcon from "../../../public/icons/TrendingIcon";
 import NewIcon from "../../../public/icons/NewIcon";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
-import { toJS } from "mobx";
 import Comment from "../../components/CommentItem";
-// import TextArea from "antd/es/input/TextArea";
-
-const { Paragraph } = Typography;
+import { CommentBox } from "../../components/CommentBox";
 
 const StoryDetail = ({ chapterTitle, storyTitle }) => {
   // const [showBubble, setShowBubble] = useState("up");
@@ -57,13 +50,12 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     topTrending,
     getTopTrending,
     comments,
+    modalComments,
     getComments,
   } = StoryStore;
-
+  const MODAL_PAGE_SIZE = 10;
   const [showChapter, setShowChapter] = useState(false);
-
   const route = useRouter();
-
   const [chapterContents, setChapterContents] = useState([]);
   const [currentChapter, setCurrentChapter] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
@@ -87,7 +79,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [filter, setFilter] = useState("oldest");
   const [showDepositSuccessWarning, setShowDepositSuccessWarning] =
     useState(false);
-
+  const [openCommentModal, setOpenCommentModal] = useState(false);
   const { storyChapterColumns } = useStoryChapterTableOptions();
 
   const fetchData = async () => {
@@ -170,7 +162,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       return;
     }
     try {
-      // console.log('storyDetail: ', detailStory);
       const result = await Api.get({
         url: "/customer/customer/availableCash",
         params: {
@@ -232,9 +223,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   useEffect(() => {
     getComments(0, 3, currentChapter?.id, GlobalStore.isLoggedIn);
   }, [currentChapter?.id]);
-
-  console.log("CURRENT CHAP: ", currentChapter)
-  console.log("IS LOGGED IN: ", GlobalStore.isLoggedIn)
 
   // const [currentChappter, chapterIndex] = useMemo(() => {
 
@@ -488,29 +476,14 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥");
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥");
 
-  // const svg = `
-  // <svg xmlns="http://www.w3.org/2000/svg" width="820" height="90">
-  //   <defs>
-  //     <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="0%">
-  //       <stop offset="0%" stop-color="#09B2E5" stop-opacity="0.5"/>
-  //       <stop offset="100%" stop-color="#005993" stop-opacity="0.5"/>
-  //     </linearGradient>
-  //   </defs>
-  //   <text
-  //     style="font-family: 'Abel', sans-serif"
-  //     x="80%" y="40%"
-  //     text-anchor="middle"
-  //     dominant-baseline="middle"
-  //     font-size="60"
-  //     fill="url(#grad)"
-  //   >
-  //     TOIDOC.VN
-  //   </text>
-  // </svg>`;
-
-  // // 2. Base64‑encode it into a data URI:
-  // const base64 = Buffer.from(svg).toString("base64");
-  // const gradientImage = `data:image/svg+xml;base64,${base64}`;
+  const handleOpenCommentModal = async () => {
+    if (!GlobalStore.isLoggedIn) {
+      return Router.push("/dang-nhap");
+    }
+    // Lần đầu load modal: page=0, size=10
+    await getComments(0, MODAL_PAGE_SIZE, currentChapter.id, true, true);
+    setOpenCommentModal(true);
+  };
 
   return (
     <>
@@ -889,32 +862,64 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           </div>
 
           <div className="px-3 space-y-2 mt-4">
-            <div className="font-bold rounded-t-2xl bg-[#F5F8FF] text-black p-2.5">Bình luận</div>
+            <div className="font-bold rounded-t-2xl bg-[#F5F8FF] text-black p-2.5">
+              Bình luận
+            </div>
 
             {/* <TextArea placeholder="Nhập bình luận.." /> */}
           </div>
 
-          {comments?.data?.map((item, index) => (
-            <Comment
-              author={item.author?.name}
-              avatar={item.author?.avatar}
-              content={item?.message}
-              timestamp={item?.createdAt}
-              totalLike={item?.totalLike}
-              // onReply={() => handleReply(1)}
-            >
-              {item.children.map((childItem) => (
-                <Comment
-                  key={childItem.id}
-                  author={childItem.author?.name}
-                  avatar={childItem.author?.avatar}
-                  content={childItem?.message}
-                  timestamp={childItem?.createdAt}
-                  totalLike={childItem?.totalLike}
-                />
-              ))}
-            </Comment>
-          ))}
+          {comments?.data?.map((item) => {
+            const hasMoreChildren = item.children.length > 2;
+            return (
+              <Comment
+                key={item?.id}
+                author={item.author?.name}
+                avatar={item.author?.avatar}
+                content={item?.message}
+                timestamp={item?.createdAt}
+                totalLike={item?.totalLike}
+                // onReply={() => {
+                //   setSelectedChildItem(null);
+                //   setSelectedItem(item);
+                // }}
+              >
+                {item.children.slice(0, 2).map((childItem, index) => (
+                  <div key={childItem.id}>
+                    <Comment
+                      author={childItem.author?.name}
+                      avatar={childItem.author?.avatar}
+                      content={childItem?.message}
+                      timestamp={childItem?.createdAt}
+                      totalLike={childItem?.totalLike}
+                      onReply={() => {
+                        setSelectedItem(null);
+                        setSelectedChildItem(childItem);
+                      }}
+                    />
+                    {index === 1 && hasMoreChildren && (
+                      <Button
+                        type="text"
+                        size="small"
+                        className="text-blue-500 ml-8"
+                        onClick={handleOpenCommentModal}
+                      >
+                        Xem thêm {item.children.length - 2} bình luận
+                      </Button>
+                    )}
+                  </div>
+                ))}
+              </Comment>
+            );
+          })}
+
+          <Button
+            type="text"
+            className="text-blue-500 flex mx-auto"
+            onClick={handleOpenCommentModal}
+          >
+            Xem tất cả bình luận
+          </Button>
 
           {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
             storyDetail?.slug ===
@@ -1101,7 +1106,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       )}
       {/*<MobileShare showBubble={showBubble} setShowBubble={setShowBubble}/>*/}
       {/*<ChatSupportAutoClose/>*/}
-
       <Modal
         title={
           <div>
@@ -1162,6 +1166,17 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           />
         </div>
       </Modal>
+
+      <CommentBox
+        open={openCommentModal}
+        onCancel={() => setOpenCommentModal(false)}
+        parentId={currentChapter?.id}
+        data={modalComments?.data ?? []}
+        title="Bình luận"
+        isLoggedIn={GlobalStore.isLoggedIn}
+        pageSize={MODAL_PAGE_SIZE}
+      />
+
       <Spin spinning={loadingChapterDetail} />
     </>
   );

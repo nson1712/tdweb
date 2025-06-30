@@ -54,6 +54,8 @@ class StoryStore {
 
   comments = {};
 
+  modalComments = {}; 
+
   hashtags = {};
 
   stories = {};
@@ -916,26 +918,9 @@ class StoryStore {
 
   handleLikeUnlike = async (id, isLike, parentId) => {
     try {
-      const result = await Api.get({
-        url: "data/private/data/story/search-by-hashtag",
-        params: {
-          hashtag,
-          page,
-          size,
-        },
-        hideError: true,
-      });
-
-      runInAction(() => {
-        this.storiesByHashtag = result?.data;
-      });
-    } catch (e) {
-      console.log(e);
-    }
-    try {
       const url = isLike
-        ? `/data/api/mobile/rating/${id}/unlike`
-        : `/data/api/mobile/rating/${id}/like`;
+        ? `/data/web/rating/${id}/unlike`
+        : `/data/web/rating/${id}/like`;
 
       await Api.post({
         url: url,
@@ -943,7 +928,7 @@ class StoryStore {
           id: id,
         },
       });
-      // // After successfully liking/unliking, refetch the ratings data
+
       await this.getRatingsByStory({
         page: 0,
         parentId: parentId,
@@ -953,7 +938,7 @@ class StoryStore {
     }
   };
 
-  getComments = async (page, size, parentId, isLoggedIn) => {
+  getComments = async (page, size, parentId, isLoggedIn, isModal = false) => {
     try {
       const result = await Api.get({
         url: isLoggedIn
@@ -961,14 +946,30 @@ class StoryStore {
           : "/data/web/comment/anonymous/list",
         params: {
           type: "CHAPTER",
-          page: page,
-          size: size,
-          parentId: parentId,
+          page,
+          size,
+          parentId,
         },
       });
 
       runInAction(() => {
-        this.comments = result.data;
+        if (!isModal) {
+          // inline
+          this.comments = result.data;
+        } else {
+          // modal
+          if (page === 0) {
+            this.modalComments = result.data;
+          } else {
+            this.modalComments = {
+              ...result.data,
+              data: [
+                ...this.modalComments.data,
+                ...result.data.data,
+              ],
+            };
+          }
+        }
       });
     } catch (e) {
       console.log("Error while fetching comments: ", e);
