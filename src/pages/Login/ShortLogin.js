@@ -42,9 +42,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         type: "success",
         theme: "colored",
       });
-      if (navigate !== "") {
-        Router.push(navigate);
-      }
+      Router.back();
     },
   });
 
@@ -92,9 +90,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         type: "success",
         theme: "colored",
       });
-      if (navigate !== "") {
-        Router.push(navigate);
-      }
+      Router.back();
     } catch (error) {
       console.error("Login failed:", error);
     }
@@ -172,15 +168,19 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
             style={{ margin: "30px 10px", borderTop: "1px solid #fff" }}
           ></div>
           <div>
-            <a href="https://toidoc.onelink.me/59bO/d42503wz" target='_blank' rel="nofollow">
-                <Image
-                  loader={imageLoader}
-                  className="rounded-xl self-center"
-                  width={500}
-                  height={400}
-                  src={"/images/intro-app.png"}
-                  priority
-                />
+            <a
+              href="https://toidoc.onelink.me/59bO/d42503wz"
+              target="_blank"
+              rel="nofollow"
+            >
+              <Image
+                loader={imageLoader}
+                className="rounded-xl self-center"
+                width={500}
+                height={400}
+                src={"/images/intro-app.png"}
+                priority
+              />
             </a>
           </div>
           <p className="white-text px-[10px] ">
@@ -228,14 +228,23 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
               className="text-xl sm:text-2xl mt-4"
               message={
                 <div>
-                  Vui lòng kiểm tra lại trình duyệt bạn đang sử dụng!. Nếu bạn sử
-                  dụng{" "}
+                  Vui lòng kiểm tra lại trình duyệt bạn đang sử dụng!. Nếu bạn
+                  sử dụng{" "}
                   <span className="font-bold text-red-500 italic">Cốc Cốc</span>{" "}
                   hoặc{" "}
                   <span className="font-bold text-red-500 italic">Firefox</span>
                   , vui lòng chuyển sang{" "}
-                  <span className="font-bold text-red-500 italic">Chrome. </span>
-                  Nếu bạn đang sử dụng Chrome mà vẫn không đăng nhập được, vui lòng <span className="text-blue-500 font-bold cursor-pointer hover:text-blue-400" onClick={handleSupport}>liên hệ với Toidoc!</span>
+                  <span className="font-bold text-red-500 italic">
+                    Chrome.{" "}
+                  </span>
+                  Nếu bạn đang sử dụng Chrome mà vẫn không đăng nhập được, vui
+                  lòng{" "}
+                  <span
+                    className="text-blue-500 font-bold cursor-pointer hover:text-blue-400"
+                    onClick={handleSupport}
+                  >
+                    liên hệ với Toidoc!
+                  </span>
                 </div>
               }
             />

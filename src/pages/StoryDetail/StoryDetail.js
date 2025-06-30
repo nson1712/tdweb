@@ -19,7 +19,7 @@ import OpenInAppInfo from "./OpenInAppInfo";
 import OpenChapterInfo from "./OpenChapterInfo";
 import ContentDisplay from "./ContentDisplay";
 import Link from "next/link";
-import { Modal, Spin, Table, Watermark } from "antd";
+import { Modal, Spin, Table, Watermark, Button } from "antd";
 import { LeftOutlined, MenuOutlined, RightOutlined } from "@ant-design/icons";
 import { useStoryChapterTableOptions } from "../../hook/useTableOption";
 import HotStories from "../../components/HotStories";
@@ -29,6 +29,8 @@ import TrendingIcon from "../../../public/icons/TrendingIcon";
 import NewIcon from "../../../public/icons/NewIcon";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
+import Comment from "../../components/CommentItem";
+import { CommentBox } from "../../components/CommentBox";
 
 const StoryDetail = ({ chapterTitle, storyTitle }) => {
   // const [showBubble, setShowBubble] = useState("up");
@@ -47,15 +49,15 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     getTopNew,
     topTrending,
     getTopTrending,
+    comments,
+    modalComments,
+    getComments,
   } = StoryStore;
-
+  const MODAL_PAGE_SIZE = 10;
   const [showChapter, setShowChapter] = useState(false);
-
   const route = useRouter();
-
   const [chapterContents, setChapterContents] = useState([]);
   const [currentChapter, setCurrentChapter] = useState({});
-  const [currentChapterDetail, setCurrentChapterDetail] = useState({});
   const [loggedIn, setLoggedIn] = useState(false);
   const [needOpenChapter, setNeedOpenChapter] = useState(false);
   const [allowOpenWeb, setAllowOpenWeb] = useState(false);
@@ -77,7 +79,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [filter, setFilter] = useState("oldest");
   const [showDepositSuccessWarning, setShowDepositSuccessWarning] =
     useState(false);
-
+  const [openCommentModal, setOpenCommentModal] = useState(false);
   const { storyChapterColumns } = useStoryChapterTableOptions();
 
   const fetchData = async () => {
@@ -110,7 +112,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       if (prevChapter) {
         prevChapter = prevChapter.split("_")[1];
       }
-      setCurrentChapterDetail(result);
       setCurrentChapter({
         ...result,
         next: nextChapter,
@@ -161,7 +162,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       return;
     }
     try {
-      // console.log('storyDetail: ', detailStory);
       const result = await Api.get({
         url: "/customer/customer/availableCash",
         params: {
@@ -219,6 +219,10 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     getTopNew(0, 16);
     getTopTrending(0, 16);
   }, []);
+
+  useEffect(() => {
+    getComments(0, 3, currentChapter?.id, GlobalStore.isLoggedIn);
+  }, [currentChapter?.id]);
 
   // const [currentChappter, chapterIndex] = useMemo(() => {
 
@@ -338,7 +342,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
   const handleOpenChapter = async () => {
     try {
-      if (currentChapterDetail?.price > availableCash?.balance) {
+      if (currentChapter?.price > availableCash?.balance) {
         setShowModalNotEnoughDiamond(true);
         return;
       }
@@ -476,6 +480,14 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     window.open(
       `https://m.me/185169981351799?text=Mình đang đọc ${chapterTitle} %0A Truyện: ${storyTitle} %0A Nhưng bị thiếu nội dung, Toidoc hỗ trợ mình với!`
     );
+  };
+  const handleOpenCommentModal = async () => {
+    if (!GlobalStore.isLoggedIn) {
+      return Router.push("/dang-nhap");
+    }
+    // Lần đầu load modal: page=0, size=10
+    await getComments(0, MODAL_PAGE_SIZE, currentChapter.id, true, true);
+    setOpenCommentModal(true);
   };
 
   return (
@@ -688,9 +700,9 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                           />
                         </GoogleReCaptchaProvider>
                       </div>
-                    ) : currentChapterDetail.price &&
-                      currentChapterDetail.order > 50 &&
-                      currentChapterDetail.order % 10 <= 5 ? (
+                    ) : currentChapter.price &&
+                      currentChapter.order > 50 &&
+                      currentChapter.order % 10 <= 5 ? (
                       <>
                         <Watermark
                           gap={[30, 0]}
@@ -810,7 +822,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                 ) : (
                   <OpenInAppInfo
                     handleSupport={handleSupportNotAllow}
-                    chapterDetail={currentChapterDetail}
+                    chapterDetail={currentChapter}
                     storyDetail={storyDetail}
                     handleOpenChapter={handleOpenChapter}
                   />
@@ -860,6 +872,89 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           >
             Báo lỗi chương
           </button>
+
+          {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
+            storyDetail?.slug ===
+              "thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang" ||
+            storyDetail?.slug === "nguoi-yeu-online-la-anh-de" ||
+            storyDetail?.slug ===
+              "thap-nien-70-mang-theo-khong-gian-ga-cho-chang-quan-nhan-mat-lanh-1" ||
+            storyDetail?.slug ===
+              "xuyen-thanh-nu-chinh-phan-cong-bay-nam-chinh-dien-loan" ||
+            storyDetail?.slug ===
+              "tan-the-thien-tai-ta-mang-theo-khong-gian-trong-trot") && (
+            <div
+              className="flex justify-center my-5 cursor-pointer"
+              onClick={handlePremiumBannerClick}
+            >
+              <Image
+                width={400}
+                height={533}
+                className="aspect-[3/4]"
+                src="/images/pre-banner.png"
+                loader={imageLoader}
+              />
+            </div>
+          )}
+          <div className="px-3 space-y-2 mt-4">
+            <div className="font-bold rounded-t-2xl bg-[#F5F8FF] text-black p-2.5">
+              Bình luận
+            </div>
+
+            {/* <TextArea placeholder="Nhập bình luận.." /> */}
+          </div>
+
+          {comments?.data?.map((item) => {
+            const hasMoreChildren = item.children.length > 2;
+            return (
+              <Comment
+                key={item?.id}
+                author={item.author?.name}
+                avatar={item.author?.avatar}
+                content={item?.message}
+                timestamp={item?.createdAt}
+                totalLike={item?.totalLike}
+                // onReply={() => {
+                //   setSelectedChildItem(null);
+                //   setSelectedItem(item);
+                // }}
+              >
+                {item.children.slice(0, 2).map((childItem, index) => (
+                  <div key={childItem.id}>
+                    <Comment
+                      author={childItem.author?.name}
+                      avatar={childItem.author?.avatar}
+                      content={childItem?.message}
+                      timestamp={childItem?.createdAt}
+                      totalLike={childItem?.totalLike}
+                      onReply={() => {
+                        setSelectedItem(null);
+                        setSelectedChildItem(childItem);
+                      }}
+                    />
+                    {index === 1 && hasMoreChildren && (
+                      <Button
+                        type="text"
+                        size="small"
+                        className="text-blue-500 ml-8"
+                        onClick={handleOpenCommentModal}
+                      >
+                        Xem thêm {item.children.length - 2} bình luận
+                      </Button>
+                    )}
+                  </div>
+                ))}
+              </Comment>
+            );
+          })}
+
+          <Button
+            type="text"
+            className="text-blue-500 flex mx-auto"
+            onClick={handleOpenCommentModal}
+          >
+            Xem tất cả bình luận
+          </Button>
 
           {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
             storyDetail?.slug ===
@@ -1046,7 +1141,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       )}
       {/*<MobileShare showBubble={showBubble} setShowBubble={setShowBubble}/>*/}
       {/*<ChatSupportAutoClose/>*/}
-
       <Modal
         title={
           <div>
@@ -1107,6 +1201,17 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           />
         </div>
       </Modal>
+
+      <CommentBox
+        open={openCommentModal}
+        onCancel={() => setOpenCommentModal(false)}
+        parentId={currentChapter?.id}
+        data={modalComments?.data ?? []}
+        title="Bình luận"
+        isLoggedIn={GlobalStore.isLoggedIn}
+        pageSize={MODAL_PAGE_SIZE}
+      />
+
       <Spin spinning={loadingChapterDetail} />
     </>
   );

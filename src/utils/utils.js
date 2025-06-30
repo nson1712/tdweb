@@ -17,56 +17,56 @@ const mapPackages = {
     deposit: "18,000VNĐ",
     value: 18000,
     diamondValue: 15000,
-    qrUrl: "/images/qr-15k-son.jpg",
+    qrUrl: "/images/qr-15k-son.jpg"
   },
   18000: {
     label: "15,500",
     deposit: "18,000VNĐ",
     value: 18000,
     diamondValue: 15000,
-    qrUrl: "/images/qr-15k-son.jpg",
+    qrUrl: "/images/qr-15k-son.jpg"
   },
   50000: {
     label: "50,000",
     deposit: "50,000VNĐ",
     value: 50000,
     diamondValue: 50000,
-    qrUrl: "/images/qr-50k-son.jpg",
+    qrUrl: "/images/qr-50k-son.jpg"
   },
   100000: {
     label: "105,000",
     deposit: "100,000VNĐ",
     value: 100000,
     diamondValue: 105000,
-    qrUrl: "/images/qr-100k-son.jpg",
+    qrUrl: "/images/qr-100k-son.jpg"
   },
   200000: {
     label: "210,000",
     deposit: "200,000VNĐ",
     diamondValue: 210000,
     value: 200000,
-    qrUrl: "/images/qr-200k-son.jpg",
+    qrUrl: "/images/qr-200k-son.jpg"
   },
   300000: {
     label: "315,000",
     deposit: "300,000VNĐ",
     diamondValue: 315000,
     value: 300000,
-    qrUrl: "/images/qr-300k-son.jpg",
+    qrUrl: "/images/qr-300k-son.jpg"
   },
   500000: {
     label: "530,000",
     deposit: "500,000VNĐ",
     diamondValue: 530000,
     value: 500000,
-    qrUrl: "/images/qr-500k-son.jpg",
+    qrUrl: "/images/qr-500k-son.jpg"
   },
   1000000: {
     label: "1,060,000",
     deposit: "1,000,000VNĐ",
     diamondValue: 1060000,
     value: 1000000,
-    qrUrl: "/images/qr-1000k-son.jpg",
+    qrUrl: "/images/qr-1000k-son.jpg"
   },
 };
 
@@ -760,11 +760,11 @@ export const getDepositPackage = async (value) => {
   if (value < 1060000) {
     return mapPackages["1000000"];
   }
-};
+}
 
 export const urlCheck = (string) => {
-  return string?.split("/")?.includes("media.truyenso1.xyz");
-};
+  return string?.split("/")?.includes("media.truyenso1.xyz")
+}
 
 export const getQrUrl = (amount) => {
   const value = mapPackages[`${amount}`];
@@ -773,4 +773,48 @@ export const getQrUrl = (amount) => {
 
 export function cn(...inputs) {
   return twMerge(clsx(inputs));
-}
+};
+
+export const findMatchingSubstring = (fullString, targetSubstring) => {
+  const startIndex = fullString
+    ? fullString.indexOf(targetSubstring ? targetSubstring : "")
+    : 0;
+  if (startIndex !== -1) {
+    const matchingSubstring = fullString
+      ? fullString.substring(
+          startIndex,
+          startIndex + (targetSubstring ? targetSubstring.length : 0)
+        )
+      : "";
+    return matchingSubstring;
+  } else {
+    return null;
+  }
+};
+
+export const findRemainingSubstring = (fullString, matchingSubstring) => {
+  const startIndex = fullString.indexOf(matchingSubstring);
+  if (startIndex !== -1) {
+    const endIndex = startIndex + matchingSubstring.length;
+    return fullString.substring(endIndex).trim();
+  } else {
+    return null;
+  }
+};
+
+export const getContentInsideBrackets = (input) => {
+  const match = input.match(/\[([^\]]+)\]/);
+  return match ? match[1] : null;
+};
+
+export const getContentAfterParenthesis = (input) => {
+  // Tìm vị trí của dấu ")"
+  const index = input.indexOf(")");
+  // Nếu không tìm thấy dấu ")" thì trả về chuỗi rỗng
+  if (index === -1) {
+    return "";
+  }
+  // Lấy nội dung đằng sau dấu ")" và loại bỏ khoảng trắng thừa nếu có
+  return input.slice(index + 1).trim();
+};
+

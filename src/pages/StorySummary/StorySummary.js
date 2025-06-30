@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Router, { useRouter } from "next/router";
 import * as Api from "../../api/api";
 import Button from "../../components/Button/Button";
@@ -19,7 +19,7 @@ import PaginatedList from "./PaginatedList";
 import GlobalStore from "../../stores/GlobalStore";
 import PriceInfo from "./PriceInfo";
 import ShortLogin from "../Login/ShortLogin";
-import { Alert, Spin } from "antd";
+import { Alert, message, Spin } from "antd";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
 import BlogStore from "../../stores/BlogStore";
@@ -28,6 +28,8 @@ import TrendingIcon from "../../../public/icons/TrendingIcon";
 import NewIcon from "../../../public/icons/NewIcon";
 import HotStories from "../../components/HotStories";
 import ButtonViewAll from "../../components/ButtonViewAll";
+import { toJS } from "mobx";
+import SlideRatings from "../../components/SliderRating";
 
 const TABS = [
   {
@@ -137,6 +139,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     useState(false);
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [ratingsPage, setRatingsPage] = useState(0);
   const {
     // storyDetail,
     // getStoryDetail,
@@ -158,6 +161,8 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     getTopTrending,
     topNew,
     getTopNew,
+    ratingsByStory,
+    getRatingsByStory,
   } = StoryStore;
   // const { storyDetailArticle, getBlogStoryDetail } = BlogStore;
   const [currentChapterDetail, setCurrentChapterDetail] = useState([]);
@@ -255,6 +260,21 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     getTopTrending(0, 16);
     getTopNew(0, 16);
   }, [route.query.storySlug]);
+
+  useEffect(() => {
+    if (storyDetail?.slug) {
+      getRatingsByStory({ parentId: storyDetail.slug, page: 0 });
+    }
+  }, [storyDetail?.slug]);
+
+  const handleLoadMoreRatings = async () => {
+    const nextPage = ratingsPage + 1;
+    await getRatingsByStory({
+      page: nextPage,
+      parentId: storyDetail?.slug,
+    });
+    setRatingsPage(nextPage);
+  };
 
   const getPriceInfo = async () => {
     if (GlobalStore.isLoggedIn) {
@@ -844,6 +864,20 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                     </div>
                   ))}
               </div>
+
+              {ratingsByStory?.data?.length !== 0 && (
+                <>
+                  <h2 className="text-lg font-bold mt-4 underline pl-3">
+                    Đánh giá của độc giả
+                  </h2>
+                  <div className="bg-[#F5F8FF] py-2">
+                    <SlideRatings
+                      ratings={ratingsByStory?.data}
+                      onEndReached={handleLoadMoreRatings}
+                    />
+                  </div>
+                </>
+              )}
 
               {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
                 storyDetail?.slug ===

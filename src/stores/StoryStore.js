@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction } from "mobx";
+import { makeAutoObservable, runInAction, toJS } from "mobx";
 import GlobalStore from "./GlobalStore";
 import * as Api from "../api/api";
 import { decryptData } from "../utils/utils";
@@ -50,6 +50,12 @@ class StoryStore {
 
   ratings = {};
 
+  ratingsByStory = {};
+
+  comments = {};
+
+  modalComments = {}; 
+
   hashtags = {};
 
   stories = {};
@@ -74,6 +80,7 @@ class StoryStore {
   resetDataHastag = async () => {
     this.hashtags = {};
   }
+
 
   getStories = async (
     categoryCode,
@@ -120,7 +127,7 @@ class StoryStore {
     sortDirection = "DESC",
     chapterMin,
     chapterMax,
-    status
+    status,
   }) => {
     try {
       const result = await Api.get({
@@ -836,6 +843,36 @@ class StoryStore {
     }
   };
 
+  getRatingsByStory = async ({ page, size = 20, parentId, isLoggedIn }) => {
+    try {
+      const result = await Api.get({
+        url: isLoggedIn ? "/data/web/rating/list" : "/data/web/rating/anonymous/list",
+        params: {
+          page,
+          size,
+          type: "STORY",
+          parentId: parentId,
+        },
+        hideError: true,
+      });
+
+      if (page === 0) {
+        runInAction(() => {
+          this.ratingsByStory = result?.data;
+        });
+      } else {
+        runInAction(() => {
+          this.ratingsByStory = {
+            ...result?.data,
+            data: [...this.ratingsByStory?.data, ...result.data?.data],
+          };
+        });
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   getHashtags = async (page = 0, size = 20) => {
     try {
       const result = await Api.get({
@@ -847,7 +884,6 @@ class StoryStore {
         hideError: true,
       });
 
-      console.log('Page: ', page);
       if (page === 0) {
         runInAction(() => {
           this.hashtags = result?.data;
@@ -880,9 +916,68 @@ class StoryStore {
       runInAction(() => {
         this.storiesByHashtag = result?.data;
       });
-      
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  handleLikeUnlike = async (id, isLike, parentId) => {
+    try {
+      const url = isLike
+        ? `/data/web/rating/${id}/unlike`
+        : `/data/web/rating/${id}/like`;
+
+      await Api.post({
+        url: url,
+        data: {
+          id: id,
+        },
+      });
+
+      await this.getRatingsByStory({
+        page: 0,
+        parentId: parentId,
+      });
+    } catch (error) {
+      console.error("Error while toggling like:", error);
+    }
+  };
+
+  getComments = async (page, size, parentId, isLoggedIn, isModal = false) => {
+    try {
+      const result = await Api.get({
+        url: isLoggedIn
+          ? "/data/web/comment/list"
+          : "/data/web/comment/anonymous/list",
+        params: {
+          type: "CHAPTER",
+          page,
+          size,
+          parentId,
+        },
+      });
+
+      runInAction(() => {
+        if (!isModal) {
+          // inline
+          this.comments = result.data;
+        } else {
+          // modal
+          if (page === 0) {
+            this.modalComments = result.data;
+          } else {
+            this.modalComments = {
+              ...result.data,
+              data: [
+                ...this.modalComments.data,
+                ...result.data.data,
+              ],
+            };
+          }
+        }
+      });
+    } catch (e) {
+      console.log("Error while fetching comments: ", e);
     }
   };
 }
