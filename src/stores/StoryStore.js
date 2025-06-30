@@ -77,6 +77,11 @@ class StoryStore {
     });
   };
 
+  resetDataHastag = async () => {
+    this.hashtags = {};
+  }
+
+
   getStories = async (
     categoryCode,
     page = 1,
