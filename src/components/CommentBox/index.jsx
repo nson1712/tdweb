@@ -27,18 +27,9 @@ export const CommentBox = ({
     }
   }, [open]);
 
-  console.log(
-    "StoryStore.modalComments.totalPages: ",
-    StoryStore.modalComments.totalPages
-  );
-  console.log(" PAGE: ", page);
-
   // Hàm gọi khi scroll đến cuối
   const handleScroll = (e) => {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
-    console.log("SCROLL TOP: ", scrollTop);
-    console.log("SCROLL HEIGHT: ", scrollHeight);
-    console.log("CLIENT HEIGHT: ", clientHeight);
     if (scrollTop + clientHeight === scrollHeight && isLoggedIn) {
       if (page === StoryStore.modalComments.totalPages) return;
       const nextPage = page + 1;

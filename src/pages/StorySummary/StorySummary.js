@@ -865,7 +865,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                   ))}
               </div>
 
-              {ratingsByStory?.data?.length !== 0 && (
+              {ratingsByStory?.data?.length !== 0 ? (
                 <>
                   <h2 className="text-lg font-bold mt-4 underline pl-3">
                     Đánh giá của độc giả
@@ -877,7 +877,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                     />
                   </div>
                 </>
-              )}
+              ) : <div className="text-center py-4 text-gray-500">✨Chưa có ai đánh giá truyện này. Bạn hãy là người đầu tiên đóng góp cho cộng đồng nhé!</div>}
 
               {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
                 storyDetail?.slug ===
