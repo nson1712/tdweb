@@ -476,6 +476,11 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥");
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥");
 
+  const handleErrorNotification = () => {
+    window.open(
+      `https://m.me/185169981351799?text=Mình đang đọc ${chapterTitle} %0A Truyện: ${storyTitle} %0A Nhưng bị thiếu nội dung, Toidoc hỗ trợ mình với!`
+    );
+  };
   const handleOpenCommentModal = async () => {
     if (!GlobalStore.isLoggedIn) {
       return Router.push("/dang-nhap");
@@ -861,6 +866,36 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             </Link>
           </div>
 
+          <button
+            className="w-[270px] mx-auto flex justify-center h-fit p-2 text-base sm:text-lg text-white bg-[#849EBF] font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4"
+            onClick={handleErrorNotification}
+          >
+            Báo lỗi chương
+          </button>
+
+          {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
+            storyDetail?.slug ===
+              "thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang" ||
+            storyDetail?.slug === "nguoi-yeu-online-la-anh-de" ||
+            storyDetail?.slug ===
+              "thap-nien-70-mang-theo-khong-gian-ga-cho-chang-quan-nhan-mat-lanh-1" ||
+            storyDetail?.slug ===
+              "xuyen-thanh-nu-chinh-phan-cong-bay-nam-chinh-dien-loan" ||
+            storyDetail?.slug ===
+              "tan-the-thien-tai-ta-mang-theo-khong-gian-trong-trot") && (
+            <div
+              className="flex justify-center my-5 cursor-pointer"
+              onClick={handlePremiumBannerClick}
+            >
+              <Image
+                width={400}
+                height={533}
+                className="aspect-[3/4]"
+                src="/images/pre-banner.png"
+                loader={imageLoader}
+              />
+            </div>
+          )}
           <div className="px-3 space-y-2 mt-4">
             <div className="font-bold rounded-t-2xl bg-[#F5F8FF] text-black p-2.5">
               Bình luận
@@ -948,7 +983,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 mt-4">
             <TopTrendingTitle />
             <HotStories
-              className="grid grid-cols-4 justify-center gap-x-2 gap-y-5 "
+              className="grid grid-cols-3 sm:grid-cols-4 justify-center gap-x-3 gap-y-5"
               data={topTrending?.data}
             />
             <div className="flex">
@@ -963,7 +998,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           <div className="border-1 p-3 rounded-2xl space-y-4 mx-2 sm:mt-4">
             <TopNewTitle />
             <HotStories
-              className="grid grid-cols-4 justify-center gap-x-2 gap-y-5"
+              className="grid grid-cols-3  sm:grid-cols-4 justify-center gap-x-2 gap-y-5"
               data={topNew?.data}
             />
             <div className="flex">

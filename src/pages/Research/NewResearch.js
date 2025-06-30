@@ -63,6 +63,7 @@ const Research = () => {
     getRatings,
 
     hashtags,
+    resetDataHastag,
     getHashtags,
 
     // getcollections1,
@@ -106,8 +107,9 @@ const Research = () => {
     getTopViews();
     getTopNew();
     getTopFull();
-    getRatings(0, 4);
-    getHashtags(1, 40);
+    getRatings(0, 7);
+    resetDataHastag();
+    getHashtags(0, 40);
     // getcollections1();
     // getcollections2();
     // setShowModal(true);

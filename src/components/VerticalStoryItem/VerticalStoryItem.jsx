@@ -2,32 +2,95 @@ import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
 import Link from "next/link";
 import MarkedLabel from "../MarkedLabel";
+import TotalView from "../TotalView";
 
-const VerticalStoryItem = ({ title, slug, coverImage, status }) => {
+const VerticalStoryItem = ({
+  title,
+  slug,
+  coverImage,
+  status,
+  rate,
+  totalView,
+  totalLike,
+}) => {
   return (
     <Link href={`/${slug}`} passHref>
       <a
         title={`Truyện full ${title}`}
         className="max-w-fit flex flex-col gap-y-2 cursor-pointer hover:translate-y-[-5%] transition delay-75 relative z-5"
       >
-        {status === "ACTIVE" && (
-          <MarkedLabel />
-        )}
+        {status === "ACTIVE" && <MarkedLabel />}
         {coverImage ? (
-          <Image
-            loader={imageLoader}
-            className="max-w-[120px] max-h-[165px] rounded-tl-[25px] rounded-bl-[5px] rounded-e-[5px] "
-            width={120}
-            height={165}
-            src={coverImage}
-            alt={title}
-            title={title}
-          />
+          <div className="relative">
+            <Image
+              loader={imageLoader}
+              className="aspect-[3/4] rounded-tl-[25px] rounded-bl-[5px] rounded-e-[5px] "
+              width={200}
+              height={266}
+              src={coverImage}
+              alt={title}
+              title={title}
+            />
+            <div className="w-full flex justify-center bg-black/60 mb-[5px] absolute bottom-0 max-w-full h-[15%] sm:h-[10%] ">
+              <div className="flex gap-x-4 sm:gap-x-10">
+                {/* <div className="flex gap-x-0.5">
+                  <div className="h-3 w-3 flex self-center">
+                    <Image
+                      className="aspect-square"
+                      src="/images/heart-icon.png"
+                      width={12}
+                      height={12}
+                      alt="heart-icon"
+                      loader={imageLoader}
+                    />
+                  </div>
+                  <div className="text-white text-xs self-center">
+                    {totalLike ?? 0}
+                  </div>
+                </div> */}
+
+                <div className="flex gap-x-0.5">
+                  <div className="h-3 w-3 flex self-center -mt-0.5">
+                    <Image
+                      className="aspect-square"
+                      src="/images/star-icon.png"
+                      width={12}
+                      height={12}
+                      alt="star-icon"
+                      loader={imageLoader}
+                    />
+                  </div>{" "}
+                  <div className="text-white text-xs self-center">
+                    {Number.isInteger(rate ?? 0)
+                      ? rate ?? 0
+                      : (rate ?? 0).toFixed(1)}
+                  </div>
+                </div>
+                <div className="self-center">
+                  {totalView < 500000 ? (
+                    <TotalView
+                      totalView={totalView || 0}
+                      className="text-white"
+                    />
+                  ) : (
+                    <div className="flex gap-x-1">
+                      <Image
+                        src="/images/icon-hot.png"
+                        width={12}
+                        height={12}
+                        alt="hot-icon"
+                        loader={imageLoader}
+                      />
+                      <div className="text-xs text-white">HOT</div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
         ) : null}
 
-        <div className="w-full flex justify-center items-center bg-black/60 absolute bottom-0 max-w-full h-[45%] sm:h-[40%] overflow-hidden">
-          <h3 className="line-clamp-3 px-[1px] m-0 story-item-title text-white text-center sm:text-xs">{title}</h3>
-        </div>
+        <h3 className="px-[1px] m-0 story-item-title">{title}</h3>
       </a>
     </Link>
   );

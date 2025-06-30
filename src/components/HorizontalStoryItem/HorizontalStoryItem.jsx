@@ -1,4 +1,3 @@
-import React from "react";
 import Image from "next/image";
 import clsx from "clsx";
 import TagComponent from "./TagComponent";
@@ -7,7 +6,6 @@ import StarsRate from "../StarRate";
 import StoryStatus from "../StoryStatus";
 import GoldenTicket from "../GoldenTicket";
 import imageLoader from "../../loader/imageLoader";
-import { getSlugfromSlugGenerate, slugGenerate } from "../../utils/utils";
 import Link from "next/link";
 import MarkedLabel from "../MarkedLabel";
 
@@ -104,7 +102,7 @@ const HorizontalStoryItem = ({
             )}
 
             <div
-              className={clsx("flex flex-row gap-x-2.5", {
+              className={clsx("flex gap-x-2.5", {
                 "max-h-3.5 self-center":
                   type !== "secondary" && type !== "primary",
                 "w-fit max-h-[22px] py-1": type === "secondary",
@@ -112,10 +110,10 @@ const HorizontalStoryItem = ({
             >
               {starVisible && (
                 <div className={clsx("", { "mt-1": type === "primary" })}>
-                  <StarsRate rate={rate} lightBg={true} />
+                  <StarsRate rate={rate} lightBg={true} className={'h-6 font-bold'}/>
                 </div>
               )}
-              {viewVisible && <TotalView totalView={totalView || 0} />}
+              {viewVisible && <TotalView totalView={totalView || 0} className="font-bold text-black" />}
               {statusVisible && <StoryStatus status={status} lightBg={true} />}
             </div>
 
