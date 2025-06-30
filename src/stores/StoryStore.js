@@ -884,7 +884,7 @@ class StoryStore {
         hideError: true,
       });
 
-      if (page === 1) {
+      if (page === 0) {
         runInAction(() => {
           this.hashtags = result?.data;
         });

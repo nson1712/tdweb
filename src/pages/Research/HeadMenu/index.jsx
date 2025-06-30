@@ -2,7 +2,7 @@ import NewIcon from "../../../../public/icons/NewIcon";
 
 const HeadMenu = ({ items }) => {
   return (
-    <div className="flex px-[10px] justify-between py-[10px] items-center justify-center" style={{backgroundColor: "#f1f1f1"}}>
+    <div className="flex px-[10px] justify-between py-[10px] items-center" style={{backgroundColor: "#f1f1f1"}}>
       <a href='/danh-sach-truyen/truyen-full'>
         <img src='/images/icon-story-full.png' className='w-[30px] mx-auto mb-[3px]' />
         <p className="text-center text-[12px] font-roboto m-0 text-[#000]"><strong>Truyện Full</strong></p>
