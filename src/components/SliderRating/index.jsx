@@ -10,7 +10,7 @@ const settings = {
   arrows: false,
   speed: 500,
   autoPlay: true,
-  slidesToShow: 2.1,
+  slidesToShow: 2.5,
   slidesToScroll: 2,
   responsive: [
     {

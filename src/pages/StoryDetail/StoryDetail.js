@@ -866,13 +866,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             </Link>
           </div>
 
-          <button
-            className="w-[270px] mx-auto flex justify-center h-fit p-2 text-base sm:text-lg text-white bg-[#849EBF] font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4"
-            onClick={handleErrorNotification}
-          >
-            Báo lỗi chương
-          </button>
-
           {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
             storyDetail?.slug ===
               "thien-kim-that-tro-ve-ong-xa-toi-la-ac-ma-ao-trang" ||
@@ -904,57 +897,68 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             {/* <TextArea placeholder="Nhập bình luận.." /> */}
           </div>
 
-          {comments?.data?.map((item) => {
-            const hasMoreChildren = item.children.length > 2;
-            return (
-              <Comment
-                key={item?.id}
-                author={item.author?.name}
-                avatar={item.author?.avatar}
-                content={item?.message}
-                timestamp={item?.createdAt}
-                totalLike={item?.totalLike}
-                // onReply={() => {
-                //   setSelectedChildItem(null);
-                //   setSelectedItem(item);
-                // }}
-              >
-                {item.children.slice(0, 2).map((childItem, index) => (
-                  <div key={childItem.id}>
-                    <Comment
-                      author={childItem.author?.name}
-                      avatar={childItem.author?.avatar}
-                      content={childItem?.message}
-                      timestamp={childItem?.createdAt}
-                      totalLike={childItem?.totalLike}
-                      onReply={() => {
-                        setSelectedItem(null);
-                        setSelectedChildItem(childItem);
-                      }}
-                    />
-                    {index === 1 && hasMoreChildren && (
-                      <Button
-                        type="text"
-                        size="small"
-                        className="text-blue-500 ml-8"
-                        onClick={handleOpenCommentModal}
-                      >
-                        Xem thêm {item.children.length - 2} bình luận
-                      </Button>
-                    )}
-                  </div>
-                ))}
-              </Comment>
-            );
-          })}
+          {comments?.data?.length > 0 ? (
+            comments.data.map((item) => {
+              const hasMoreChildren = item.children.length > 2;
+              return (
+                <Comment
+                  key={item.id}
+                  author={item.author?.name}
+                  avatar={item.author?.avatar}
+                  content={item.message}
+                  timestamp={item.createdAt}
+                  totalLike={item.totalLike}
+                >
+                  {item.children.slice(0, 2).map((childItem, idx) => (
+                    <div key={childItem.id}>
+                      <Comment
+                        author={childItem.author?.name}
+                        avatar={childItem.author?.avatar}
+                        content={childItem.message}
+                        timestamp={childItem.createdAt}
+                        totalLike={childItem.totalLike}
+                        onReply={() => {
+                          setSelectedItem(null);
+                          setSelectedChildItem(childItem);
+                        }}
+                      />
+                      {idx === 1 && hasMoreChildren && (
+                        <Button
+                          type="text"
+                          size="small"
+                          className="text-blue-500 ml-8"
+                          onClick={handleOpenCommentModal}
+                        >
+                          Xem thêm {item.children.length - 2} bình luận
+                        </Button>
+                      )}
+                    </div>
+                  ))}
+                </Comment>
+              );
+            })
+          ) : (
+            <div className="text-center py-4 text-gray-500">
+              Chưa có ai bình luận chương này. Bạn hãy là người đầu tiên đóng góp cho cộng đồng nhé !
+            </div>
+          )}
 
-          <Button
-            type="text"
-            className="text-blue-500 flex mx-auto"
-            onClick={handleOpenCommentModal}
+          {comments.data?.length > 3 && (
+            <Button
+              type="text"
+              className="text-blue-500 flex mx-auto"
+              onClick={handleOpenCommentModal}
+            >
+              Xem tất cả bình luận
+            </Button>
+          )}
+
+          <button
+            className="w-[270px] mx-auto flex justify-center h-fit p-2 text-base sm:text-lg text-white bg-[#849EBF] font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4"
+            onClick={handleErrorNotification}
           >
-            Xem tất cả bình luận
-          </Button>
+            Báo lỗi chương
+          </button>
 
           {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
             storyDetail?.slug ===

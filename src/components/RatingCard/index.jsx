@@ -50,7 +50,6 @@ export const RatingCard = ({
           <div
             className="cursor-pointer hover:scale-110 transition-all duration-200 active:scale-90"
             onClick={() => GlobalStore.isLoggedIn ? handleLikeUnlike(id, isLike, parentId) : handleForceLogin()}
-            // onClick={() => handleLikeUnlike(id, isLike, parentId)}
           >
             {isLike ? (
               <LikeFilled className="self-center text-blue-500" />
