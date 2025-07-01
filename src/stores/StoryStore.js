@@ -52,9 +52,11 @@ class StoryStore {
 
   ratingsByStory = {};
 
+  myRating = {};
+
   comments = {};
 
-  modalComments = {}; 
+  modalComments = {};
 
   hashtags = {};
 
@@ -79,8 +81,7 @@ class StoryStore {
 
   resetDataHastag = async () => {
     this.hashtags = {};
-  }
-
+  };
 
   getStories = async (
     categoryCode,
@@ -846,7 +847,9 @@ class StoryStore {
   getRatingsByStory = async ({ page, size = 20, parentId, isLoggedIn }) => {
     try {
       const result = await Api.get({
-        url: isLoggedIn ? "/data/web/rating/list" : "/data/web/rating/anonymous/list",
+        url: isLoggedIn
+          ? "/data/web/rating/list"
+          : "/data/web/rating/anonymous/list",
         params: {
           page,
           size,
@@ -870,6 +873,24 @@ class StoryStore {
       }
     } catch (e) {
       console.log(e);
+    }
+  };
+
+  getMyRating = async ({ parentId }) => {
+    try {
+      const result = await Api.get({
+        url: "/data/web/rating/mine",
+        params: {
+          type: "STORY",
+          parentId: parentId,
+        },
+      });
+
+      runInAction(() => {
+        this.myRating = result.data;
+      });
+    } catch (e) {
+      console.log("Error: ", e);
     }
   };
 
@@ -968,10 +989,7 @@ class StoryStore {
           } else {
             this.modalComments = {
               ...result.data,
-              data: [
-                ...this.modalComments.data,
-                ...result.data.data,
-              ],
+              data: [...this.modalComments.data, ...result.data.data],
             };
           }
         }
