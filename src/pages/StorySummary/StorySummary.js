@@ -28,6 +28,7 @@ import SlideRatings from "../../components/SliderRating";
 import { EditOutlined } from "@ant-design/icons";
 import AddRatingModal from "../../components/AddRatingModal";
 import { toJS } from "mobx";
+import { CommentBox } from "../../components/CommentBox";
 
 const ADS = [
   {
@@ -150,6 +151,11 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     getRatingsByStory,
     myRating,
     getMyRating,
+    showRatingComment,
+    setShowRatingComment,
+    getComments,
+    modalComments,
+    parentId
   } = StoryStore;
   // const [currentTab, setCurrentTab] = useState("CONTENT");
   // const [chapters, setChapters] = useState([]);
@@ -249,10 +255,17 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     if (storyDetail?.slug) {
       getRatingsByStory({ parentId: storyDetail.slug, page: 0 });
     }
-    if (GlobalStore.isLoggedIn) getMyRating({ parentId: storyDetail.slug });
   }, [storyDetail?.slug]);
 
-  console.log("MY RATING: ", toJS(myRating));
+  useEffect(() => {
+    if (GlobalStore.isLoggedIn) {
+      getMyRating({ parentId: storyDetail.slug });
+    }
+  }, [GlobalStore.isLoggedIn]);
+
+  useEffect(() => {
+    getComments(0, 3, "RATING", parentId, GlobalStore.isLoggedIn, true);
+  }, [parentId])
 
   const handleLoadMoreRatings = async () => {
     const nextPage = ratingsPage + 1;
@@ -325,7 +338,6 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
   const handleOpenFullChapter = async () => {
     setLoading(true);
     try {
-      console.log("GlobalStore.isLoggedIn: ", GlobalStore.isLoggedIn);
       if (!GlobalStore.isLoggedIn) {
         setShowLoginModal(true);
         return;
@@ -420,7 +432,6 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥");
 
   const handleAddRating = async (values) => {
-    console.log("VALUES: ", values);
     try {
       const result = await Api.post({
         url: "/data/web/rating/save",
@@ -433,7 +444,6 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
       });
       setShowAddRating(false);
       getRatingsByStory({ parentId: storyDetail.slug, page: 0 });
-      console.log("RESULT: ", result);
     } catch (e) {
       console.log("Error: ", e);
     }
@@ -1105,6 +1115,18 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
         onOk={handleAddRating}
         rating={myRating?.data}
       />
+
+      <CommentBox
+        open={showRatingComment}
+        onCancel={() => setShowRatingComment(false)}
+        parentId={parentId}
+        data={modalComments?.data ?? []}
+        title="Bình luận"
+        isLoggedIn={GlobalStore.isLoggedIn}
+        pageSize={10}
+        type="RATING"
+      />
+
       {/*<MobileShare showBubble={showBubble} setShowBubble={setShowBubble}/>*/}
       {/*<ChatSupportAutoClose/>*/}
       <Spin spinning={loadingChapterDetail || loading} fullscreen={true} />

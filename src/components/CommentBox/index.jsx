@@ -1,7 +1,12 @@
-import { Avatar, Button, Form, Modal, notification } from "antd";
+import { Avatar, Button, Form, Modal, Input, notification } from "antd";
 import { useEffect, useRef, useState } from "react";
 import Comment from "../CommentItem";
 import StoryStore from "../../stores/StoryStore";
+import { SendOutlined } from "@ant-design/icons";
+import { findMatchingSubstring, findRemainingSubstring } from "../../utils/utils";
+import { toJS } from "mobx";
+
+const { TextArea } = Input;
 
 export const CommentBox = ({
   open,
@@ -12,14 +17,18 @@ export const CommentBox = ({
   data,
   isLoggedIn,
   pageSize,
+  handleOpenCommentModal,
+  replyTo
 }) => {
   const [form] = Form.useForm();
   const [page, setPage] = useState(0);
-  // const [selectedItem, setSelectedItem] = useState();
-  // const [selectedChildItem, setSelectedChildItem] = useState();
+  const [selectedItem, setSelectedItem] = useState();
+  const [selectedChildItem, setSelectedChildItem] = useState();
   const [expandedItems, setExpandedItems] = useState({});
   const ref = useRef(null);
   const commentRef = useRef({});
+
+  console.log("REPLy TOOOOOOOOO: ", toJS(replyTo.author.name))
 
   useEffect(() => {
     if (open) {
@@ -27,13 +36,23 @@ export const CommentBox = ({
     }
   }, [open]);
 
+  useEffect(() => {
+    if (!open) return;
+    const target = selectedItem || selectedChildItem || replyTo;
+    console.log("TARGETTTTTTTTTT: ", target)
+    if (target) {
+      form.setFieldsValue({ comment: `@${target.author.name} ` });
+      if (ref.current) ref.current.focus();
+    }
+  }, [open, replyTo, selectedItem, selectedChildItem]);
+
   // Hàm gọi khi scroll đến cuối
   const handleScroll = (e) => {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
     if (scrollTop + clientHeight === scrollHeight && isLoggedIn) {
       if (page === StoryStore.modalComments.totalPages) return;
       const nextPage = page + 1;
-      StoryStore.getComments(nextPage, pageSize, parentId, true, true);
+      StoryStore.getComments(nextPage, pageSize, type, parentId, true, true);
       setPage(nextPage);
     }
   };
@@ -49,83 +68,79 @@ export const CommentBox = ({
   //   },
   // });
 
-  // useEffect(() => {
-  //   if (selectedItem || selectedChildItem) {
-  //     form.setFieldsValue({
-  //       comment: `@${
-  //         selectedItem?.author?.name ?? selectedChildItem?.author?.name
-  //       }${" "}`,
-  //     });
-  //     if (ref.current) {
-  //       ref.current.focus();
-  //     }
-  //   }
-  // }, [selectedItem, selectedChildItem]);
+  const handleSubmit = (values) => {
+    console.log("V")
+    const name = findMatchingSubstring(
+      values.comment,
+      selectedItem?.author?.name ?? selectedChildItem?.author?.name ?? replyTo?.author?.name
+    );
+    const message = findRemainingSubstring(
+      values.comment,
+      selectedItem?.author?.name ?? selectedChildItem?.author?.name ?? replyTo?.author?.name
+    );
 
-  // const handleSubmit = (values) => {
-  //   const name = findMatchingSubstring(
-  //     values.comment,
-  //     selectedItem?.author?.name ?? selectedChildItem?.author?.name
-  //   );
-  //   const message = findRemainingSubstring(
-  //     values.comment,
-  //     selectedItem?.author?.name ?? selectedChildItem?.author?.name
-  //   );
+    
+    console.log("MESSAGE: ", message)
+    console.log("NAME: ", name)
 
-  //   mutate(
-  //     {
-  //       method: "post",
-  //       url: `${DATA_API_URL}/api/mobile/comment/add`,
-  //       values: {
-  //         message:
-  //           values.comment &&
-  //           values.comment.includes("@", 0) &&
-  //           (selectedItem || selectedChildItem)
-  //             ? `@[${name}](${
-  //                 selectedItem?.author?.obfuscatedId ?? selectedChildItem?.author?.obfuscatedId
-  //               }) ${message}`
-  //             : values.comment,
-  //         parentId:
-  //           selectedItem?.id ?? selectedChildItem?.parentId ?? parentId ?? "",
-  //         type:
-  //           type === "COMMENT"
-  //             ? "COMMENT"
-  //             : type === "CHAPTER"
-  //             ? selectedItem || selectedChildItem
-  //               ? "COMMENT"
-  //               : "CHAPTER"
-  //             : selectedItem || selectedChildItem
-  //             ? "COMMENT"
-  //             : "RATING",
-  //       },
-  //     },
-  //     {
-  //       onSuccess(response) {
-  //         dataRefetch();
-  //         setSelectedItem(null);
-  //         setSelectedChildItem(null);
-  //         notification.success({
-  //           message: `Bạn vừa ${
-  //             selectedItem || selectedChildItem ? "trả lời" : "đăng"
-  //           } 1 ${type === "RATING" ? "đánh giá" : "bình luận"}!`,
-  //         });
-  //         form.resetFields();
-  //         setExpandedItems((prev) => ({
-  //           ...prev,
-  //           [response.data.data.parentId || parentId]: true,
-  //         }));
 
-  //         const commentId = selectedItem?.id ?? selectedChildItem?.parentId;
-  //         if (commentId && commentRef.current[commentId]) {
-  //           commentRef.current[commentId].scrollIntoView({
-  //             behavior: "smooth",
-  //             block: "start",
-  //           });
-  //         }
-  //       },
-  //     }
-  //   );
-  // };
+
+    // console.log("VALUES: ", values)
+    // console.log("SELECTED ITEM: ", toJS(selectedItem))
+    // mutate(
+    //   {
+    //     method: "post",
+    //     url: `${DATA_API_URL}/api/mobile/comment/add`,
+    //     values: {
+    //       message:
+    //         values.comment &&
+    //         values.comment.includes("@", 0) &&
+    //         (selectedItem || selectedChildItem)
+    //           ? `@[${name}](${
+    //               selectedItem?.author?.obfuscatedId ?? selectedChildItem?.author?.obfuscatedId
+    //             }) ${message}`
+    //           : values.comment,
+    //       parentId:
+    //         selectedItem?.id ?? selectedChildItem?.parentId ?? parentId ?? "",
+    //       type:
+    //         type === "COMMENT"
+    //           ? "COMMENT"
+    //           : type === "CHAPTER"
+    //           ? selectedItem || selectedChildItem
+    //             ? "COMMENT"
+    //             : "CHAPTER"
+    //           : selectedItem || selectedChildItem
+    //           ? "COMMENT"
+    //           : "RATING",
+    //     },
+    //   },
+    //   {
+    //     onSuccess(response) {
+    //       dataRefetch();
+    //       setSelectedItem(null);
+    //       setSelectedChildItem(null);
+    //       notification.success({
+    //         message: `Bạn vừa ${
+    //           selectedItem || selectedChildItem ? "trả lời" : "đăng"
+    //         } 1 ${type === "RATING" ? "đánh giá" : "bình luận"}!`,
+    //       });
+    //       form.resetFields();
+    //       setExpandedItems((prev) => ({
+    //         ...prev,
+    //         [response.data.data.parentId || parentId]: true,
+    //       }));
+
+    //       const commentId = selectedItem?.id ?? selectedChildItem?.parentId;
+    //       if (commentId && commentRef.current[commentId]) {
+    //         commentRef.current[commentId].scrollIntoView({
+    //           behavior: "smooth",
+    //           block: "start",
+    //         });
+    //       }
+    //     },
+    //   }
+    // );
+  };
 
   const toggleExpand = (itemId) => {
     setExpandedItems((prev) => ({
@@ -136,12 +151,13 @@ export const CommentBox = ({
 
   return (
     <Modal
+      // centered
       className="sm:min-w-[650px] max-h-[500px]"
       open={open}
       onCancel={() => {
         onCancel?.();
-        // setSelectedItem(null);
-        // setSelectedChildItem(null);
+        setSelectedItem(null);
+        setSelectedChildItem(null);
         form.resetFields();
       }}
       footer={false}
@@ -150,10 +166,12 @@ export const CommentBox = ({
       {/* <Form form={form} onFinish={handleSubmit} className="w-full"> */}
       <Form
         form={form}
-        className="w-full max-h-[700px] overflow-y-auto"
+        className="w-full"
         onScroll={handleScroll}
+        onFinish={handleSubmit}
       >
-        {data?.map((item, index) => (
+        <div className="max-h-[600px] overflow-y-auto">
+          {data?.map((item, index) => (
           <div
             key={index}
             ref={(el) => {
@@ -169,10 +187,11 @@ export const CommentBox = ({
               content={item?.message}
               timestamp={item?.createdAt}
               totalLike={item?.totalLike}
-              // onReply={() => {
-              //   setSelectedChildItem(null);
-              //   setSelectedItem(item);
-              // }}
+              onReply={() => {
+                  console.log("ITEM: ", toJS(item))
+                        setSelectedItem(item);
+                        setSelectedChildItem(null);
+                      }}
             >
               {item.children?.slice(0, 2).map((childItem, index) => {
                 const hasMoreChildren = item.childItem?.length > 2;
@@ -194,7 +213,7 @@ export const CommentBox = ({
                         type="text"
                         size="small"
                         className="text-blue-500 ml-8"
-                        onClick={handleOpenCommentModal}
+                        onReply={() => handleOpenCommentModal(item)}
                       >
                         Xem thêm {item.children.length - 2} bình luận
                       </Button>
@@ -205,8 +224,9 @@ export const CommentBox = ({
             </Comment>
           </div>
         ))}
+        </div>
 
-        {/* <div className="flex gap-2 mt-5">
+        <div className="flex gap-2 mt-5">
           <div className="w-full">
             <Form.Item name={["comment"]}>
               <TextArea
@@ -222,7 +242,7 @@ export const CommentBox = ({
               <Button htmlType="submit" icon={<SendOutlined />} />
             </Form.Item>
           </div>
-        </div> */}
+        </div>
       </Form>
     </Modal>
   );

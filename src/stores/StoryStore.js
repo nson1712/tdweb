@@ -68,10 +68,34 @@ class StoryStore {
 
   isOpenFull = false;
 
+  showRatingComment = false;
+
+  showCommentModal = false;
+
+  parentId = null;
+
   constructor() {
     makeAutoObservable(this);
     this.getBookMark(1, 1000);
   }
+
+  setParentId = (value) => {
+    runInAction(() => {
+      this.parentId = value;
+    });
+  };
+
+  setShowCommentModal = (value) => {
+    runInAction(() => {
+      this.showCommentModal = value;
+    });
+  };
+
+  setShowRatingComment = (value) => {
+    runInAction(() => {
+      this.showRatingComment = value;
+    });
+  };
 
   setIsOpenFull = (value) => {
     runInAction(() => {
@@ -894,6 +918,49 @@ class StoryStore {
     }
   };
 
+  saveRating = async (
+    values,
+    selectedItem,
+    selectedChildItem,
+    replyTo,
+    parentId
+  ) => {
+    try {
+      const result = await Api.post({
+        url: "/data/web/comment/add",
+        data: {
+          message:
+            values.comment &&
+            values.comment.includes("@", 0) &&
+            (selectedItem || selectedChildItem || replyTo)
+              ? `@[${name}](${
+                  selectedItem?.author?.obfuscatedId ??
+                  selectedChildItem?.author?.obfuscatedId
+                }) ${message}`
+              : values.comment,
+          parentId:
+            selectedItem?.id ??
+            selectedChildItem?.parentId ??
+            replyTo.parentId ??
+            parentId ??
+            "",
+          type:
+            type === "COMMENT"
+              ? "COMMENT"
+              : type === "CHAPTER"
+              ? selectedItem || selectedChildItem
+                ? "COMMENT"
+                : "CHAPTER"
+              : selectedItem || selectedChildItem
+              ? "COMMENT"
+              : "RATING",
+        },
+      });
+    } catch (e) {
+      console.log("Error: ", e);
+    }
+  };
+
   getHashtags = async (page = 0, size = 20) => {
     try {
       const result = await Api.get({
@@ -964,14 +1031,21 @@ class StoryStore {
     }
   };
 
-  getComments = async (page, size, parentId, isLoggedIn, isModal = false) => {
+  getComments = async (
+    page,
+    size,
+    type,
+    parentId,
+    isLoggedIn,
+    isModal = false
+  ) => {
     try {
       const result = await Api.get({
         url: isLoggedIn
           ? "/data/web/comment/list"
           : "/data/web/comment/anonymous/list",
         params: {
-          type: "CHAPTER",
+          type: type,
           page,
           size,
           parentId,

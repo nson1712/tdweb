@@ -3,7 +3,6 @@ import { toJS } from "mobx";
 const { TextArea } = Input;
 
 const AddRatingModal = ({ rating, open, onOk, onCancel }) => {
-  console.log("RATING: ", toJS(rating?.[0]))
   const [form] = Form.useForm();
   return (
     <Modal
