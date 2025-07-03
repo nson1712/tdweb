@@ -3,8 +3,11 @@ import { useEffect, useRef, useState } from "react";
 import Comment from "../CommentItem";
 import StoryStore from "../../stores/StoryStore";
 import { SendOutlined } from "@ant-design/icons";
-import { findMatchingSubstring, findRemainingSubstring } from "../../utils/utils";
-import { toJS } from "mobx";
+import {
+  findMatchingSubstring,
+  findRemainingSubstring,
+} from "../../utils/utils";
+import { toast } from "react-toastify";
 
 const { TextArea } = Input;
 
@@ -18,17 +21,16 @@ export const CommentBox = ({
   isLoggedIn,
   pageSize,
   handleOpenCommentModal,
-  replyTo
+  replyTo,
 }) => {
   const [form] = Form.useForm();
   const [page, setPage] = useState(0);
   const [selectedItem, setSelectedItem] = useState();
   const [selectedChildItem, setSelectedChildItem] = useState();
-  const [expandedItems, setExpandedItems] = useState({});
+  // const [expandedItems, setExpandedItems] = useState({});
   const ref = useRef(null);
   const commentRef = useRef({});
-
-  console.log("REPLy TOOOOOOOOO: ", toJS(replyTo.author.name))
+  const { setReplyTo } = StoryStore;
 
   useEffect(() => {
     if (open) {
@@ -39,191 +41,142 @@ export const CommentBox = ({
   useEffect(() => {
     if (!open) return;
     const target = selectedItem || selectedChildItem || replyTo;
-    console.log("TARGETTTTTTTTTT: ", target)
-    if (target) {
-      form.setFieldsValue({ comment: `@${target.author.name} ` });
+    if (target?.author) {
+      form.setFieldsValue({ comment: `@${target.author?.name} ` });
       if (ref.current) ref.current.focus();
     }
   }, [open, replyTo, selectedItem, selectedChildItem]);
 
-  // Hàm gọi khi scroll đến cuối
   const handleScroll = (e) => {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
     if (scrollTop + clientHeight === scrollHeight && isLoggedIn) {
-      if (page === StoryStore.modalComments.totalPages) return;
+      if (page === StoryStore.comments.totalPages) return;
       const nextPage = page + 1;
-      StoryStore.getComments(nextPage, pageSize, type, parentId, true, true);
+      StoryStore.getComments(nextPage, pageSize, type, parentId);
       setPage(nextPage);
     }
   };
 
-  // const { data: dataList, refetch: dataRefetch } = useCustom({
-  //   method: "get",
-  //   url: `${DATA_API_URL}/api/mobile/comment/list`,
-  //   config: {
-  //     query: {
-  //       parentId: parentId,
-  //       size: 100,
-  //     },
-  //   },
-  // });
+  const handleReset = () => {
+    setSelectedItem(null);
+    setSelectedChildItem(null);
+    setReplyTo(null);
+  };
 
-  const handleSubmit = (values) => {
-    console.log("V")
+  const handleSubmit = async (values) => {
     const name = findMatchingSubstring(
       values.comment,
-      selectedItem?.author?.name ?? selectedChildItem?.author?.name ?? replyTo?.author?.name
+      selectedItem?.author?.name ??
+        selectedChildItem?.author?.name ??
+        replyTo?.author?.name
     );
     const message = findRemainingSubstring(
       values.comment,
-      selectedItem?.author?.name ?? selectedChildItem?.author?.name ?? replyTo?.author?.name
+      selectedItem?.author?.name ??
+        selectedChildItem?.author?.name ??
+        replyTo?.author?.name
     );
 
-    
-    console.log("MESSAGE: ", message)
-    console.log("NAME: ", name)
+    try {
+       await StoryStore.saveComment({
+        name: name,
+        message: message,
+        values: values,
+        selectedItem: selectedItem,
+        selectedChildItem: selectedChildItem,
+        replyTo: replyTo,
+        parentId: parentId,
+        type: type,
+      });
+      form.resetFields();
+      handleReset();
 
+      await StoryStore.getComments(page, pageSize, type, parentId);
 
-
-    // console.log("VALUES: ", values)
-    // console.log("SELECTED ITEM: ", toJS(selectedItem))
-    // mutate(
-    //   {
-    //     method: "post",
-    //     url: `${DATA_API_URL}/api/mobile/comment/add`,
-    //     values: {
-    //       message:
-    //         values.comment &&
-    //         values.comment.includes("@", 0) &&
-    //         (selectedItem || selectedChildItem)
-    //           ? `@[${name}](${
-    //               selectedItem?.author?.obfuscatedId ?? selectedChildItem?.author?.obfuscatedId
-    //             }) ${message}`
-    //           : values.comment,
-    //       parentId:
-    //         selectedItem?.id ?? selectedChildItem?.parentId ?? parentId ?? "",
-    //       type:
-    //         type === "COMMENT"
-    //           ? "COMMENT"
-    //           : type === "CHAPTER"
-    //           ? selectedItem || selectedChildItem
-    //             ? "COMMENT"
-    //             : "CHAPTER"
-    //           : selectedItem || selectedChildItem
-    //           ? "COMMENT"
-    //           : "RATING",
-    //     },
-    //   },
-    //   {
-    //     onSuccess(response) {
-    //       dataRefetch();
-    //       setSelectedItem(null);
-    //       setSelectedChildItem(null);
-    //       notification.success({
-    //         message: `Bạn vừa ${
-    //           selectedItem || selectedChildItem ? "trả lời" : "đăng"
-    //         } 1 ${type === "RATING" ? "đánh giá" : "bình luận"}!`,
-    //       });
-    //       form.resetFields();
-    //       setExpandedItems((prev) => ({
-    //         ...prev,
-    //         [response.data.data.parentId || parentId]: true,
-    //       }));
-
-    //       const commentId = selectedItem?.id ?? selectedChildItem?.parentId;
-    //       if (commentId && commentRef.current[commentId]) {
-    //         commentRef.current[commentId].scrollIntoView({
-    //           behavior: "smooth",
-    //           block: "start",
-    //         });
-    //       }
-    //     },
-    //   }
-    // );
+      onCancel()
+      toast("Đăng bình luận thành công!", {
+        type: "success",
+        theme: "colored",
+      });
+    } catch (e) {
+      console.log("Error: ", e);
+    }
   };
 
-  const toggleExpand = (itemId) => {
-    setExpandedItems((prev) => ({
-      ...prev,
-      [itemId]: !prev[itemId],
-    }));
-  };
+  // const toggleExpand = (itemId) => {
+  //   setExpandedItems((prev) => ({
+  //     ...prev,
+  //     [itemId]: !prev[itemId],
+  //   }));
+  // };
 
   return (
     <Modal
-      // centered
-      className="sm:min-w-[650px] max-h-[500px]"
+      className="sm:min-w-[650px] max-h-[700px]"
       open={open}
       onCancel={() => {
         onCancel?.();
-        setSelectedItem(null);
-        setSelectedChildItem(null);
+        handleReset();
         form.resetFields();
+        StoryStore.getComments(0, pageSize, type, parentId);
       }}
       footer={false}
       title={title}
     >
-      {/* <Form form={form} onFinish={handleSubmit} className="w-full"> */}
-      <Form
-        form={form}
-        className="w-full"
-        onScroll={handleScroll}
-        onFinish={handleSubmit}
-      >
-        <div className="max-h-[600px] overflow-y-auto">
+      <Form form={form} className="w-full" onFinish={handleSubmit}>
+        <div className="max-h-[600px] overflow-y-auto" onScroll={handleScroll}>
           {data?.map((item, index) => (
-          <div
-            key={index}
-            ref={(el) => {
-              if (el) {
-                commentRef.current[item.id] = el;
-              }
-            }}
-          >
-            <Comment
-              key={item?.id}
-              author={item.author?.name}
-              avatar={item.author?.avatar}
-              content={item?.message}
-              timestamp={item?.createdAt}
-              totalLike={item?.totalLike}
-              onReply={() => {
-                  console.log("ITEM: ", toJS(item))
-                        setSelectedItem(item);
-                        setSelectedChildItem(null);
-                      }}
+            <div
+              key={index}
+              ref={(el) => {
+                if (el) {
+                  commentRef.current[item.id] = el;
+                }
+              }}
             >
-              {item.children?.slice(0, 2).map((childItem, index) => {
-                const hasMoreChildren = item.childItem?.length > 2;
-                return (
-                  <div key={childItem.id}>
-                    <Comment
-                      author={childItem.author?.name}
-                      avatar={childItem.author?.avatar}
-                      content={childItem?.message}
-                      timestamp={childItem?.createdAt}
-                      totalLike={childItem?.totalLike}
-                      onReply={() => {
-                        setSelectedItem(null);
-                        setSelectedChildItem(childItem);
-                      }}
-                    />
-                    {index === 1 && hasMoreChildren && (
-                      <Button
-                        type="text"
-                        size="small"
-                        className="text-blue-500 ml-8"
-                        onReply={() => handleOpenCommentModal(item)}
-                      >
-                        Xem thêm {item.children.length - 2} bình luận
-                      </Button>
-                    )}
-                  </div>
-                );
-              })}
-            </Comment>
-          </div>
-        ))}
+              <Comment
+                key={item?.id}
+                author={item.author?.name}
+                avatar={item.author?.avatar}
+                content={item?.message}
+                timestamp={item?.createdAt}
+                totalLike={item?.totalLike}
+                onReply={() => {
+                  setSelectedItem(item);
+                  setSelectedChildItem(null);
+                }}
+              >
+                {item.children?.map((childItem, index) => {
+                  const hasMoreChildren = item.childItem?.length > 2;
+                  return (
+                    <div key={childItem.id}>
+                      <Comment
+                        author={childItem.author?.name}
+                        avatar={childItem.author?.avatar}
+                        content={childItem?.message}
+                        timestamp={childItem?.createdAt}
+                        totalLike={childItem?.totalLike}
+                        onReply={() => {
+                          setSelectedItem(null);
+                          setSelectedChildItem(childItem);
+                        }}
+                      />
+                      {index === 1 && hasMoreChildren && (
+                        <Button
+                          type="text"
+                          size="small"
+                          className="text-blue-500 ml-8"
+                          onReply={() => handleOpenCommentModal(item)}
+                        >
+                          Xem thêm {item.children.length - 2} bình luận
+                        </Button>
+                      )}
+                    </div>
+                  );
+                })}
+              </Comment>
+            </div>
+          ))}
         </div>
 
         <div className="flex gap-2 mt-5">

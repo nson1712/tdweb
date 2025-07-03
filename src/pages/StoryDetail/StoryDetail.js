@@ -34,7 +34,6 @@ import { CommentBox } from "../../components/CommentBox";
 import { toJS } from "mobx";
 
 const StoryDetail = ({ chapterTitle, storyTitle }) => {
-    const [replyTo, setReplyTo] = useState(null); // thêm state reply
   // const [showBubble, setShowBubble] = useState("up");
   const {
     loadingChapterDetail,
@@ -52,12 +51,12 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     topTrending,
     getTopTrending,
     comments,
-    modalComments,
     getComments,
     showCommentModal,
     setShowCommentModal,
+    replyTo,
+    setReplyTo,
   } = StoryStore;
-  console.log("MODAL COMMENTS: ", toJS(modalComments))
   const MODAL_PAGE_SIZE = 10;
   const [showChapter, setShowChapter] = useState(false);
   const route = useRouter();
@@ -86,8 +85,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     useState(false);
   // const [openCommentModal, setOpenCommentModal] = useState(false);
   const { storyChapterColumns } = useStoryChapterTableOptions();
-  const [selectedItem, setSelectedItem] = useState();
-  const [selectedChildItem, setSelectedChildItem] = useState();
 
   const fetchData = async () => {
     try {
@@ -228,7 +225,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   }, []);
 
   useEffect(() => {
-    getComments(0, 3, "CHAPTER", currentChapter?.id, GlobalStore.isLoggedIn);
+    getComments(0, 3, "CHAPTER", currentChapter?.id);
   }, [currentChapter?.id]);
 
   // const [currentChappter, chapterIndex] = useMemo(() => {
@@ -489,24 +486,19 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     );
   };
   const handleOpenCommentModal = async (item) => {
-    console.log("ITEMMMMMMMM: ", toJS(item))
     if (!GlobalStore.isLoggedIn) {
       return Router.push("/dang-nhap");
     }
     setReplyTo({ author: item.author, parentId: item.id });
-    // Lần đầu load modal: page=0, size=10
+
     await getComments(
       0,
       MODAL_PAGE_SIZE,
       "CHAPTER",
       currentChapter.id,
-      true,
-      true
     );
     setShowCommentModal(true);
   };
-
-  console.log("REPLY TO: ", toJS(replyTo.author))
 
   return (
     <>
@@ -916,34 +908,36 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           </div>
 
           {comments?.data?.length > 0 ? (
-            comments.data.map((item) => {
+            comments.data.slice(0,3).map((item) => {
               const hasMoreChildren = item.children.length > 2;
               return (
                 <Comment
-                  key={item.id}
-                  author={item.author?.name}
-                  avatar={item.author?.avatar}
-                  content={item.message}
-                  timestamp={item.createdAt}
-                  totalLike={item.totalLike}
+                  key={item?.id}
+                  id={item?.id}
+                  parentId={item?.parentId}
+                  author={item?.author?.name}
+                  avatar={item?.author?.avatar}
+                  content={item?.message}
+                  timestamp={item?.createdAt}
+                  totalLike={item?.totalLike}
+                  isLike={item?.isLike}
                   onReply={() => {
-                    // setSelectedItem(item);
-                    // setSelectedChildItem(null);
-                    handleOpenCommentModal(item)
+                    handleOpenCommentModal(item);
                   }}
                 >
                   {item.children.slice(0, 2).map((childItem, idx) => (
                     <div key={childItem.id}>
                       <Comment
+                        id={item?.id}
+                        parentId={item?.parentId}
                         author={childItem.author?.name}
                         avatar={childItem.author?.avatar}
-                        content={childItem.message}
-                        timestamp={childItem.createdAt}
-                        totalLike={childItem.totalLike}
+                        content={childItem?.message}
+                        timestamp={childItem?.createdAt}
+                        totalLike={childItem?.totalLike}
+                        isLike={childItem?.isLike}
                         onReply={() => {
-                          // setSelectedItem(null);
-                          // setSelectedChildItem(childItem);
-                          handleOpenCommentModal(childItem)
+                          handleOpenCommentModal(childItem);
                         }}
                       />
                       {idx === 1 && hasMoreChildren && (
@@ -951,7 +945,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                           type="text"
                           size="small"
                           className="text-blue-500 ml-8"
-                      onClick={() => handleOpenCommentModal(item)}
+                          onClick={() => handleOpenCommentModal(item)}
                         >
                           Xem thêm {item.children.length - 2} bình luận
                         </Button>
@@ -968,15 +962,13 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             </div>
           )}
 
-          {comments.data?.length > 3 && (
             <Button
               type="text"
               className="text-blue-500 flex mx-auto"
               onClick={handleOpenCommentModal}
             >
-              Xem tất cả bình luận
+              {comments.totalElements > 3 ? "Viết bình luận/Xem tất cả bình luận" : "Viết bình luận"}
             </Button>
-          )}
 
           <button
             className="w-[270px] mx-auto flex justify-center h-fit p-2 text-base sm:text-lg text-white bg-[#849EBF] font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4"
@@ -1235,7 +1227,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         open={showCommentModal}
         onCancel={() => setShowCommentModal(false)}
         parentId={currentChapter?.id}
-        data={modalComments?.data ?? []}
+        data={comments?.data ?? []}
         title="Bình luận"
         isLoggedIn={GlobalStore.isLoggedIn}
         pageSize={MODAL_PAGE_SIZE}

@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, toJS } from "mobx";
+import { makeAutoObservable, runInAction } from "mobx";
 import GlobalStore from "./GlobalStore";
 import * as Api from "../api/api";
 import { decryptData } from "../utils/utils";
@@ -56,11 +56,11 @@ class StoryStore {
 
   comments = {};
 
-  modalComments = {};
-
   hashtags = {};
 
   stories = {};
+
+  replyTo = null;
 
   loadingChapterDetail = false;
 
@@ -78,6 +78,12 @@ class StoryStore {
     makeAutoObservable(this);
     this.getBookMark(1, 1000);
   }
+
+  setReplyTo = (value) => {
+    runInAction(() => {
+      this.replyTo = value;
+    });
+  };
 
   setParentId = (value) => {
     runInAction(() => {
@@ -868,8 +874,9 @@ class StoryStore {
     }
   };
 
-  getRatingsByStory = async ({ page, size = 20, parentId, isLoggedIn }) => {
+  getRatingsByStory = async ({ page, size = 20, parentId }) => {
     try {
+      const isLoggedIn = await GlobalStore.checkIsLogin();
       const result = await Api.get({
         url: isLoggedIn
           ? "/data/web/rating/list"
@@ -918,15 +925,18 @@ class StoryStore {
     }
   };
 
-  saveRating = async (
+  saveComment = async ({
     values,
+    name,
+    message,
     selectedItem,
     selectedChildItem,
     replyTo,
-    parentId
-  ) => {
+    parentId,
+    type,
+  }) => {
     try {
-      const result = await Api.post({
+      await Api.post({
         url: "/data/web/comment/add",
         data: {
           message:
@@ -935,23 +945,24 @@ class StoryStore {
             (selectedItem || selectedChildItem || replyTo)
               ? `@[${name}](${
                   selectedItem?.author?.obfuscatedId ??
-                  selectedChildItem?.author?.obfuscatedId
+                  selectedChildItem?.author?.obfuscatedId ??
+                  replyTo?.author?.obfuscatedId
                 }) ${message}`
               : values.comment,
           parentId:
             selectedItem?.id ??
             selectedChildItem?.parentId ??
-            replyTo.parentId ??
+            replyTo?.parentId ??
             parentId ??
             "",
           type:
             type === "COMMENT"
               ? "COMMENT"
               : type === "CHAPTER"
-              ? selectedItem || selectedChildItem
+              ? selectedItem || selectedChildItem || replyTo?.parentId
                 ? "COMMENT"
                 : "CHAPTER"
-              : selectedItem || selectedChildItem
+              : selectedItem || selectedChildItem || replyTo?.parentId
               ? "COMMENT"
               : "RATING",
         },
@@ -1031,15 +1042,28 @@ class StoryStore {
     }
   };
 
-  getComments = async (
-    page,
-    size,
-    type,
-    parentId,
-    isLoggedIn,
-    isModal = false
-  ) => {
+  handleLikeUnlikeComment = async (id, isLike, parentId) => {
     try {
+      const url = isLike
+        ? `/data/web/comment/${id}/unlike`
+        : `/data/web/comment/${id}/like`;
+
+      await Api.post({
+        url: url,
+        data: {
+          id: id,
+        },
+      });
+
+      await this.getComments(0, 20, "CHAPTER", parentId);
+    } catch (error) {
+      console.error("Error while toggling like:", error);
+    }
+  };
+
+  getComments = async (page, size, type, parentId) => {
+    try {
+      const isLoggedIn = GlobalStore.checkIsLogin();
       const result = await Api.get({
         url: isLoggedIn
           ? "/data/web/comment/list"
@@ -1053,19 +1077,13 @@ class StoryStore {
       });
 
       runInAction(() => {
-        if (!isModal) {
-          // inline
+        if (page === 0) {
           this.comments = result.data;
         } else {
-          // modal
-          if (page === 0) {
-            this.modalComments = result.data;
-          } else {
-            this.modalComments = {
-              ...result.data,
-              data: [...this.modalComments.data, ...result.data.data],
-            };
-          }
+          this.comments = {
+            ...result.data,
+            data: [...this.comments.data, ...result.data.data],
+          };
         }
       });
     } catch (e) {

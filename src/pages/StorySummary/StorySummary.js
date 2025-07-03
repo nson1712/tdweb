@@ -154,7 +154,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     showRatingComment,
     setShowRatingComment,
     getComments,
-    modalComments,
+    comments,
     parentId
   } = StoryStore;
   // const [currentTab, setCurrentTab] = useState("CONTENT");
@@ -264,7 +264,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
   }, [GlobalStore.isLoggedIn]);
 
   useEffect(() => {
-    getComments(0, 3, "RATING", parentId, GlobalStore.isLoggedIn, true);
+    getComments(0, 3, "RATING", parentId);
   }, [parentId])
 
   const handleLoadMoreRatings = async () => {
@@ -1120,7 +1120,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
         open={showRatingComment}
         onCancel={() => setShowRatingComment(false)}
         parentId={parentId}
-        data={modalComments?.data ?? []}
+        data={comments?.data ?? []}
         title="Bình luận"
         isLoggedIn={GlobalStore.isLoggedIn}
         pageSize={10}

@@ -25,6 +25,7 @@ export const RatingCard = ({
     setParentId(id);
     setShowRatingComment(true);
   };
+  const isLoggedIn = GlobalStore.checkIsLogin();
   return (
     <div className="relative w-72 bg-white rounded-2xl mt-3 z-99">
       <div className="absolute w-fit rounded-full px-2 py-0 bg-gray-50/50 right-5 -top-3">
@@ -56,7 +57,7 @@ export const RatingCard = ({
           <div
             className="cursor-pointer hover:scale-110 transition-all duration-200 active:scale-90"
             onClick={() =>
-              GlobalStore.isLoggedIn
+              isLoggedIn
                 ? handleLikeUnlike(id, isLike, parentId)
                 : handleForceLogin()
             }
