@@ -1,6 +1,6 @@
 import React from 'react';
 import Button from '../../components/Button';
-import { formatStringToNumber } from '../../utils/utils';
+import { formatNumber, formatStringToNumber } from '../../utils/utils';
 
 const PriceInfo = ({discountValue, finalChargeValue, storyDetail, handleOpenFullChapter}) => {
 
@@ -14,7 +14,7 @@ const PriceInfo = ({discountValue, finalChargeValue, storyDetail, handleOpenFull
               className="white-text mt-2.5 mr-5 ml-5 font-bold text-xl"
             >
               <span className="fl mr-[5px]">
-                {`Ủng Hộ ${formatStringToNumber(finalChargeValue)}`}
+                {`Ủng Hộ ${formatNumber(finalChargeValue)}`}
               </span>
               <img
                 src={

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { calculateCreatedTime } from "../../utils/utils";
 import imageLoader from "../../loader/imageLoader";
 import GlobalStore from "../../stores/GlobalStore";
+import StoryStore from "../../stores/StoryStore";
 
 export const RatingCard = ({
   id,
@@ -17,8 +18,14 @@ export const RatingCard = ({
   createdAt,
   isLike,
   handleLikeUnlike,
-  handleForceLogin
+  handleForceLogin,
 }) => {
+  const { setShowRatingComment, setParentId } = StoryStore;
+  const handleOpenCommentModal = () => {
+    setParentId(id);
+    setShowRatingComment(true);
+  };
+  const isLoggedIn = GlobalStore.checkIsLogin();
   return (
     <div className="relative w-72 bg-white rounded-2xl mt-3 z-99">
       <div className="absolute w-fit rounded-full px-2 py-0 bg-gray-50/50 right-5 -top-3">
@@ -35,7 +42,7 @@ export const RatingCard = ({
             loader={imageLoader}
           />
         </div>
-        <div className="flex-1 font-bold text-sm self-center line-clamp-2  break-words">
+        <div className="flex-1 font-bold text-sm self-center line-clamp-2 break-words">
           {displayName}
         </div>
       </div>
@@ -49,7 +56,11 @@ export const RatingCard = ({
         <div className="flex gap-x-1 text-xs text-gray-400/90">
           <div
             className="cursor-pointer hover:scale-110 transition-all duration-200 active:scale-90"
-            onClick={() => GlobalStore.isLoggedIn ? handleLikeUnlike(id, isLike, parentId) : handleForceLogin()}
+            onClick={() =>
+              isLoggedIn
+                ? handleLikeUnlike(id, isLike, parentId)
+                : handleForceLogin()
+            }
           >
             {isLike ? (
               <LikeFilled className="self-center text-blue-500" />
@@ -60,7 +71,12 @@ export const RatingCard = ({
           <span className="self-center">{totalLike}</span>
         </div>
         <div className="flex gap-x-1 text-xs text-gray-400/90">
-          <CommentOutlined />{" "}
+          <CommentOutlined
+            className="cursor-pointer hover:scale-105"
+            onClick={
+              GlobalStore.isLoggedIn ? handleOpenCommentModal : handleForceLogin
+            }
+          />
           <span className="self-center">{totalComment}</span>
         </div>
         <div className="flex gap-x-1 text-xs">

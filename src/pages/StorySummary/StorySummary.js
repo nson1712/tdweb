@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 import * as Api from "../../api/api";
 import Button from "../../components/Button/Button";
@@ -8,10 +8,7 @@ import StoryStore from "../../stores/StoryStore";
 import classNames from "classnames";
 import Link from "next/link";
 import MobileHeader from "../../components/Header/MobileHeader";
-import Header from "../../components/Header/Header";
 import Chapters from "../StoryDetail/Chapters";
-import MobileShare from "./MobileShare";
-import LaunchCountdown from "../../components/LaunchCountdown";
 import { getMobileOperatingSystem, getRadomNumber } from "../../utils/utils";
 import ModalComponent from "../../components/Modal/Modal";
 import { toast } from "react-toastify";
@@ -19,28 +16,19 @@ import PaginatedList from "./PaginatedList";
 import GlobalStore from "../../stores/GlobalStore";
 import PriceInfo from "./PriceInfo";
 import ShortLogin from "../Login/ShortLogin";
-import { Alert, message, Spin } from "antd";
+import { Alert, Spin, Input } from "antd";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
-import BlogStore from "../../stores/BlogStore";
 import withIconTitle from "../../components/CustomIconTitle";
 import TrendingIcon from "../../../public/icons/TrendingIcon";
 import NewIcon from "../../../public/icons/NewIcon";
 import HotStories from "../../components/HotStories";
 import ButtonViewAll from "../../components/ButtonViewAll";
-import { toJS } from "mobx";
 import SlideRatings from "../../components/SliderRating";
-
-const TABS = [
-  {
-    label: "Nội dung",
-    value: "CONTENT",
-  },
-  {
-    label: "Mục lục",
-    value: "CHAPTERS",
-  },
-];
+import { EditOutlined } from "@ant-design/icons";
+import AddRatingModal from "../../components/AddRatingModal";
+import { toJS } from "mobx";
+import { CommentBox } from "../../components/CommentBox";
 
 const ADS = [
   {
@@ -59,9 +47,6 @@ const ADS = [
     image: "https://media.truyenso1.xyz/ads/linh-chi-do.png",
   },
 ];
-
-let timeout;
-let isMobile = true;
 
 const ReadMore = ({ children }) => {
   const text = children;
@@ -124,11 +109,11 @@ function useScrollDirection() {
 }
 
 const StorySummary = ({ storyDetail, articleDetail }) => {
-  const scrollDirection = useScrollDirection();
-  const [showBubble, setShowBubble] = useState("up");
+  // const scrollDirection = useScrollDirection();
+  // const [showBubble, setShowBubble] = useState("up");
   const [scrollOffset, setScrollOffset] = useState(0);
   const [showChapter, setShowChapter] = useState(false);
-  const [time, setTime] = useState(180);
+  // const [time, setTime] = useState(180);
   const [showModal, setShowModal] = useState(false);
   const [showModalApp, setShowModalApp] = useState(false);
   const [popupUrl, setPopUpUrl] = useState("/images/download-app/popup-1.png");
@@ -140,6 +125,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [loading, setLoading] = useState(false);
   const [ratingsPage, setRatingsPage] = useState(0);
+  const [showAddRating, setShowAddRating] = useState(false);
   const {
     // storyDetail,
     // getStoryDetail,
@@ -163,13 +149,17 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     getTopNew,
     ratingsByStory,
     getRatingsByStory,
+    myRating,
+    getMyRating,
+    showRatingComment,
+    setShowRatingComment,
+    getComments,
+    comments,
+    parentId
   } = StoryStore;
-  // const { storyDetailArticle, getBlogStoryDetail } = BlogStore;
-  const [currentChapterDetail, setCurrentChapterDetail] = useState([]);
-
-  const [currentTab, setCurrentTab] = useState("CONTENT");
-  const [chapters, setChapters] = useState([]);
-  const [affType, setAffType] = useState("");
+  // const [currentTab, setCurrentTab] = useState("CONTENT");
+  // const [chapters, setChapters] = useState([]);
+  // const [affType, setAffType] = useState("");
   const [affObj, setAffObj] = useState({});
 
   const route = useRouter();
@@ -267,6 +257,16 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     }
   }, [storyDetail?.slug]);
 
+  useEffect(() => {
+    if (GlobalStore.isLoggedIn) {
+      getMyRating({ parentId: storyDetail.slug });
+    }
+  }, [GlobalStore.isLoggedIn]);
+
+  useEffect(() => {
+    getComments(0, 3, "RATING", parentId);
+  }, [parentId])
+
   const handleLoadMoreRatings = async () => {
     const nextPage = ratingsPage + 1;
     await getRatingsByStory({
@@ -338,7 +338,6 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
   const handleOpenFullChapter = async () => {
     setLoading(true);
     try {
-      console.log("GlobalStore.isLoggedIn: ", GlobalStore.isLoggedIn);
       if (!GlobalStore.isLoggedIn) {
         setShowLoginModal(true);
         return;
@@ -431,6 +430,28 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
 
   const TopTrendingTitle = withIconTitle(TrendingIcon, "Truyện Hot 🔥");
   const TopNewTitle = withIconTitle(NewIcon, "Truyện Mới 💥");
+
+  const handleAddRating = async (values) => {
+    try {
+      const result = await Api.post({
+        url: "/data/web/rating/save",
+        data: {
+          parentId: storyDetail?.slug,
+          type: "STORY",
+          message: values?.message,
+          rate: values?.rate,
+        },
+      });
+      setShowAddRating(false);
+      getRatingsByStory({ parentId: storyDetail.slug, page: 0 });
+    } catch (e) {
+      console.log("Error: ", e);
+    }
+  };
+
+  const handleCloseAddRating = () => {
+    setShowAddRating(false);
+  };
 
   return (
     <>
@@ -865,19 +886,43 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                   ))}
               </div>
 
-              {ratingsByStory?.data?.length !== 0 ? (
-                <>
-                  <h2 className="text-lg font-bold mt-4 underline pl-3">
-                    Đánh giá của độc giả
-                  </h2>
-                  <div className="bg-[#F5F8FF] py-2">
+              <>
+                <h2 className="text-lg font-bold mt-4 underline pl-3">
+                  Đánh giá của độc giả
+                </h2>
+                <div className="bg-[#F5F8FF] py-2">
+                  {ratingsByStory.data?.length !== 0 ? (
                     <SlideRatings
                       ratings={ratingsByStory?.data}
                       onEndReached={handleLoadMoreRatings}
                     />
+                  ) : (
+                    <div className="text-center py-4 text-gray-500">
+                      ✨Chưa có ai đánh giá truyện này. Bạn hãy là người đầu
+                      tiên đóng góp cho cộng đồng nhé!
+                    </div>
+                  )}
+
+                  <div className="flex justify-end mt-4 mr-4">
+                    <button
+                      className="px-3 py-2 text-sm bg-white w-fit rounded-lg space-x-2 text-blue-500"
+                      onClick={() =>
+                        GlobalStore.isLoggedIn
+                          ? setShowAddRating(true)
+                          : Router.push("/dang-nhap")
+                      }
+                    >
+                      {" "}
+                      <EditOutlined />
+                      <span>
+                        {myRating?.data?.length !== 0
+                          ? "Sửa đánh giá"
+                          : "Viết đánh giá"}
+                      </span>
+                    </button>
                   </div>
-                </>
-              ) : <div className="text-center py-4 text-gray-500">✨Chưa có ai đánh giá truyện này. Bạn hãy là người đầu tiên đóng góp cho cộng đồng nhé!</div>}
+                </div>
+              </>
 
               {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
                 storyDetail?.slug ===
@@ -1063,6 +1108,25 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
           </ModalComponent>
         )}
       </div>
+
+      <AddRatingModal
+        open={showAddRating}
+        onCancel={handleCloseAddRating}
+        onOk={handleAddRating}
+        rating={myRating?.data}
+      />
+
+      <CommentBox
+        open={showRatingComment}
+        onCancel={() => setShowRatingComment(false)}
+        parentId={parentId}
+        data={comments?.data ?? []}
+        title="Bình luận"
+        isLoggedIn={GlobalStore.isLoggedIn}
+        pageSize={10}
+        type="RATING"
+      />
+
       {/*<MobileShare showBubble={showBubble} setShowBubble={setShowBubble}/>*/}
       {/*<ChatSupportAutoClose/>*/}
       <Spin spinning={loadingChapterDetail || loading} fullscreen={true} />

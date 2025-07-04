@@ -1,7 +1,15 @@
-import { Avatar, Button, Form, Modal, notification } from "antd";
+import { Avatar, Button, Form, Modal, Input, notification } from "antd";
 import { useEffect, useRef, useState } from "react";
 import Comment from "../CommentItem";
 import StoryStore from "../../stores/StoryStore";
+import { SendOutlined } from "@ant-design/icons";
+import {
+  findMatchingSubstring,
+  findRemainingSubstring,
+} from "../../utils/utils";
+import { toast } from "react-toastify";
+
+const { TextArea } = Input;
 
 export const CommentBox = ({
   open,
@@ -12,14 +20,17 @@ export const CommentBox = ({
   data,
   isLoggedIn,
   pageSize,
+  handleOpenCommentModal,
+  replyTo,
 }) => {
   const [form] = Form.useForm();
   const [page, setPage] = useState(0);
-  // const [selectedItem, setSelectedItem] = useState();
-  // const [selectedChildItem, setSelectedChildItem] = useState();
-  const [expandedItems, setExpandedItems] = useState({});
+  const [selectedItem, setSelectedItem] = useState();
+  const [selectedChildItem, setSelectedChildItem] = useState();
+  // const [expandedItems, setExpandedItems] = useState({});
   const ref = useRef(null);
   const commentRef = useRef({});
+  const { setReplyTo } = StoryStore;
 
   useEffect(() => {
     if (open) {
@@ -27,186 +38,148 @@ export const CommentBox = ({
     }
   }, [open]);
 
-  // Hàm gọi khi scroll đến cuối
+  useEffect(() => {
+    if (!open) return;
+    const target = selectedItem || selectedChildItem || replyTo;
+    if (target?.author) {
+      form.setFieldsValue({ comment: `@${target.author?.name} ` });
+      if (ref.current) ref.current.focus();
+    }
+  }, [open, replyTo, selectedItem, selectedChildItem]);
+
   const handleScroll = (e) => {
     const { scrollTop, scrollHeight, clientHeight } = e.currentTarget;
     if (scrollTop + clientHeight === scrollHeight && isLoggedIn) {
-      if (page === StoryStore.modalComments.totalPages) return;
+      if (page === StoryStore.comments.totalPages) return;
       const nextPage = page + 1;
-      StoryStore.getComments(nextPage, pageSize, parentId, true, true);
+      StoryStore.getComments(nextPage, pageSize, type, parentId);
       setPage(nextPage);
     }
   };
 
-  // const { data: dataList, refetch: dataRefetch } = useCustom({
-  //   method: "get",
-  //   url: `${DATA_API_URL}/api/mobile/comment/list`,
-  //   config: {
-  //     query: {
-  //       parentId: parentId,
-  //       size: 100,
-  //     },
-  //   },
-  // });
-
-  // useEffect(() => {
-  //   if (selectedItem || selectedChildItem) {
-  //     form.setFieldsValue({
-  //       comment: `@${
-  //         selectedItem?.author?.name ?? selectedChildItem?.author?.name
-  //       }${" "}`,
-  //     });
-  //     if (ref.current) {
-  //       ref.current.focus();
-  //     }
-  //   }
-  // }, [selectedItem, selectedChildItem]);
-
-  // const handleSubmit = (values) => {
-  //   const name = findMatchingSubstring(
-  //     values.comment,
-  //     selectedItem?.author?.name ?? selectedChildItem?.author?.name
-  //   );
-  //   const message = findRemainingSubstring(
-  //     values.comment,
-  //     selectedItem?.author?.name ?? selectedChildItem?.author?.name
-  //   );
-
-  //   mutate(
-  //     {
-  //       method: "post",
-  //       url: `${DATA_API_URL}/api/mobile/comment/add`,
-  //       values: {
-  //         message:
-  //           values.comment &&
-  //           values.comment.includes("@", 0) &&
-  //           (selectedItem || selectedChildItem)
-  //             ? `@[${name}](${
-  //                 selectedItem?.author?.obfuscatedId ?? selectedChildItem?.author?.obfuscatedId
-  //               }) ${message}`
-  //             : values.comment,
-  //         parentId:
-  //           selectedItem?.id ?? selectedChildItem?.parentId ?? parentId ?? "",
-  //         type:
-  //           type === "COMMENT"
-  //             ? "COMMENT"
-  //             : type === "CHAPTER"
-  //             ? selectedItem || selectedChildItem
-  //               ? "COMMENT"
-  //               : "CHAPTER"
-  //             : selectedItem || selectedChildItem
-  //             ? "COMMENT"
-  //             : "RATING",
-  //       },
-  //     },
-  //     {
-  //       onSuccess(response) {
-  //         dataRefetch();
-  //         setSelectedItem(null);
-  //         setSelectedChildItem(null);
-  //         notification.success({
-  //           message: `Bạn vừa ${
-  //             selectedItem || selectedChildItem ? "trả lời" : "đăng"
-  //           } 1 ${type === "RATING" ? "đánh giá" : "bình luận"}!`,
-  //         });
-  //         form.resetFields();
-  //         setExpandedItems((prev) => ({
-  //           ...prev,
-  //           [response.data.data.parentId || parentId]: true,
-  //         }));
-
-  //         const commentId = selectedItem?.id ?? selectedChildItem?.parentId;
-  //         if (commentId && commentRef.current[commentId]) {
-  //           commentRef.current[commentId].scrollIntoView({
-  //             behavior: "smooth",
-  //             block: "start",
-  //           });
-  //         }
-  //       },
-  //     }
-  //   );
-  // };
-
-  const toggleExpand = (itemId) => {
-    setExpandedItems((prev) => ({
-      ...prev,
-      [itemId]: !prev[itemId],
-    }));
+  const handleReset = () => {
+    setSelectedItem(null);
+    setSelectedChildItem(null);
+    setReplyTo(null);
   };
+
+  const handleSubmit = async (values) => {
+    const name = findMatchingSubstring(
+      values.comment,
+      selectedItem?.author?.name ??
+        selectedChildItem?.author?.name ??
+        replyTo?.author?.name
+    );
+    const message = findRemainingSubstring(
+      values.comment,
+      selectedItem?.author?.name ??
+        selectedChildItem?.author?.name ??
+        replyTo?.author?.name
+    );
+
+    try {
+       await StoryStore.saveComment({
+        name: name,
+        message: message,
+        values: values,
+        selectedItem: selectedItem,
+        selectedChildItem: selectedChildItem,
+        replyTo: replyTo,
+        parentId: parentId,
+        type: type,
+      });
+      form.resetFields();
+      handleReset();
+
+      await StoryStore.getComments(page, pageSize, type, parentId);
+
+      onCancel()
+      toast("Đăng bình luận thành công!", {
+        type: "success",
+        theme: "colored",
+      });
+    } catch (e) {
+      console.log("Error: ", e);
+    }
+  };
+
+  // const toggleExpand = (itemId) => {
+  //   setExpandedItems((prev) => ({
+  //     ...prev,
+  //     [itemId]: !prev[itemId],
+  //   }));
+  // };
 
   return (
     <Modal
-      className="sm:min-w-[650px] max-h-[500px]"
+      className="sm:min-w-[650px] max-h-[700px]"
       open={open}
       onCancel={() => {
         onCancel?.();
-        // setSelectedItem(null);
-        // setSelectedChildItem(null);
+        handleReset();
         form.resetFields();
+        StoryStore.getComments(0, pageSize, type, parentId);
       }}
       footer={false}
       title={title}
     >
-      {/* <Form form={form} onFinish={handleSubmit} className="w-full"> */}
-      <Form
-        form={form}
-        className="w-full max-h-[700px] overflow-y-auto"
-        onScroll={handleScroll}
-      >
-        {data?.map((item, index) => (
-          <div
-            key={index}
-            ref={(el) => {
-              if (el) {
-                commentRef.current[item.id] = el;
-              }
-            }}
-          >
-            <Comment
-              key={item?.id}
-              author={item.author?.name}
-              avatar={item.author?.avatar}
-              content={item?.message}
-              timestamp={item?.createdAt}
-              totalLike={item?.totalLike}
-              // onReply={() => {
-              //   setSelectedChildItem(null);
-              //   setSelectedItem(item);
-              // }}
+      <Form form={form} className="w-full" onFinish={handleSubmit}>
+        <div className="max-h-[600px] overflow-y-auto" onScroll={handleScroll}>
+          {data?.map((item, index) => (
+            <div
+              key={index}
+              ref={(el) => {
+                if (el) {
+                  commentRef.current[item.id] = el;
+                }
+              }}
             >
-              {item.children?.slice(0, 2).map((childItem, index) => {
-                const hasMoreChildren = item.childItem?.length > 2;
-                return (
-                  <div key={childItem.id}>
-                    <Comment
-                      author={childItem.author?.name}
-                      avatar={childItem.author?.avatar}
-                      content={childItem?.message}
-                      timestamp={childItem?.createdAt}
-                      totalLike={childItem?.totalLike}
-                      onReply={() => {
-                        setSelectedItem(null);
-                        setSelectedChildItem(childItem);
-                      }}
-                    />
-                    {index === 1 && hasMoreChildren && (
-                      <Button
-                        type="text"
-                        size="small"
-                        className="text-blue-500 ml-8"
-                        onClick={handleOpenCommentModal}
-                      >
-                        Xem thêm {item.children.length - 2} bình luận
-                      </Button>
-                    )}
-                  </div>
-                );
-              })}
-            </Comment>
-          </div>
-        ))}
+              <Comment
+                key={item?.id}
+                author={item.author?.name}
+                avatar={item.author?.avatar}
+                content={item?.message}
+                timestamp={item?.createdAt}
+                totalLike={item?.totalLike}
+                onReply={() => {
+                  setSelectedItem(item);
+                  setSelectedChildItem(null);
+                }}
+              >
+                {item.children?.map((childItem, index) => {
+                  const hasMoreChildren = item.childItem?.length > 2;
+                  return (
+                    <div key={childItem.id}>
+                      <Comment
+                        author={childItem.author?.name}
+                        avatar={childItem.author?.avatar}
+                        content={childItem?.message}
+                        timestamp={childItem?.createdAt}
+                        totalLike={childItem?.totalLike}
+                        onReply={() => {
+                          setSelectedItem(null);
+                          setSelectedChildItem(childItem);
+                        }}
+                      />
+                      {index === 1 && hasMoreChildren && (
+                        <Button
+                          type="text"
+                          size="small"
+                          className="text-blue-500 ml-8"
+                          onReply={() => handleOpenCommentModal(item)}
+                        >
+                          Xem thêm {item.children.length - 2} bình luận
+                        </Button>
+                      )}
+                    </div>
+                  );
+                })}
+              </Comment>
+            </div>
+          ))}
+        </div>
 
-        {/* <div className="flex gap-2 mt-5">
+        <div className="flex gap-2 mt-5">
           <div className="w-full">
             <Form.Item name={["comment"]}>
               <TextArea
@@ -222,7 +195,7 @@ export const CommentBox = ({
               <Button htmlType="submit" icon={<SendOutlined />} />
             </Form.Item>
           </div>
-        </div> */}
+        </div>
       </Form>
     </Modal>
   );

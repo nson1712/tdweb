@@ -31,6 +31,7 @@ import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
 import Comment from "../../components/CommentItem";
 import { CommentBox } from "../../components/CommentBox";
+import { toJS } from "mobx";
 
 const StoryDetail = ({ chapterTitle, storyTitle }) => {
   // const [showBubble, setShowBubble] = useState("up");
@@ -50,8 +51,11 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
     topTrending,
     getTopTrending,
     comments,
-    modalComments,
     getComments,
+    showCommentModal,
+    setShowCommentModal,
+    replyTo,
+    setReplyTo,
   } = StoryStore;
   const MODAL_PAGE_SIZE = 10;
   const [showChapter, setShowChapter] = useState(false);
@@ -79,7 +83,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [filter, setFilter] = useState("oldest");
   const [showDepositSuccessWarning, setShowDepositSuccessWarning] =
     useState(false);
-  const [openCommentModal, setOpenCommentModal] = useState(false);
+  // const [openCommentModal, setOpenCommentModal] = useState(false);
   const { storyChapterColumns } = useStoryChapterTableOptions();
 
   const fetchData = async () => {
@@ -221,7 +225,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   }, []);
 
   useEffect(() => {
-    getComments(0, 3, currentChapter?.id, GlobalStore.isLoggedIn);
+    getComments(0, 3, "CHAPTER", currentChapter?.id);
   }, [currentChapter?.id]);
 
   // const [currentChappter, chapterIndex] = useMemo(() => {
@@ -481,13 +485,19 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       `https://m.me/185169981351799?text=Mình đang đọc ${chapterTitle} %0A Truyện: ${storyTitle} %0A Nhưng bị thiếu nội dung, Toidoc hỗ trợ mình với!`
     );
   };
-  const handleOpenCommentModal = async () => {
+  const handleOpenCommentModal = async (item) => {
     if (!GlobalStore.isLoggedIn) {
       return Router.push("/dang-nhap");
     }
-    // Lần đầu load modal: page=0, size=10
-    await getComments(0, MODAL_PAGE_SIZE, currentChapter.id, true, true);
-    setOpenCommentModal(true);
+    setReplyTo({ author: item.author, parentId: item.id });
+
+    await getComments(
+      0,
+      MODAL_PAGE_SIZE,
+      "CHAPTER",
+      currentChapter.id,
+    );
+    setShowCommentModal(true);
   };
 
   return (
@@ -898,28 +908,36 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           </div>
 
           {comments?.data?.length > 0 ? (
-            comments.data.map((item) => {
+            comments.data.slice(0,3).map((item) => {
               const hasMoreChildren = item.children.length > 2;
               return (
                 <Comment
-                  key={item.id}
-                  author={item.author?.name}
-                  avatar={item.author?.avatar}
-                  content={item.message}
-                  timestamp={item.createdAt}
-                  totalLike={item.totalLike}
+                  key={item?.id}
+                  id={item?.id}
+                  parentId={item?.parentId}
+                  author={item?.author?.name}
+                  avatar={item?.author?.avatar}
+                  content={item?.message}
+                  timestamp={item?.createdAt}
+                  totalLike={item?.totalLike}
+                  isLike={item?.isLike}
+                  onReply={() => {
+                    handleOpenCommentModal(item);
+                  }}
                 >
                   {item.children.slice(0, 2).map((childItem, idx) => (
                     <div key={childItem.id}>
                       <Comment
+                        id={item?.id}
+                        parentId={item?.parentId}
                         author={childItem.author?.name}
                         avatar={childItem.author?.avatar}
-                        content={childItem.message}
-                        timestamp={childItem.createdAt}
-                        totalLike={childItem.totalLike}
+                        content={childItem?.message}
+                        timestamp={childItem?.createdAt}
+                        totalLike={childItem?.totalLike}
+                        isLike={childItem?.isLike}
                         onReply={() => {
-                          setSelectedItem(null);
-                          setSelectedChildItem(childItem);
+                          handleOpenCommentModal(childItem);
                         }}
                       />
                       {idx === 1 && hasMoreChildren && (
@@ -927,7 +945,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                           type="text"
                           size="small"
                           className="text-blue-500 ml-8"
-                          onClick={handleOpenCommentModal}
+                          onClick={() => handleOpenCommentModal(item)}
                         >
                           Xem thêm {item.children.length - 2} bình luận
                         </Button>
@@ -939,19 +957,18 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             })
           ) : (
             <div className="text-center py-4 text-gray-500">
-              Chưa có ai bình luận chương này. Bạn hãy là người đầu tiên đóng góp cho cộng đồng nhé !
+              Chưa có ai bình luận chương này. Bạn hãy là người đầu tiên đóng
+              góp cho cộng đồng nhé !
             </div>
           )}
 
-          {comments.data?.length > 3 && (
             <Button
               type="text"
               className="text-blue-500 flex mx-auto"
               onClick={handleOpenCommentModal}
             >
-              Xem tất cả bình luận
+              {comments.totalElements > 3 ? "Viết bình luận/Xem tất cả bình luận" : "Viết bình luận"}
             </Button>
-          )}
 
           <button
             className="w-[270px] mx-auto flex justify-center h-fit p-2 text-base sm:text-lg text-white bg-[#849EBF] font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4"
@@ -1207,13 +1224,16 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       </Modal>
 
       <CommentBox
-        open={openCommentModal}
-        onCancel={() => setOpenCommentModal(false)}
+        open={showCommentModal}
+        onCancel={() => setShowCommentModal(false)}
         parentId={currentChapter?.id}
-        data={modalComments?.data ?? []}
+        data={comments?.data ?? []}
         title="Bình luận"
         isLoggedIn={GlobalStore.isLoggedIn}
         pageSize={MODAL_PAGE_SIZE}
+        type="CHAPTER"
+        handleOpenCommentModal={() => {}}
+        replyTo={replyTo}
       />
 
       <Spin spinning={loadingChapterDetail} />

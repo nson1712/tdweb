@@ -128,6 +128,14 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
           {description ||
             "Đăng nhập 1 chạm bằng các phương thức dưới đây để đọc nội dung này"}
         </p>
+
+        <Alert
+          className="mb-4"
+          showIcon
+          type="warning"
+          message="Chú ý: Chỉ hoạt động tốt trên safari và chrome!"
+        />
+
         <div style={{ margin: "auto" }}>
           <a id="google-login-btn" className="align-center">
             <Button
@@ -228,22 +236,24 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
               className="text-xl sm:text-2xl mt-4"
               message={
                 <div>
-                  Vui lòng kiểm tra lại trình duyệt bạn đang sử dụng!. Nếu bạn
-                  sử dụng{" "}
-                  <span className="font-bold text-red-500 italic">Cốc Cốc</span>{" "}
+                  {" "}
+                  Nếu bạn sử dụng{" "}
+                  <span className="font-bold text-red-500 italic">
+                    Cốc Cốc
+                  </span>{" "}
                   hoặc{" "}
                   <span className="font-bold text-red-500 italic">Firefox</span>
                   , vui lòng chuyển sang{" "}
                   <span className="font-bold text-red-500 italic">
-                    Chrome.{" "}
+                    Chrome/Safari.{" "}
                   </span>
-                  Nếu bạn đang sử dụng Chrome mà vẫn không đăng nhập được, vui
+                  Nếu gặp bất tiện gì khác, vui
                   lòng{" "}
                   <span
                     className="text-blue-500 font-bold cursor-pointer hover:text-blue-400"
                     onClick={handleSupport}
                   >
-                    liên hệ với Toidoc!
+                    liên hệ với Toidoc Support!
                   </span>
                 </div>
               }
