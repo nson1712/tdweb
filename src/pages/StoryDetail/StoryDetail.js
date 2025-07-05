@@ -225,7 +225,9 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   }, []);
 
   useEffect(() => {
-    getComments(0, 3, "CHAPTER", currentChapter?.id);
+    if (currentChapter?.id) {
+      getComments(0, 3, "CHAPTER", currentChapter?.id);
+    }
   }, [currentChapter?.id]);
 
   // const [currentChappter, chapterIndex] = useMemo(() => {
@@ -490,13 +492,6 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
       return Router.push("/dang-nhap");
     }
     setReplyTo({ author: item.author, parentId: item.id });
-
-    await getComments(
-      0,
-      MODAL_PAGE_SIZE,
-      "CHAPTER",
-      currentChapter.id,
-    );
     setShowCommentModal(true);
   };
 
@@ -908,7 +903,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           </div>
 
           {comments?.data?.length > 0 ? (
-            comments.data.slice(0,3).map((item) => {
+            comments.data.slice(0, 3).map((item) => {
               const hasMoreChildren = item.children.length > 2;
               return (
                 <Comment
@@ -962,13 +957,15 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
             </div>
           )}
 
-            <Button
-              type="text"
-              className="text-blue-500 flex mx-auto"
-              onClick={handleOpenCommentModal}
-            >
-              {comments.totalElements > 3 ? "Viết bình luận/Xem tất cả bình luận" : "Viết bình luận"}
-            </Button>
+          <Button
+            type="text"
+            className="text-blue-500 flex mx-auto"
+            onClick={handleOpenCommentModal}
+          >
+            {comments.totalElements > 3
+              ? "Viết bình luận/Xem tất cả bình luận"
+              : "Viết bình luận"}
+          </Button>
 
           <button
             className="w-[270px] mx-auto flex justify-center h-fit p-2 text-base sm:text-lg text-white bg-[#849EBF] font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4"

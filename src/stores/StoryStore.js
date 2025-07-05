@@ -1063,7 +1063,7 @@ class StoryStore {
 
   getComments = async (page, size, type, parentId) => {
     try {
-      const isLoggedIn = GlobalStore.checkIsLogin();
+      const isLoggedIn = await GlobalStore.checkIsLogin();
       const result = await Api.get({
         url: isLoggedIn
           ? "/data/web/comment/list"
