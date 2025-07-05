@@ -24,6 +24,11 @@ const settings = {
 };
 
 const SlideRatings = ({ ratings, onEndReached }) => {
+  const computedSettings = {
+    ...settings,
+    slidesToShow: ratings?.length <= 2 ? 1 : settings.slidesToShow,
+    slidesToScroll: ratings?.length <= 2 ? 1 : settings.slidesToScroll,
+  };
   const router = useRouter();
   const handleAfterChange = (currentSlide) => {
     // Nếu đang ở cuối (và có callback)
@@ -43,7 +48,11 @@ const SlideRatings = ({ ratings, onEndReached }) => {
     router.push("/dang-nhap");
   };
   return (
-    <Slider className="flex" {...settings} afterChange={handleAfterChange}>
+    <Slider
+      className="flex"
+      {...computedSettings}
+      afterChange={handleAfterChange}
+    >
       {ratings?.map((item) => (
         <div key={item.id} className="pl-3">
           <RatingCard
