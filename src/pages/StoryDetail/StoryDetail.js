@@ -20,7 +20,12 @@ import OpenChapterInfo from "./OpenChapterInfo";
 import ContentDisplay from "./ContentDisplay";
 import Link from "next/link";
 import { Modal, Spin, Table, Watermark, Button } from "antd";
-import { LeftOutlined, MenuOutlined, RightOutlined } from "@ant-design/icons";
+import {
+  LeftOutlined,
+  MenuOutlined,
+  RightOutlined,
+  WarningFilled,
+} from "@ant-design/icons";
 import { useStoryChapterTableOptions } from "../../hook/useTableOption";
 import HotStories from "../../components/HotStories";
 import ButtonViewAll from "../../components/ButtonViewAll";
@@ -226,7 +231,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
 
   useEffect(() => {
     if (currentChapter?.id) {
-      getComments(0, 3, "CHAPTER", currentChapter?.id);
+      getComments(0, 5, "CHAPTER", currentChapter?.id);
     }
   }, [currentChapter?.id]);
 
@@ -903,7 +908,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           </div>
 
           {comments?.data?.length > 0 ? (
-            comments.data.slice(0, 3).map((item) => {
+            comments.data.slice(0, 5).map((item) => {
               const hasMoreChildren = item.children.length > 2;
               return (
                 <Comment
@@ -968,9 +973,10 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
           </Button>
 
           <button
-            className="w-[270px] mx-auto flex justify-center h-fit p-2 text-base sm:text-lg text-white bg-[#849EBF] font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4"
+            className="w-[270px] mx-auto flex justify-center h-fit p-2 text-base sm:text-lg text-white bg-[#849EBF] font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4 gap-x-2"
             onClick={handleErrorNotification}
           >
+            <WarningFilled className="text-base self-center text-yellow-500" />{" "}
             Báo lỗi chương
           </button>
 
