@@ -91,7 +91,6 @@ export const CommentBox = ({
       });
       form.resetFields();
       handleReset();
-      // await StoryStore.getComments(page, pageSize, type, parentId);
       onCancel()
       toast("Đăng bình luận thành công!", {
         type: "success",
