@@ -263,10 +263,6 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
     }
   }, [GlobalStore.isLoggedIn]);
 
-  useEffect(() => {
-    getComments(0, 3, "RATING", parentId);
-  }, [parentId])
-
   const handleLoadMoreRatings = async () => {
     const nextPage = ratingsPage + 1;
     await getRatingsByStory({

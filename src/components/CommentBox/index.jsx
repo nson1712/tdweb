@@ -35,8 +35,9 @@ export const CommentBox = ({
   useEffect(() => {
     if (open) {
       setPage(0);
+      StoryStore.getComments(0, pageSize, type, parentId);
     }
-  }, [open]);
+  }, [open, parentId]);
 
   useEffect(() => {
     if (!open) return;
@@ -90,9 +91,6 @@ export const CommentBox = ({
       });
       form.resetFields();
       handleReset();
-
-      await StoryStore.getComments(page, pageSize, type, parentId);
-
       onCancel()
       toast("Đăng bình luận thành công!", {
         type: "success",
@@ -118,7 +116,6 @@ export const CommentBox = ({
         onCancel?.();
         handleReset();
         form.resetFields();
-        StoryStore.getComments(0, pageSize, type, parentId);
       }}
       footer={false}
       title={title}
