@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 
-const useFacebookSDK = () => {
+const useFacebookSDK = ({src}) => {
   useEffect(() => {
     if (window.FB) {
       window.FB.XFBML.parse();
@@ -8,8 +8,7 @@ const useFacebookSDK = () => {
     }
 
     const script = document.createElement("script");
-    script.src =
-      "https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v22.0";
+    script.src = src
     script.async = true;
     script.defer = true;
     script.crossOrigin = "anonymous";
