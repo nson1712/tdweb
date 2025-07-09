@@ -6,9 +6,16 @@ import { getOS, handleStoreOpen } from "../../utils/utils";
 import dynamic from "next/dynamic";
 import Link from "next/link";
 
-const FacebookPagePlugin = dynamic(() => import("../FacebookPlugin"), {
-  ssr: false,
-});
+// const ToidocPagePlugin = dynamic(() => import("../ToidocPagePlugin"), {
+//   ssr: false,
+// });
+
+const ToidocSupportPagePlugin = dynamic(
+  () => import("../ToidocSupportPagePlugin"),
+  {
+    ssr: false,
+  }
+);
 
 const Footer = () => {
   return (
@@ -20,12 +27,16 @@ const Footer = () => {
               <Logo />
               <div className="space-y-2 self-center">
                 <div className="text-md">
-                  Toidoc là nền tảng đọc truyện Full #1 dành cho phái nữ với nhiều đánh giá chất
-                  lượng từ độc giả. Độc giả có thể lựa chọn đa dạng các thể loại
-                  truyện full, truyện hot, truyện đề cử khác nhau như <a href='/the-loai/dien-van'>#điền văn</a>,
-                  <a href='/the-loai/ngon-tinh'>#ngôn tình hiện đại</a> <a href='/the-loai/dam-my'>#đam mỹ</a> <a href='/the-loai/sung'>#sủng</a> <a href='/the-loai/nguoc'>#ngược</a>, <a href='/the-loai/doan-van'>#zhihu</a>, .... Web
-                  truyện luôn cập nhật những bộ truyện mới nhất một cách nhanh
-                  nhất.
+                  Toidoc là nền tảng đọc truyện Full #1 dành cho phái nữ với
+                  nhiều đánh giá chất lượng từ độc giả. Độc giả có thể lựa chọn
+                  đa dạng các thể loại truyện full, truyện hot, truyện đề cử
+                  khác nhau như <a href="/the-loai/dien-van">#điền văn</a>,
+                  <a href="/the-loai/ngon-tinh">#ngôn tình hiện đại</a>{" "}
+                  <a href="/the-loai/dam-my">#đam mỹ</a>{" "}
+                  <a href="/the-loai/sung">#sủng</a>{" "}
+                  <a href="/the-loai/nguoc">#ngược</a>,{" "}
+                  <a href="/the-loai/doan-van">#zhihu</a>, .... Web truyện luôn
+                  cập nhật những bộ truyện mới nhất một cách nhanh nhất.
                 </div>
                 <div className="text-xs text-slate-500">
                   Tất cả người dùng được yêu cầu tuân thủ nghiêm ngặt luật pháp
@@ -54,8 +65,15 @@ const Footer = () => {
             </div>
           </div>
 
-          {/*<FacebookPagePlugin />*/}
+            <div className="hidden lg:block self-center">
+              <ToidocSupportPagePlugin customWidth={340} />
+            </div>
+
         </div>
+      </div>
+
+      <div className="w-full flex justify-center lg:hidden mb-4">
+        <ToidocSupportPagePlugin />
       </div>
 
       <div className="bg-black w-full py-2">
@@ -112,7 +130,17 @@ const Footer = () => {
           <div className="order-1 text-xs text-blue-400 self-center text-center space-y-2">
             <div>Copyright @ by Toidoc.vn All rights reserved</div>
             <div className="self-center flex justify-center">
-              <a href="//www.dmca.com/Protection/Status.aspx?ID=6f2ee0d7-917c-47f5-b84e-973bdcdf5f07" title="DMCA.com Protection Status" className="dmca-badge"> <img src ="https://images.dmca.com/Badges/dmca-badge-w150-2x1-02.png?ID=6f2ee0d7-917c-47f5-b84e-973bdcdf5f07"  alt="DMCA.com Protection Status" /></a>
+              <a
+                href="//www.dmca.com/Protection/Status.aspx?ID=6f2ee0d7-917c-47f5-b84e-973bdcdf5f07"
+                title="DMCA.com Protection Status"
+                className="dmca-badge"
+              >
+                {" "}
+                <img
+                  src="https://images.dmca.com/Badges/dmca-badge-w150-2x1-02.png?ID=6f2ee0d7-917c-47f5-b84e-973bdcdf5f07"
+                  alt="DMCA.com Protection Status"
+                />
+              </a>
             </div>
           </div>
         </div>

@@ -1,7 +1,9 @@
 import useFacebookSDK from "../../hook/useFacebookSDK";
 
-const FacebookPagePlugin = () => {
-  useFacebookSDK();
+const ToiDocPagePlugin = () => {
+  useFacebookSDK({
+    src: "https://connect.facebook.net/vi_VN/sdk.js#xfbml=1&version=v23.0&appId=703963665607035",
+  });
 
   return (
     <div
@@ -18,4 +20,4 @@ const FacebookPagePlugin = () => {
   );
 };
 
-export default FacebookPagePlugin;
+export default ToiDocPagePlugin;
