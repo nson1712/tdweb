@@ -975,13 +975,13 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
               : "Viết bình luận"}
           </Button>
 
-          <button
+          {allowOpenWeb && <button
             className="w-[270px] mx-auto flex justify-center h-fit p-2 text-base sm:text-lg text-white bg-[#849EBF] font-medium rounded-md text-center shadow-2xl hover:translate-y-[-5%] transition delay-75 cursor-pointer mt-4 gap-x-2"
             onClick={handleErrorNotification}
           >
             <WarningFilled className="text-base self-center text-yellow-500" />{" "}
             Báo lỗi chương
-          </button>
+          </button>}
 
           {(storyDetail?.slug === "nu-phu-phao-hoi-luon-doi-treo-co-full" ||
             storyDetail?.slug ===
