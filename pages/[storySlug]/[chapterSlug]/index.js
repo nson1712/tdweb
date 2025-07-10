@@ -1,9 +1,9 @@
-import React from "react";
 import StoryDetailComponent from "../../../src/pages/StoryDetail";
 import HeaderServerSchema from "../../../src/components/HeaderServerSchema";
 import axios from "axios";
+import NotFound from "../../../src/components/NotFound";
 
-const StoryDetail = ({ detail, canonical, titleSlug }) => {
+const StoryDetail = ({ detail, canonical, titleSlug, statusCode }) => {
   return (
     <>
       <HeaderServerSchema
@@ -43,10 +43,15 @@ const StoryDetail = ({ detail, canonical, titleSlug }) => {
             : 10
         }
       />
-      <StoryDetailComponent
-        chapterTitle={detail?.seoTitle}
-        storyTitle={detail?.storyTitle}
-      />
+      {statusCode === 404 ?
+          <NotFound title='Chương bạn đang tìm đã bị xoá khỏi hệ thống.'/>
+        :
+          <StoryDetailComponent
+            chapterTitle={detail?.seoTitle}
+            storyTitle={detail?.storyTitle}
+          />
+      }
+      
     </>
   );
 };
@@ -92,12 +97,8 @@ export async function getServerSideProps(context) {
     console.log("Error get chapter detail: ", e?.response?.data?.error);
 
     if (e?.response?.data?.error === "The story does not exist") {
-      return {
-        redirect: {
-          destination: "/404.html",
-          permanent: true, // hoặc false nếu là redirect tạm thời
-        },
-      };
+      context.res.statusCode = 404;
+      return {props: {statusCode: 404},};
     }
 
     return {

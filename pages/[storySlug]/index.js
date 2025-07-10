@@ -3,8 +3,9 @@ import StorySummaryComponent from '../../src/pages/StorySummary'
 import HeaderServerSchema from '../../src/components/HeaderServerSchema'
 import axios from 'axios'
 import { countWords } from '../../src/utils/utils'
+import NotFound from '../../src/components/NotFound'
 
-const StorySummary = ({ detail, article, canonical }) => {
+const StorySummary = ({ detail, article, canonical, statusCode }) => {
   return (
     <>
       <HeaderServerSchema
@@ -19,7 +20,12 @@ const StorySummary = ({ detail, article, canonical }) => {
         slug={detail?.slug}
         totalView={detail ? ((detail?.totalView === 0 || detail?.totalView === null) ? 10 : detail?.totalView) : 10}
       />
-      <StorySummaryComponent storyDetail={detail} articleDetail={article} />
+
+      {statusCode === 404 ?
+          <NotFound title='Truyện bạn đang tìm đã bị xoá khỏi hệ thống.'/>
+        :
+          <StorySummaryComponent storyDetail={detail} articleDetail={article} />
+      }
     </>
   )
 }
@@ -59,24 +65,25 @@ export async function getServerSideProps(context) {
     //   `https://fsdfssf.truyenso1.xyz/data/article/story/${storySlug}`
     // );
 
-    return {
-      props: {
-        detail: result?.data?.data || {},
-        article: resultBlog?.data?.data || {},
-        canonical: storySlug
-      }
-    };
+    if (result?.data?.data) {
+      return {
+        props: {
+          detail: result?.data?.data || {},
+          article: resultBlog?.data?.data || {},
+          canonical: storySlug
+        }
+      };
+    } else {
+      context.res.statusCode = 404;
+      return {props: {statusCode: 404},};
+    }
   } catch (e) {
     console.log('server call error', e?.response?.data);
 
     if (e?.response?.data?.error === "The story does not exist") {
       console.log('The story does not exist ==========');
-      return {
-        redirect: {
-          destination: '/404.html',
-          permanent: true, // 301 redirect
-        }
-      };
+      context.res.statusCode = 404;
+      return {props: {statusCode: 404},};
     }
 
     return {
