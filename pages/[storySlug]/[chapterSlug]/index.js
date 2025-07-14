@@ -86,13 +86,19 @@ export async function getServerSideProps(context) {
       }
     );
 
-    return {
-      props: {
-        detail: result?.data?.data || {},
-        canonical,
-        titleSlug: storySlug,
-      },
-    };
+    if (result?.data?.data) {
+      return {
+        props: {
+          detail: result?.data?.data || {},
+          canonical,
+          titleSlug: storySlug,
+        },
+      };
+    } else {
+      context.res.statusCode = 404;
+      return {props: {statusCode: 404},};
+    }
+    
   } catch (e) {
     console.log("Error get chapter detail: ", e?.response?.data?.error);
 
