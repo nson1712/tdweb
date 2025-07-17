@@ -2,13 +2,14 @@ import NextAuth from "next-auth";
 import AppleProvider from "next-auth/providers/apple";
 
 export default NextAuth({
+  debug: true,
   providers: [
     AppleProvider({
       clientId: process.env.APPLE_CLIENT_ID,
       clientSecret: {
         clientId: process.env.APPLE_CLIENT_ID,
         teamId: process.env.APPLE_TEAM_ID,
-        privateKey: process.env.APPLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
+        privateKey: process.env.APPLE_PRIVATE_KEY,
         keyId: process.env.APPLE_KEY_ID,
       },
     }),
