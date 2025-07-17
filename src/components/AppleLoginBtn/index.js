@@ -1,3 +1,4 @@
+import { AppleFilled } from "@ant-design/icons";
 import { signIn, signOut, useSession } from "next-auth/react";
 
 export default function AppleLoginButton() {
@@ -12,8 +13,8 @@ export default function AppleLoginButton() {
     );
   }
   return (
-    <>
-      <button onClick={() => signIn("apple")}>Sign in with Apple</button>
-    </>
+    <div className="mx-auto w-[270px]">
+      <button className="bg-black text-white py-2.5 w-full rounded-xl border-2 border-white flex gap-x-2 px-2" onClick={() => signIn("apple")}><AppleFilled  className="text-3xl" /><div className="self-center text-lg">Đăng nhập bằng APPLE</div></button>
+    </div>
   );
 }
