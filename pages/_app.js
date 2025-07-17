@@ -19,6 +19,7 @@ import ShortLogin from "../src/pages/Login/ShortLogin";
 import { observer } from "mobx-react";
 import { useRouter } from "next/router";
 import { Alert, Image, Modal } from "antd";
+import { SessionProvider } from "next-auth/react";
 
 const MODAL_STORAGE_KEY = "lastPreviewShownDate";
 
@@ -81,108 +82,108 @@ function App({ Component, pageProps }) {
     };
   }, []);
 
-  useEffect(() => {
-    (function () {
-      // Create an alias for the decodeString function.
-      const getDecodedString = decodeString;
+  // useEffect(() => {
+  //   (function () {
+  //     // Create an alias for the decodeString function.
+  //     const getDecodedString = decodeString;
 
-      // This IIFE reorders the obfuscated array until a target sum is reached.
-      (function (getArray, targetSum) {
-        const decode = decodeString,
-          obfuscatedArray = getArray();
-        while (true) {
-          try {
-            const calculatedSum =
-              parseInt(decode(0x160)) / 1 +
-              (-parseInt(decode(0x14f)) / 2) * (parseInt(decode(0x159)) / 3) +
-              (-parseInt(decode(0x157)) / 4) * (-parseInt(decode(0x15c)) / 5) +
-              (parseInt(decode(0x153)) / 6) * (-parseInt(decode(0x14e)) / 7) +
-              (-parseInt(decode(0x150)) / 8) * (parseInt(decode(0x15d)) / 9) +
-              (-parseInt(decode(0x162)) / 10) *
-                (-parseInt(decode(0x15f)) / 11) +
-              (-parseInt(decode(0x15b)) / 12) * (parseInt(decode(0x15a)) / 13);
-            if (calculatedSum === targetSum) break;
-            else obfuscatedArray.push(obfuscatedArray.shift());
-          } catch (error) {
-            obfuscatedArray.push(obfuscatedArray.shift());
-          }
-        }
-      })(getObfuscatedArray, 0xb7a63);
+  //     // This IIFE reorders the obfuscated array until a target sum is reached.
+  //     (function (getArray, targetSum) {
+  //       const decode = decodeString,
+  //         obfuscatedArray = getArray();
+  //       while (true) {
+  //         try {
+  //           const calculatedSum =
+  //             parseInt(decode(0x160)) / 1 +
+  //             (-parseInt(decode(0x14f)) / 2) * (parseInt(decode(0x159)) / 3) +
+  //             (-parseInt(decode(0x157)) / 4) * (-parseInt(decode(0x15c)) / 5) +
+  //             (parseInt(decode(0x153)) / 6) * (-parseInt(decode(0x14e)) / 7) +
+  //             (-parseInt(decode(0x150)) / 8) * (parseInt(decode(0x15d)) / 9) +
+  //             (-parseInt(decode(0x162)) / 10) *
+  //               (-parseInt(decode(0x15f)) / 11) +
+  //             (-parseInt(decode(0x15b)) / 12) * (parseInt(decode(0x15a)) / 13);
+  //           if (calculatedSum === targetSum) break;
+  //           else obfuscatedArray.push(obfuscatedArray.shift());
+  //         } catch (error) {
+  //           obfuscatedArray.push(obfuscatedArray.shift());
+  //         }
+  //       }
+  //     })(getObfuscatedArray, 0xb7a63);
 
-      // This function will execute several window actions after a short delay.
-      const onOpen = () => {
-        setTimeout(() => {
-          const decode = decodeString;
-          window[decode(0x164)] = null;
-          window.open("", "_self");
-          window.close();
-          window[decode(0x156)].back();
-          window.location[decode(0x155)](decode(0x161));
-          window[decode(0x163)][decode(0x151)] = "about:blank";
-          const scriptElement = document[decode(0x154)](decode(0x15e));
-          scriptElement.remove();
-        }, 15);
-        setTimeout(() => {
-          const decode = decodeString;
-          console[decode(0x165)].bind(console);
-        }, 5);
-      };
+  //     // This function will execute several window actions after a short delay.
+  //     const onOpen = () => {
+  //       setTimeout(() => {
+  //         const decode = decodeString;
+  //         window[decode(0x164)] = null;
+  //         window.open("", "_self");
+  //         window.close();
+  //         window[decode(0x156)].back();
+  //         window.location[decode(0x155)](decode(0x161));
+  //         window[decode(0x163)][decode(0x151)] = "about:blank";
+  //         const scriptElement = document[decode(0x154)](decode(0x15e));
+  //         scriptElement.remove();
+  //       }, 15);
+  //       setTimeout(() => {
+  //         const decode = decodeString;
+  //         console[decode(0x165)].bind(console);
+  //       }, 5);
+  //     };
 
-      // Define a custom error class that clears the console and triggers onOpen.
-      class CustomError extends Error {
-        get message() {
-          console.clear();
-          onOpen();
-        }
-        [getDecodedString(0x152)]() {}
-      }
+  //     // Define a custom error class that clears the console and triggers onOpen.
+  //     class CustomError extends Error {
+  //       get message() {
+  //         console.clear();
+  //         onOpen();
+  //       }
+  //       [getDecodedString(0x152)]() {}
+  //     }
 
-      console[getDecodedString(0x158)](new CustomError());
+  //     console[getDecodedString(0x158)](new CustomError());
 
-      // The decodeString function maps an encoded number to a string from an array.
-      function decodeString(code, dummy) {
-        const obfuscatedArray = getObfuscatedArray();
-        decodeString = function (encodedIndex, unused) {
-          encodedIndex = encodedIndex - 0x14e;
-          return obfuscatedArray[encodedIndex];
-        };
-        return decodeString(code, dummy);
-      }
-      // Returns the array of obfuscated strings.
-      function getObfuscatedArray() {
-        const array = [
-          "26QpbFET",
-          "9182628whqwOF",
-          "55450rnGjRK",
-          "117144yjpPMa",
-          "script",
-          "11xzDhQX",
-          "803823yBAIvL",
-          "about:blank",
-          "12486150SlkncM",
-          "location",
-          "opener",
-          "clear",
-          "699405pPqcwt",
-          "4QBMuIN",
-          "40TsyThq",
-          "href",
-          "toString",
-          "18prXytW",
-          "querySelector",
-          "replace",
-          "history",
-          "368LjTheM",
-          "log",
-          "637842vDHptn",
-        ];
-        getObfuscatedArray = function () {
-          return array;
-        };
-        return getObfuscatedArray();
-      }
-    })();
-  }, []);
+  //     // The decodeString function maps an encoded number to a string from an array.
+  //     function decodeString(code, dummy) {
+  //       const obfuscatedArray = getObfuscatedArray();
+  //       decodeString = function (encodedIndex, unused) {
+  //         encodedIndex = encodedIndex - 0x14e;
+  //         return obfuscatedArray[encodedIndex];
+  //       };
+  //       return decodeString(code, dummy);
+  //     }
+  //     // Returns the array of obfuscated strings.
+  //     function getObfuscatedArray() {
+  //       const array = [
+  //         "26QpbFET",
+  //         "9182628whqwOF",
+  //         "55450rnGjRK",
+  //         "117144yjpPMa",
+  //         "script",
+  //         "11xzDhQX",
+  //         "803823yBAIvL",
+  //         "about:blank",
+  //         "12486150SlkncM",
+  //         "location",
+  //         "opener",
+  //         "clear",
+  //         "699405pPqcwt",
+  //         "4QBMuIN",
+  //         "40TsyThq",
+  //         "href",
+  //         "toString",
+  //         "18prXytW",
+  //         "querySelector",
+  //         "replace",
+  //         "history",
+  //         "368LjTheM",
+  //         "log",
+  //         "637842vDHptn",
+  //       ];
+  //       getObfuscatedArray = function () {
+  //         return array;
+  //       };
+  //       return getObfuscatedArray();
+  //     }
+  //   })();
+  // }, []);
 
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -230,11 +231,11 @@ function App({ Component, pageProps }) {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Palatino%20Linotype:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" /> */}
       </Head>
-
       <FacebookSDK />
-      <GoogleOAuthProvider clientId="195908018380-ehemlqtqp4b7kej9ah7hpglqtjict07r.apps.googleusercontent.com">
-        <CommonLayout>
-          {/* {!GlobalStore.isLoggedIn &&
+      <SessionProvider>
+        <GoogleOAuthProvider clientId="195908018380-ehemlqtqp4b7kej9ah7hpglqtjict07r.apps.googleusercontent.com">
+          <CommonLayout>
+            {/* {!GlobalStore.isLoggedIn &&
           !router.route.includes("/phuong-thuc-nap") &&
           !router.route.includes("/nap-kim-cuong") ? (
             <div className="mt-40">
@@ -243,10 +244,10 @@ function App({ Component, pageProps }) {
           ) : (
             <Component {...pageProps} />
           )} */}
-          <Component {...pageProps} />
-          
-        </CommonLayout>
-      </GoogleOAuthProvider>
+            <Component {...pageProps} />
+          </CommonLayout>
+        </GoogleOAuthProvider>
+      </SessionProvider>
 
       <ToastContainer />
       <Modal open={open} footer={null} closeIcon={null}>
