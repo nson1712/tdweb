@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
 import { Alert } from "antd";
+import AppleLoginButton from "../../components/AppleLoginBtn";
 
 const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
   const [loading, setLoading] = useState(false);
@@ -135,6 +136,8 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
           type="warning"
           message="Chú ý: Chỉ hoạt động tốt trên safari và chrome!"
         />
+
+        <AppleLoginButton />
 
         <div style={{ margin: "auto" }}>
           <a id="google-login-btn" className="align-center">
