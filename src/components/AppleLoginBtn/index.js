@@ -1,10 +1,54 @@
-import { AppleFilled } from "@ant-design/icons";
+import { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
+import { AppleFilled } from "@ant-design/icons";
+import Router from "next/router";
+import toast from "react-toastify"; // hoặc thư viện bạn đang dùng
 
-export default function AppleLoginButton() {
+export default function AppleLoginButton({ closeModal }) {
   const { data: session } = useSession();
 
   console.log("Session data:", session);
+
+  useEffect(() => {
+    if (session?.accessToken) {
+      sendTokenToBackend(session.accessToken);
+    }
+  }, [session?.accessToken]);
+
+  const sendTokenToBackend = async (accessToken) => {
+    try {
+      const loginResult = await Api.post({
+        url: "/customer/public/login-by-social",
+        data: {
+          token: accessToken,
+          socialType: "APPLE",
+        },
+      });
+
+      await setAccessToken(loginResult?.data?.accessToken);
+      await setRefreshToken(loginResult?.data?.refreshToken);
+
+      const tokens = loginResult?.data?.accessToken.split(".");
+      const decoded = base64URLdecode(tokens[1]);
+      const jsonObj = JSON.parse(decoded);
+      GlobalStore.profile = {
+        ...GlobalStore.profile,
+        ...jsonObj,
+      };
+      GlobalStore.isLoggedIn = true;
+
+      if (closeModal) closeModal();
+
+      toast("Bạn đã đăng nhập thành công!", {
+        type: "success",
+        theme: "colored",
+      });
+
+      Router.back();
+    } catch (error) {
+      console.error("Login failed:", error);
+    }
+  };
 
   if (session) {
     return (
@@ -14,6 +58,7 @@ export default function AppleLoginButton() {
       </>
     );
   }
+
   return (
     <div className="mx-auto w-[270px]">
       <button
