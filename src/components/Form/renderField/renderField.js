@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 import React from "react"
 import classNames from "classnames"
-import Fade from "react-reveal/Fade"
+// import Fade from "react-reveal/Fade"
 import classes from "./renderField.module.scss"
 
 export default function renderField(Component) {
@@ -39,9 +39,9 @@ export default function renderField(Component) {
       {smallLabel && <span className={classes.smallLabel}>{smallLabel}</span>}
       <Component {...rest} hasError={touched && error} errorMessage={error} />
       {touched && error && !hideError && (
-        <Fade bottom>
+        // <Fade bottom>
           <span className={classes.errorMessage}>{error}</span>
-        </Fade>
+        // </Fade>
       )}
       {typeof note === 'string' ? (
         <div
