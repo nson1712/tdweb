@@ -1,17 +1,13 @@
 import NextAuth from "next-auth";
 import AppleProvider from "next-auth/providers/apple";
+import { generateAppleClientSecret } from "../../../src/lib/apple-client-secret";
 
 export default NextAuth({
   debug: true,
   providers: [
     AppleProvider({
   clientId: process.env.APPLE_CLIENT_ID,
-  clientSecret: {
-    clientId: process.env.APPLE_CLIENT_ID,
-    teamId: process.env.APPLE_TEAM_ID,
-    keyId: process.env.APPLE_KEY_ID,
-    privateKey: process.env.APPLE_PRIVATE_KEY?.replace(/\\n/g, '\n'),
-  },
+  clientSecret: generateAppleClientSecret(),
   authorization: {
     params: {
       scope: 'name email',
@@ -39,9 +35,5 @@ export default NextAuth({
     error(error) {
       console.error("[NextAuth ERROR]", error);
     },
-  },
-  pages: {
-    signIn: '/dang-nhap',
-    error: '/dang-nhap', // Error code passed in query string as ?error=
   },
 });
