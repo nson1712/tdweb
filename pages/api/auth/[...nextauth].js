@@ -1,9 +1,6 @@
 import NextAuth from "next-auth";
 import AppleProvider from "next-auth/providers/apple";
-import { generateAppleClientSecret } from "../../../src/lib/apple-client-secret";
 
-import NextAuth from "next-auth";
-import AppleProvider from "next-auth/providers/apple";
 export default NextAuth({
   providers: [
     AppleProvider({
