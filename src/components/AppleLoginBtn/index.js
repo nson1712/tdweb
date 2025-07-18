@@ -12,18 +12,18 @@ export default function AppleLoginButton() {
 
   console.log("Session data:", session);
 
-  // useEffect(() => {
-  //   if (session?.accessToken) {
-  //     sendTokenToBackend(session.accessToken);
-  //   }
-  // }, [session?.accessToken]);
+  useEffect(() => {
+    if (session?.refreshToken) {
+      sendTokenToBackend(session.refreshToken);
+    }
+  }, [session?.refreshToken]);
 
-  const sendTokenToBackend = async (accessToken) => {
+  const sendTokenToBackend = async (token) => {
     try {
       const loginResult = await Api.post({
         url: "/customer/public/login-by-social",
         data: {
-          token: accessToken,
+          token: token,
           socialType: "APPLE",
         },
       });
@@ -65,12 +65,9 @@ export default function AppleLoginButton() {
       <button
         className="bg-black text-white py-2.5 w-full rounded-xl border-2 border-white flex gap-x-2 px-2"
         onClick={() =>
-        {
           signIn("apple", {
             callbackUrl: "https://tdweb-i3os.vercel.app",
           })
-          sendTokenToBackend(session.refreshToken);
-        }
         }
       >
         <AppleFilled className="text-3xl" />
