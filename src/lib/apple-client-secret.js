@@ -6,6 +6,8 @@ export function generateAppleClientSecret() {
   const keyId = process.env.APPLE_KEY_ID;
   const privateKey = process.env.APPLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
 
+  console.log("PRIVATE KEY:", privateKey);
+
   const token = jwt.sign({}, privateKey, {
     algorithm: "ES256",
     expiresIn: "180d", // tối đa 180 ngày
