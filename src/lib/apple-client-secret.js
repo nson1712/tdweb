@@ -6,7 +6,7 @@ export function generateAppleClientSecret() {
   const keyId = process.env.APPLE_KEY_ID;
   const privateKey = process.env.APPLE_PRIVATE_KEY?.replace(/\\n/g, '\n');
 
-  console.log("PRIVATE KEY:", privateKey);
+  console.log("PRIVATE KEYYYYYY:", privateKey);
 
   const token = jwt.sign({}, privateKey, {
     algorithm: "ES256",
