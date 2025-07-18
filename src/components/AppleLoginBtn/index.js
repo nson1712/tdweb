@@ -3,8 +3,11 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import { AppleFilled } from "@ant-design/icons";
 import Router from "next/router";
 import toast from "react-toastify"; // hoặc thư viện bạn đang dùng
+import { setAccessToken, setRefreshToken } from "../../utils/storage";
+import * as Api from "../../api/api";
+import GlobalStore from "../../stores/GlobalStore";
 
-export default function AppleLoginButton({ closeModal }) {
+export default function AppleLoginButton() {
   const { data: session } = useSession();
 
   console.log("Session data:", session);
@@ -36,8 +39,6 @@ export default function AppleLoginButton({ closeModal }) {
         ...jsonObj,
       };
       GlobalStore.isLoggedIn = true;
-
-      if (closeModal) closeModal();
 
       toast("Bạn đã đăng nhập thành công!", {
         type: "success",
