@@ -12,11 +12,17 @@ export default NextAuth({
     async jwt({ token, account }) {
       if (account) {
         token.accessToken = account.access_token;
+        token.refreshToken = account.refresh_token;
+        token.expires = account.expires_at;
+        token.provider = account.provider;
       }
       return token;
     },
     async session({ session, token }) {
       session.accessToken = token.accessToken;
+      session.refreshToken = token.refreshToken;
+      session.expires = token.expires;
+      session.provider = token.provider;
       return session;
     },
   },
