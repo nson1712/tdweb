@@ -4,6 +4,8 @@ import { signIn, signOut, useSession } from "next-auth/react";
 export default function AppleLoginButton() {
   const { data: session } = useSession();
 
+  console.log("Session data:", session);
+
   if (session) {
     return (
       <>
