@@ -18,7 +18,7 @@ export default function AppleLoginButton() {
         className="bg-black text-white py-2.5 w-full rounded-xl border-2 border-white flex gap-x-2 px-2"
         onClick={() =>
           signIn("apple", {
-            callbackUrl: "https://2cbc6e1692aa.ngrok-free.app",
+            callbackUrl: "https://tdweb-gyg7.vercel.app",
           })
         }
       >
