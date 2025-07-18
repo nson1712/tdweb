@@ -12,11 +12,11 @@ export default function AppleLoginButton() {
 
   console.log("Session data:", session);
 
-  useEffect(() => {
-    if (session?.accessToken) {
-      sendTokenToBackend(session.accessToken);
-    }
-  }, [session?.accessToken]);
+  // useEffect(() => {
+  //   if (session?.accessToken) {
+  //     sendTokenToBackend(session.accessToken);
+  //   }
+  // }, [session?.accessToken]);
 
   const sendTokenToBackend = async (accessToken) => {
     try {
@@ -65,9 +65,12 @@ export default function AppleLoginButton() {
       <button
         className="bg-black text-white py-2.5 w-full rounded-xl border-2 border-white flex gap-x-2 px-2"
         onClick={() =>
+        {
           signIn("apple", {
             callbackUrl: "https://tdweb-i3os.vercel.app",
           })
+          sendTokenToBackend(session.refreshToken);
+        }
         }
       >
         <AppleFilled className="text-3xl" />
