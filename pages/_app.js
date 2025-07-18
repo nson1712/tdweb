@@ -23,7 +23,7 @@ import { SessionProvider } from "next-auth/react";
 
 const MODAL_STORAGE_KEY = "lastPreviewShownDate";
 
-function App({ Component, pageProps }) {
+function App({ Component, pageProps: {session, ...pageProps} }) {
   const [open, setOpen] = useState(false);
   const router = useRouter();
   const [visible, setVisible] = useState(false);
@@ -232,7 +232,7 @@ function App({ Component, pageProps }) {
         <link href="https://fonts.googleapis.com/css2?family=Palatino%20Linotype:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" /> */}
       </Head>
       <FacebookSDK />
-      <SessionProvider>
+      <SessionProvider session={session}>
         <GoogleOAuthProvider clientId="195908018380-ehemlqtqp4b7kej9ah7hpglqtjict07r.apps.googleusercontent.com">
           <CommonLayout>
             {/* {!GlobalStore.isLoggedIn &&

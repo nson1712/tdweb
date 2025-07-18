@@ -26,6 +26,7 @@
     "cleave.js": "^1.6.0",
     "clipboard-copy": "^4.0.1",
     "devtools-detect": "^4.0.2",
+    "dotenv": "^17.2.0",
     "encrypt-rsa": "^3.3.0",
     "firebase": "^7.6.2",
     "html-react-parser": "^5.2.2",
