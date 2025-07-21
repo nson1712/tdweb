@@ -13,10 +13,10 @@ export default function AppleLoginButton() {
   console.log("Session data:", session);
 
   useEffect(() => {
-    if (session?.idToken) {
-      sendTokenToBackend(session.idToken);
+    if (session?.accessToken) {
+      sendTokenToBackend(session.accessToken);
     }
-  }, [session?.idToken]);
+  }, [session?.accessToken]);
 
   const sendTokenToBackend = async (token) => {
     try {
