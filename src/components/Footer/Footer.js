@@ -10,12 +10,12 @@ import Link from "next/link";
 //   ssr: false,
 // });
 
-const ToidocSupportPagePlugin = dynamic(
-  () => import("../ToidocSupportPagePlugin"),
-  {
-    ssr: false,
-  }
-);
+// const ToidocSupportPagePlugin = dynamic(
+//   () => import("../ToidocSupportPagePlugin"),
+//   {
+//     ssr: false,
+//   }
+// );
 
 const Footer = () => {
   return (
@@ -65,16 +65,16 @@ const Footer = () => {
             </div>
           </div>
 
-            <div className="hidden lg:block self-center">
+            {/* <div className="hidden lg:block self-center">
               <ToidocSupportPagePlugin customWidth={340} />
-            </div>
+            </div> */}
 
         </div>
       </div>
 
-      <div className="w-full flex justify-center lg:hidden mb-4">
+      {/* <div className="w-full flex justify-center lg:hidden mb-4">
         <ToidocSupportPagePlugin />
-      </div>
+      </div> */}
 
       <div className="bg-black w-full py-2">
         <div className="max-w-[1116px] md:flex justify-between mx-auto px-1 space-y-2">
