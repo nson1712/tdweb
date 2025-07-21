@@ -10,19 +10,19 @@ const StoryDetail = ({ detail, canonical, titleSlug, statusCode }) => {
         containTitle={detail ? detail.storyTitle : ""}
         title={
           detail
-            ? `✅ Truyện ${detail.storyTitle} ${detail.seoTitle}`
+            ? `✅ Truyện ${detail.storyTitle} ${detail.seoTitle || detail.chapterTitle}`
             : `✅${titleSlug}| Nền tảng đọc truyện full cập nhật mới nhất `
         }
         description={
           detail?.metaDescription
             ? detail.metaDescription.replace(/"/g, "")
-            : `${detail?.seoTitle} của truyện ${detail?.storyTitle}. ${
+            : `${detail?.seoTitle || detail.chapterTitle} của truyện ${detail?.storyTitle}. ${
                 detail?.shortDes || "Click vào để xem nội dung chi tiết đầy đủ!"
               }`
         }
         keywords={
           detail?.metaKeywords ||
-          `${detail?.storyTitle}, ${detail?.storyTitle} truyện full, đọc truyện ${detail?.storyTitle}, ${detail?.storyTitle} ${detail?.seoTitle}`
+          `${detail?.storyTitle}, ${detail?.storyTitle} truyện full, đọc truyện ${detail?.storyTitle}, ${detail?.storyTitle} ${detail?.seoTitle || detail.chapterTitle}`
         }
         image={detail?.thumbnail || detail?.coverImage}
         canonical={canonical}
@@ -47,7 +47,7 @@ const StoryDetail = ({ detail, canonical, titleSlug, statusCode }) => {
           <NotFound title='Chương bạn đang tìm đã bị xoá khỏi hệ thống.'/>
         :
           <StoryDetailComponent
-            chapterTitle={detail?.seoTitle}
+            chapterTitle={detail?.seoTitle || detail.chapterTitle}
             storyTitle={detail?.storyTitle}
           />
       }

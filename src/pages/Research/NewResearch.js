@@ -113,7 +113,7 @@ const Research = () => {
     // getcollections1();
     // getcollections2();
     // setShowModal(true);
-    // checkCustomerClickAffLocal();
+    checkCustomerClickAffLocal();
   }, []);
 
   // useEffect(() => {
@@ -144,11 +144,12 @@ const Research = () => {
     if (code === "tai-app-research") {
       window.open("https://toidoc.onelink.me/59bO/d42503wz");
     } else {
-      window.open(
-        `https://www.facebook.com/groups/congdongdoctoidoc/posts/674053792015086/`,
-        "_blank",
-        "Toidoc"
-      );
+      window.location.href('https://toidoc.vn/sau-khi-tai-sinh-toi-ket-hon-lai-lan-nua');
+      // window.open(
+      //   `https://www.facebook.com/groups/congdongdoctoidoc/posts/674053792015086/`,
+      //   "_blank",
+      //   "Toidoc"
+      // );
     }
   };
 
@@ -290,8 +291,8 @@ const Research = () => {
           countDownTime={5}
         >
           <a onClick={(e) => handleClick(e, 'big-banner-research')}>
-            {/* <img src="https://media.truyenso1.xyz/ads/flash-sale-3-5.png" className='imgBanner'/> */}
-            <img src="/images/pre-banner.png" className='premium-banner'/>
+            <img src="https://media.truyenso1.xyz/ads/banner-truyen-hot.jpg" className='imgBanner'/>
+            {/* <img src="/images/pre-banner.png" className='premium-banner'/> */}
           </a>
         </ModalComponent>}
       </div>
