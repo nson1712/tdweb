@@ -113,7 +113,7 @@ const Research = () => {
     // getcollections1();
     // getcollections2();
     // setShowModal(true);
-    checkCustomerClickAffLocal();
+    // checkCustomerClickAffLocal();
   }, []);
 
   // useEffect(() => {
