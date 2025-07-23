@@ -407,17 +407,15 @@ const Payment = ({
 
 const validate = (values) => {
   const errors = {};
-  // if(referralCode !== '') {
-  //   return errors;
-  // }
-  // if (!values.customerCode) {
-  //   errors.customerCode = "Vui lòng nhập mã khách hàng";
-  // } else if (
-  //   !values.customerCode.startsWith("TD") ||
-  //   values.customerCode.length < 12
-  // ) {
-  //   errors.customerCode = "Mã khách hàng không chính xác.";
-  // }
+
+  if (!values.customerCode) {
+    errors.customerCode = "Vui lòng nhập mã khách hàng";
+  } else if (
+    !values.customerCode.startsWith("TD") ||
+    values.customerCode.length < 12
+  ) {
+    errors.customerCode = "Mã khách hàng không chính xác.";
+  }
   return errors;
 };
 
