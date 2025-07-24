@@ -248,7 +248,7 @@ const TransferInfo = () => {
                 }}
               />
             )}
-            <div className="pl-[20px] pr-[20px] mb-[30px]">
+            <div className="pl-[20px] pr-[20px] mb-[30px] space-y-6">
               <p className="text-[14px] font-bold mb-[0px]">
                 Hãy ấn nút Copy thông tin chuyển khoản bên dưới
               </p>
