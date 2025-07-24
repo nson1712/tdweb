@@ -6,7 +6,7 @@ const LocalForm = ({validate, MyComponent}) => (props) => {
   const [values, setValues] = useState({})
 
   const initialForm = () => {
-    const errors = validate ? validate({}) : {}
+    const errors = validate ? validate({}, props) : {}
 
     const tempValues = {}
     Object.keys(errors).forEach((key) => {
@@ -23,7 +23,7 @@ const LocalForm = ({validate, MyComponent}) => (props) => {
 
   useEffect(() => {
     initialForm()
-  }, [])
+  }, [props])
 
   const updateProperties = (val) => {
     setValues((prev) => {
@@ -72,7 +72,7 @@ const LocalForm = ({validate, MyComponent}) => (props) => {
 
   const runValidate = (val) => {
     const rawValues = getFormProperty()
-    const errors = validate({...rawValues, ...val})
+    const errors = validate({...rawValues, ...val}, props)
     setValues((prev) => {
       const tempValues = {}
       Object.keys({...prev, ...errors}).forEach((key) => {
@@ -127,7 +127,7 @@ const LocalForm = ({validate, MyComponent}) => (props) => {
   }
 
   const setAllTouched = (rawValues) => {
-    const errors = validate(rawValues)
+    const errors = validate(rawValues, props)
     setValues((prev) => {
 
       const tempValues = {}
@@ -146,7 +146,7 @@ const LocalForm = ({validate, MyComponent}) => (props) => {
   }
 
   const hasErrorsCurrentForm = (rawValues) => {
-    const errors = validate(rawValues)
+    const errors = validate(rawValues, props)
     return Object.keys(errors)?.length > 0
   }
 

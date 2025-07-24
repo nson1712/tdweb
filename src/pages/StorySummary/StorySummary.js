@@ -887,7 +887,7 @@ const StorySummary = ({ storyDetail, articleDetail }) => {
                   Đánh giá của độc giả
                 </h2>
                 <div className="bg-[#F5F8FF] py-2">
-                  {ratingsByStory.data?.length !== 0 ? (
+                  {ratingsByStory?.data?.length !== 0 ? (
                     <SlideRatings
                       ratings={ratingsByStory?.data}
                       onEndReached={handleLoadMoreRatings}
