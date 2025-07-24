@@ -407,8 +407,6 @@ const Payment = ({
       )}
     </>
   );
-
-  
 };
 
 const validate = (values, props) => {
