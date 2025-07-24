@@ -1,9 +1,10 @@
-import React from "react"
-import classNames from "classnames"
-import Loader from "react-loader-spinner"
-import classes from "./Button.module.scss"
+import React from "react";
+import classNames from "classnames";
+import Loader from "react-loader-spinner";
+import classes from "./Button.module.scss";
 
 const Button = ({
+  id = "",
   loading = false,
   loadingColor = "#ffffff",
   className = "",
@@ -14,6 +15,7 @@ const Button = ({
   customLoader = null,
 }) => (
   <button
+    id={id}
     className={classNames(
       classes.btn,
       className,
@@ -22,6 +24,7 @@ const Button = ({
     )}
     onClick={onClick}
     type={type}
+    disabled={disabled || loading}
   >
     {children}
     {loading && (
@@ -35,6 +38,6 @@ const Button = ({
       </div>
     )}
   </button>
-)
+);
 
-export default Button
+export default Button;

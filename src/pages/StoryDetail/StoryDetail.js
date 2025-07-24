@@ -79,6 +79,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   const [affType, setAffType] = useState("");
   const [affObj, setAffObj] = useState({});
   const [isLoading, setIsLoading] = useState(false);
+  const [openChapterLoading, setOpenChapterLoading] = useState(false);
   const [availableCash, setAvailableCash] = useState({});
   const [showModalNotEnoughDiamond, setShowModalNotEnoughDiamond] =
     useState(false);
@@ -352,6 +353,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
   // }
 
   const handleOpenChapter = async () => {
+    setOpenChapterLoading(true)
     try {
       if (currentChapter?.price > availableCash?.balance) {
         setShowModalNotEnoughDiamond(true);
@@ -370,9 +372,12 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
         type: "success",
         theme: "colored",
       });
-      fetchData();
+      await fetchData();
       window.scrollTo({ top: 0, behavior: "smooth" });
-    } catch (e) {}
+      setOpenChapterLoading(false);
+    } catch (e) {
+      setOpenChapterLoading(false);
+    }
   };
 
   const handlePaymentDepositAuto = async (isOpenFull, isShowAlertSuccess) => {
@@ -710,6 +715,7 @@ const StoryDetail = ({ chapterTitle, storyTitle }) => {
                             }
                             handlePaymentDepositAuto={handlePaymentDepositAuto}
                             handleSupportOpenChapter={handleSupportOpenChapter}
+                            openChapterLoading={openChapterLoading}
                           />
                         </GoogleReCaptchaProvider>
                       </div>
