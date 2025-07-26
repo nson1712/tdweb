@@ -1,8 +1,7 @@
-import Image from "next/image";
-import imageLoader from "../../loader/imageLoader";
 import Link from "next/link";
-import MarkedLabel from "../MarkedLabel";
-import TotalView from "../TotalView";
+import { StoryConfigurationService } from "../../config/storyConfig";
+import StoryCover from "../StoryCover/StoryCover";
+import StoryStatus from "../StoryStatus/StoryStatus";
 
 const VerticalStoryItem = ({
   title,
@@ -11,86 +10,38 @@ const VerticalStoryItem = ({
   status,
   rate,
   totalView,
-  totalLike,
+  mainCategories,
+  configService = new StoryConfigurationService(),
 }) => {
+  const config = configService;
+  
   return (
     <Link href={`/${slug}`} passHref>
       <a
         title={`Truyện full ${title}`}
-        className="max-w-fit flex flex-col gap-y-2 cursor-pointer hover:translate-y-[-5%] transition delay-75 relative z-5"
+        className="max-w-fit flex flex-col gap-y-2 cursor-pointer hover:translate-y-[-5%] transition duration-300 relative z-5"
       >
-        {status === "ACTIVE" && <MarkedLabel />}
-        {coverImage ? (
-          <div className="relative">
-            <Image
-              loader={imageLoader}
-              className="aspect-[3/4] rounded-tl-[25px] rounded-bl-[5px] rounded-e-[5px] "
-              width={200}
-              height={266}
-              src={coverImage}
-              alt={title}
+        <StoryStatus 
+          status={status} 
+          activeStatus={config.getActiveStatus()} 
+        />
+        
+        <div className="group space-y-2">
+          {coverImage && (
+            <StoryCover
+              coverImage={coverImage}
               title={title}
+              categories={mainCategories}
+              maxCategories={config.getMaxCategories()}
+              totalView={totalView || 0}
+              rate={rate || 0}
+              hotThreshold={config.getHotThreshold()}
+              imageDimensions={config.getImageDimensions()}
             />
-            <div className="w-full flex justify-center bg-black/60 mb-[5px] absolute bottom-0 max-w-full h-[15%] sm:h-[10%] ">
-              <div className="flex gap-x-4 sm:gap-x-10">
-                {/* <div className="flex gap-x-0.5">
-                  <div className="h-3 w-3 flex self-center">
-                    <Image
-                      className="aspect-square"
-                      src="/images/heart-icon.png"
-                      width={12}
-                      height={12}
-                      alt="heart-icon"
-                      loader={imageLoader}
-                    />
-                  </div>
-                  <div className="text-white text-xs self-center">
-                    {totalLike ?? 0}
-                  </div>
-                </div> */}
-
-                <div className="flex gap-x-0.5">
-                  <div className="h-3 w-3 flex self-center -mt-0.5">
-                    <Image
-                      className="aspect-square"
-                      src="/images/star-icon.png"
-                      width={12}
-                      height={12}
-                      alt="star-icon"
-                      loader={imageLoader}
-                    />
-                  </div>{" "}
-                  <div className="text-white text-xs self-center">
-                    {Number.isInteger(rate ?? 0)
-                      ? rate ?? 0
-                      : (rate ?? 0).toFixed(1)}
-                  </div>
-                </div>
-                <div className="self-center">
-                  {totalView < 500000 ? (
-                    <TotalView
-                      totalView={totalView || 0}
-                      className="text-white"
-                    />
-                  ) : (
-                    <div className="flex gap-x-1">
-                      <Image
-                        src="/images/icon-hot.png"
-                        width={12}
-                        height={12}
-                        alt="hot-icon"
-                        loader={imageLoader}
-                      />
-                      <div className="text-xs text-white">HOT</div>
-                    </div>
-                  )}
-                </div>
-              </div>
-            </div>
-          </div>
-        ) : null}
-
-        <h3 className="px-[1px] m-0 story-item-title">{title}</h3>
+          )}
+          
+          <h3 className="px-[1px] m-0 story-item-title">{title}</h3>
+        </div>
       </a>
     </Link>
   );

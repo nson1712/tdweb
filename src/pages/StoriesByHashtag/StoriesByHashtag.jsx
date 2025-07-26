@@ -8,6 +8,7 @@ import { convertObjectToSearchParams } from "../../utils/utils";
 import Link from "next/link";
 import { Pagination } from "antd";
 import HotStories from "../../components/HotStories";
+import VerticalStoryItem from "../../components/VerticalStoryItem/VerticalStoryItem";
 
 const SORTS = [
   {
@@ -188,11 +189,20 @@ const StoriesByHashtag = () => {
           </div>
         )}
 
-        <div className="flex justify-center px-2 md:px-0 pt-6 md:pt-0">
-          <HotStories
-            className="grid grid-cols-4 sm:grid-cols-5 self-center items-center gap-x-4 gap-y-6"
-            data={storiesByHashtag?.data}
-          />
+        <div className="grid grid-cols-4 justify-center gap-3 px-2 md:px-0 pt-6 md:pt-0">
+          {storiesByHashtag?.data?.map((item, index) => (
+            <VerticalStoryItem
+              key={index}
+              title={item.title}
+              slug={item.slug}
+              coverImage={item.thumbnail || item.coverImage}
+              status={item.status}
+              rate={item.rate}
+              totalView={item.totalView}
+              totalLike={item.totalLike}
+              mainCategories={item.mainCategories}
+            />
+          ))}
         </div>
 
         <div className="w-full flex justify-center mt-4">

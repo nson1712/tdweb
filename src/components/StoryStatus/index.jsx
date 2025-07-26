@@ -18,7 +18,7 @@ const STORY_STATUSES = [
 ];
 
 const StoryStatus = ({ status, lightBg }) => {
-  const normalizedStatus = status?.toLowerCase(); // Đảm bảo không bị lỗi do viết hoa/thường
+  const normalizedStatus = status?.toLowerCase();
   const currentStatus = STORY_STATUSES.find(
     (item) => item.status.toLowerCase() === normalizedStatus
   );

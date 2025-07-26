@@ -14,6 +14,7 @@ const TopFull = ({ data }) => {
           rate={item?.rate}
           totalView={item?.totalView}
           totalLike={item?.totalLike}
+          mainCategories={item?.mainCategories}
         />
       ))}
     </div>
