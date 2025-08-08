@@ -29,7 +29,7 @@ StoriesByHashTag.getInitialProps = async (ctx) => {
         url:
           typeof window !== "undefined"
             ? "https://fsdfssf.truyenso1.xyz/data/private/data/story/search-by-hashtag"
-            : "http://10.8.22.205:8082/private/data/story/search-by-hashtag",
+            : "http://10.8.22.37:8082/private/data/story/search-by-hashtag",
           // "https://fsdfssf.truyenso1.xyz/data/private/data/story/search-by-hashtag",
           // typeof window !== "undefined"
           //   ? "https://uatapi.truyenso1.xyz/data/private/data/story/search-by-hashtag"

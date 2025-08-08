@@ -75,7 +75,7 @@ export async function getServerSideProps(context) {
     const result = await axios.get(
       typeof window !== "undefined"
             ? "https://fsdfssf.truyenso1.xyz/data/private/data/story/chapter/detail"
-            : "http://10.8.22.205:8082/private/data/story/chapter/detail",
+            : "http://10.8.22.37:8082/private/data/story/chapter/detail",
           // 'https://fsdfssf.truyenso1.xyz/data/private/data/story/chapter/detail',
           // typeof window !== 'undefined' ? 'https://uatapi.truyenso1.xyz/data/private/data/story/chapter/detail' : 'http://10.8.22.250:18111/data/private/data/story/chapter/detail',
       {

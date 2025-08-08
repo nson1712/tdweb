@@ -49,7 +49,7 @@ export async function getServerSideProps(context) {
     const result = await axios.get(
       typeof window !== "undefined"
         ? `https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}`
-        : `http://10.8.22.205:8082/private/data/story/detail?slug=${storySlug}`
+        : `http://10.8.22.37:8082/private/data/story/detail?slug=${storySlug}`
     );
     // const result = await axios.get(
     //   `https://fsdfssf.truyenso1.xyz/data/private/data/story/detail?slug=${storySlug}`
@@ -59,7 +59,7 @@ export async function getServerSideProps(context) {
     const resultBlog = await axios.get(
       typeof window !== "undefined"
         ? `https://fsdfssf.truyenso1.xyz/data/article/story/${storySlug}`
-        : `http://10.8.22.205:8082/article/story/${storySlug}`
+        : `http://10.8.22.37:8082/article/story/${storySlug}`
     );
     // const resultBlog = await axios.get(
     //   `https://fsdfssf.truyenso1.xyz/data/article/story/${storySlug}`

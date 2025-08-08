@@ -54,7 +54,7 @@ BlogDetailPage.getInitialProps = async (ctx) => {
         const result = await axios.get(
           typeof window !== "undefined"
             ? `https://fsdfssf.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`
-            : `http://10.8.22.205:8082/article/detail/${ctx.query.blogSlug}`
+            : `http://10.8.22.37:8082/article/detail/${ctx.query.blogSlug}`
         // `https://fsdfssf.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`
         // typeof window !== "undefined"
         //     ? `https://uatapi.truyenso1.xyz/data/article/detail/${ctx.query.blogSlug}`

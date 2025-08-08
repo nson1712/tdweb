@@ -30,7 +30,7 @@ Stories.getInitialProps = async (ctx) => {
         url:
           typeof window !== "undefined"
             ? "https://fsdfssf.truyenso1.xyz/data/private/data/categories/detail"
-            : "http://10.8.22.205:8082/private/data/categories/detail",
+            : "http://10.8.22.37:8082/private/data/categories/detail",
           // "https://fsdfssf.truyenso1.xyz/data/private/data/categories/detail",
           // typeof window !== "undefined"
           //   ? "https://uatapi.truyenso1.xyz/data/private/data/categories/detail"
