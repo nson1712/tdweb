@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import * as Api from "../../api/api";
 import Button from "../../components/Button";
 import { useGoogleLogin } from "@react-oauth/google";
-import { base64URLdecode, isCocCoc } from "../../utils/utils";
+import { base64URLdecode } from "../../utils/utils";
 import { setAccessToken, setRefreshToken } from "../../utils/storage";
 import GlobalStore from "../../stores/GlobalStore";
 import Router from "next/router";
@@ -42,7 +42,6 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         type: "success",
         theme: "colored",
       });
-      Router.back();
     },
   });
 
@@ -90,14 +89,9 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         type: "success",
         theme: "colored",
       });
-      Router.back();
     } catch (error) {
       console.error("Login failed:", error);
     }
-  };
-
-  const handleLoginEmail = () => {
-    Router.push("/dang-nhap");
   };
 
   const handleSupport = () => {
