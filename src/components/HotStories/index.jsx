@@ -13,6 +13,7 @@ const HotStories = ({ data, className }) => {
           rate={item.rate}
           totalView={item.totalView}
           totalLike={item.totalLike}
+          mainCategories={item.mainCategories}
         />
       ))}
 
@@ -27,6 +28,7 @@ const HotStories = ({ data, className }) => {
             rate={item.rate}
             totalView={item.totalView}
             totalLike={item.totalLike}
+            mainCategories={item.mainCategories}
           />
         ))}
       </div>
