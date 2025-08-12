@@ -91,14 +91,16 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         closeModal();
       }
 
-      Router.reload();
+      if (router.pathname === "/dang-nhap") {
+        router.push(navigate || "/");
+      } else {
+        Router.reload();
+      }
 
       toast("Bạn đã đăng nhập thành công!", {
         type: "success",
         theme: "colored",
       });
-      
-      
     } catch (error) {
       console.error("Login failed:", error);
     }
