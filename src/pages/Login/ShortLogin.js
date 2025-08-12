@@ -91,8 +91,8 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         closeModal();
       }
 
-      Router.back();
-      
+      Router.reload();
+
       toast("Bạn đã đăng nhập thành công!", {
         type: "success",
         theme: "colored",
