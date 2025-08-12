@@ -140,8 +140,6 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
           message="Chú ý: Chỉ hoạt động tốt trên safari và chrome!"
         />
 
-        <AppleLoginButton />
-
         <div style={{ margin: "auto" }}>
           <a id="google-login-btn" className="align-center">
             <Button
