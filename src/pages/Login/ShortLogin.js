@@ -9,7 +9,7 @@ import { toast } from "react-toastify";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
 import { Alert } from "antd";
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 
 const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
   const [loading, setLoading] = useState(false);
@@ -97,7 +97,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
       if (router.pathname === "/dang-nhap") {
         router.push(navigate || "/");
       } else {
-        router.reload();
+        Router.reload();
       }
     } catch (error) {
       console.error("Login failed:", error);
