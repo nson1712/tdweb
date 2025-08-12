@@ -5,14 +5,15 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { base64URLdecode } from "../../utils/utils";
 import { setAccessToken, setRefreshToken } from "../../utils/storage";
 import GlobalStore from "../../stores/GlobalStore";
-import Router from "next/router";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
 import { Alert } from "antd";
+import { useRouter } from "next/router";
 
 const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
   const [loading, setLoading] = useState(false);
+  const router = useRouter();
   const [showWarning, setShowWarning] = useState(false);
   const handleLoginGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -42,6 +43,10 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         type: "success",
         theme: "colored",
       });
+
+      if (router.pathname === "/dang-nhap") {
+        router.push(navigate || "/");
+      }
     },
   });
 
@@ -89,6 +94,11 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         type: "success",
         theme: "colored",
       });
+      if (router.pathname === "/dang-nhap") {
+        router.push(navigate || "/");
+      } else {
+        router.reload();
+      }
     } catch (error) {
       console.error("Login failed:", error);
     }
@@ -241,8 +251,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
                   <span className="font-bold text-red-500 italic">
                     Chrome/Safari.{" "}
                   </span>
-                  Nếu gặp bất tiện gì khác, vui
-                  lòng{" "}
+                  Nếu gặp bất tiện gì khác, vui lòng{" "}
                   <span
                     className="text-blue-500 font-bold cursor-pointer hover:text-blue-400"
                     onClick={handleSupport}
