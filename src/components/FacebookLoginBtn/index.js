@@ -9,9 +9,10 @@ import GlobalStore from "../../stores/GlobalStore";
 import { base64URLdecode } from "../../utils/utils";
 
 export default function FacebookLoginBtn() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
 
   console.log("Session data:", session);
+  console.log("STATUS: ", status)
 
   useEffect(() => {
     if (session?.accessToken) {
