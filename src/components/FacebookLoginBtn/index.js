@@ -2,11 +2,11 @@ import { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import {  FacebookFilled } from "@ant-design/icons";
 import Router from "next/router";
-import toast from "react-toastify"; // hoặc thư viện bạn đang dùng
 import { setAccessToken, setRefreshToken } from "../../utils/storage";
 import * as Api from "../../api/api";
 import GlobalStore from "../../stores/GlobalStore";
 import { base64URLdecode } from "../../utils/utils";
+import { toast } from "react-toastify";
 
 export default function FacebookLoginBtn() {
   const { data: session, status } = useSession();
