@@ -27,7 +27,7 @@ class WebDocument extends Document {
             }}
           />
 
-
+{/* 
           <script dangerouslySetInnerHTML={{
               __html: `
           window.fbAsyncInit = function() {
@@ -49,7 +49,7 @@ class WebDocument extends Document {
             js.src = "https://connect.facebook.net/en_US/sdk.js";
             fjs.parentNode.insertBefore(js, fjs);
           }(document, 'script', 'facebook-jssdk'));
-          `}}/>
+          `}}/> */}
 
           <script async src="https://www.googletagmanager.com/gtag/js?id=UA-130623220-1"></script>
           <script
