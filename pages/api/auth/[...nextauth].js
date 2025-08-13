@@ -23,6 +23,7 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, account }) {
+      console.log("JWT Callback:", token, account);
       if (account?.provider === "google" || account?.provider === "facebook") {
         token.idToken = account.id_token;
         token.accessToken = account.access_token;
@@ -31,6 +32,7 @@ export const authOptions = {
       return token;
     },
     async session({ session, token }) {
+      console.log("Session Callback:", session, token);
       session.user = {
         email: token.email,
         name: token.name,
