@@ -15,7 +15,7 @@ export const authOptions = {
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       authorization: {
         params: {
-          scope: "email,public_profile",
+          scope: "public_profile email",
         },
       },
     }),
@@ -43,6 +43,18 @@ export const authOptions = {
       session.provider = token.provider;
       return session;
     },
+  },
+  debug: true, // bật verbose logs (server)
+  logger: {
+    debug: (code, ...args) => console.log("[NEXTAUTH][DEBUG]", code, ...args),
+    warn:  (code, ...args) => console.warn("[NEXTAUTH][WARN]", code, ...args),
+    error: (code, ...args) => console.error("[NEXTAUTH][ERROR]", code, ...args),
+  },
+  events: {
+    signIn: (message) => console.log("[EVENT] signIn", message),
+    signOut: (message) => console.log("[EVENT] signOut", message),
+    session: (message) => console.log("[EVENT] session", message),
+    linkAccount: (message) => console.log("[EVENT] linkAccount", message),
   },
   // cookies: {
   //   sessionToken: {
