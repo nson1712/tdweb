@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { AppleFilled, FacebookFilled } from "@ant-design/icons";
+import {  FacebookFilled } from "@ant-design/icons";
 import Router from "next/router";
 import toast from "react-toastify"; // hoặc thư viện bạn đang dùng
 import { setAccessToken, setRefreshToken } from "../../utils/storage";
@@ -66,9 +66,7 @@ export default function FacebookLoginBtn() {
       <button
         className="bg-blue-500 text-white py-2.5 w-full rounded-xl border-2 border-white flex gap-x-2 px-2"
         onClick={() =>
-          signIn("facebook", {
-            callbackUrl: "https://tdweb-wp2i.vercel.app",
-          })
+          signIn("facebook")
         }
       >
         <FacebookFilled className="text-3xl" />
