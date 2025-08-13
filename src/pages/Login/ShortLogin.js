@@ -51,10 +51,11 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         type: "success",
         theme: "colored",
       });
+      Router.back();
 
-      if (router.pathname === "/dang-nhap") {
-        router.push(navigate || "/");
-      }
+      // if (router.pathname === "/dang-nhap") {
+      //   router.push(navigate || "/");
+      // }
     },
   });
 
@@ -99,15 +100,11 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
       if (closeModal) {
         closeModal();
       }
-
-      Router.reload();
-
       toast("Bạn đã đăng nhập thành công!", {
         type: "success",
         theme: "colored",
       });
-
-        
+      Router.back();
     } catch (error) {
       console.error("Login failed:", error);
     }
