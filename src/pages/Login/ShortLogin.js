@@ -92,16 +92,12 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         closeModal();
       }
 
-      if (router.pathname === "/dang-nhap") {
-        router.push(navigate || "/");
-      } else {
-        Router.reload();
-      }
-
       toast("Bạn đã đăng nhập thành công!", {
         type: "success",
         theme: "colored",
       });
+
+        Router.back();
     } catch (error) {
       console.error("Login failed:", error);
     }
@@ -161,7 +157,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
               Đăng Nhập Bằng GOOGLE
             </Button>
           </a>
-          {/* <a id="facebook-login-btn" className="align-center mt-[10px]">
+          <a id="facebook-login-btn" className="align-center mt-[10px]">
             <Button
               className="login-button login-fb-bg"
               onClick={(e) => handleFacebookLogin(e)}
@@ -177,9 +173,9 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
               />
               Đăng Nhập Bằng FACEBOOK
             </Button>
-          </a> */}
+          </a>
 
-          <FacebookLoginBtn />
+          {/* <FacebookLoginBtn /> */}
 
           <div
             style={{ margin: "30px 10px", borderTop: "1px solid #fff" }}
