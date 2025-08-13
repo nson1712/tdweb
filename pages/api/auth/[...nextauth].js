@@ -1,75 +1,53 @@
-
-
-import NextAuth, { NextAuthOptions } from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
+import NextAuth from "next-auth";
 import FacebookProvider from "next-auth/providers/facebook";
 
 export const authOptions = {
   providers: [
-    // GoogleProvider({
-    //   clientId: process.env.GOOGLE_CLIENT_ID,
-    //   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    // }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       authorization: {
+        url: "https://www.facebook.com/v20.0/dialog/oauth",
         params: {
           scope: "public_profile email",
+          response_type: "code",
         },
+      },
+      checks: ["state"],
+      profile(profile) {
+        return {
+          id: profile.id?.toString(),
+          name: profile.name || null,
+          email: profile.email || null,
+          image: profile.picture?.data?.url || profile.picture || null,
+        };
       },
     }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
+  session: { strategy: "jwt" },
   callbacks: {
-    async jwt({ token, account }) {
-      console.log("JWT Callback:", token, account);
-      if (account?.provider === "google" || account?.provider === "facebook") {
-        token.idToken = account.id_token;
-        token.accessToken = account.access_token;
-        token.provider = account.provider;
+    async jwt({ token, user, account }) {
+      if (account && user) {
+        token.user = {
+          id: user.id,
+          name: user.name ?? null,
+          email: user.email ?? null,
+          image: user.image ?? null,
+        };
+        token.accessToken = account.access_token ?? token.accessToken;
+        token.provider = account.provider ?? token.provider;
+        // KHÔNG cần id_token với Facebook (OAuth2)
       }
       return token;
     },
     async session({ session, token }) {
-      console.log("Session Callback:", session, token);
-      session.user = {
-        email: token.email,
-        name: token.name,
-        image: token.picture,
-      };
-      session.idToken = token.idToken;
-      session.accessToken = token.accessToken;
-      session.provider = token.provider;
+      session.user = { ...session.user, ...(token.user || {}) };
+      session.accessToken = token.accessToken ?? null;
+      session.provider = token.provider ?? null;
       return session;
     },
   },
-  debug: true, // bật verbose logs (server)
-  logger: {
-    debug: (code, ...args) => console.log("[NEXTAUTH][DEBUG]", code, ...args),
-    warn:  (code, ...args) => console.warn("[NEXTAUTH][WARN]", code, ...args),
-    error: (code, ...args) => console.error("[NEXTAUTH][ERROR]", code, ...args),
-  },
-  events: {
-    signIn: (message) => console.log("[EVENT] signIn", message),
-    signOut: (message) => console.log("[EVENT] signOut", message),
-    session: (message) => console.log("[EVENT] session", message),
-    linkAccount: (message) => console.log("[EVENT] linkAccount", message),
-  },
-  // cookies: {
-  //   sessionToken: {
-  //     name: "next-auth.session-token",
-  //     options: {
-  //       httpOnly: true,
-  //       secure: process.env.NODE_ENV === "production",
-  //       sameSite: "none",
-  //       path: "/",
-  //     },
-  //   },
-  // },
-  pages: {
-    signIn: "/dang-nhap",
-  },
+  debug: true,
 };
-
-export default NextAuth(authOptions)
+export default NextAuth(authOptions);
