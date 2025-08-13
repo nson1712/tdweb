@@ -92,12 +92,14 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         closeModal();
       }
 
+      Router.reload();
+
       toast("Bạn đã đăng nhập thành công!", {
         type: "success",
         theme: "colored",
       });
 
-        Router.back();
+        
     } catch (error) {
       console.error("Login failed:", error);
     }
