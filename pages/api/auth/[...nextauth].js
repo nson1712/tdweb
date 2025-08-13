@@ -1,47 +1,57 @@
-// pages/api/auth/[...nextauth].js
-import NextAuth from "next-auth";
+import { NextAuthOptions } from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 import FacebookProvider from "next-auth/providers/facebook";
 
-export default NextAuth({
+export const authOptions = {
   providers: [
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    }),
     FacebookProvider({
       clientId: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-       checks: ["state"], 
-      // để mặc định, không custom scope/checks
+      authorization: {
+        params: {
+          scope: "email,public_profile",
+        },
+      },
     }),
   ],
-  session: { strategy: "jwt" },
-
+  secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
     async jwt({ token, account }) {
-      if (account) {
+      if (account?.provider === "google" || account?.provider === "facebook") {
+        token.idToken = account.id_token;
         token.accessToken = account.access_token;
+        token.provider = account.provider;
       }
       return token;
     },
     async session({ session, token }) {
+      session.user = {
+        email: token.email,
+        name: token.name,
+        image: token.picture,
+      };
+      session.idToken = token.idToken;
       session.accessToken = token.accessToken;
+      session.provider = token.provider;
       return session;
     },
   },
-
-  secret: process.env.NEXTAUTH_SECRET,
-
-  // Bật debug qua env: NEXTAUTH_DEBUG=true
-  debug: process.env.NEXTAUTH_DEBUG === "true",
-
-  // Logger để xem trong Vercel Logs
-  logger: {
-    error(code, metadata) {
-      // Tránh log thông tin nhạy cảm trong production
-      console.error("NextAuth error:", code, metadata?.error ?? metadata);
-    },
-    warn(code) {
-      console.warn("NextAuth warn:", code);
-    },
-    debug(code, metadata) {
-      console.debug("NextAuth debug:", code, metadata);
+  cookies: {
+    sessionToken: {
+      name: "next-auth.session-token",
+      options: {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "none",
+        path: "/",
+      },
     },
   },
-});
+  pages: {
+    signIn: "/login",
+  },
+};
