@@ -4,15 +4,13 @@ import FacebookProvider from "next-auth/providers/facebook";
 export const authOptions = {
   providers: [
     FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-      authorization: {
-        params: {
-          scope: "public_profile email",
-          response_type: "code",
-        },
-      },
-      checks: ["state"],
+      clientId: process.env.FACEBOOK_CLIENT_ID!,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+      version: "v20.0",
+      authorization: { params: { scope: "public_profile,email" } }, // chỉ scope
+      // KHÔNG set authorization.url, KHÔNG response_type thủ công
+      // KHÔNG bật OIDC ở Facebook
+      checks: ["state"], // giữ mặc định cho FB
       profile(profile) {
         return {
           id: profile.id?.toString(),
@@ -36,7 +34,6 @@ export const authOptions = {
         };
         token.accessToken = account.access_token ?? token.accessToken;
         token.provider = account.provider ?? token.provider;
-        // KHÔNG cần id_token với Facebook (OAuth2)
       }
       return token;
     },
@@ -47,6 +44,8 @@ export const authOptions = {
       return session;
     },
   },
+  pages: { signIn: "/dang-nhap" },
   debug: true,
 };
+
 export default NextAuth(authOptions);
