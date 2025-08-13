@@ -67,7 +67,7 @@ export default function FacebookLoginBtn() {
         className="bg-blue-500 text-white py-2.5 w-full rounded-xl border-2 border-white flex gap-x-2 px-2"
         onClick={() =>
           signIn("facebook", {
-            callbackUrl: "https://tdweb-i3os.vercel.app",
+            callbackUrl: "https://tdweb-wp2i.vercel.app",
           })
         }
       >
