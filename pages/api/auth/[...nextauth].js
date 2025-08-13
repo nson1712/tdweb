@@ -40,17 +40,17 @@ export const authOptions = {
       return session;
     },
   },
-  cookies: {
-    sessionToken: {
-      name: "next-auth.session-token",
-      options: {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "none",
-        path: "/",
-      },
-    },
-  },
+  // cookies: {
+  //   sessionToken: {
+  //     name: "next-auth.session-token",
+  //     options: {
+  //       httpOnly: true,
+  //       secure: process.env.NODE_ENV === "production",
+  //       sameSite: "none",
+  //       path: "/",
+  //     },
+  //   },
+  // },
   pages: {
     signIn: "/dang-nhap",
   },
