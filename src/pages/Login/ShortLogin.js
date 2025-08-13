@@ -62,7 +62,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
             console.log("User cancelled login or did not fully authorize.");
           }
         },
-        { scope: "public_profile,email,user_link" } // Yêu cầu quyền
+        { scope: "public_profile,email" } // Yêu cầu quyền
       );
     }
   };
