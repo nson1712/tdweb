@@ -12,6 +12,13 @@ import { Alert } from "antd";
 import Router, { useRouter } from "next/router";
 import FacebookLoginBtn from "../../components/FacebookLoginBtn";
 
+const fbReady = new Promise((resolve) => {
+  window.fbAsyncInit = function () {
+    FB.init({ appId: '939240831358946', cookie: true, xfbml: false, version: 'v21.0' });
+    resolve();
+  };
+});
+
 const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -51,7 +58,8 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
     },
   });
 
-  const handleFacebookLogin = () => {
+  const handleFacebookLogin = async () => {
+    await fbReady;
     if (typeof window.FB !== "undefined") {
       window.FB.login(
         function (response) {
