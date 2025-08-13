@@ -10,6 +10,7 @@ import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
 import { Alert } from "antd";
 import Router, { useRouter } from "next/router";
+import FacebookLoginBtn from "../../components/FacebookLoginBtn";
 
 const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
   const [loading, setLoading] = useState(false);
@@ -160,7 +161,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
               Đăng Nhập Bằng GOOGLE
             </Button>
           </a>
-          <a id="facebook-login-btn" className="align-center mt-[10px]">
+          {/* <a id="facebook-login-btn" className="align-center mt-[10px]">
             <Button
               className="login-button login-fb-bg"
               onClick={(e) => handleFacebookLogin(e)}
@@ -176,7 +177,9 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
               />
               Đăng Nhập Bằng FACEBOOK
             </Button>
-          </a>
+          </a> */}
+
+          <FacebookLoginBtn />
 
           <div
             style={{ margin: "30px 10px", borderTop: "1px solid #fff" }}
