@@ -4,8 +4,8 @@ import FacebookProvider from "next-auth/providers/facebook";
 export const authOptions = {
   providers: [
     FacebookProvider({
-      clientId: process.env.FACEBOOK_CLIENT_ID!,
-      clientSecret: process.env.FACEBOOK_CLIENT_SECRET!,
+      clientId: process.env.FACEBOOK_CLIENT_ID,
+      clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
       version: "v20.0",
       authorization: { params: { scope: "public_profile,email" } }, // chỉ scope
       // KHÔNG set authorization.url, KHÔNG response_type thủ công
