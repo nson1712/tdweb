@@ -60,13 +60,14 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         alert("FB login called"),
         function (response) {
           if (response.authResponse) {
+            alert("response.authResponse is defined: " + JSON.stringify(response.authResponse));
             const accessToken = response.authResponse.accessToken;
-            sendTokenToBackend(accessToken);7
+            sendTokenToBackend(accessToken);
           } else {
             console.log("User cancelled login or did not fully authorize.");
           }
         },
-        { scope: "public_profile,email" } // Yêu cầu quyền
+        { scope: "public_profile,email,user_link" } // Yêu cầu quyền
       );
     }
   };
@@ -81,7 +82,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
           socialType: "FACEBOOK",
         },
       });
-      
+
       alert("Login result: " + JSON.stringify(loginResult));
 
       await setAccessToken(loginResult?.data?.accessToken);
