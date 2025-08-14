@@ -59,6 +59,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
       window.FB.login(
         alert("FB login called"),
         function (response) {
+          alert("FB login response: " + JSON.stringify(response));
           if (response.authResponse) {
             alert("response.authResponse is defined: " + JSON.stringify(response.authResponse));
             const accessToken = response.authResponse.accessToken;
