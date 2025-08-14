@@ -1,15 +1,19 @@
-import Link from "next/link";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const InAppBrowserBanner = () => {
   const [show, setShow] = useState(false);
 
   const ua = typeof navigator !== "undefined" ? navigator.userAgent : "";
-  const isInApp = /FBAN|FBAV|Instagram|Line\/|Zalo|Zing|TikTok/i.test(ua);
-  const isIOS   = /iPhone|iPad|iPod/i.test(ua);
+  const isIOS = /iPhone|iPad|iPod/i.test(ua);
   const isAndroid = /Android/i.test(ua);
 
-  const pageUrl = "https://toidoc.vn/nap-kim-cuong"; // use your real domain
+  // Tách rõ in-app của Meta (FB/IG/Messenger)
+  const isMetaInApp = /FBAN|FBAV|Instagram/i.test(ua);
+  // Các in-app phổ biến khác
+  const isOtherInApp = /Line\/|Zalo|Zing|TikTok/i.test(ua);
+  const isInApp = isMetaInApp || isOtherInApp;
+
+  const pageUrl = "https://toidoc.vn/nap-kim-cuong";
   const chromeIOS = "googlechromes://toidoc.vn/nap-kim-cuong";
   const chromeAndroidIntent =
     "intent://toidoc.vn/nap-kim-cuong#Intent;scheme=https;package=com.android.chrome;end";
@@ -23,7 +27,6 @@ const InAppBrowserBanner = () => {
       await navigator.clipboard.writeText(pageUrl);
       alert("Đã copy link. Hãy mở Safari/Chrome và dán link để nạp nhé!");
     } catch {
-      // Fallback for old in-app browsers
       prompt("Copy link sau:", pageUrl);
     }
   };
@@ -41,14 +44,17 @@ const InAppBrowserBanner = () => {
           Hãy mở bằng Safari hoặc Chrome để nạp thành công.
         </p>
 
+        {/* iOS: Ẩn nút Chrome khi là in-app của Meta (sẽ bị chặn) */}
         {isIOS && (
           <>
-            <Link  href={chromeIOS} passHref>
-            <a
-              className="block w-full text-center rounded-xl border px-4 py-2 mb-2"
-            >
-              Thử mở bằng Chrome (iOS)
-            </a></Link>
+            {!isMetaInApp && (
+              <a
+                href={chromeIOS}
+                className="block w-full text-center rounded-xl border px-4 py-2 mb-2"
+              >
+                Thử mở bằng Chrome (iOS)
+              </a>
+            )}
             <button
               onClick={copy}
               className="block w-full text-center rounded-xl bg-black text-white px-4 py-2 mb-2"
@@ -65,6 +71,7 @@ const InAppBrowserBanner = () => {
           </>
         )}
 
+        {/* Android: vẫn cho Intent (thường hoạt động) */}
         {isAndroid && (
           <>
             <a
