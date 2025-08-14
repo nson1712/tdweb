@@ -72,6 +72,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
   };
 
   const sendTokenToBackend = async (accessToken) => {
+    alert("Sending token to backend: " + accessToken);
     try {
       const loginResult = await Api.post({
         url: "/customer/public/login-by-social",
@@ -80,6 +81,8 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
           socialType: "FACEBOOK",
         },
       });
+      
+      alert("Login result: " + JSON.stringify(loginResult));
 
       await setAccessToken(loginResult?.data?.accessToken);
       await setRefreshToken(loginResult?.data?.refreshToken);
