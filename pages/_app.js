@@ -231,7 +231,7 @@ function App({ Component, pageProps: {session, ...pageProps} }) {
         <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
         <link href="https://fonts.googleapis.com/css2?family=Palatino%20Linotype:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" /> */}
       </Head>
-      {/* <FacebookSDK /> */}
+      <FacebookSDK />
       <SessionProvider session={session}>
         <GoogleOAuthProvider clientId="195908018380-ehemlqtqp4b7kej9ah7hpglqtjict07r.apps.googleusercontent.com">
           <CommonLayout>
