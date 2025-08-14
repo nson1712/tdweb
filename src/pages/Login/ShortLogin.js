@@ -42,7 +42,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         type: "success",
         theme: "colored",
       });
-      Router.back();
+      Router.reload();
     },
   });
 
@@ -90,7 +90,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         type: "success",
         theme: "colored",
       });
-      Router.back();
+      Router.reload();
     } catch (error) {
       console.error("Login failed:", error);
     }
