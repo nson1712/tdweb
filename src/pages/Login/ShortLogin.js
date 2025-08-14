@@ -43,7 +43,9 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         type: "success",
         theme: "colored",
       });
-      Router.reload();
+      if(router.pathname === "/dang-nhap") {
+        router.push(navigate || "/");
+      }
     },
   });
 
@@ -92,7 +94,7 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         theme: "colored",
       });
       if(router.pathname === "/dang-nhap") {
-        Router.push(navigate || "/");
+        router.push(navigate || "/");
       }
     } catch (error) {
       console.error("Login failed:", error);
