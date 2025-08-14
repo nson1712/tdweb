@@ -9,7 +9,7 @@ const FacebookSDK = () => {
           appId: "939240831358946",
           cookie: true,
           xfbml: true,
-          version: "v19.0", // Hạ version nếu v21.0 có lỗi
+          version: "v20.0", // Hạ version nếu v21.0 có lỗi
         });
 
         window.FB.AppEvents.logPageView();
