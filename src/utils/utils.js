@@ -500,7 +500,7 @@ export const redirectToBrowser = () => {
     const encodedUrl = encodeURIComponent(url);
 
     // Trường hợp 1: Mở bằng Google Chrome trên iOS/Android
-    const chromeUrl = `googlechrome://${url.replace(/^https?:\/\//, "")}`;
+    const chromeUrl = `googlechromes://${url.replace(/^https?:\/\//, "")}`;
 
     // Trường hợp 2: Dành cho Android (Intent)
     const androidIntent = `intent://${url.replace(
