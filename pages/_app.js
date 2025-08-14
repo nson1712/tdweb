@@ -69,7 +69,7 @@ function App({ Component, pageProps: {session, ...pageProps} }) {
     });
 
     // Redirect to browser instead of open webview
-    redirectToBrowser();
+    // redirectToBrowser();
 
     // Add event listeners
     document.addEventListener("selectionchange", handleSelectionChange);
