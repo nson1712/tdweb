@@ -5,7 +5,7 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { base64URLdecode } from "../../utils/utils";
 import { setAccessToken, setRefreshToken } from "../../utils/storage";
 import GlobalStore from "../../stores/GlobalStore";
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
@@ -14,6 +14,7 @@ import { Alert } from "antd";
 const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
   const [loading, setLoading] = useState(false);
   const [showWarning, setShowWarning] = useState(false);
+  const router = useRouter();
   const handleLoginGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const loginResult = await Api.post({
@@ -90,7 +91,11 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         type: "success",
         theme: "colored",
       });
-      Router.reload();
+      if(router.pathname === "/dang-nhap") {
+        Router.push(navigate || "/");
+      } else {
+        Router.reload();
+      }
     } catch (error) {
       console.error("Login failed:", error);
     }
