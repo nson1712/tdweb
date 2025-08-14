@@ -53,12 +53,15 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
   });
 
   const handleFacebookLogin = () => {
+    alert("Start login facebook")
     if (typeof window.FB !== "undefined") {
+      alert("FB is defined")
       window.FB.login(
+        alert("FB login called"),
         function (response) {
           if (response.authResponse) {
             const accessToken = response.authResponse.accessToken;
-            sendTokenToBackend(accessToken);
+            sendTokenToBackend(accessToken);7
           } else {
             console.log("User cancelled login or did not fully authorize.");
           }
