@@ -5,16 +5,14 @@ import { useGoogleLogin } from "@react-oauth/google";
 import { base64URLdecode } from "../../utils/utils";
 import { setAccessToken, setRefreshToken } from "../../utils/storage";
 import GlobalStore from "../../stores/GlobalStore";
+import Router from "next/router";
 import { toast } from "react-toastify";
 import Image from "next/image";
 import imageLoader from "../../loader/imageLoader";
 import { Alert } from "antd";
-import Router, { useRouter } from "next/router";
-import FacebookLoginBtn from "../../components/FacebookLoginBtn";
 
 const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
   const [loading, setLoading] = useState(false);
-  const router = useRouter();
   const [showWarning, setShowWarning] = useState(false);
   const handleLoginGoogle = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -45,23 +43,14 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
         theme: "colored",
       });
       Router.back();
-
-      // if (router.pathname === "/dang-nhap") {
-      //   router.push(navigate || "/");
-      // }
     },
   });
 
   const handleFacebookLogin = () => {
-    alert("Start login facebook")
     if (typeof window.FB !== "undefined") {
-      alert("FB is defined")
       window.FB.login(
-        alert("FB login called"),
         function (response) {
-          alert("FB login response: " + JSON.stringify(response));
           if (response.authResponse) {
-            alert("response.authResponse is defined: " + JSON.stringify(response.authResponse));
             const accessToken = response.authResponse.accessToken;
             sendTokenToBackend(accessToken);
           } else {
@@ -74,7 +63,6 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
   };
 
   const sendTokenToBackend = async (accessToken) => {
-    alert("Sending token to backend: " + accessToken);
     try {
       const loginResult = await Api.post({
         url: "/customer/public/login-by-social",
@@ -83,8 +71,6 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
           socialType: "FACEBOOK",
         },
       });
-
-      alert("Login result: " + JSON.stringify(loginResult));
 
       await setAccessToken(loginResult?.data?.accessToken);
       await setRefreshToken(loginResult?.data?.refreshToken);
@@ -182,8 +168,6 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
             </Button>
           </a>
 
-          {/* <FacebookLoginBtn /> */}
-
           <div
             style={{ margin: "30px 10px", borderTop: "1px solid #fff" }}
           ></div>
@@ -259,7 +243,8 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
                   <span className="font-bold text-red-500 italic">
                     Chrome/Safari.{" "}
                   </span>
-                  Nếu gặp bất tiện gì khác, vui lòng{" "}
+                  Nếu gặp bất tiện gì khác, vui
+                  lòng{" "}
                   <span
                     className="text-blue-500 font-bold cursor-pointer hover:text-blue-400"
                     onClick={handleSupport}
