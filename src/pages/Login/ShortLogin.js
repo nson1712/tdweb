@@ -93,8 +93,6 @@ const ShortLogin = ({ description, navigate = "", closeModal, enableFB }) => {
       });
       if(router.pathname === "/dang-nhap") {
         Router.push(navigate || "/");
-      } else {
-        Router.reload();
       }
     } catch (error) {
       console.error("Login failed:", error);
