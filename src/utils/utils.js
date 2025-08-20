@@ -471,6 +471,8 @@ export const isInAppBrowser = () => {
   const isFacebookApp = /FBAN|FBAV|FB_IAB|FB4A|FBIOS|FBSSO/.test(userAgent);
   const isInstagramApp = /Instagram/.test(userAgent);
   const isLinkedInApp = /LinkedInApp/.test(userAgent);
+  
+  alert("isFacebookApp: " + isFacebookApp + "\nisInstagramApp: " + isInstagramApp + "\nisLinkedInApp: " + isLinkedInApp);
 
   return isFacebookApp || isInstagramApp || isLinkedInApp;
 };
